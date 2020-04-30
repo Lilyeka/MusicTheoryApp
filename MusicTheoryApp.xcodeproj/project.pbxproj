@@ -8,22 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		6149ED0F245978CD00A1375A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6149ED0E245978CD00A1375A /* AppDelegate.swift */; };
-		6149ED11245978CD00A1375A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6149ED10245978CD00A1375A /* SceneDelegate.swift */; };
-		6149ED13245978CD00A1375A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6149ED12245978CD00A1375A /* ContentView.swift */; };
 		6149ED15245978D700A1375A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6149ED14245978D700A1375A /* Assets.xcassets */; };
-		6149ED18245978D700A1375A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6149ED17245978D700A1375A /* Preview Assets.xcassets */; };
 		6149ED1B245978D700A1375A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6149ED19245978D700A1375A /* LaunchScreen.storyboard */; };
+		6149ED23245A1DCE00A1375A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6149ED22245A1DCE00A1375A /* ViewController.swift */; };
+		6149ED25245A24D600A1375A /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6149ED24245A24D600A1375A /* Note.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6149ED0B245978CD00A1375A /* MusicTheoryApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicTheoryApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6149ED0E245978CD00A1375A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		6149ED10245978CD00A1375A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		6149ED12245978CD00A1375A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6149ED14245978D700A1375A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		6149ED17245978D700A1375A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		6149ED1A245978D700A1375A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6149ED1C245978D700A1375A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6149ED22245A1DCE00A1375A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		6149ED24245A24D600A1375A /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,22 +55,13 @@
 			isa = PBXGroup;
 			children = (
 				6149ED0E245978CD00A1375A /* AppDelegate.swift */,
-				6149ED10245978CD00A1375A /* SceneDelegate.swift */,
-				6149ED12245978CD00A1375A /* ContentView.swift */,
+				6149ED22245A1DCE00A1375A /* ViewController.swift */,
 				6149ED14245978D700A1375A /* Assets.xcassets */,
 				6149ED19245978D700A1375A /* LaunchScreen.storyboard */,
 				6149ED1C245978D700A1375A /* Info.plist */,
-				6149ED16245978D700A1375A /* Preview Content */,
+				6149ED24245A24D600A1375A /* Note.swift */,
 			);
 			path = MusicTheoryApp;
-			sourceTree = "<group>";
-		};
-		6149ED16245978D700A1375A /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				6149ED17245978D700A1375A /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -134,7 +123,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6149ED1B245978D700A1375A /* LaunchScreen.storyboard in Resources */,
-				6149ED18245978D700A1375A /* Preview Assets.xcassets in Resources */,
 				6149ED15245978D700A1375A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -146,9 +134,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6149ED23245A1DCE00A1375A /* ViewController.swift in Sources */,
 				6149ED0F245978CD00A1375A /* AppDelegate.swift in Sources */,
-				6149ED11245978CD00A1375A /* SceneDelegate.swift in Sources */,
-				6149ED13245978CD00A1375A /* ContentView.swift in Sources */,
+				6149ED25245A24D600A1375A /* Note.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,7 +273,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"MusicTheoryApp/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"MusicTheoryApp\"";
 				DEVELOPMENT_TEAM = 9A9LR934E6;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = MusicTheoryApp/Info.plist;
@@ -296,7 +284,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = L887ddd877.com.MusicTheoryApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -305,7 +293,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"MusicTheoryApp/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"MusicTheoryApp\"";
 				DEVELOPMENT_TEAM = 9A9LR934E6;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = MusicTheoryApp/Info.plist;
@@ -316,7 +304,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = L887ddd877.com.MusicTheoryApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
