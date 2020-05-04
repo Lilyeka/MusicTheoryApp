@@ -14,15 +14,15 @@ class StaffView: UIView {
     var clefImageView: UIImageView = {
         var imageView = UIImageView()
         //imageView.backgroundColor = .green
-        imageView.image = UIImage(named: "treble_clef")!
+        imageView.image = UIImage(named: "clef_new")!
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
     var shouldSetupConstraints = true
-    static let VERTICAL_OFFSET = 30
-    static let LINE_OFFSET = 60
+    static let VERTICAL_OFFSET = 60
+    static let LINE_OFFSET = 30
     static let LINE_WIDTH: CGFloat = 2.0
     
     static func viewHeight() -> Int {
@@ -60,13 +60,13 @@ class StaffView: UIView {
         var i = 0
         for note in notes {
             let imageView = UIImageView()
-               imageView.backgroundColor = .blue
+               //imageView.backgroundColor = .blue
                imageView.translatesAutoresizingMaskIntoConstraints = false
-               imageView.contentMode = .scaleAspectFill
+               imageView.contentMode = .scaleAspectFit
             // разбираемся какая картинка
             if note.duration == .none {
                 if note.tone == .dies {
-                    imageView.image = UIImage(named: "dies")
+                    imageView.image = UIImage(named: "bemol"/*"dies_new"*/)
                 }
             }
             // разбираемся с расположением

@@ -21,9 +21,9 @@ class ViewController: UIViewController {
         let note1 = Note(name:.fa1, tone: .dies, duration:.none)
         let note2 = Note(name:.Do1, tone: .dies, duration:.none)
         let note3 = Note(name:.sol1, tone: .dies, duration:.none)
-        let note4 = Note(name:.mi, tone: .dies, duration:.none)
-        let note5 = Note(name:.re, tone: .dies, duration:.none)
-        staffView.drawNotes(notes:[note1, note2, note3, note4, note5])
+        let note4 = Note(name:.re1, tone: .dies, duration:.none)
+ // 
+        staffView.drawNotes(notes:[note1, note2, note3, note4])
 //        staffView.layoutIfNeeded()
         
        // staffView.layoutSubviews()
