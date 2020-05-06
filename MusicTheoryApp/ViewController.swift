@@ -18,10 +18,10 @@ class ViewController: UIViewController {
         staffView = StaffView(frame: CGRect(x: 0, y: 250, width: Int(self.view.frame.size.width), height: StaffView.viewHeight()))
         self.view.addSubview(staffView)
         
-        let note1 = Note(name:.fa1, tone: .dies, duration:.none)
-        let note2 = Note(name:.Do1, tone: .dies, duration:.none)
-        let note3 = Note(name:.sol1, tone: .dies, duration:.none)
-        let note4 = Note(name:.re1, tone: .dies, duration:.none)
+        let note1 = NoteViewModel(model:Note(name:.fa1, tone: .dies, duration:.none))
+        let note2 = NoteViewModel(model:Note(name:.Do1, tone: .dies, duration:.none))
+        let note3 = NoteViewModel(model:Note(name:.sol1, tone: .dies, duration:.none))
+        let note4 = NoteViewModel(model:Note(name:.re1, tone: .dies, duration:.none))
  // 
         staffView.drawNotes(notes:[note1, note2, note3, note4])
 //        staffView.layoutIfNeeded()

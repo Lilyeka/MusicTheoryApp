@@ -52,7 +52,7 @@ class StaffView: UIView {
       return true
     }
     
-    func drawNotes(notes: [Note]) {
+    func drawNotes(notes: [NoteViewModel]) {
         let horizOffset: CGFloat = -10.0
         let noteWidth: CGFloat = 60.0
         let noteHeight: CGFloat = 64.0
@@ -60,13 +60,20 @@ class StaffView: UIView {
         var i = 0
         for note in notes {
             let imageView = UIImageView()
-               //imageView.backgroundColor = .blue
-               imageView.translatesAutoresizingMaskIntoConstraints = false
-               imageView.contentMode = .scaleAspectFit
-            // разбираемся какая картинка
-            if note.duration == .none {
-                if note.tone == .dies {
-                    imageView.image = UIImage(named: "bemol"/*"dies_new"*/)
+            //imageView.backgroundColor = .blue
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            imageView.contentMode = .scaleAspectFit
+            
+            // картинка для ноты
+            if let durationImageName = note.imagesForNote.duration {
+                imageView.image = UIImage(named: durationImageName)
+                // TODO: если у ноты есть еще и тональность то отрисовать значок тональности в отдельной imageView
+                if let toneImageName = note.imagesForNote.tone {
+                }
+            } else {
+                //если просто тональность
+                if let toneImageName = note.imagesForNote.tone {
+                     imageView.image = UIImage(named: toneImageName)
                 }
             }
             // разбираемся с расположением
@@ -76,16 +83,15 @@ class StaffView: UIView {
             imageView.leftAnchor.constraint(equalTo: clefImageView.rightAnchor, constant:leftOffsetFromClef).isActive = true
             imageView.widthAnchor.constraint(equalToConstant: noteWidth).isActive = true
             imageView.heightAnchor.constraint(equalToConstant: noteHeight).isActive = true
-            
+                
             let y: CGFloat = notePosition(note:note)
             imageView.centerYAnchor.constraint(equalTo: self.bottomAnchor, constant: y).isActive = true
-           
             i += 1
         }
     }
     
-    fileprivate func notePosition(note: Note) -> CGFloat {
-        let offsetLinePositions = (CGFloat(note.name.rawValue)/2.0)*CGFloat(StaffView.LINE_OFFSET)
+    fileprivate func notePosition(note: NoteViewModel) -> CGFloat {
+        let offsetLinePositions = (CGFloat(note.model.name.rawValue)/2.0)*CGFloat(StaffView.LINE_OFFSET)
         return -CGFloat(StaffView.VERTICAL_OFFSET) - offsetLinePositions
     }
     
