@@ -10,6 +10,9 @@ import UIKit
 
 
 class StaffView: UIView {
+    static let VERTICAL_OFFSET = 60
+    static let LINE_OFFSET = 30
+    static let LINE_WIDTH: CGFloat = 2.0
     
     var clefImageView: UIImageView = {
         var imageView = UIImageView()
@@ -20,13 +23,11 @@ class StaffView: UIView {
         return imageView
     }()
     
-    var shouldSetupConstraints = true
-    static let VERTICAL_OFFSET = 60
-    static let LINE_OFFSET = 30
-    static let LINE_WIDTH: CGFloat = 2.0
-    
     static func viewHeight() -> Int {
-        return (VERTICAL_OFFSET*2 + Int(LINE_WIDTH)*5 + LINE_OFFSET*4)
+        let linesThicknessHeight = Int(LINE_WIDTH)*5
+        let linesOffset = LINE_OFFSET*4
+        let offsetFromTopAndBottom = VERTICAL_OFFSET*2
+        return (offsetFromTopAndBottom + linesOffset + linesThicknessHeight)
     }
     
     override init(frame: CGRect) {
@@ -47,52 +48,64 @@ class StaffView: UIView {
         clefImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         clefImageView.widthAnchor.constraint(equalToConstant: 80.0).isActive = true
     }
+   
     
-    override class var requiresConstraintBasedLayout: Bool {
-      return true
-    }
-    
-    func drawNotes(notes: [NoteViewModel]) {
-        let horizOffset: CGFloat = -10.0
-        let noteWidth: CGFloat = 60.0
-        let noteHeight: CGFloat = 64.0
-            
+    func drawNotesOneByOne(notes: [NoteViewModel]) {
+        let offsetBetwenNotes: CGFloat = 25.0
+        let offsetFromClef: CGFloat = 35.0
+        var previousNoteWidth: CGFloat = 0.0
+        var previousLeftOffsetFromClef: CGFloat = 0.0
+        
         var i = 0
         for note in notes {
-            let imageView = UIImageView()
-            //imageView.backgroundColor = .blue
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            imageView.contentMode = .scaleAspectFit
-            
+            let noteCharacteristics = note.noteImagesHeightsAndCentersPositions(verticalOffset: CGFloat(StaffView.VERTICAL_OFFSET), lineOffset: CGFloat(StaffView.LINE_OFFSET))
+            let leftOffsetFromClef = i == 0 ? offsetFromClef : (previousLeftOffsetFromClef + previousNoteWidth + offsetBetwenNotes)
             // картинка для ноты
-            if let durationImageName = note.imagesForNote.duration {
-                imageView.image = UIImage(named: durationImageName)
+            if let durationImageName = noteCharacteristics.duration,
+                let noteHeight = noteCharacteristics.durationHeight,
+                let noteWidth = noteCharacteristics.durationWidth,
+                let y = noteCharacteristics.durationY {
+                let imageView = UIImageView()
+                //imageView.backgroundColor = .green
+                imageView.translatesAutoresizingMaskIntoConstraints = false
+                imageView.contentMode = .scaleAspectFit
+                let img = UIImage(named: durationImageName)
+                imageView.image = img
+                imageView.alpha = 0.5
+                // расположение ноты
+                self.addSubview(imageView)
+                imageView.leftAnchor.constraint(equalTo: clefImageView.rightAnchor, constant:leftOffsetFromClef).isActive = true
+                imageView.heightAnchor.constraint(equalToConstant: noteHeight).isActive = true
+                imageView.widthAnchor.constraint(equalToConstant: noteWidth).isActive = true
+                imageView.centerYAnchor.constraint(equalTo: self.bottomAnchor, constant: y).isActive = true
+                previousLeftOffsetFromClef = leftOffsetFromClef
+                previousNoteWidth = noteWidth
                 // TODO: если у ноты есть еще и тональность то отрисовать значок тональности в отдельной imageView
-                if let toneImageName = note.imagesForNote.tone {
+                if let toneImageName = noteCharacteristics.tone {
                 }
             } else {
-                //если просто тональность
-                if let toneImageName = note.imagesForNote.tone {
-                     imageView.image = UIImage(named: toneImageName)
+                //если просто тональность (без ноты)
+                if let toneImageName = noteCharacteristics.tone,
+                    let toneHeight = noteCharacteristics.toneHeight,
+                    let toneWidth = noteCharacteristics.toneWidth,
+                    let y = noteCharacteristics.toneY {
+                    let imageView = UIImageView()
+                    //imageView.backgroundColor = .gray
+                    imageView.translatesAutoresizingMaskIntoConstraints = false
+                    imageView.contentMode = .scaleAspectFit
+                    imageView.image = UIImage(named: toneImageName)
+                    // расположение тональности
+                    self.addSubview(imageView)
+                    imageView.leftAnchor.constraint(equalTo: clefImageView.rightAnchor, constant:leftOffsetFromClef).isActive = true
+                    imageView.heightAnchor.constraint(equalToConstant: toneHeight).isActive = true
+                    imageView.widthAnchor.constraint(equalToConstant: toneWidth).isActive = true
+                    imageView.centerYAnchor.constraint(equalTo: self.bottomAnchor, constant: y).isActive = true
+                    previousLeftOffsetFromClef = leftOffsetFromClef
+                    previousNoteWidth = toneWidth
                 }
             }
-            // разбираемся с расположением
-            self.addSubview(imageView)
-            let leftOffsetFromClef = horizOffset + CGFloat(i)*noteWidth
-
-            imageView.leftAnchor.constraint(equalTo: clefImageView.rightAnchor, constant:leftOffsetFromClef).isActive = true
-            imageView.widthAnchor.constraint(equalToConstant: noteWidth).isActive = true
-            imageView.heightAnchor.constraint(equalToConstant: noteHeight).isActive = true
-                
-            let y: CGFloat = notePosition(note:note)
-            imageView.centerYAnchor.constraint(equalTo: self.bottomAnchor, constant: y).isActive = true
             i += 1
         }
-    }
-    
-    fileprivate func notePosition(note: NoteViewModel) -> CGFloat {
-        let offsetLinePositions = (CGFloat(note.model.name.rawValue)/2.0)*CGFloat(StaffView.LINE_OFFSET)
-        return -CGFloat(StaffView.VERTICAL_OFFSET) - offsetLinePositions
     }
     
     fileprivate func drawLines() {
