@@ -13,6 +13,8 @@ class StaffView: UIView {
     static let VERTICAL_OFFSET = 60
     static let LINE_OFFSET = 30
     static let LINE_WIDTH: CGFloat = 2.0
+    static let CLEFT_LEFT_OFFSET: CGFloat = 10.0
+    static let CLEF_WIDTH: CGFloat = 80.0
     
     var clefImageView: UIImageView = {
         var imageView = UIImageView()
@@ -43,15 +45,15 @@ class StaffView: UIView {
     fileprivate func setupView() {
         drawLines()
         self.addSubview(clefImageView)
-        clefImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0).isActive = true
+        clefImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: StaffView.CLEFT_LEFT_OFFSET).isActive = true
         clefImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 15).isActive = true
         clefImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        clefImageView.widthAnchor.constraint(equalToConstant: 80.0).isActive = true
+        clefImageView.widthAnchor.constraint(equalToConstant: StaffView.CLEF_WIDTH).isActive = true
     }
    
     
     func drawNotesOneByOne(notes: [NoteViewModel]) {
-        let offsetBetwenNotes: CGFloat = 25.0
+        let offsetBetwenNotes: CGFloat = 35.0
         let offsetFromClef: CGFloat = 35.0
         var previousNoteWidth: CGFloat = 0.0
         var previousLeftOffsetFromClef: CGFloat = 0.0
@@ -65,6 +67,21 @@ class StaffView: UIView {
                 let noteHeight = noteCharacteristics.durationHeight,
                 let noteWidth = noteCharacteristics.durationWidth,
                 let y = noteCharacteristics.durationY {
+                //дополнительная линейка
+                if note.needsAdditionalLine {
+                    let addLineXOffset = 7
+                    let noteStartXPosition =  Int(StaffView.CLEFT_LEFT_OFFSET + StaffView.CLEF_WIDTH + leftOffsetFromClef)
+                    drawLine(
+                        startX: noteStartXPosition - 7,
+                        toEndingX: noteStartXPosition + Int(noteWidth) + 7,
+                        startingY: StaffView.viewHeight() + Int(y),
+                        toEndingY: StaffView.viewHeight() + Int(y),
+                        ofColor: .black,
+                        widthOfLine: 3,
+                        inView: self
+                    )
+                }
+                
                 let imageView = UIImageView()
                 //imageView.backgroundColor = .green
                 imageView.translatesAutoresizingMaskIntoConstraints = false

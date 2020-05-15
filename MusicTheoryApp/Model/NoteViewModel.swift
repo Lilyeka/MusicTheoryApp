@@ -10,8 +10,16 @@ import UIKit
 
 struct NoteViewModel {
     let model: Note
-    let noteWidth: CGFloat = 60.0 
-    let noteHeight: CGFloat = 64.0
+    var needsAdditionalLine:Bool {
+        get {
+            switch self.model.name {
+                case .Do,.la1:
+                    return true
+                default:
+                    return false
+            }
+        }
+    }
     
     init(model:Note) {
         self.model = model
@@ -80,19 +88,19 @@ extension NoteViewModel {
         return (tone:toneImageName, toneWidth:toneWidth, toneHeight:toneHeight, toneY:toneY, duration: durationImageName, durationWidth:durationWidth, durationHeight:durationHeight, durationY:durationY)
     }
     
-    func noteYPositions(verticalOffset:CGFloat, lineOffset:CGFloat) -> (toneY:CGFloat?, durationY:CGFloat?) {
-        var toneY: CGFloat? = nil
-        var durationY: CGFloat? = nil
-        var offsetFromNoteCenter: CGFloat = 0.0
-        
-        let offsetLinePositions = (CGFloat(model.name.rawValue)/2.0)*lineOffset
-        if ((model.duration != .whole) || (model.tone != .dies)) {
-            offsetFromNoteCenter = noteHeight/4 + noteHeight/8
-        }
-        
-        if model.tone != .none { toneY = -verticalOffset - offsetLinePositions - offsetFromNoteCenter}
-        if model.duration != .none { durationY = -verticalOffset - offsetLinePositions - offsetFromNoteCenter }
-        
-        return (toneY:toneY, durationY:durationY)
-    }
+//    func noteYPositions(verticalOffset:CGFloat, lineOffset:CGFloat) -> (toneY:CGFloat?, durationY:CGFloat?) {
+//        var toneY: CGFloat? = nil
+//        var durationY: CGFloat? = nil
+//        var offsetFromNoteCenter: CGFloat = 0.0
+//
+//        let offsetLinePositions = (CGFloat(model.name.rawValue)/2.0)*lineOffset
+//        if ((model.duration != .whole) || (model.tone != .dies)) {
+//            offsetFromNoteCenter = noteHeight/4 + noteHeight/8
+//        }
+//
+//        if model.tone != .none { toneY = -verticalOffset - offsetLinePositions - offsetFromNoteCenter}
+//        if model.duration != .none { durationY = -verticalOffset - offsetLinePositions - offsetFromNoteCenter }
+//
+//        return (toneY:toneY, durationY:durationY)
+//    }
 }
