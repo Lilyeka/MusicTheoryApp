@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Note {
+struct Note {
      enum Duration {
         case whole
         case half
@@ -43,6 +43,10 @@ class Note {
     var name: NoteName = .Do
     var tone: Tonality = .none
     var duration: Duration = .whole
+    
+//    static func ==(lhs: Note, rhs: Note) -> Bool {
+//        return lhs.name == rhs.name && lhs.duration == rhs.duration && lhs.tone == rhs.tone
+//    }
     
     init(name: NoteName, tone: Tonality, duration: Duration) {
         self.name = name
