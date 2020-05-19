@@ -144,7 +144,7 @@ class StaffView: UIView {
         let noteViewModelNumber = tapGestureRecognizer.view?.tag
         let noteViewModel = notesArray![noteViewModelNumber!]
         noteViewModel.didTapped()
-        tapGestureRecognizer.view?.alpha = noteViewModel.alfa
+        tapGestureRecognizer.view?.alpha = noteViewModel.selected ? NoteViewModel.OPAQUE_ALFA : NoteViewModel.TRANSPARENT_ALFA
         
         if pickedOutNotesIndexes.contains(noteViewModelNumber!) {
             let index = pickedOutNotesIndexes.firstIndex(of: noteViewModelNumber!)

@@ -13,7 +13,8 @@ class NoteViewModel {
     static let OPAQUE_ALFA: CGFloat = 1.0
     let model: Note
     var alfa: CGFloat = NoteViewModel.OPAQUE_ALFA
-        
+    var selected: Bool = false
+    
     var imageView = UIImageView()
     var needsAdditionalLine:Bool {
         get {
@@ -88,7 +89,6 @@ extension NoteViewModel {
     }
     
     func didTapped() {
-        if alfa == NoteViewModel.OPAQUE_ALFA {alfa = NoteViewModel.TRANSPARENT_ALFA}
-        else {alfa = NoteViewModel.OPAQUE_ALFA}
+        self.selected = !self.selected
     }
 }
