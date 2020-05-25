@@ -17,7 +17,7 @@ struct Note {
         case none //для значков нет длительности
     }
     
-    public enum NoteName: Int {
+    public enum NoteName: Int{
         case Do = -2
         case re = -1
         case mi = 0

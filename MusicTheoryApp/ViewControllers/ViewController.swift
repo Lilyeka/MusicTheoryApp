@@ -9,19 +9,24 @@
 import UIKit
 
 class ViewController: UIViewController {
+    static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 16.0)
+    
     let TOP_OFFSET: CGFloat = 15.0
     let LEFT_OFFSET: CGFloat = 15.0
     let RIGHT_OFFSET: CGFloat = 15.0
     let LABEL_HEIGHT: CGFloat = 45.0
-    let rightAnsverSet: Set<Int> = [2,4,6]
+   
     var staffView: StaffView!
+    var tasksStorage: MusicTasks!
+    
     var questionLabel: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .systemPink
-        label.font = UIFont.boldSystemFont(ofSize: 16.0)
         label.textColor = .white
-        label.text = "Отметьте ноты, расположенные на основных нотных линейках"
+        label.font = ViewController.QUESTION_FONT
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 0
         return label
     }()
     var checkResultButton: UIButton = {
@@ -34,24 +39,20 @@ class ViewController: UIViewController {
     }()
     
     override func viewDidAppear(_ animated: Bool) {
-        let note1 = NoteViewModel(model:Note(name:.Do, tone:.none, duration:.whole))
-        let note2 = NoteViewModel(model:Note(name:.re, tone:.none, duration:.whole))
-        let note3 = NoteViewModel(model:Note(name:.mi, tone:.none, duration:.whole))
-        let note4 = NoteViewModel(model:Note(name:.fa, tone:.none, duration:.whole))
-        let note5 = NoteViewModel(model:Note(name:.sol, tone:.none, duration:.whole))
-        let note6 = NoteViewModel(model:Note(name:.la, tone:.none, duration:.whole))
-        let note7 = NoteViewModel(model:Note(name:.si, tone:.none, duration:.whole))
-    
-        self.view.addSubview(questionLabel)
-        questionLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: TOP_OFFSET).isActive = true
-        questionLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: LEFT_OFFSET).isActive = true
-        questionLabel.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -RIGHT_OFFSET).isActive = true
-        questionLabel.heightAnchor.constraint(equalToConstant: LABEL_HEIGHT).isActive = true
-        
         let safeAreaLayoutFrame = view.safeAreaLayoutGuide.layoutFrame
         let safeAreaWidth = safeAreaLayoutFrame.width
         
-        staffView = StaffView(notesViewModels: [note1,note2,note3,note4,note5,note6,note7],
+        let task0: MusicTask = tasksStorage.tasks[0]
+
+        self.view.addSubview(questionLabel)
+        questionLabel.text = task0.questionText
+        
+        questionLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: TOP_OFFSET).isActive = true
+        questionLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: LEFT_OFFSET).isActive = true
+        questionLabel.widthAnchor.constraint(equalToConstant: safeAreaWidth - LEFT_OFFSET*2).isActive = true
+        questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: safeAreaWidth - LEFT_OFFSET*2 , font:ViewController.QUESTION_FONT))!).isActive = true
+        
+        staffView = StaffView(notesViewModels:convertNotesToViewModels(notes:task0.notesArray!),
                               frame: CGRect(x:0, y:0, width:Int(safeAreaWidth)-30, height:StaffView.viewHeight()))
         staffView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(staffView)
@@ -72,21 +73,30 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        tasksStorage = MusicTasks()
     }
     
     @objc func checkButtonTapped(sender: UIButton) {
         var alertTitleText = "Верный ответ"
         var alertMessageText = "Так держать!"
         var tappedSet = Set(staffView.pickedOutNotesIndexes)
-        if tappedSet != rightAnsverSet {
-                alertTitleText = "Неверный ответ"
-                alertMessageText = "Попробуйте еще раз!"
+        
+        if !tasksStorage.tasks[0].checkUserAnswer(userAnswer: tappedSet) {
+            alertTitleText = "Неверный ответ"
+            alertMessageText = "Попробуйте еще раз!"
         }
         let alert = UIAlertController(title: alertTitleText, message: alertMessageText, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-       // alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
-
+       
         self.present(alert, animated: true)
     }
     
+    fileprivate func convertNotesToViewModels(notes:[Note]) -> [NoteViewModel] {
+        var resultArray:[NoteViewModel] = [NoteViewModel]()
+        for note in notes {
+            var noteViewModel = NoteViewModel(model:note)
+            resultArray.append(noteViewModel)
+        }
+        return resultArray
+    }
 }

@@ -91,6 +91,6 @@ class MusicTasks {
                                       Note(name: .re1, tone: .none, duration: .whole),
                                       Note(name: .Do1, tone: .none, duration: .whole)
                                        ],
-            rightAnswer: [5,7]),
+            rightAnswer: [5,7])
 ]
 }

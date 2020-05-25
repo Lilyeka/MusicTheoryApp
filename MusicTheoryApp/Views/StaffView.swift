@@ -8,16 +8,24 @@
 
 import UIKit
 
-
 class StaffView: UIView {
     static let VERTICAL_OFFSET = 60
     static let LINE_OFFSET = 30
     static let LINE_WIDTH: CGFloat = 2.0
     static let CLEFT_LEFT_OFFSET: CGFloat = 10.0
     static let CLEF_WIDTH: CGFloat = 80.0
+    
+    static func viewHeight() -> Int {
+        let linesThicknessHeight = Int(LINE_WIDTH)*5
+        let linesOffset = LINE_OFFSET*4
+        let offsetFromTopAndBottom = VERTICAL_OFFSET*2
+        return (offsetFromTopAndBottom + linesOffset + linesThicknessHeight)
+    }
+    
+    
     var notesArray:[NoteViewModel]?
     var pickedOutNotesIndexes:[Int] = [Int]()
- 
+    
     var clefImageView: UIImageView = {
         var imageView = UIImageView()
         //imageView.backgroundColor = .green
@@ -26,13 +34,6 @@ class StaffView: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    
-    static func viewHeight() -> Int {
-        let linesThicknessHeight = Int(LINE_WIDTH)*5
-        let linesOffset = LINE_OFFSET*4
-        let offsetFromTopAndBottom = VERTICAL_OFFSET*2
-        return (offsetFromTopAndBottom + linesOffset + linesThicknessHeight)
-    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -56,7 +57,7 @@ class StaffView: UIView {
         clefImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         clefImageView.widthAnchor.constraint(equalToConstant: StaffView.CLEF_WIDTH).isActive = true
     }
-
+    
     func drawNotesOneByOne() {
         let offsetBetwenNotes: CGFloat = 35.0
         let offsetFromClef: CGFloat = 35.0
@@ -105,6 +106,22 @@ class StaffView: UIView {
                 imageView.widthAnchor.constraint(equalToConstant: noteWidth).isActive = true
                 imageView.centerYAnchor.constraint(equalTo: self.bottomAnchor, constant: durationPositionY).isActive = true
                 
+                //Название ноты
+                let nameLabel = UILabel()
+                nameLabel.translatesAutoresizingMaskIntoConstraints = false
+                // nameLabel.backgroundColor = .green
+                nameLabel.text = note.noteTitle()
+                nameLabel.textColor = .black
+                nameLabel.textAlignment = .center
+                nameLabel.isHidden = !note.selected
+                nameLabel.tag = (i+1)*999
+                
+                self.addSubview(nameLabel)
+                nameLabel.leftAnchor.constraint(equalTo: imageView.leftAnchor).isActive = true
+                nameLabel.heightAnchor.constraint(equalToConstant: 25.0).isActive = true
+                nameLabel.widthAnchor.constraint(equalToConstant: noteWidth).isActive = true
+                nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 10.0).isActive = true
+                
                 let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(noteTapped(tapGestureRecognizer:)))
                 imageView.isUserInteractionEnabled = true
                 imageView.addGestureRecognizer(tapGestureRecognizer)
@@ -152,13 +169,19 @@ class StaffView: UIView {
         } else {
             pickedOutNotesIndexes.append(noteViewModelNumber!)
         }
+        
+        for view in self.subviews {
+            if view.tag == ((tapGestureRecognizer.view!.tag+1)*999) {
+                view.isHidden = !view.isHidden
+            }
+        }
         print(pickedOutNotesIndexes)
     }
     
     fileprivate func drawLines() {
         let lineStartX = 0
         let lineEndX = Int(self.bounds.maxX)
-
+        
         var i = 0
         while i < 5 {
             let lineY = Int(self.bounds.maxY) - StaffView.VERTICAL_OFFSET - i*StaffView.LINE_OFFSET
@@ -168,11 +191,11 @@ class StaffView: UIView {
     }
     
     fileprivate func drawLine(startX: Int, toEndingX endX: Int, startingY startY: Int, toEndingY endY: Int, ofColor lineColor: UIColor, widthOfLine lineWidth: CGFloat, inView view: UIView) {
-
+        
         let path = UIBezierPath()
         path.move(to: CGPoint(x: startX, y: startY))
         path.addLine(to: CGPoint(x: endX, y: endY))
-
+        
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = path.cgPath
         shapeLayer.strokeColor = lineColor.cgColor
