@@ -13,6 +13,7 @@ struct MusicTask {
     enum MusicTaskType {
         case SelectNotes
         case ColorNotes
+        case ShowNoteOnThePiano
     }
     
     var taskType: MusicTaskType

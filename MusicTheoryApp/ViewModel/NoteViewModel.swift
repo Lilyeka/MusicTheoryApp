@@ -11,7 +11,9 @@ import UIKit
 class NoteViewModel {
     static let TRANSPARENT_ALFA: CGFloat = 0.3
     static let OPAQUE_ALFA: CGFloat = 1.0
+    
     let model: Note
+    
     var alfa: CGFloat = NoteViewModel.OPAQUE_ALFA
     var selected: Bool = false
     

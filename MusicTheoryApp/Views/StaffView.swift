@@ -58,7 +58,7 @@ class StaffView: UIView {
         clefImageView.widthAnchor.constraint(equalToConstant: StaffView.CLEF_WIDTH).isActive = true
     }
     
-    func drawNotesOneByOne() {
+    func drawNotesOneByOne(notesAreTransparent: Bool) {
         let offsetBetwenNotes: CGFloat = 35.0
         let offsetFromClef: CGFloat = 35.0
         var previousNoteWidth: CGFloat = 0.0
@@ -66,7 +66,7 @@ class StaffView: UIView {
         
         var i = 0
         for note in notesArray! {
-            note.alfa = NoteViewModel.TRANSPARENT_ALFA
+            note.alfa = notesAreTransparent ?  NoteViewModel.TRANSPARENT_ALFA : NoteViewModel.OPAQUE_ALFA
             let noteCharacteristics = note.noteImagesHeightsAndCentersPositions()
             let leftOffsetFromClef = i == 0 ? offsetFromClef : (previousLeftOffsetFromClef + previousNoteWidth + offsetBetwenNotes)
             let offsetLinePositions = CGFloat(note.model.name.rawValue)/2.0*CGFloat(StaffView.LINE_OFFSET)

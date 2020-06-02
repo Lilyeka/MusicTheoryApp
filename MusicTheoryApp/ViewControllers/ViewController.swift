@@ -52,22 +52,53 @@ class ViewController: UIViewController {
         questionLabel.widthAnchor.constraint(equalToConstant: safeAreaWidth - LEFT_OFFSET*2).isActive = true
         questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: safeAreaWidth - LEFT_OFFSET*2 , font:ViewController.QUESTION_FONT))!).isActive = true
         
-        staffView = StaffView(notesViewModels:convertNotesToViewModels(notes:task0.notesArray!),
-                              frame: CGRect(x:0, y:0, width:Int(safeAreaWidth)-30, height:StaffView.viewHeight()))
+        
+// 1 тип вопроса - выбрать ноты на нотном стане по заданным параметрам
+//
+//        staffView = StaffView(notesViewModels:convertNotesToViewModels(notes:task0.notesArray!),
+//                              frame: CGRect(x:0, y:0, width:Int(safeAreaWidth)-30, height:StaffView.viewHeight()))
+//        staffView.translatesAutoresizingMaskIntoConstraints = false
+//        self.view.addSubview(staffView)
+//        super.viewDidAppear(animated)
+//        staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: TOP_OFFSET).isActive = true
+//        staffView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: LEFT_OFFSET).isActive = true
+//        staffView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -RIGHT_OFFSET).isActive = true
+//        staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
+//        staffView.drawNotesOneByOne()
+//
+//        self.view.addSubview(checkResultButton)
+//        checkResultButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: LEFT_OFFSET).isActive = true
+//        checkResultButton.topAnchor.constraint(equalTo: staffView.bottomAnchor, constant: TOP_OFFSET).isActive = true
+//        checkResultButton.heightAnchor.constraint(equalToConstant: 60.0).isActive = true
+//        checkResultButton.widthAnchor.constraint(equalToConstant: 200.0).isActive = true
+//
+        
+ //2 тип вопроса - нажать на пианино клавишу, которая соответствует ноте на нотном стане
+        let pianoLeftOffset:CGFloat = 15.0
+        let staffViewWidth = (safeAreaWidth - LEFT_OFFSET - RIGHT_OFFSET - pianoLeftOffset)/2
+        let pianoViewWidth = staffViewWidth
+        let testNote = Note(name: .fa, tone: .none, duration: .whole)
+        let notes = convertNotesToViewModels(notes:[testNote])
+    
+        staffView = StaffView(notesViewModels:notes,
+                              frame: CGRect(x:0, y:0, width:Int(safeAreaWidth/2), height:StaffView.viewHeight()))
         staffView.translatesAutoresizingMaskIntoConstraints = false
+        staffView.isUserInteractionEnabled = false
         self.view.addSubview(staffView)
         super.viewDidAppear(animated)
         staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: TOP_OFFSET).isActive = true
         staffView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: LEFT_OFFSET).isActive = true
-        staffView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -RIGHT_OFFSET).isActive = true
+        staffView.widthAnchor.constraint(equalToConstant: staffViewWidth).isActive = true
         staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
-        staffView.drawNotesOneByOne()
-        
-        self.view.addSubview(checkResultButton)
-        checkResultButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: LEFT_OFFSET).isActive = true
-        checkResultButton.topAnchor.constraint(equalTo: staffView.bottomAnchor, constant: TOP_OFFSET).isActive = true
-        checkResultButton.heightAnchor.constraint(equalToConstant: 60.0).isActive = true
-        checkResultButton.widthAnchor.constraint(equalToConstant: 200.0).isActive = true
+        staffView.drawNotesOneByOne(notesAreTransparent: false)
+
+        let pianoView = PianoView(pianoWidth: pianoViewWidth, blackKeysOffset: 10.0, frame:CGRect.zero)
+        pianoView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(pianoView)
+        pianoView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: TOP_OFFSET).isActive = true
+        pianoView.rightAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.rightAnchor, constant: RIGHT_OFFSET).isActive = true
+        pianoView.widthAnchor.constraint(equalToConstant: pianoViewWidth).isActive = true
+        pianoView.heightAnchor.constraint(equalToConstant: 200.0).isActive = true
     }
 
     override func viewDidLoad() {
@@ -99,4 +130,6 @@ class ViewController: UIViewController {
         }
         return resultArray
     }
+    
+    
 }
