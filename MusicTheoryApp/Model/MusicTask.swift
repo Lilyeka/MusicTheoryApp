@@ -8,28 +8,15 @@
 
 import UIKit
 
-struct MusicTask {
-    
-    enum MusicTaskType {
-        case SelectNotes
-        case ColorNotes
-        case ShowNoteOnThePiano
-    }
-    
-    var taskType: MusicTaskType
+class MusicTask {
+   
     var questionText: String
     var notesArray: [Note]?
-    var rightAnswer: Set<Int>?
+  
     
-    init(taskType: MusicTaskType, questionText: String, notesArray: [Note], rightAnswer: Set<Int>) {
-        self.taskType = taskType
+    init(questionText: String, notesArray: [Note]) {
         self.questionText = questionText
         self.notesArray = notesArray
-        self.rightAnswer = rightAnswer
-    }
-    
-    func checkUserAnswer(userAnswer: Set<Int>) -> Bool {
-        return self.rightAnswer == userAnswer ? true : false
     }
     
 }

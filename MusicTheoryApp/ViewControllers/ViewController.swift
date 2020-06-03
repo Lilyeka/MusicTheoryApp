@@ -42,7 +42,7 @@ class ViewController: UIViewController {
         let safeAreaLayoutFrame = view.safeAreaLayoutGuide.layoutFrame
         let safeAreaWidth = safeAreaLayoutFrame.width
         
-        let task0: MusicTask = tasksStorage.tasks[0]
+        let task0: MusicTaskSelectNote = tasksStorage.tasks[0] as! MusicTaskSelectNote
 
         self.view.addSubview(questionLabel)
         questionLabel.text = task0.questionText
@@ -112,7 +112,8 @@ class ViewController: UIViewController {
         var alertMessageText = "Так держать!"
         var tappedSet = Set(staffView.pickedOutNotesIndexes)
         
-        if !tasksStorage.tasks[0].checkUserAnswer(userAnswer: tappedSet) {
+        let task0: MusicTaskSelectNote = tasksStorage.tasks[0] as! MusicTaskSelectNote
+        if !task0.checkUserAnswer(userAnswer: tappedSet) {
             alertTitleText = "Неверный ответ"
             alertMessageText = "Попробуйте еще раз!"
         }
