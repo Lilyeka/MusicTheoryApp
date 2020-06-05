@@ -91,7 +91,7 @@ class MusicTasks {
                          Note(name: .re1, tone: .none, duration: .whole),
                          Note(name: .Do1, tone: .none, duration: .whole)
             ],
-            rightAnswer: [5,7])/*,
-        MusicTaskShowNoteOnThePiano(questionText: <#T##String#>, notesArray: <#T##[Note]#>)*/
+            rightAnswer: [5,7]),
+        MusicTaskShowNoteOnThePiano(questionText:"Нажмите на нужную ноту", note: Note(name:.fa, tone: .none, duration: .whole))
     ]
 }

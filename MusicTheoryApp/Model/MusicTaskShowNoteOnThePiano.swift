@@ -9,6 +9,7 @@
 import UIKit
 
 class MusicTaskShowNoteOnThePiano: MusicTask {
+    /// это сделать частью PianoView
     var whiteKeysNotes: [[(Note.NoteName, Note.Tonality)]] = [
         [(.Do,.none),(.Do1,.none)],
         [(.re,.none),(.re1,.none)],
@@ -26,15 +27,12 @@ class MusicTaskShowNoteOnThePiano: MusicTask {
         [(.sol,.dies),(.sol1,.dies),(.la,.bimol),(.la1,.bimol)],
         [(.la,.dies),(.la1,.dies),(.si,.bimol),(.si1,.bimol)]
     ]
-  
-    var rightAnswer:(Note.NoteName, Note.Tonality)?
-    
-    init(questionText: String, notesArray: [Note], rightAnswer:(Note.NoteName, Note.Tonality)) {
-        super.init(questionText: questionText, notesArray: notesArray)
-        self.rightAnswer = rightAnswer
+     //----------------->
+    init(questionText: String, note: Note) {
+        super.init(questionText: questionText, notesArray: [note])
     }
     
     func checkUserAnswer(userAnswer: (Note.NoteName, Note.Tonality)) -> Bool {
-        return self.rightAnswer! == userAnswer ? true : false
+        return (self.notesArray![0].name, self.notesArray![0].tone) == userAnswer ? true : false
     }
 }

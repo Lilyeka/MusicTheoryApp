@@ -1,0 +1,96 @@
+//
+//  MusicTaskSelectNoteView.swift
+//  MusicTheoryApp
+//
+//  Created by Лилия Левина on 05.06.2020.
+//  Copyright © 2020 Лилия Левина. All rights reserved.
+//
+
+import UIKit
+
+protocol MusicTaskSelectNoteViewDelegate {
+    func rightAnswerReaction()
+    func wrongAnswerReaction()
+}
+
+
+class MusicTaskSelectNoteView: UIView {
+    //MARK: -Delegate
+    var delegate: MusicTaskSelectNoteViewDelegate?
+    
+    let TOP_OFFSET: CGFloat = 15.0
+    let LEFT_OFFSET: CGFloat = 15.0
+    let RIGHT_OFFSET: CGFloat = 15.0
+    let LABEL_HEIGHT: CGFloat = 45.0
+    
+    var viewModel: MusicTaskSelectNoteViewModel?
+    var staffView: StaffView!
+    
+    var questionLabel: UILabel = {
+        var label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.backgroundColor = .systemPink
+        label.textColor = .white
+        label.font = MusicTaskSelectNoteViewModel.QUESTION_FONT
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 0
+        return label
+    }()
+    var checkResultButton: UIButton = {
+        var btn = UIButton(type: .custom)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setTitle("Проверить", for: .normal)
+        btn.addTarget(self, action: #selector(checkButtonTapped(sender:)), for: .touchUpInside)
+        btn.backgroundColor = .gray
+        return btn
+    }()
+    
+    init(viewModel: MusicTaskSelectNoteViewModel, frame:CGRect) {
+        super.init(frame: frame)
+        self.viewModel = viewModel
+        setupSubViews(withFrame:frame)
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    func setupSubViews(withFrame:CGRect) {
+        
+        self.addSubview(questionLabel)
+        questionLabel.text = viewModel?.model.questionText
+        
+        questionLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: TOP_OFFSET).isActive = true
+        questionLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: LEFT_OFFSET).isActive = true
+        questionLabel.widthAnchor.constraint(equalToConstant: withFrame.size.width - LEFT_OFFSET*2).isActive = true
+        questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: withFrame.size.width - LEFT_OFFSET*2 , font:MusicTaskSelectNoteViewModel.QUESTION_FONT))!).isActive = true
+        
+        staffView = StaffView(notesViewModels: viewModel!.notesViewModels, frame:CGRect(x:0, y:0, width:Int(withFrame.size.width)-30, height:StaffView.viewHeight()))
+        staffView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(staffView)
+        staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: TOP_OFFSET).isActive = true
+        staffView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: LEFT_OFFSET).isActive = true
+        staffView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -RIGHT_OFFSET).isActive = true
+        staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
+        staffView.drawNotesOneByOne(notesAreTransparent: true)
+        
+        self.addSubview(checkResultButton)
+        checkResultButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: LEFT_OFFSET).isActive = true
+        checkResultButton.topAnchor.constraint(equalTo: staffView.bottomAnchor, constant: TOP_OFFSET).isActive = true
+        checkResultButton.heightAnchor.constraint(equalToConstant: 60.0).isActive = true
+        checkResultButton.widthAnchor.constraint(equalToConstant: 200.0).isActive = true
+    }
+    
+    @objc func checkButtonTapped(sender: UIButton) {
+        let tappedSet = Set(staffView.pickedOutNotesIndexes)
+        if (viewModel?.checkUserAnswer(userAnswer: tappedSet))! {
+            delegate?.wrongAnswerReaction()
+        } else {
+            delegate?.rightAnswerReaction()
+        }
+    }
+}

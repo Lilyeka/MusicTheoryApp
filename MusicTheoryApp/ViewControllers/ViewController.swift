@@ -33,24 +33,32 @@ class ViewController: UIViewController {
         var btn = UIButton(type: .custom)
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.setTitle("Проверить", for: .normal)
-        btn.addTarget(self, action: #selector(checkButtonTapped(sender:)), for: .touchUpInside)
+      //  btn.addTarget(self, action: #selector(checkButtonTapped(sender:)), for: .touchUpInside)
         btn.backgroundColor = .gray
         return btn
     }()
     
+    var musicTaskSelectNoteView: MusicTaskSelectNoteView!
+    
     override func viewDidAppear(_ animated: Bool) {
         let safeAreaLayoutFrame = view.safeAreaLayoutGuide.layoutFrame
         let safeAreaWidth = safeAreaLayoutFrame.width
+        let safeAreaHeight = safeAreaLayoutFrame.height
         
         let task0: MusicTaskSelectNote = tasksStorage.tasks[0] as! MusicTaskSelectNote
-
-        self.view.addSubview(questionLabel)
-        questionLabel.text = task0.questionText
         
-        questionLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: TOP_OFFSET).isActive = true
-        questionLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: LEFT_OFFSET).isActive = true
-        questionLabel.widthAnchor.constraint(equalToConstant: safeAreaWidth - LEFT_OFFSET*2).isActive = true
-        questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: safeAreaWidth - LEFT_OFFSET*2 , font:ViewController.QUESTION_FONT))!).isActive = true
+    
+        musicTaskSelectNoteView = MusicTaskSelectNoteView(viewModel: MusicTaskSelectNoteViewModel(model: task0), frame: CGRect(x: 0, y: 0, width: Int(safeAreaWidth)-30, height: Int(safeAreaHeight)))
+        musicTaskSelectNoteView.delegate = self
+        self.view.addSubview(musicTaskSelectNoteView)
+
+//        self.view.addSubview(questionLabel)
+//        questionLabel.text = task0.questionText
+//
+//        questionLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: TOP_OFFSET).isActive = true
+//        questionLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: LEFT_OFFSET).isActive = true
+//        questionLabel.widthAnchor.constraint(equalToConstant: safeAreaWidth - LEFT_OFFSET*2).isActive = true
+//        questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: safeAreaWidth - LEFT_OFFSET*2 , font:ViewController.QUESTION_FONT))!).isActive = true
         
         
 // 1 тип вопроса - выбрать ноты на нотном стане по заданным параметрам
@@ -74,31 +82,31 @@ class ViewController: UIViewController {
 //
         
  //2 тип вопроса - нажать на пианино клавишу, которая соответствует ноте на нотном стане
-        let pianoLeftOffset:CGFloat = 15.0
-        let staffViewWidth = (safeAreaWidth - LEFT_OFFSET - RIGHT_OFFSET - pianoLeftOffset)/2
-        let pianoViewWidth = staffViewWidth
-        let testNote = Note(name: .fa, tone: .none, duration: .whole)
-        let notes = convertNotesToViewModels(notes:[testNote])
-    
-        staffView = StaffView(notesViewModels:notes,
-                              frame: CGRect(x:0, y:0, width:Int(safeAreaWidth/2), height:StaffView.viewHeight()))
-        staffView.translatesAutoresizingMaskIntoConstraints = false
-        staffView.isUserInteractionEnabled = false
-        self.view.addSubview(staffView)
-        super.viewDidAppear(animated)
-        staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: TOP_OFFSET).isActive = true
-        staffView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: LEFT_OFFSET).isActive = true
-        staffView.widthAnchor.constraint(equalToConstant: staffViewWidth).isActive = true
-        staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
-        staffView.drawNotesOneByOne(notesAreTransparent: false)
-
-        let pianoView = PianoView(pianoWidth: pianoViewWidth, blackKeysOffset: 10.0, frame:CGRect.zero)
-        pianoView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(pianoView)
-        pianoView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: TOP_OFFSET).isActive = true
-        pianoView.rightAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.rightAnchor, constant: RIGHT_OFFSET).isActive = true
-        pianoView.widthAnchor.constraint(equalToConstant: pianoViewWidth).isActive = true
-        pianoView.heightAnchor.constraint(equalToConstant: 200.0).isActive = true
+//        let pianoLeftOffset:CGFloat = 15.0
+//        let staffViewWidth = (safeAreaWidth - LEFT_OFFSET - RIGHT_OFFSET - pianoLeftOffset)/2
+//        let pianoViewWidth = staffViewWidth
+//        let testNote = Note(name: .fa, tone: .none, duration: .whole)
+//        let notes = convertNotesToViewModels(notes:[testNote])
+//
+//        staffView = StaffView(notesViewModels:notes,
+//                              frame: CGRect(x:0, y:0, width:Int(safeAreaWidth/2), height:StaffView.viewHeight()))
+//        staffView.translatesAutoresizingMaskIntoConstraints = false
+//        staffView.isUserInteractionEnabled = false
+//        self.view.addSubview(staffView)
+//        super.viewDidAppear(animated)
+//        staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: TOP_OFFSET).isActive = true
+//        staffView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: LEFT_OFFSET).isActive = true
+//        staffView.widthAnchor.constraint(equalToConstant: staffViewWidth).isActive = true
+//        staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
+//        staffView.drawNotesOneByOne(notesAreTransparent: false)
+//
+//        let pianoView = PianoView(pianoWidth: pianoViewWidth, blackKeysOffset: 10.0, frame:CGRect.zero)
+//        pianoView.translatesAutoresizingMaskIntoConstraints = false
+//        self.view.addSubview(pianoView)
+//        pianoView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: TOP_OFFSET).isActive = true
+//        pianoView.rightAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.rightAnchor, constant: RIGHT_OFFSET).isActive = true
+//        pianoView.widthAnchor.constraint(equalToConstant: pianoViewWidth).isActive = true
+//        pianoView.heightAnchor.constraint(equalToConstant: 200.0).isActive = true
     }
 
     override func viewDidLoad() {
@@ -107,21 +115,21 @@ class ViewController: UIViewController {
         tasksStorage = MusicTasks()
     }
     
-    @objc func checkButtonTapped(sender: UIButton) {
-        var alertTitleText = "Верный ответ"
-        var alertMessageText = "Так держать!"
-        var tappedSet = Set(staffView.pickedOutNotesIndexes)
-        
-        let task0: MusicTaskSelectNote = tasksStorage.tasks[0] as! MusicTaskSelectNote
-        if !task0.checkUserAnswer(userAnswer: tappedSet) {
-            alertTitleText = "Неверный ответ"
-            alertMessageText = "Попробуйте еще раз!"
-        }
-        let alert = UIAlertController(title: alertTitleText, message: alertMessageText, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-       
-        self.present(alert, animated: true)
-    }
+//    @objc func checkButtonTapped(sender: UIButton) {
+//        var alertTitleText = "Верный ответ"
+//        var alertMessageText = "Так держать!"
+//        var tappedSet = Set(staffView.pickedOutNotesIndexes)
+//
+//        let task0: MusicTaskSelectNote = tasksStorage.tasks[0] as! MusicTaskSelectNote
+//        if !task0.checkUserAnswer(userAnswer: tappedSet) {
+//            alertTitleText = "Неверный ответ"
+//            alertMessageText = "Попробуйте еще раз!"
+//        }
+//        let alert = UIAlertController(title: alertTitleText, message: alertMessageText, preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//
+//        self.present(alert, animated: true)
+//    }
     
     fileprivate func convertNotesToViewModels(notes:[Note]) -> [NoteViewModel] {
         var resultArray:[NoteViewModel] = [NoteViewModel]()
@@ -131,6 +139,18 @@ class ViewController: UIViewController {
         }
         return resultArray
     }
+}
+
+extension ViewController: MusicTaskSelectNoteViewDelegate {
+    func rightAnswerReaction() {
+        let alert = UIAlertController(title: "Неверный ответ", message: "Попробуй еще раз!", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true)
+    }
     
-    
+    func wrongAnswerReaction() {
+        let alert = UIAlertController(title: "Верный ответ", message: "Поехали дельше!", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true)
+    }
 }

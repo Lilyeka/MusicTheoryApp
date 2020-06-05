@@ -16,7 +16,5 @@ class MusicTaskSelectNote: MusicTask {
         self.rightAnswer = rightAnswer
     }
     
-    func checkUserAnswer(userAnswer: Set<Int>) -> Bool {
-        return self.rightAnswer == userAnswer ? true : false
-    }
+
 }

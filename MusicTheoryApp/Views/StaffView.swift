@@ -21,8 +21,7 @@ class StaffView: UIView {
         let offsetFromTopAndBottom = VERTICAL_OFFSET*2
         return (offsetFromTopAndBottom + linesOffset + linesThicknessHeight)
     }
-    
-    
+
     var notesArray:[NoteViewModel]?
     var pickedOutNotesIndexes:[Int] = [Int]()
     
