@@ -128,13 +128,20 @@ class PianoView: UIView {
     
     @objc func didTouchDownWhiteKey(gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {
-            gesture.view?.backgroundColor = .gray
+            UIView.animate(withDuration: 0.0, animations: {
+                gesture.view?.layer.backgroundColor = UIColor.gray.cgColor
+                self.isUserInteractionEnabled = false
+            })
         } else if gesture.state == .ended || gesture.state == .cancelled {
-            gesture.view?.backgroundColor = .white
+            UIView.animate(withDuration: 0.5, animations: {
+                gesture.view?.layer.backgroundColor = UIColor.white.cgColor
+            }) { _ in
+                    let view = gesture.view! as! WhiteKeyView
+                    self.delegate?.keyTapped(withNotes: view.notesForKey!)
+                    self.isUserInteractionEnabled = true
+                    print(view.notesForKey!)
+            }
         }
-        let view = gesture.view! as! WhiteKeyView
-        delegate?.keyTapped(withNotes: view.notesForKey!)
-        print(view.notesForKey!)
     }
     
     func setupTapBlackKey(forView: UIView) {
@@ -144,14 +151,21 @@ class PianoView: UIView {
     }
     
     @objc func didTouchDownBlackKey(gesture: UILongPressGestureRecognizer) {
-        if gesture.state == .began {
-            gesture.view?.backgroundColor = .gray
+         if gesture.state == .began {
+            UIView.animate(withDuration: 0.0, animations: {
+                gesture.view?.layer.backgroundColor = UIColor.gray.cgColor
+                self.isUserInteractionEnabled = false
+            })
         } else if gesture.state == .ended || gesture.state == .cancelled {
-            gesture.view?.backgroundColor = .black
+            UIView.animate(withDuration: 0.5, animations: {
+                gesture.view?.layer.backgroundColor = UIColor.black.cgColor
+            }) { _ in
+                    let view = gesture.view! as! BlackKeyView
+                    self.delegate?.keyTapped(withNotes: view.notesForKey!)
+                    self.isUserInteractionEnabled = true
+                    print(view.notesForKey!)
+            }
         }
-        let view = gesture.view! as! BlackKeyView
-        delegate?.keyTapped(withNotes: view.notesForKey!)
-        print(view.notesForKey!)
     }
 }
 

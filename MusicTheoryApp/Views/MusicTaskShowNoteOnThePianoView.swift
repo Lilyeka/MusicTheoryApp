@@ -35,16 +35,7 @@ class MusicTaskShowNoteOnThePianoView: UIView {
         label.numberOfLines = 0
         return label
     }()
-    
-    var checkResultButton: UIButton = {
-        var btn = UIButton(type: .custom)
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.setTitle("Проверить", for: .normal)
-        btn.addTarget(self, action: #selector(checkButtonTapped(sender:)), for: .touchUpInside)
-        btn.backgroundColor = .gray
-        return btn
-    }()
-    
+        
     init(viewModel: MusicTaskShowtNoteOnThePianoViewModel, frame:CGRect) {
         super.init(frame: frame)
         self.viewModel = viewModel
@@ -92,20 +83,5 @@ class MusicTaskShowNoteOnThePianoView: UIView {
         pianoView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 0).isActive = true
         pianoView.widthAnchor.constraint(equalToConstant: pianoViewWidth).isActive = true
         pianoView.heightAnchor.constraint(equalToConstant: 200.0).isActive = true
-        
-        self.addSubview(checkResultButton)
-        checkResultButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0).isActive = true
-        checkResultButton.topAnchor.constraint(equalTo: staffView.bottomAnchor, constant: TOP_OFFSET).isActive = true
-        checkResultButton.heightAnchor.constraint(equalToConstant: 60.0).isActive = true
-        checkResultButton.widthAnchor.constraint(equalToConstant: 200.0).isActive = true
-    }
-    
-    @objc func checkButtonTapped(sender: UIButton) {
-//        let tappedSet = Set(staffView.pickedOutNotesIndexes)
-//        if (viewModel?.checkUserAnswer(userAnswer: tappedSet))! {
-//            delegate?.wrongAnswerReaction()
-//        } else {
-//            delegate?.rightAnswerReaction()
- //       }
     }
 }

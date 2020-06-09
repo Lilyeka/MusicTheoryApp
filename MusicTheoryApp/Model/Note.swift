@@ -44,9 +44,9 @@ struct Note {
     var tone: Tonality = .none
     var duration: Duration = .whole
     
-//    static func ==(lhs: Note, rhs: Note) -> Bool {
-//        return lhs.name == rhs.name && lhs.duration == rhs.duration && lhs.tone == rhs.tone
-//    }
+    static func ==(lhs: Note, rhs: Note) -> Bool {
+        return lhs.name == rhs.name && lhs.duration == rhs.duration && lhs.tone == rhs.tone
+    }
     
     init(name: NoteName, tone: Tonality, duration: Duration) {
         self.name = name

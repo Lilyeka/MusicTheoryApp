@@ -9,7 +9,7 @@
 import UIKit
 
 class MusicTaskShowtNoteOnThePianoViewModel {
-
+    
     let model: MusicTaskShowNoteOnThePiano
     var notesViewModels: [NoteViewModel]
     
@@ -24,13 +24,14 @@ class MusicTaskShowtNoteOnThePianoViewModel {
         self.notesViewModels = resultArray
     }
     
-      func checkUserAnswer(userAnswer: [(Note.NoteName, Note.Tonality)]) -> Bool {
-        //TODO - сделать настоящую проверку вродит ли ноты из модели в массив нот клавиши
-        
-       // if userAnswer.contains((model.notesArray![0].name, model.notesArray![0].tone)) {
-            
-       // }
-          return true //(model.notesArray![0].name, model.notesArray![0].tone) in userAnswer ? true : false
-      }
-    
+    func checkUserAnswer(userAnswer: [(Note.NoteName, Note.Tonality)]) -> Bool {
+        let noteName = model.notesArray![0].name
+        let noteTone = model.notesArray![0].tone
+        for noteNameAndTone in userAnswer {
+            if noteNameAndTone.0 == noteName && noteNameAndTone.1 == noteTone {
+                return true
+            }
+        }
+        return false
+    }
 }
