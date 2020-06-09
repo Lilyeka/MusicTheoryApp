@@ -12,6 +12,7 @@ class ViewController: UIViewController {
     static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 16.0)
     
     let TOP_OFFSET: CGFloat = 15.0
+    let BOTTOM_OFFSET: CGFloat = 15.0
     let LEFT_OFFSET: CGFloat = 15.0
     let RIGHT_OFFSET: CGFloat = 15.0
     let LABEL_HEIGHT: CGFloat = 45.0
@@ -39,19 +40,27 @@ class ViewController: UIViewController {
     }()
     
     var musicTaskSelectNoteView: MusicTaskSelectNoteView!
+    var musicTaskShowNoteView: MusicTaskShowNoteOnThePianoView!
     
     override func viewDidAppear(_ animated: Bool) {
         let safeAreaLayoutFrame = view.safeAreaLayoutGuide.layoutFrame
         let safeAreaWidth = safeAreaLayoutFrame.width
         let safeAreaHeight = safeAreaLayoutFrame.height
-        
+ //<----------------------
         let task0: MusicTaskSelectNote = tasksStorage.tasks[0] as! MusicTaskSelectNote
-        
-    
-        musicTaskSelectNoteView = MusicTaskSelectNoteView(viewModel: MusicTaskSelectNoteViewModel(model: task0), frame: CGRect(x: 0, y: 0, width: Int(safeAreaWidth)-30, height: Int(safeAreaHeight)))
+        let task0ViewModel =  MusicTaskSelectNoteViewModel(model: task0)
+        musicTaskSelectNoteView = MusicTaskSelectNoteView(
+            viewModel: task0ViewModel,
+            frame: CGRect(x: Int(safeAreaLayoutFrame.minX) + Int(TOP_OFFSET),
+                          y: Int(safeAreaLayoutFrame.minY) + Int(LEFT_OFFSET),
+                          width: Int(safeAreaWidth) - Int(LEFT_OFFSET) - Int(RIGHT_OFFSET),
+                          height: Int(safeAreaHeight) - Int(TOP_OFFSET) - Int(BOTTOM_OFFSET)
+                        )
+        )
         musicTaskSelectNoteView.delegate = self
-        self.view.addSubview(musicTaskSelectNoteView)
-
+//        self.view.addSubview(musicTaskSelectNoteView)
+//---------------------->
+    
 //        self.view.addSubview(questionLabel)
 //        questionLabel.text = task0.questionText
 //
@@ -80,6 +89,23 @@ class ViewController: UIViewController {
 //        checkResultButton.heightAnchor.constraint(equalToConstant: 60.0).isActive = true
 //        checkResultButton.widthAnchor.constraint(equalToConstant: 200.0).isActive = true
 //
+    //<--------------
+        let task8: MusicTaskShowNoteOnThePiano = tasksStorage.tasks[8] as! MusicTaskShowNoteOnThePiano
+        let task8ViewModel = MusicTaskShowtNoteOnThePianoViewModel(model: task8)
+
+        musicTaskShowNoteView = MusicTaskShowNoteOnThePianoView(
+            viewModel: task8ViewModel,
+            frame: CGRect(x: Int(safeAreaLayoutFrame.minX) + Int(TOP_OFFSET),
+                          y: Int(safeAreaLayoutFrame.minY) + Int(LEFT_OFFSET),
+                          width: Int(safeAreaWidth) - Int(LEFT_OFFSET) - Int(RIGHT_OFFSET),
+                          height: Int(safeAreaHeight) - Int(TOP_OFFSET) - Int(BOTTOM_OFFSET)
+                            )
+        )
+
+       // musicTaskShowNoteView.delegate = self
+        musicTaskShowNoteView.pianoView.delegate = self
+        self.view.addSubview(musicTaskShowNoteView)
+// ---------------------->
         
  //2 тип вопроса - нажать на пианино клавишу, которая соответствует ноте на нотном стане
 //        let pianoLeftOffset:CGFloat = 15.0
@@ -154,3 +180,21 @@ extension ViewController: MusicTaskSelectNoteViewDelegate {
         self.present(alert, animated: true)
     }
 }
+
+extension ViewController: PianoViewDelegate {
+    func keyTapped(withNotes:[(Note.NoteName,Note.Tonality)]) {
+        let task8: MusicTaskShowNoteOnThePiano = tasksStorage.tasks[8] as! MusicTaskShowNoteOnThePiano
+        let task8ViewModel = MusicTaskShowtNoteOnThePianoViewModel(model: task8)
+        if task8ViewModel.checkUserAnswer(userAnswer: withNotes) {
+            let alert = UIAlertController(title: "Верный ответ", message: "Поехали дельше!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true)
+        } else {
+            let alert = UIAlertController(title: "Неверный ответ", message: "Попробуй еще раз!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true)
+        }
+    }
+}
+
+

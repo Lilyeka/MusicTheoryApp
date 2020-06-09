@@ -11,7 +11,6 @@ import UIKit
 class MusicTaskSelectNoteViewModel {
     static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 16.0)
 
-    
     let model: MusicTaskSelectNote
     var notesViewModels: [NoteViewModel]
     

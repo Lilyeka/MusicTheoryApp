@@ -19,6 +19,8 @@
 		61A4B5052488477F004A286E /* MusicTaskShowNoteOnThePiano.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A4B5042488477F004A286E /* MusicTaskShowNoteOnThePiano.swift */; };
 		61A4B507248998F5004A286E /* MusicTaskSelectNoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A4B506248998F5004A286E /* MusicTaskSelectNoteViewModel.swift */; };
 		61A4B509248999CF004A286E /* MusicTaskSelectNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A4B508248999CF004A286E /* MusicTaskSelectNoteView.swift */; };
+		61A4B744248ECC2A00C0E92D /* MusicTaskShowNoteOnThePianoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A4B743248ECC2A00C0E92D /* MusicTaskShowNoteOnThePianoViewModel.swift */; };
+		61A4B746248ECDC500C0E92D /* MusicTaskShowNoteOnThePianoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A4B745248ECDC500C0E92D /* MusicTaskShowNoteOnThePianoView.swift */; };
 		61A818BD247477E2009DCE07 /* MusicTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A818BC247477E2009DCE07 /* MusicTask.swift */; };
 		61A818BF2474858D009DCE07 /* MusicTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A818BE2474858D009DCE07 /* MusicTasks.swift */; };
 		61A818C1247AB591009DCE07 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A818C0247AB591009DCE07 /* String+Extension.swift */; };
@@ -40,6 +42,8 @@
 		61A4B5042488477F004A286E /* MusicTaskShowNoteOnThePiano.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskShowNoteOnThePiano.swift; sourceTree = "<group>"; };
 		61A4B506248998F5004A286E /* MusicTaskSelectNoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskSelectNoteViewModel.swift; sourceTree = "<group>"; };
 		61A4B508248999CF004A286E /* MusicTaskSelectNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskSelectNoteView.swift; sourceTree = "<group>"; };
+		61A4B743248ECC2A00C0E92D /* MusicTaskShowNoteOnThePianoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskShowNoteOnThePianoViewModel.swift; sourceTree = "<group>"; };
+		61A4B745248ECDC500C0E92D /* MusicTaskShowNoteOnThePianoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskShowNoteOnThePianoView.swift; sourceTree = "<group>"; };
 		61A818BC247477E2009DCE07 /* MusicTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTask.swift; sourceTree = "<group>"; };
 		61A818BE2474858D009DCE07 /* MusicTasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTasks.swift; sourceTree = "<group>"; };
 		61A818C0247AB591009DCE07 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
@@ -95,6 +99,7 @@
 				6149ED27245B69E500A1375A /* StaffView.swift */,
 				61CDA926247C66E800780D04 /* PianoView.swift */,
 				61A4B508248999CF004A286E /* MusicTaskSelectNoteView.swift */,
+				61A4B745248ECDC500C0E92D /* MusicTaskShowNoteOnThePianoView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -125,6 +130,7 @@
 			children = (
 				610585FC2460B63700F56611 /* NoteViewModel.swift */,
 				61A4B506248998F5004A286E /* MusicTaskSelectNoteViewModel.swift */,
+				61A4B743248ECC2A00C0E92D /* MusicTaskShowNoteOnThePianoViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -217,6 +223,8 @@
 				61A4B509248999CF004A286E /* MusicTaskSelectNoteView.swift in Sources */,
 				6149ED28245B69E500A1375A /* StaffView.swift in Sources */,
 				61A4B507248998F5004A286E /* MusicTaskSelectNoteViewModel.swift in Sources */,
+				61A4B744248ECC2A00C0E92D /* MusicTaskShowNoteOnThePianoViewModel.swift in Sources */,
+				61A4B746248ECDC500C0E92D /* MusicTaskShowNoteOnThePianoView.swift in Sources */,
 				61A4B5052488477F004A286E /* MusicTaskShowNoteOnThePiano.swift in Sources */,
 				61A4B503248843FF004A286E /* MusicTaskSelectNote.swift in Sources */,
 				61A818BD247477E2009DCE07 /* MusicTask.swift in Sources */,
