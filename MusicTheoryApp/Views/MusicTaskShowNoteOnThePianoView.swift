@@ -51,8 +51,6 @@ class MusicTaskShowNoteOnThePianoView: UIView {
     }
     
     func setupSubViews(withFrame:CGRect) {
-        self.backgroundColor = .green
-        
         self.addSubview(questionLabel)
         questionLabel.text = viewModel?.model.questionText
         questionLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
