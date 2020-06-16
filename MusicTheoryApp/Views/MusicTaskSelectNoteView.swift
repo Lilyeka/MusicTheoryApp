@@ -15,6 +15,8 @@ protocol MusicTaskSelectNoteViewDelegate {
 
 
 class MusicTaskSelectNoteView: UIView {
+    static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 16.0)
+    
     //MARK: -Delegate
     var delegate: MusicTaskSelectNoteViewDelegate?
     
@@ -31,7 +33,7 @@ class MusicTaskSelectNoteView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .systemPink
         label.textColor = .white
-        label.font = MusicTaskSelectNoteViewModel.QUESTION_FONT
+        label.font = MusicTaskSelectNoteView.QUESTION_FONT
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         return label
@@ -66,7 +68,7 @@ class MusicTaskSelectNoteView: UIView {
         questionLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
         questionLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0).isActive = true
         questionLabel.widthAnchor.constraint(equalToConstant: withFrame.size.width).isActive = true
-        questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: withFrame.size.width, font:MusicTaskSelectNoteViewModel.QUESTION_FONT))!).isActive = true
+        questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: withFrame.size.width, font:MusicTaskSelectNoteView.QUESTION_FONT))!).isActive = true
         
         staffView = StaffView(notesViewModels: viewModel!.notesViewModels, frame:CGRect(x:0, y:0, width:Int(withFrame.size.width), height:StaffView.viewHeight()))
         staffView.translatesAutoresizingMaskIntoConstraints = false

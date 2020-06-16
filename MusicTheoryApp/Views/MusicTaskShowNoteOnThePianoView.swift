@@ -15,7 +15,7 @@ protocol MusicTaskShowNoteOnThePianoViewDelegate {
 
 
 class MusicTaskShowNoteOnThePianoView: UIView {
-    
+    static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 16.0)
     let TOP_OFFSET: CGFloat = 15.0
     let LEFT_OFFSET: CGFloat = 15.0
     let RIGHT_OFFSET: CGFloat = 15.0
@@ -30,7 +30,7 @@ class MusicTaskShowNoteOnThePianoView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .systemPink
         label.textColor = .white
-        label.font = MusicTaskSelectNoteViewModel.QUESTION_FONT
+        label.font = MusicTaskShowNoteOnThePianoView.QUESTION_FONT
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         return label
@@ -56,7 +56,7 @@ class MusicTaskShowNoteOnThePianoView: UIView {
         questionLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
         questionLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0).isActive = true
         questionLabel.widthAnchor.constraint(equalToConstant: withFrame.size.width).isActive = true
-        questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: withFrame.size.width, font:MusicTaskSelectNoteViewModel.QUESTION_FONT))!).isActive = true
+        questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: withFrame.size.width, font:MusicTaskShowNoteOnThePianoView.QUESTION_FONT))!).isActive = true
     
         let pianoLeftOffset:CGFloat = 20.0
         let staffViewWidth = (withFrame.size.width - pianoLeftOffset)/2

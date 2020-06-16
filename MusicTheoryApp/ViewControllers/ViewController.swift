@@ -21,39 +21,44 @@ class ViewController: UIViewController {
     
     var musicTaskSelectNoteView: MusicTaskSelectNoteView!
     var musicTaskShowNoteView: MusicTaskShowNoteOnThePianoView!
+    var musicTaskSelectNoteInWordView: MusicTaskSelectNoteInWordView!
     
     override func viewDidAppear(_ animated: Bool) {
         let safeAreaLayoutFrame = view.safeAreaLayoutGuide.layoutFrame
         let safeAreaWidth = safeAreaLayoutFrame.width
         let safeAreaHeight = safeAreaLayoutFrame.height
-
+        let taskViewFrame = CGRect(x: Int(safeAreaLayoutFrame.minX) + Int(TOP_OFFSET),
+          y: Int(safeAreaLayoutFrame.minY) + Int(LEFT_OFFSET),
+          width: Int(safeAreaWidth) - Int(LEFT_OFFSET) - Int(RIGHT_OFFSET),
+          height: Int(safeAreaHeight) - Int(TOP_OFFSET) - Int(BOTTOM_OFFSET)
+        )
+  //---------------------------------------------------------------
         let task0: MusicTaskSelectNote = tasksStorage.tasks[0] as! MusicTaskSelectNote
         let task0ViewModel =  MusicTaskSelectNoteViewModel(model: task0)
         musicTaskSelectNoteView = MusicTaskSelectNoteView(
             viewModel: task0ViewModel,
-            frame: CGRect(x: Int(safeAreaLayoutFrame.minX) + Int(TOP_OFFSET),
-                          y: Int(safeAreaLayoutFrame.minY) + Int(LEFT_OFFSET),
-                          width: Int(safeAreaWidth) - Int(LEFT_OFFSET) - Int(RIGHT_OFFSET),
-                          height: Int(safeAreaHeight) - Int(TOP_OFFSET) - Int(BOTTOM_OFFSET)
-                        )
+            frame: taskViewFrame
         )
         musicTaskSelectNoteView.delegate = self
 //        self.view.addSubview(musicTaskSelectNoteView)
-
+  //---------------------------------------------------------------
         let task8: MusicTaskShowNoteOnThePiano = tasksStorage.tasks[8] as! MusicTaskShowNoteOnThePiano
         let task8ViewModel = MusicTaskShowtNoteOnThePianoViewModel(model: task8)
-
         musicTaskShowNoteView = MusicTaskShowNoteOnThePianoView(
             viewModel: task8ViewModel,
-            frame: CGRect(x: Int(safeAreaLayoutFrame.minX) + Int(TOP_OFFSET),
-                          y: Int(safeAreaLayoutFrame.minY) + Int(LEFT_OFFSET),
-                          width: Int(safeAreaWidth) - Int(LEFT_OFFSET) - Int(RIGHT_OFFSET),
-                          height: Int(safeAreaHeight) - Int(TOP_OFFSET) - Int(BOTTOM_OFFSET)
-                            )
+            frame: taskViewFrame
         )
-
         musicTaskShowNoteView.pianoView.delegate = self
-        self.view.addSubview(musicTaskShowNoteView)
+    //    self.view.addSubview(musicTaskShowNoteView)
+        
+  //---------------------------------------------------------------
+        let task9: MusicTaskSelectNoteInWord = tasksStorage.tasks[9] as! MusicTaskSelectNoteInWord
+        let task9ViewModel = MusicTaskSelectNoteInWordViewModel(model: task9)
+        musicTaskSelectNoteInWordView = MusicTaskSelectNoteInWordView(
+            viewModel: task9ViewModel,
+            frame: taskViewFrame
+        )
+        self.view.addSubview(musicTaskSelectNoteInWordView)
     }
 
     override func viewDidLoad() {
