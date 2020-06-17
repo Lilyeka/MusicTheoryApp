@@ -13,7 +13,6 @@ protocol MusicTaskSelectNoteViewDelegate {
     func wrongAnswerReaction()
 }
 
-
 class MusicTaskSelectNoteView: UIView {
     static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 16.0)
     
@@ -38,6 +37,7 @@ class MusicTaskSelectNoteView: UIView {
         label.numberOfLines = 0
         return label
     }()
+    
     var checkResultButton: UIButton = {
         var btn = UIButton(type: .custom)
         btn.translatesAutoresizingMaskIntoConstraints = false
@@ -89,9 +89,9 @@ class MusicTaskSelectNoteView: UIView {
     @objc func checkButtonTapped(sender: UIButton) {
         let tappedSet = Set(staffView.pickedOutNotesIndexes)
         if (viewModel?.checkUserAnswer(userAnswer: tappedSet))! {
-            delegate?.wrongAnswerReaction()
-        } else {
             delegate?.rightAnswerReaction()
+        } else {
+           delegate?.wrongAnswerReaction()
         }
     }
 }

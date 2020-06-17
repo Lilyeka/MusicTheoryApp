@@ -91,7 +91,7 @@ class StaffView: UIView {
                 }
                 
                 let imageView = UIImageView()
-                imageView.tag = i
+                imageView.tag = note.model.name.rawValue
                 //imageView.backgroundColor = .green
                 imageView.translatesAutoresizingMaskIntoConstraints = false
                 imageView.contentMode = .scaleAspectFit
@@ -113,7 +113,7 @@ class StaffView: UIView {
                 nameLabel.textColor = .black
                 nameLabel.textAlignment = .center
                 nameLabel.isHidden = !note.selected
-                nameLabel.tag = (i+1)*999
+                nameLabel.tag = (note.model.name.rawValue+1)*999
                 
                 self.addSubview(nameLabel)
                 nameLabel.leftAnchor.constraint(equalTo: imageView.leftAnchor).isActive = true

@@ -9,11 +9,11 @@
 import UIKit
 
 class MusicTaskSelectNoteInWord: MusicTask {
-    var partsOfAWord:[(String,Note?)]?
+    var partsOfWord:[(String,Note?)]?
     
-    init(questionText: String, notesArray: [Note], partsOfAWord:[(String,Note?)]) {
+    init(questionText: String, notesArray: [Note], partsOfWord:[(String,Note?)]) {
         super.init(questionText: questionText, notesArray: notesArray)
-        self.partsOfAWord = partsOfAWord
+        self.partsOfWord = partsOfWord
     }
     
 }

@@ -25,11 +25,20 @@ class MusicTaskSelectNoteInWordViewModel {
     }
     
     func checkUserAnswer(userAnswer: Note) -> Bool {
-        for partOfWord in model.partsOfAWord! {
+        for partOfWord in model.partsOfWord! {
             if partOfWord.1! == userAnswer {
                 return true
             }
         }
         return false
     }
+    
+    func checkUserAnswer1(userAnswer: [Int]) -> Bool {
+         for partOfWord in model.partsOfWord! {
+            if let partNote = partOfWord.1, userAnswer.count > 0, partNote.name.rawValue == userAnswer[0] {
+                 return true
+             }
+         }
+         return false
+     }
 }

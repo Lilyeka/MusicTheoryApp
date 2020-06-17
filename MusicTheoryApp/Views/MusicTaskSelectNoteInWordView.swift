@@ -8,10 +8,17 @@
 
 import UIKit
 
+protocol MusicTaskSelectNoteInWordViewDelegate {
+    func rightAnswerReaction()
+    func wrongAnswerReaction()
+}
+
 class MusicTaskSelectNoteInWordView: UIView {
     static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 16.0)
-    var viewModel: MusicTaskSelectNoteInWordViewModel!
+    //MARK: -Delegate
+    var delegate: MusicTaskSelectNoteInWordViewDelegate?
     
+    var viewModel: MusicTaskSelectNoteInWordViewModel!
     var staffView: StaffView!
     var wordStackView: UIStackView!
     var partsOfWordLables: [UILabel] = [UILabel]()
@@ -25,6 +32,15 @@ class MusicTaskSelectNoteInWordView: UIView {
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         return label
+    }()
+    
+    var checkResultButton: UIButton = {
+        var btn = UIButton(type: .custom)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setTitle("Проверить", for: .normal)
+        btn.addTarget(self, action: #selector(checkButtonTapped(sender:)), for: .touchUpInside)
+        btn.backgroundColor = .gray
+        return btn
     }()
 
     init(viewModel:MusicTaskSelectNoteInWordViewModel, frame:CGRect) {
@@ -46,9 +62,9 @@ class MusicTaskSelectNoteInWordView: UIView {
         questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: withFrame.size.width, font:MusicTaskShowNoteOnThePianoView.QUESTION_FONT))!).isActive = true
         
         var i = 0
-        while i < viewModel.model.partsOfAWord!.count {
+        while i < viewModel.model.partsOfWord!.count {
             let label = UILabel()
-            label.text = viewModel.model.partsOfAWord![i].0
+            label.text = viewModel.model.partsOfWord![i].0
             label.textColor = .black
             label.font = UIFont.systemFont(ofSize: 35, weight: .bold)
             partsOfWordLables.append(label)
@@ -74,5 +90,20 @@ class MusicTaskSelectNoteInWordView: UIView {
         staffView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
         staffView.drawNotesOneByOne(notesAreTransparent: true)
+        
+        self.addSubview(checkResultButton)
+        checkResultButton.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        checkResultButton.topAnchor.constraint(equalTo: staffView.bottomAnchor, constant: 15.0).isActive = true
+        checkResultButton.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
+        checkResultButton.widthAnchor.constraint(equalToConstant: 200.0).isActive = true
+    }
+    
+    @objc func checkButtonTapped(sender: UIButton) {
+        let tappedNotesNumbers = staffView.pickedOutNotesIndexes
+        if (viewModel?.checkUserAnswer1(userAnswer: tappedNotesNumbers))! {
+            delegate?.rightAnswerReaction()
+        } else {
+            delegate?.wrongAnswerReaction()
+        }
     }
 }

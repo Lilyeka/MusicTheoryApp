@@ -58,6 +58,7 @@ class ViewController: UIViewController {
             viewModel: task9ViewModel,
             frame: taskViewFrame
         )
+        musicTaskSelectNoteInWordView.delegate = self
         self.view.addSubview(musicTaskSelectNoteInWordView)
     }
 
@@ -77,15 +78,15 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: MusicTaskSelectNoteViewDelegate {
-    func rightAnswerReaction() {
+extension ViewController: MusicTaskSelectNoteViewDelegate,MusicTaskSelectNoteInWordViewDelegate{
+    func wrongAnswerReaction() {
         let alert = UIAlertController(title: "Неверный ответ", message: "Попробуй еще раз!", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true)
     }
     
-    func wrongAnswerReaction() {
-        let alert = UIAlertController(title: "Верный ответ", message: "Поехали дельше!", preferredStyle: .alert)
+    func rightAnswerReaction() {
+        let alert = UIAlertController(title: "Верный ответ", message: "Поехали дальше!", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true)
     }
@@ -96,7 +97,7 @@ extension ViewController: PianoViewDelegate {
         let task8: MusicTaskShowNoteOnThePiano = tasksStorage.tasks[8] as! MusicTaskShowNoteOnThePiano
         let task8ViewModel = MusicTaskShowtNoteOnThePianoViewModel(model: task8)
         if task8ViewModel.checkUserAnswer(userAnswer: withNotes) {
-            let alert = UIAlertController(title: "Верный ответ", message: "Поехали дельше!", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Верный ответ", message: "Поехали дальше!", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true)
         } else {
