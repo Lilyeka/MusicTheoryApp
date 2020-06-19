@@ -108,7 +108,7 @@ extension NoteViewModel {
             return "Соль"
         case .la,.la1:
             return "Ля"
-        case .si,.si1:
+        case .si0,.si,.si1:
             return "Си"
         }
     }

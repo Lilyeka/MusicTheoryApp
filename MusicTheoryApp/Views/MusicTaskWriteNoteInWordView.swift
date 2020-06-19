@@ -1,35 +1,28 @@
 //
-//  MusicTaskSelectNoteInWordView.swift
+//  MusicTaskWriteNoteInWordView.swift
 //  MusicTheoryApp
 //
-//  Created by Лилия Левина on 11.06.2020.
+//  Created by Лилия Левина on 19.06.2020.
 //  Copyright © 2020 Лилия Левина. All rights reserved.
 //
 
 import UIKit
 
-protocol MusicTaskSelectNoteInWordViewDelegate {
-    func rightAnswerReaction()
-    func wrongAnswerReaction()
-}
-
-class MusicTaskSelectNoteInWordView: UIView {
+class MusicTaskWriteNoteInWordView: UIView {
     static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 16.0)
-    static let WORD_FONT = UIFont.systemFont(ofSize: 35, weight: .bold)
-    //MARK: -Delegate
-    var delegate: MusicTaskSelectNoteInWordViewDelegate?
-    //MARK: -Views
-    var viewModel: MusicTaskSelectNoteInWordViewModel!
+    static let WORD_FONT = UIFont.boldSystemFont(ofSize: 35.0)
+    //MARK: -UI Elements
+    var viewModel: MusicTaskWriteNoteInWordViewModel!
     var staffView: StaffView!
     var wordStackView: UIStackView!
-    var partsOfWordLables: [UILabel] = [UILabel]()
-
+    var partsOfWordViews: [UIView] = [UIView]()
+    
     var questionLabel: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .systemPink
         label.textColor = .white
-        label.font = MusicTaskSelectNoteInWordView.QUESTION_FONT
+        label.font = MusicTaskWriteNoteInWordView.QUESTION_FONT
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         return label
@@ -43,8 +36,8 @@ class MusicTaskSelectNoteInWordView: UIView {
         btn.backgroundColor = .gray
         return btn
     }()
-    //MARK: -Init
-    init(viewModel:MusicTaskSelectNoteInWordViewModel, frame:CGRect) {
+     //MARK: -Init
+    init(viewModel:MusicTaskWriteNoteInWordViewModel, frame:CGRect) {
         super.init(frame: frame)
         self.viewModel = viewModel
         setupSubviews(withFrame:frame)
@@ -53,6 +46,7 @@ class MusicTaskSelectNoteInWordView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+       
     //MARK: - Private methods
     fileprivate func setupSubviews(withFrame:CGRect) {
         self.addSubview(questionLabel)
@@ -64,15 +58,30 @@ class MusicTaskSelectNoteInWordView: UIView {
         
         var i = 0
         while i < viewModel.model.partsOfWord!.count {
-            let label = UILabel()
-            label.text = viewModel.model.partsOfWord![i].0
-            label.textColor = .black
-            label.font = MusicTaskSelectNoteInWordView.WORD_FONT
-            partsOfWordLables.append(label)
+            if let note = viewModel.model.partsOfWord![i].1 {
+                let numberOfLetters = note.noteRusName().count
+                let textFieldWidth = numberOfLetters * 100
+                let textField = UITextField(frame: CGRect(x: 20, y: 100, width: textFieldWidth, height: 40))
+                textField.placeholder = ""
+                textField.font = MusicTaskWriteNoteInWordView.WORD_FONT
+                textField.borderStyle = UITextField.BorderStyle.roundedRect
+                textField.autocorrectionType = UITextAutocorrectionType.no
+                textField.keyboardType = UIKeyboardType.alphabet
+                textField.returnKeyType = UIReturnKeyType.done
+                textField.clearButtonMode = UITextField.ViewMode.whileEditing
+                textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
+               // textField.delegate = self
+                partsOfWordViews.append(textField)
+            } else {
+                let label = UILabel()
+                label.text = viewModel.model.partsOfWord![i].0
+                label.textColor = .black
+                label.font = UIFont.systemFont(ofSize: 35, weight: .bold)
+                partsOfWordViews.append(label)
+            }
             i += 1
         }
-        
-        wordStackView = UIStackView(arrangedSubviews: partsOfWordLables)
+        wordStackView = UIStackView(arrangedSubviews: partsOfWordViews)
         wordStackView.translatesAutoresizingMaskIntoConstraints = false
         wordStackView.axis = .horizontal
         wordStackView.distribution = .fill
@@ -83,13 +92,15 @@ class MusicTaskSelectNoteInWordView: UIView {
         
         staffView = StaffView(notesViewModels:viewModel!.notesViewModels,
                               frame: CGRect(x:0, y:0, width:Int(withFrame.size.width*0.9), height:StaffView.viewHeight()))
+        staffView.isUserInteractionEnabled = false
         staffView.translatesAutoresizingMaskIntoConstraints = false
+        staffView.clipsToBounds = true
         self.addSubview(staffView)
         staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 15.0).isActive = true
-        staffView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.9).isActive = true
+        staffView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.6).isActive = true
         staffView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
-        staffView.drawNotesOneByOne(notesAreTransparent: true)
+        staffView.drawNotesOneByOne(notesAreTransparent: false)
         
         self.addSubview(checkResultButton)
         checkResultButton.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
@@ -99,11 +110,11 @@ class MusicTaskSelectNoteInWordView: UIView {
     }
     
     @objc func checkButtonTapped(sender: UIButton) {
-        let tappedNotesNumbers = staffView.pickedOutNotesIndexes
-        if (viewModel?.checkUserAnswer1(userAnswer: tappedNotesNumbers))! {
-            delegate?.rightAnswerReaction()
-        } else {
-            delegate?.wrongAnswerReaction()
-        }
-    }
+//         if (viewModel?.checkUserAnswer1(userAnswer: tappedNotesNumbers))! {
+//             delegate?.rightAnswerReaction()
+//         } else {
+//             delegate?.wrongAnswerReaction()
+//         }
+     }
+    
 }

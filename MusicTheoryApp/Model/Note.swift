@@ -18,6 +18,7 @@ struct Note {
     }
     
     public enum NoteName: Int{
+        case si0 = -3
         case Do = -2
         case re = -1
         case mi = 0
@@ -52,6 +53,26 @@ struct Note {
         self.name = name
         self.tone = tone
         self.duration = duration
+    }
+    
+    func noteRusName() -> String {
+        switch self.name {
+        case .Do,.Do1:
+            return " До"
+        case .re,.re1:
+            return "Ре"
+        case .mi, .mi1:
+            return "Ми"
+        case .fa, .fa1:
+            return "Фа"
+        case .sol,.sol1:
+            return "Соль"
+        case .la,.la1:
+            return "Ля"
+        case .si0,.si,.si1:
+            return "Си"
+        
+        }
     }
 }
 

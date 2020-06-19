@@ -13,6 +13,8 @@
 		6149ED1B245978D700A1375A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6149ED19245978D700A1375A /* LaunchScreen.storyboard */; };
 		6149ED23245A1DCE00A1375A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6149ED22245A1DCE00A1375A /* ViewController.swift */; };
 		6149ED28245B69E500A1375A /* StaffView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6149ED27245B69E500A1375A /* StaffView.swift */; };
+		6172FA16249C084C009153BD /* MusicTaskWriteNoteInWordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6172FA15249C084C009153BD /* MusicTaskWriteNoteInWordViewModel.swift */; };
+		6172FA18249C12A9009153BD /* MusicTaskWriteNoteInWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6172FA17249C12A9009153BD /* MusicTaskWriteNoteInWordView.swift */; };
 		617F7EC7245E05F900EE08AA /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6149ED24245A24D600A1375A /* Note.swift */; };
 		619E3E5424686F52003ECD16 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619E3E5324686F52003ECD16 /* UIImage+Extension.swift */; };
 		61A4B503248843FF004A286E /* MusicTaskSelectNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A4B502248843FF004A286E /* MusicTaskSelectNote.swift */; };
@@ -40,6 +42,8 @@
 		6149ED22245A1DCE00A1375A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		6149ED24245A24D600A1375A /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		6149ED27245B69E500A1375A /* StaffView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffView.swift; sourceTree = "<group>"; };
+		6172FA15249C084C009153BD /* MusicTaskWriteNoteInWordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskWriteNoteInWordViewModel.swift; sourceTree = "<group>"; };
+		6172FA17249C12A9009153BD /* MusicTaskWriteNoteInWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskWriteNoteInWordView.swift; sourceTree = "<group>"; };
 		619E3E5324686F52003ECD16 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		61A4B502248843FF004A286E /* MusicTaskSelectNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskSelectNote.swift; sourceTree = "<group>"; };
 		61A4B5042488477F004A286E /* MusicTaskShowNoteOnThePiano.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskShowNoteOnThePiano.swift; sourceTree = "<group>"; };
@@ -107,6 +111,7 @@
 				61A4B508248999CF004A286E /* MusicTaskSelectNoteView.swift */,
 				61A4B745248ECDC500C0E92D /* MusicTaskShowNoteOnThePianoView.swift */,
 				61A4B74B24918ADB00C0E92D /* MusicTaskSelectNoteInWordView.swift */,
+				6172FA17249C12A9009153BD /* MusicTaskWriteNoteInWordView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -140,6 +145,7 @@
 				61A4B506248998F5004A286E /* MusicTaskSelectNoteViewModel.swift */,
 				61A4B743248ECC2A00C0E92D /* MusicTaskShowNoteOnThePianoViewModel.swift */,
 				61A4B7492491860D00C0E92D /* MusicTaskSelectNoteInWordViewModel.swift */,
+				6172FA15249C084C009153BD /* MusicTaskWriteNoteInWordViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -227,9 +233,11 @@
 				6149ED23245A1DCE00A1375A /* ViewController.swift in Sources */,
 				61A4B74824917D2E00C0E92D /* MusicTaskSelectNoteInWord.swift in Sources */,
 				61A818BF2474858D009DCE07 /* MusicTasks.swift in Sources */,
+				6172FA16249C084C009153BD /* MusicTaskWriteNoteInWordViewModel.swift in Sources */,
 				61CDA927247C66E800780D04 /* PianoView.swift in Sources */,
 				6149ED0F245978CD00A1375A /* AppDelegate.swift in Sources */,
 				619E3E5424686F52003ECD16 /* UIImage+Extension.swift in Sources */,
+				6172FA18249C12A9009153BD /* MusicTaskWriteNoteInWordView.swift in Sources */,
 				61A4B509248999CF004A286E /* MusicTaskSelectNoteView.swift in Sources */,
 				6149ED28245B69E500A1375A /* StaffView.swift in Sources */,
 				61A4B507248998F5004A286E /* MusicTaskSelectNoteViewModel.swift in Sources */,
