@@ -41,7 +41,7 @@ class ViewController: UIViewController {
             frame: taskViewFrame
         )
         musicTaskSelectNoteView.delegate = self
-//        self.view.addSubview(musicTaskSelectNoteView)
+        self.view.addSubview(musicTaskSelectNoteView)
   //---------------------------------------------------------------
         let task8: MusicTaskShowNoteOnThePiano = tasksStorage.tasks[8] as! MusicTaskShowNoteOnThePiano
         let task8ViewModel = MusicTaskShowtNoteOnThePianoViewModel(model: task8)
@@ -60,7 +60,7 @@ class ViewController: UIViewController {
             frame: taskViewFrame
         )
         musicTaskSelectNoteInWordView.delegate = self
- //       self.view.addSubview(musicTaskSelectNoteInWordView)
+  //     self.view.addSubview(musicTaskSelectNoteInWordView)
 
 //---------------------------------------------------------------
         let task19: MusicTaskSelectNoteInWord = tasksStorage.tasks[19] as! MusicTaskSelectNoteInWord
@@ -69,7 +69,7 @@ class ViewController: UIViewController {
             viewModel: task19ViewModel,
             frame: taskViewFrame
         )
-        self.view.addSubview(musicTaskWriteNoteInWordView)
+ //       self.view.addSubview(musicTaskWriteNoteInWordView)
     }
 
     override func viewDidLoad() {

@@ -90,7 +90,7 @@ class MusicTaskWriteNoteInWordView: UIView {
         wordStackView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 15.0).isActive = true
         wordStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true
         
-        staffView = StaffView(notesViewModels:viewModel!.notesViewModels,
+        staffView = StaffView(notesViewModels:viewModel!.notesViewModels,selectOnlyOneNote: true,
                               frame: CGRect(x:0, y:0, width:Int(withFrame.size.width*0.9), height:StaffView.viewHeight()))
         staffView.isUserInteractionEnabled = false
         staffView.translatesAutoresizingMaskIntoConstraints = false

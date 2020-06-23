@@ -24,6 +24,8 @@ class StaffView: UIView {
 
     var notesArray:[NoteViewModel]?
     var pickedOutNotesIndexes:[Int] = [Int]()
+    var selectOnlyOneNote: Bool!
+    var previousSelectedNoteView: UIView?
     
     var clefImageView: UIImageView = {
         var imageView = UIImageView()
@@ -42,9 +44,10 @@ class StaffView: UIView {
         super.init(coder: aDecoder)
     }
     
-    init(notesViewModels:[NoteViewModel], frame:CGRect) {
+    init(notesViewModels:[NoteViewModel], selectOnlyOneNote: Bool, frame:CGRect) {
         super.init(frame:frame)
         self.notesArray = notesViewModels
+        self.selectOnlyOneNote = selectOnlyOneNote
         setupView()
     }
     
@@ -113,7 +116,7 @@ class StaffView: UIView {
                 nameLabel.textColor = .black
                 nameLabel.textAlignment = .center
                 nameLabel.isHidden = !note.selected
-                nameLabel.tag = (note.model.name.rawValue+1)*999
+                nameLabel.tag = (note.model.name.rawValue+999)*999
                 
                 self.addSubview(nameLabel)
                 nameLabel.leftAnchor.constraint(equalTo: imageView.leftAnchor).isActive = true
@@ -157,24 +160,52 @@ class StaffView: UIView {
     }
     
     @objc func noteTapped(tapGestureRecognizer:UITapGestureRecognizer) {
-        let noteViewModelNumber = tapGestureRecognizer.view?.tag
-        let noteViewModel = notesArray![noteViewModelNumber!]
-        noteViewModel.didTapped()
-        tapGestureRecognizer.view?.alpha = noteViewModel.selected ? NoteViewModel.OPAQUE_ALFA : NoteViewModel.TRANSPARENT_ALFA
-        
-        if pickedOutNotesIndexes.contains(noteViewModelNumber!) {
-            let index = pickedOutNotesIndexes.firstIndex(of: noteViewModelNumber!)
-            pickedOutNotesIndexes.remove(at: index!)
-        } else {
-            pickedOutNotesIndexes.append(noteViewModelNumber!)
-        }
-        
-        for view in self.subviews {
-            if view.tag == ((tapGestureRecognizer.view!.tag+1)*999) {
-                view.isHidden = !view.isHidden
+        if selectOnlyOneNote {//можно выбрать только одну ноту из нескольких
+            let noteViewModelNumber = tapGestureRecognizer.view?.tag
+         //   let noteViewModelIndex = findNoteIndex(noteNumber: noteViewModelNumber!, inArray: notesArray!)
+           // let noteViewModel = notesArray![noteViewModelIndex]
+            tapGestureRecognizer.view?.alpha = NoteViewModel.OPAQUE_ALFA
+            if  previousSelectedNoteView != nil, previousSelectedNoteView != tapGestureRecognizer.view {
+                previousSelectedNoteView?.alpha = NoteViewModel.TRANSPARENT_ALFA
+            }
+            if !pickedOutNotesIndexes.contains(noteViewModelNumber!) {
+                pickedOutNotesIndexes.removeAll()
+                pickedOutNotesIndexes.append(noteViewModelNumber!)
+            }
+            previousSelectedNoteView = tapGestureRecognizer.view
+        } else {// можно выбрать несколько нот из нескольких
+  
+            
+            let noteViewModelNumber = tapGestureRecognizer.view?.tag
+            let noteViewModelIndex = findNoteIndex(noteNumber: noteViewModelNumber!, inArray: notesArray!)
+            let noteViewModel = notesArray![noteViewModelIndex]
+            
+            noteViewModel.didTapped()
+            tapGestureRecognizer.view?.alpha = noteViewModel.selected ? NoteViewModel.OPAQUE_ALFA : NoteViewModel.TRANSPARENT_ALFA
+            
+            if pickedOutNotesIndexes.contains(noteViewModelNumber!) {
+                let index = pickedOutNotesIndexes.firstIndex(of: noteViewModelNumber!)
+                pickedOutNotesIndexes.remove(at: index!)
+            } else {
+                pickedOutNotesIndexes.append(noteViewModelNumber!)
+            }
+            
+            for view in self.subviews {
+                if view.tag == ((tapGestureRecognizer.view!.tag+999)*999) {//имя ноты
+                    view.isHidden = !view.isHidden
+                }
             }
         }
-        print(pickedOutNotesIndexes)
+         print(pickedOutNotesIndexes)
+    }
+    
+    func findNoteIndex(noteNumber:Int,inArray array:[NoteViewModel]) -> Int {
+        var i = 0
+        for note in array {
+            if note.model.name.rawValue == noteNumber {return i}
+            i += 1
+        }
+        return i
     }
     
     fileprivate func drawLines() {
