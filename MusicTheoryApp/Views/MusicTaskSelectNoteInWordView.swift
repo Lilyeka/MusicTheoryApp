@@ -14,7 +14,7 @@ protocol MusicTaskSelectNoteInWordViewDelegate {
 }
 
 class MusicTaskSelectNoteInWordView: UIView {
-    static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 16.0)
+    static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 18.0)
     static let WORD_FONT = UIFont.systemFont(ofSize: 35, weight: .bold)
     //MARK: -Delegate
     var delegate: MusicTaskSelectNoteInWordViewDelegate?
@@ -82,7 +82,7 @@ class MusicTaskSelectNoteInWordView: UIView {
         wordStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true
         
         staffView = StaffView(notesViewModels:viewModel!.notesViewModels, selectOnlyOneNote: true,
-                              frame: CGRect(x:0, y:0, width:Int(withFrame.size.width*0.9), height:StaffView.viewHeight()))
+                              frame: CGRect.zero)
         staffView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(staffView)
         staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 15.0).isActive = true

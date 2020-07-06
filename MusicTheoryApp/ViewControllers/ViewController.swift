@@ -41,7 +41,7 @@ class ViewController: UIViewController {
             frame: taskViewFrame
         )
         musicTaskSelectNoteView.delegate = self
-        self.view.addSubview(musicTaskSelectNoteView)
+  //      self.view.addSubview(musicTaskSelectNoteView)
   //---------------------------------------------------------------
         let task8: MusicTaskShowNoteOnThePiano = tasksStorage.tasks[8] as! MusicTaskShowNoteOnThePiano
         let task8ViewModel = MusicTaskShowtNoteOnThePianoViewModel(model: task8)
@@ -50,7 +50,7 @@ class ViewController: UIViewController {
             frame: taskViewFrame
         )
         musicTaskShowNoteView.pianoView.delegate = self
-    //    self.view.addSubview(musicTaskShowNoteView)
+        self.view.addSubview(musicTaskShowNoteView)
         
   //---------------------------------------------------------------
         let task9: MusicTaskSelectNoteInWord = tasksStorage.tasks[9] as! MusicTaskSelectNoteInWord
@@ -69,7 +69,11 @@ class ViewController: UIViewController {
             viewModel: task19ViewModel,
             frame: taskViewFrame
         )
- //       self.view.addSubview(musicTaskWriteNoteInWordView)
+        musicTaskWriteNoteInWordView.delegate = self
+//        self.view.addSubview(musicTaskWriteNoteInWordView)
+        
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
+        view.addGestureRecognizer(tap)
     }
 
     override func viewDidLoad() {
@@ -88,7 +92,8 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: MusicTaskSelectNoteViewDelegate,MusicTaskSelectNoteInWordViewDelegate{
+extension ViewController: MusicTaskSelectNoteViewDelegate, MusicTaskSelectNoteInWordViewDelegate, MusicTaskWriteNoteInWordViewDelegate{
+    
     func wrongAnswerReaction() {
         let alert = UIAlertController(title: "Неверный ответ", message: "Попробуй еще раз!", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -117,5 +122,7 @@ extension ViewController: PianoViewDelegate {
         }
     }
 }
+
+
 
 

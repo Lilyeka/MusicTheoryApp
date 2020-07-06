@@ -68,7 +68,7 @@ struct Note {
         case .sol,.sol1:
             return "Соль"
         case .la,.la1:
-            return "Ля"
+            return "La"//"Ля"
         case .si0,.si,.si1:
             return "Си"
         

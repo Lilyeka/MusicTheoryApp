@@ -15,7 +15,7 @@ protocol MusicTaskShowNoteOnThePianoViewDelegate {
 
 
 class MusicTaskShowNoteOnThePianoView: UIView {
-    static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 16.0)
+    static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 18.0)
     let TOP_OFFSET: CGFloat = 15.0
     let LEFT_OFFSET: CGFloat = 15.0
     let RIGHT_OFFSET: CGFloat = 15.0
@@ -63,11 +63,10 @@ class MusicTaskShowNoteOnThePianoView: UIView {
         let pianoViewWidth = staffViewWidth
 
         staffView = StaffView(notesViewModels:viewModel!.notesViewModels,selectOnlyOneNote: true,
-                              frame: CGRect(x:0, y:0, width:Int(staffViewWidth), height:StaffView.viewHeight()))
+                              frame: CGRect.zero)
         staffView.translatesAutoresizingMaskIntoConstraints = false
         staffView.isUserInteractionEnabled = false
         self.addSubview(staffView)
-    
         staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: TOP_OFFSET).isActive = true
         staffView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0).isActive = true
         staffView.widthAnchor.constraint(equalToConstant: staffViewWidth).isActive = true

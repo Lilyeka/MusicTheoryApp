@@ -51,8 +51,12 @@ class StaffView: UIView {
         setupView()
     }
     
+    override func draw(_ rect: CGRect) {
+        drawLines(in: rect)
+    }
+    
     fileprivate func setupView() {
-        drawLines()
+        //drawLines()
         self.addSubview(clefImageView)
         clefImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: StaffView.CLEFT_LEFT_OFFSET).isActive = true
         clefImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 15).isActive = true
@@ -78,21 +82,6 @@ class StaffView: UIView {
                 let noteWidth = noteCharacteristics.durationWidth,
                 let offsetFromCenterY = noteCharacteristics.durationCenterOffesetY {
                 let durationPositionY = -CGFloat(StaffView.VERTICAL_OFFSET) - offsetLinePositions - offsetFromCenterY
-                //дополнительная линейка
-                if note.needsAdditionalLine {
-                    let addLineXOffset = 7
-                    let noteStartXPosition = Int(StaffView.CLEFT_LEFT_OFFSET + StaffView.CLEF_WIDTH + leftOffsetFromClef)
-                    drawLine(
-                        startX: noteStartXPosition - addLineXOffset,
-                        toEndingX: noteStartXPosition + Int(noteWidth) + addLineXOffset,
-                        startingY: StaffView.viewHeight() + Int(durationPositionY),
-                        toEndingY: StaffView.viewHeight() + Int(durationPositionY),
-                        ofColor: .black,
-                        widthOfLine: 3,
-                        inView: self
-                    )
-                }
-                
                 let imageView = UIImageView()
                 imageView.tag = note.model.name.rawValue
                 //imageView.backgroundColor = .green
@@ -107,6 +96,21 @@ class StaffView: UIView {
                 imageView.heightAnchor.constraint(equalToConstant: noteHeight).isActive = true
                 imageView.widthAnchor.constraint(equalToConstant: noteWidth).isActive = true
                 imageView.centerYAnchor.constraint(equalTo: self.bottomAnchor, constant: durationPositionY).isActive = true
+                
+                //дополнительная линейка
+                if note.needsAdditionalLine {
+                    let addLineXOffset = 7
+                    let noteStartXPosition = Int(StaffView.CLEFT_LEFT_OFFSET + StaffView.CLEF_WIDTH + leftOffsetFromClef)
+                    drawAdditionalLine(
+                        startX: noteStartXPosition - addLineXOffset,
+                        toEndingX: Int(noteStartXPosition) + Int(noteWidth) + addLineXOffset,
+                        startingY: StaffView.viewHeight() + Int(durationPositionY),
+                        toEndingY: StaffView.viewHeight() + Int(durationPositionY),
+                        ofColor: .black,
+                        widthOfLine: 3,
+                        inView: self
+                    )
+                }
                 
                 //Название ноты
                 let nameLabel = UILabel()
@@ -162,8 +166,6 @@ class StaffView: UIView {
     @objc func noteTapped(tapGestureRecognizer:UITapGestureRecognizer) {
         if selectOnlyOneNote {//можно выбрать только одну ноту из нескольких
             let noteViewModelNumber = tapGestureRecognizer.view?.tag
-         //   let noteViewModelIndex = findNoteIndex(noteNumber: noteViewModelNumber!, inArray: notesArray!)
-           // let noteViewModel = notesArray![noteViewModelIndex]
             tapGestureRecognizer.view?.alpha = NoteViewModel.OPAQUE_ALFA
             if  previousSelectedNoteView != nil, previousSelectedNoteView != tapGestureRecognizer.view {
                 previousSelectedNoteView?.alpha = NoteViewModel.TRANSPARENT_ALFA
@@ -174,8 +176,6 @@ class StaffView: UIView {
             }
             previousSelectedNoteView = tapGestureRecognizer.view
         } else {// можно выбрать несколько нот из нескольких
-  
-            
             let noteViewModelNumber = tapGestureRecognizer.view?.tag
             let noteViewModelIndex = findNoteIndex(noteNumber: noteViewModelNumber!, inArray: notesArray!)
             let noteViewModel = notesArray![noteViewModelIndex]
@@ -208,28 +208,72 @@ class StaffView: UIView {
         return i
     }
     
-    fileprivate func drawLines() {
-        let lineStartX = 0
-        let lineEndX = Int(self.bounds.maxX)
+//    fileprivate func drawLines() {
+//        let lineStartX = 0
+//        let lineEndX = Int(self.bounds.maxX)
+//
+//        var i = 0
+//        while i < 5 {
+//            let lineY = Int(self.bounds.maxY) - StaffView.VERTICAL_OFFSET - i*StaffView.LINE_OFFSET
+//            drawLine(startX: lineStartX, toEndingX: lineEndX, startingY: lineY, toEndingY: lineY, ofColor: .black, widthOfLine: StaffView.LINE_WIDTH, inView: self)
+//            i += 1
+//        }
+//    }
+//
+//    fileprivate func drawLine(startX: Int, toEndingX endX: Int, startingY startY: Int, toEndingY endY: Int, ofColor lineColor: UIColor, widthOfLine lineWidth: CGFloat, inView view: UIView) {
+//
+//        let path = UIBezierPath()
+//        path.move(to: CGPoint(x: startX, y: startY))
+//        path.addLine(to: CGPoint(x: endX, y: endY))
+//
+//        let shapeLayer = CAShapeLayer()
+//        shapeLayer.path = path.cgPath
+//        shapeLayer.strokeColor = lineColor.cgColor
+//        shapeLayer.lineWidth = lineWidth
+//        view.layer.addSublayer(shapeLayer)
+//    }
+    
+        fileprivate func drawAdditionalLine(startX: Int, toEndingX endX: Int, startingY startY: Int, toEndingY endY: Int, ofColor lineColor: UIColor, widthOfLine lineWidth: CGFloat, inView view: UIView) {
+    
+            let path = UIBezierPath()
+            path.move(to: CGPoint(x: startX, y: startY))
+            path.addLine(to: CGPoint(x: endX, y: endY))
+    
+            let shapeLayer = CAShapeLayer()
+            shapeLayer.path = path.cgPath
+            shapeLayer.strokeColor = lineColor.cgColor
+            shapeLayer.lineWidth = lineWidth
+            view.layer.addSublayer(shapeLayer)
+        }
+
+    
+    fileprivate func drawLines(in rect: CGRect) {
+        let backgroundColor = UIColor.white
+        backgroundColor.setFill()
+        UIRectFill(rect)
         
+        let lineStartX = 0
+        let lineEndX = Int(rect.width)
+//
         var i = 0
         while i < 5 {
-            let lineY = Int(self.bounds.maxY) - StaffView.VERTICAL_OFFSET - i*StaffView.LINE_OFFSET
-            drawLine(startX: lineStartX, toEndingX: lineEndX, startingY: lineY, toEndingY: lineY, ofColor: .black, widthOfLine: StaffView.LINE_WIDTH, inView: self)
+            let lineY = Int(rect.height) - StaffView.VERTICAL_OFFSET - i*StaffView.LINE_OFFSET
+            drawLine(startX: lineStartX, toEndingX: lineEndX, startingY: lineY, toEndingY: lineY, ofColor: .black, widthOfLine: StaffView.LINE_WIDTH)
             i += 1
         }
     }
     
-    fileprivate func drawLine(startX: Int, toEndingX endX: Int, startingY startY: Int, toEndingY endY: Int, ofColor lineColor: UIColor, widthOfLine lineWidth: CGFloat, inView view: UIView) {
+    fileprivate func drawLine(startX: Int, toEndingX endX: Int, startingY startY: Int, toEndingY endY: Int, ofColor lineColor: UIColor, widthOfLine lineWidth: CGFloat) {
         
         let path = UIBezierPath()
         path.move(to: CGPoint(x: startX, y: startY))
         path.addLine(to: CGPoint(x: endX, y: endY))
+        path.close()
         
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.path = path.cgPath
-        shapeLayer.strokeColor = lineColor.cgColor
-        shapeLayer.lineWidth = lineWidth
-        view.layer.addSublayer(shapeLayer)
+        path.lineWidth = lineWidth
+        
+        let color = UIColor.black
+        color.setStroke()
+        path.stroke()
     }
 }
