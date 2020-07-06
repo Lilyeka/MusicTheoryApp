@@ -81,35 +81,6 @@ class MusicTaskWriteNoteInWordView: UIView {
         questionLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0).isActive = true
         questionLabel.widthAnchor.constraint(equalToConstant: withFrame.size.width).isActive = true
         questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: withFrame.size.width, font:MusicTaskShowNoteOnThePianoView.QUESTION_FONT))!).isActive = true
-        
-        var i = 0
-        while i < viewModel.model.partsOfWord!.count {
-            if let note = viewModel.model.partsOfWord![i].1 {
-                numberOfLettersInTextField = note.noteRusName().count
-                let textFieldWidth: CGFloat = CGFloat(numberOfLettersInTextField * MusicTaskWriteNoteInWordView.TEXTFIELD_LETTER_WIDTH)
-                textField.delegate = self
-                textField.widthAnchor.constraint(equalToConstant: textFieldWidth).isActive = true
-                partsOfWordViews.append(textField)
-                
-            } else {
-                let label = UILabel()
-                label.text = viewModel.model.partsOfWord![i].0
-                label.textColor = .black
-                label.font = UIFont.systemFont(ofSize: 35, weight: .bold)
-                partsOfWordViews.append(label)
-            }
-            i += 1
-        }
-        wordStackView = UIStackView(arrangedSubviews: partsOfWordViews)
-        wordStackView.translatesAutoresizingMaskIntoConstraints = false
-        wordStackView.axis = .horizontal
-        wordStackView.distribution = .fill
-        wordStackView.spacing = 5.0
-        wordStackView.alignment = .center
-       
-        self.addSubview(wordStackView)
-        wordStackView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 15.0).isActive = true
-        wordStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true
        
         staffView = StaffView(notesViewModels:viewModel!.notesViewModels,
                               selectOnlyOneNote: true,
@@ -123,6 +94,35 @@ class MusicTaskWriteNoteInWordView: UIView {
         staffView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
         staffView.drawNotesOneByOne(notesAreTransparent: false)
+        
+         var i = 0
+         while i < viewModel.model.partsOfWord!.count {
+             if let note = viewModel.model.partsOfWord![i].1 {
+                 numberOfLettersInTextField = note.noteRusName().count
+                 let textFieldWidth: CGFloat = CGFloat(numberOfLettersInTextField * MusicTaskWriteNoteInWordView.TEXTFIELD_LETTER_WIDTH)
+                 textField.delegate = self
+                 textField.widthAnchor.constraint(equalToConstant: textFieldWidth).isActive = true
+                 partsOfWordViews.append(textField)
+                 
+             } else {
+                 let label = UILabel()
+                 label.text = viewModel.model.partsOfWord![i].0
+                 label.textColor = .black
+                 label.font = UIFont.systemFont(ofSize: 35, weight: .bold)
+                 partsOfWordViews.append(label)
+             }
+             i += 1
+         }
+         wordStackView = UIStackView(arrangedSubviews: partsOfWordViews)
+         wordStackView.translatesAutoresizingMaskIntoConstraints = false
+         wordStackView.axis = .horizontal
+         wordStackView.distribution = .fill
+         wordStackView.spacing = 5.0
+         wordStackView.alignment = .center
+        
+         self.addSubview(wordStackView)
+         wordStackView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 15.0).isActive = true
+         wordStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true
         
         self.addSubview(checkResultButton)
         checkResultButton.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true

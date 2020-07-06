@@ -61,6 +61,16 @@ class MusicTaskSelectNoteInWordView: UIView {
         questionLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0).isActive = true
         questionLabel.widthAnchor.constraint(equalToConstant: withFrame.size.width).isActive = true
         questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: withFrame.size.width, font:MusicTaskShowNoteOnThePianoView.QUESTION_FONT))!).isActive = true
+                
+        staffView = StaffView(notesViewModels:viewModel!.notesViewModels, selectOnlyOneNote: true,
+                              frame: CGRect.zero)
+        staffView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(staffView)
+        staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 15.0).isActive = true
+        staffView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.9).isActive = true
+        staffView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
+        staffView.drawNotesOneByOne(notesAreTransparent: true)
         
         var i = 0
         while i < viewModel.model.partsOfWord!.count {
@@ -80,16 +90,6 @@ class MusicTaskSelectNoteInWordView: UIView {
         self.addSubview(wordStackView)
         wordStackView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 15.0).isActive = true
         wordStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true
-        
-        staffView = StaffView(notesViewModels:viewModel!.notesViewModels, selectOnlyOneNote: true,
-                              frame: CGRect.zero)
-        staffView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(staffView)
-        staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 15.0).isActive = true
-        staffView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.9).isActive = true
-        staffView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
-        staffView.drawNotesOneByOne(notesAreTransparent: true)
         
         self.addSubview(checkResultButton)
         checkResultButton.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
