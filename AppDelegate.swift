@@ -17,9 +17,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Create a window that is the same size as the screen
         window = UIWindow(frame: UIScreen.main.bounds)
         // Create a view controller
-        let viewController = ViewController()
+        let nav = UINavigationController()
+        let mainVC = MainViewController()
+        let configurator = MainConfigurator()
+        configurator.configure(with: mainVC)
+        nav.viewControllers = [mainVC]
         // Assign the view controller as `window`'s root view controller
-        window?.rootViewController = viewController
+        window?.rootViewController = nav
         // Show the window
         window?.makeKeyAndVisible()
         return true

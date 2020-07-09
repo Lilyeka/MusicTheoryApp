@@ -13,7 +13,6 @@ protocol MusicTaskShowNoteOnThePianoViewDelegate {
     func wrongAnswerReaction()
 }
 
-
 class MusicTaskShowNoteOnThePianoView: UIView {
     static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 18.0)
     let TOP_OFFSET: CGFloat = 15.0

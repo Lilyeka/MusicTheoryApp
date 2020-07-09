@@ -60,7 +60,7 @@ class ViewController: UIViewController {
             frame: taskViewFrame
         )
         musicTaskSelectNoteInWordView.delegate = self
-        self.view.addSubview(musicTaskSelectNoteInWordView)
+        //self.view.addSubview(musicTaskSelectNoteInWordView)
 
 //---------------------------------------------------------------
         let task19: MusicTaskSelectNoteInWord = tasksStorage.tasks[19] as! MusicTaskSelectNoteInWord
@@ -70,7 +70,7 @@ class ViewController: UIViewController {
             frame: taskViewFrame
         )
         musicTaskWriteNoteInWordView.delegate = self
-        //self.view.addSubview(musicTaskWriteNoteInWordView)
+        self.view.addSubview(musicTaskWriteNoteInWordView)
         
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
         view.addGestureRecognizer(tap)
