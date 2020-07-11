@@ -64,7 +64,6 @@ class MusicTaskSelectNoteView: UIView {
     func setupSubViews(withFrame:CGRect) {
         self.addSubview(questionLabel)
         questionLabel.text = viewModel?.model.questionText
-        
         questionLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
         questionLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0).isActive = true
         questionLabel.widthAnchor.constraint(equalToConstant: withFrame.size.width).isActive = true

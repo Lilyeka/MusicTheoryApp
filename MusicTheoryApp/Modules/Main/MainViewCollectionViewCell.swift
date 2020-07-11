@@ -39,9 +39,6 @@ class MainViewCollectionViewCell: UICollectionViewCell {
         imageView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5).isActive = true
         imageView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5).isActive = true
         imageView.bottomAnchor.constraint(equalTo: textLabel.topAnchor, constant: -5).isActive = true
-        
-        
-        
     }
     
     

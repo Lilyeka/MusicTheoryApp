@@ -13,6 +13,7 @@ protocol MainConfiguratorProtocol: class {
 }
 
 protocol MainViewProtocol: class {
+    var presenter: MainPresenterProtocol! {get set}
 //    func setInputValue(with value: String?)
 //     func setOutputValue(with value: String?)
 //     func setInputCurrencyShortName(with shortName: String)
@@ -30,6 +31,7 @@ protocol MainViewProtocol: class {
 
 protocol MainPresenterProtocol: class {
     var router: MainRouterProtocol! { set get }
+    var interactor: MainInteractorProtocol! {set get}
 //    var rateText: String { get }
     func configureView()
     func numberOfItemsInSection() -> Int

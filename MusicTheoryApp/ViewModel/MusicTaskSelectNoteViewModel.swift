@@ -10,7 +10,6 @@ import UIKit
 
 class MusicTaskSelectNoteViewModel {
     
-
     let model: MusicTaskSelectNote
     var notesViewModels: [NoteViewModel]
     

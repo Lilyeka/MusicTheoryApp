@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController, MainViewProtocol {
+class MainViewController: UIViewController,MainViewProtocol {
     let COLLECTION_VIEW_SECTION_INSET: CGFloat = 10.0
     
     var presenter: MainPresenterProtocol!
@@ -28,15 +28,7 @@ class MainViewController: UIViewController, MainViewProtocol {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
-    
-    
-    
-    // TODO: --
-    // 1) Добавить тэйбл вью
-    // 2) добавить массив со списком названий разделов
-    //                  как в примере
-    //https://medium.com/cr8resume/viper-architecture-for-ios-project-with-simple-demo-example-7a07321dbd29
-    
+
     // MARK: - Lifecycle methods
     override func viewDidLoad() {
         self.view.backgroundColor = .red
@@ -51,9 +43,6 @@ class MainViewController: UIViewController, MainViewProtocol {
         articlesCollectionView.dataSource = self
         articlesCollectionView.backgroundColor = .white
         articlesCollectionView.register(MainViewCollectionViewCell.self, forCellWithReuseIdentifier: "MyCell")
-//        articlesCollectionView.register(GameHeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "GameHeaderCollectionReusableView")
-//        articlesCollectionView.register(GameFooterCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "GameFooterCollectionReusableView")
-//        articlesCollectionView.register(GameWinnedFooterCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "GameWinnedFooterCollectionReusableView")
         
         self.view.addSubview(self.articlesCollectionView)
         articlesCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true

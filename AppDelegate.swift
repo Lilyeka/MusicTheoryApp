@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         // Create a view controller
         let nav = UINavigationController()
+       // nav.edgesForExtendedLayout = .all;
         let mainVC = MainViewController()
         let configurator = MainConfigurator()
         configurator.configure(with: mainVC)

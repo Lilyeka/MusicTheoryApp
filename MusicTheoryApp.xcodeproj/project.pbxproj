@@ -15,6 +15,7 @@
 		6149ED28245B69E500A1375A /* StaffView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6149ED27245B69E500A1375A /* StaffView.swift */; };
 		6172FA16249C084C009153BD /* MusicTaskWriteNoteInWordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6172FA15249C084C009153BD /* MusicTaskWriteNoteInWordViewModel.swift */; };
 		6172FA18249C12A9009153BD /* MusicTaskWriteNoteInWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6172FA17249C12A9009153BD /* MusicTaskWriteNoteInWordView.swift */; };
+		6175CA0824BA51820028BDBD /* QuizCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6175CA0724BA51820028BDBD /* QuizCollectionViewCell.swift */; };
 		617F7EC7245E05F900EE08AA /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6149ED24245A24D600A1375A /* Note.swift */; };
 		619BB53924B4FF3C00D3076E /* MainConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619BB53824B4FF3C00D3076E /* MainConfigurator.swift */; };
 		619BB53B24B5008F00D3076E /* MainProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619BB53A24B5008F00D3076E /* MainProtocols.swift */; };
@@ -24,6 +25,11 @@
 		619BB54324B50F5A00D3076E /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619BB54224B50F5A00D3076E /* MainRouter.swift */; };
 		619BB54524B5C7A900D3076E /* MainViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619BB54424B5C7A900D3076E /* MainViewCollectionViewCell.swift */; };
 		619BB54724B7234C00D3076E /* QuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619BB54624B7234C00D3076E /* QuizViewController.swift */; };
+		619BB54A24B743C100D3076E /* QuizProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619BB54924B743C100D3076E /* QuizProtocols.swift */; };
+		619BB54C24B7463200D3076E /* QuizConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619BB54B24B7463200D3076E /* QuizConfigurator.swift */; };
+		619BB54E24B7475200D3076E /* QuizPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619BB54D24B7475200D3076E /* QuizPresenter.swift */; };
+		619BB55024B749EF00D3076E /* QuizInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619BB54F24B749EF00D3076E /* QuizInteractor.swift */; };
+		619BB55224B74A2300D3076E /* QuizRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619BB55124B74A2300D3076E /* QuizRouter.swift */; };
 		619E3E5424686F52003ECD16 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619E3E5324686F52003ECD16 /* UIImage+Extension.swift */; };
 		61A4B503248843FF004A286E /* MusicTaskSelectNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A4B502248843FF004A286E /* MusicTaskSelectNote.swift */; };
 		61A4B5052488477F004A286E /* MusicTaskShowNoteOnThePiano.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A4B5042488477F004A286E /* MusicTaskShowNoteOnThePiano.swift */; };
@@ -52,6 +58,7 @@
 		6149ED27245B69E500A1375A /* StaffView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffView.swift; sourceTree = "<group>"; };
 		6172FA15249C084C009153BD /* MusicTaskWriteNoteInWordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskWriteNoteInWordViewModel.swift; sourceTree = "<group>"; };
 		6172FA17249C12A9009153BD /* MusicTaskWriteNoteInWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskWriteNoteInWordView.swift; sourceTree = "<group>"; };
+		6175CA0724BA51820028BDBD /* QuizCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCollectionViewCell.swift; sourceTree = "<group>"; };
 		619BB53824B4FF3C00D3076E /* MainConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainConfigurator.swift; sourceTree = "<group>"; };
 		619BB53A24B5008F00D3076E /* MainProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainProtocols.swift; sourceTree = "<group>"; };
 		619BB53C24B5021B00D3076E /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +67,11 @@
 		619BB54224B50F5A00D3076E /* MainRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRouter.swift; sourceTree = "<group>"; };
 		619BB54424B5C7A900D3076E /* MainViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewCollectionViewCell.swift; sourceTree = "<group>"; };
 		619BB54624B7234C00D3076E /* QuizViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewController.swift; sourceTree = "<group>"; };
+		619BB54924B743C100D3076E /* QuizProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizProtocols.swift; sourceTree = "<group>"; };
+		619BB54B24B7463200D3076E /* QuizConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizConfigurator.swift; sourceTree = "<group>"; };
+		619BB54D24B7475200D3076E /* QuizPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizPresenter.swift; sourceTree = "<group>"; };
+		619BB54F24B749EF00D3076E /* QuizInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizInteractor.swift; sourceTree = "<group>"; };
+		619BB55124B74A2300D3076E /* QuizRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizRouter.swift; sourceTree = "<group>"; };
 		619E3E5324686F52003ECD16 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		61A4B502248843FF004A286E /* MusicTaskSelectNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskSelectNote.swift; sourceTree = "<group>"; };
 		61A4B5042488477F004A286E /* MusicTaskShowNoteOnThePiano.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskShowNoteOnThePiano.swift; sourceTree = "<group>"; };
@@ -133,6 +145,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		6175CA0624B902630028BDBD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6175CA0724BA51820028BDBD /* QuizCollectionViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		617F7EC5245DFB9D00EE08AA /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,13 +169,13 @@
 		619BB53624B4F6C400D3076E /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				619BB53824B4FF3C00D3076E /* MainConfigurator.swift */,
-				619BB54224B50F5A00D3076E /* MainRouter.swift */,
-				619BB53E24B5048300D3076E /* MainPresenter.swift */,
 				619BB53C24B5021B00D3076E /* MainViewController.swift */,
-				619BB54424B5C7A900D3076E /* MainViewCollectionViewCell.swift */,
-				619BB53A24B5008F00D3076E /* MainProtocols.swift */,
+				619BB53824B4FF3C00D3076E /* MainConfigurator.swift */,
+				619BB53E24B5048300D3076E /* MainPresenter.swift */,
 				619BB54024B5096E00D3076E /* MainInteractor.swift */,
+				619BB54224B50F5A00D3076E /* MainRouter.swift */,
+				619BB53A24B5008F00D3076E /* MainProtocols.swift */,
+				619BB54424B5C7A900D3076E /* MainViewCollectionViewCell.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -173,6 +193,12 @@
 			isa = PBXGroup;
 			children = (
 				619BB54624B7234C00D3076E /* QuizViewController.swift */,
+				619BB54B24B7463200D3076E /* QuizConfigurator.swift */,
+				619BB54D24B7475200D3076E /* QuizPresenter.swift */,
+				619BB54F24B749EF00D3076E /* QuizInteractor.swift */,
+				619BB55124B74A2300D3076E /* QuizRouter.swift */,
+				619BB54924B743C100D3076E /* QuizProtocols.swift */,
+				6175CA0624B902630028BDBD /* Views */,
 			);
 			path = Quiz;
 			sourceTree = "<group>";
@@ -281,7 +307,10 @@
 				6149ED23245A1DCE00A1375A /* ViewController.swift in Sources */,
 				61A4B74824917D2E00C0E92D /* MusicTaskSelectNoteInWord.swift in Sources */,
 				61A818BF2474858D009DCE07 /* MusicTasks.swift in Sources */,
+				6175CA0824BA51820028BDBD /* QuizCollectionViewCell.swift in Sources */,
 				6172FA16249C084C009153BD /* MusicTaskWriteNoteInWordViewModel.swift in Sources */,
+				619BB54C24B7463200D3076E /* QuizConfigurator.swift in Sources */,
+				619BB54A24B743C100D3076E /* QuizProtocols.swift in Sources */,
 				61CDA927247C66E800780D04 /* PianoView.swift in Sources */,
 				6149ED0F245978CD00A1375A /* AppDelegate.swift in Sources */,
 				619BB54324B50F5A00D3076E /* MainRouter.swift in Sources */,
@@ -289,6 +318,7 @@
 				6172FA18249C12A9009153BD /* MusicTaskWriteNoteInWordView.swift in Sources */,
 				61A4B509248999CF004A286E /* MusicTaskSelectNoteView.swift in Sources */,
 				619BB54524B5C7A900D3076E /* MainViewCollectionViewCell.swift in Sources */,
+				619BB54E24B7475200D3076E /* QuizPresenter.swift in Sources */,
 				6149ED28245B69E500A1375A /* StaffView.swift in Sources */,
 				61A4B507248998F5004A286E /* MusicTaskSelectNoteViewModel.swift in Sources */,
 				619BB53924B4FF3C00D3076E /* MainConfigurator.swift in Sources */,
@@ -301,6 +331,8 @@
 				61A4B5052488477F004A286E /* MusicTaskShowNoteOnThePiano.swift in Sources */,
 				61A4B503248843FF004A286E /* MusicTaskSelectNote.swift in Sources */,
 				61A4B74C24918ADB00C0E92D /* MusicTaskSelectNoteInWordView.swift in Sources */,
+				619BB55024B749EF00D3076E /* QuizInteractor.swift in Sources */,
+				619BB55224B74A2300D3076E /* QuizRouter.swift in Sources */,
 				61A818BD247477E2009DCE07 /* MusicTask.swift in Sources */,
 				619BB54724B7234C00D3076E /* QuizViewController.swift in Sources */,
 				617F7EC7245E05F900EE08AA /* Note.swift in Sources */,

@@ -8,8 +8,6 @@
 
 import UIKit
 
-
-
 class MainConfigurator: MainConfiguratorProtocol {
     
     func configure(with viewController: MainViewController) {
