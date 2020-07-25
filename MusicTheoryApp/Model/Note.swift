@@ -58,7 +58,7 @@ struct Note {
     func noteRusName() -> String {
         switch self.name {
         case .Do,.Do1:
-            return " До"
+            return "До"
         case .re,.re1:
             return "Ре"
         case .mi, .mi1:
@@ -68,7 +68,7 @@ struct Note {
         case .sol,.sol1:
             return "Соль"
         case .la,.la1:
-            return "La"//"Ля"
+            return "Ля"
         case .si0,.si,.si1:
             return "Си"
         

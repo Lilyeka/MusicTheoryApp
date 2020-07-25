@@ -56,7 +56,6 @@ class StaffView: UIView {
     }
     
     fileprivate func setupView() {
-        //drawLines()
         self.addSubview(clefImageView)
         clefImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: StaffView.CLEFT_LEFT_OFFSET).isActive = true
         clefImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 15).isActive = true

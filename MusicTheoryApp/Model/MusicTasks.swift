@@ -10,7 +10,7 @@ import UIKit
 
 class MusicTasks {
     var tasks: [MusicTask] = [
-        MusicTaskSelectNote(
+       /* MusicTaskSelectNote(
             questionText: "Выберите ноты 1-й октавы, расположенные на основных линейках нотного стана",
             notesArray: [ Note(name:.Do, tone:.none, duration:.whole),
                           Note(name:.re, tone:.none, duration:.whole),
@@ -60,7 +60,7 @@ class MusicTasks {
                           Note(name:.sol, tone:.none, duration:.whole),
                           Note(name:.la, tone:.none, duration:.whole),
                           Note(name:.si, tone:.none, duration:.whole)],
-            rightAnswer:   [-1,1,3]),
+            rightAnswer:   [1,3]),
         MusicTaskSelectNote(
             questionText: "Выберите ноты 1-й октавы, которые пишутся между линейками нотного стана",
             notesArray:[Note(name:.si, tone:.none, duration:.whole),
@@ -70,7 +70,7 @@ class MusicTasks {
                         Note(name:.mi, tone:.none, duration:.whole),
                         Note(name:.re, tone:.none, duration:.whole),
                         Note(name:.Do, tone:.none, duration:.whole)],
-            rightAnswer:   [-1,1,3]),
+            rightAnswer:   [1,3]),
         MusicTaskSelectNote(
             questionText: "Выберите ноты 2-й октавы, которые пишутся между линейками нотного стана",
             notesArray: [ Note(name: .Do1, tone: .none, duration: .whole),
@@ -80,7 +80,7 @@ class MusicTasks {
                           Note(name: .sol1, tone: .none, duration: .whole),
                           Note(name: .la1, tone: .none, duration: .whole),
                           Note(name: .si1, tone: .none, duration: .whole)],
-            rightAnswer: [3,5]),
+            rightAnswer: [5,7]),
         MusicTaskSelectNote(
             questionText: "Выберите ноты 2-й октавы, которые пишутся между линейками нотного стана",
             notesArray: [Note(name: .si1, tone: .none, duration: .whole),
@@ -91,7 +91,7 @@ class MusicTasks {
                          Note(name: .re1, tone: .none, duration: .whole),
                          Note(name: .Do1, tone: .none, duration: .whole)
             ],
-            rightAnswer: [3,5]),
+            rightAnswer: [5,7]),
         MusicTaskShowNoteOnThePiano(questionText:"Нажмите на нужную ноту", note: Note(name:.fa, tone: .none, duration: .whole)),
         MusicTaskSelectNoteInWord(questionText: "Какая нота спряталась в слове?",
                                   notesArray: [
@@ -105,7 +105,8 @@ class MusicTasks {
             ],
                                   partsOfWord:[("Ли",nil),
                                                ("си",Note(name: .si, tone:.none, duration: .whole)),
-                                               ("ца",nil)]),
+                                               ("ца",nil)],
+                                  needToType: false),
         MusicTaskSelectNoteInWord(questionText:  "Какая нота спряталась в слове?",
                                   notesArray: [
                                     Note(name:.Do, tone:.none, duration:.whole),
@@ -118,7 +119,8 @@ class MusicTasks {
             ],
                                   partsOfWord: [("Ху",nil),
                                                 ("до",Note(name:.Do, tone: .none, duration: .whole)),
-                                                ("жник",nil)]),
+                                                ("жник",nil)],
+                                                needToType: false),
         MusicTaskSelectNoteInWord(questionText:  "Какая нота спряталась в слове?",
                                   notesArray: [
                                     Note(name:.Do, tone:.none, duration:.whole),
@@ -131,7 +133,8 @@ class MusicTasks {
             ],
                                   partsOfWord: [("Зем",nil),
                                                 ("ля",Note(name: .la, tone: .none, duration: .whole)),
-                                                ("ника",nil)]),
+                                                ("ника",nil)],
+                                  needToType: false),
         MusicTaskSelectNoteInWord(questionText:  "Какая нота спряталась в слове?",
                                   notesArray: [
                                     Note(name:.Do, tone:.none, duration:.whole),
@@ -144,7 +147,8 @@ class MusicTasks {
             ],
                                   partsOfWord: [("Ал",nil),
                                                 ("фа",Note(name: .fa, tone: .none, duration: .whole)),
-                                                ("вит",nil)]),
+                                                ("вит",nil)],
+                                  needToType: false),
         MusicTaskSelectNoteInWord(questionText:  "Какая нота спряталась в слове?",
                                   notesArray: [
                                     Note(name:.Do, tone:.none, duration:.whole),
@@ -157,7 +161,8 @@ class MusicTasks {
             ],
                                   partsOfWord: [("Ось",nil),
                                                 ("ми",Note(name: .mi, tone: .none, duration: .whole)),
-                                                ("ног",nil)]),
+                                                ("ног",nil)],
+                                  needToType: false),
         MusicTaskSelectNoteInWord(questionText:  "Какая нота спряталась в слове?",
                                   notesArray: [
                                     Note(name:.Do, tone:.none, duration:.whole),
@@ -170,7 +175,8 @@ class MusicTasks {
             ],
                                   partsOfWord: [("Ст",nil),
                                                 ("ре",Note(name: .re, tone: .none, duration: .whole)),
-                                                ("коза",nil)]),
+                                                ("коза",nil)],
+                                  needToType: false),
         MusicTaskSelectNoteInWord(questionText:  "Какая нота спряталась в слове?",
                                   notesArray: [
                                     Note(name:.Do, tone:.none, duration:.whole),
@@ -183,7 +189,8 @@ class MusicTasks {
             ],
                                   partsOfWord: [
                                     ("Соль",Note(name: .sol, tone: .none, duration: .whole)),
-                                    ("феджио",nil)]),
+                                    ("феджио",nil)],
+                                  needToType: false),
         MusicTaskSelectNoteInWord(questionText:  "Какая нота спряталась в слове?",
                                   notesArray: [
                                     Note(name:.Do, tone:.none, duration:.whole),
@@ -196,73 +203,93 @@ class MusicTasks {
             ],
                                   partsOfWord: [("Бе",nil),
                                                 ("ре",Note(name: .re, tone: .none, duration: .whole)),
-                                                ("г",nil)]),
+                                                ("г",nil)],
+                                  needToType: false),*/
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.si, tone:.none, duration:.whole)],
                                   partsOfWord: [
                                     ("Cи",Note(name: .si, tone: .none, duration: .whole)),
-                                    ("ница",nil)]),
+                                    ("ница",nil)],
+                                  needToType: true),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.re1, tone:.none, duration:.whole)],
                                   partsOfWord: [
                                     ("Че",nil),
                                     ("ре",Note(name: .re1, tone: .none, duration: .whole)),
-                                    ("паха",nil)]),
+                                    ("паха",nil)],
+                                  needToType: true),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.la, tone:.none, duration:.whole)],
                                   partsOfWord: [
                                     ("Ля",Note(name: .la, tone: .none, duration: .whole)),
-                                    ("гушка",nil)]),
+                                    ("гушка",nil)],
+                                  needToType: true),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.fa1, tone:.none, duration:.whole)],
                                   partsOfWord: [
                                     ("Фа",Note(name: .fa1, tone: .none, duration: .whole)),
-                                    ("кел",nil)]),
+                                    ("кел",nil)],
+                                  needToType: true),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.Do1, tone:.none, duration:.whole)],
                                   partsOfWord: [
                                     ("До",Note(name: .Do1, tone: .none, duration: .whole)),
-                                    ("рога",nil)]),
+                                    ("рога",nil)],
+                                  needToType: true),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.si0, tone:.none, duration:.whole)],
                                   partsOfWord: [
                                     ("Си",Note(name:.si0, tone: .none, duration: .whole)),
-                                    ("роп",nil)]),
+                                    ("роп",nil)],
+                                  needToType: true),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.mi, tone:.none, duration:.whole)],
                                   partsOfWord: [
                                     ("Ми",Note(name:.mi, tone: .none, duration: .whole)),
-                                    ("нута",nil)]),
+                                    ("нута",nil)],
+                                  needToType: true),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.mi1, tone:.none, duration:.whole)],
-                                  partsOfWord: [("Пира",nil),
-                                                ("ми",Note(name:.mi1, tone: .none, duration: .whole)),
-                                                ("да",nil)]),
+                                  partsOfWord: [
+                                    ("Пира",nil),
+                                    ("ми",Note(name:.mi1, tone: .none, duration: .whole)),
+                                    ("да",nil)],
+                                  needToType: true),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.fa1, tone:.none, duration:.whole)],
-                                  partsOfWord: [("Фа",Note(name:.fa1, tone: .none, duration: .whole)),
-                                                ("нтазия",nil)]),
+                                  partsOfWord: [
+                                    ("Фа",Note(name:.fa1, tone: .none, duration: .whole)),
+                                    ("нтазия",nil)],
+                                  needToType: true),
+        MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
+                                  notesArray: [
+                                    Note(name:.fa, tone:.none, duration:.whole),
+                                    Note(name:.sol1, tone:.none, duration:.whole)],
+                                  partsOfWord: [
+                                    ("Фа",Note(name:.fa, tone: .none, duration: .whole)),
+                                    ("соль",Note(name:.sol1, tone: .none, duration: .whole))],
+                                  needToType: true),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.fa, tone:.none, duration:.whole),
                                                 Note(name:.sol1, tone:.none, duration:.whole)],
                                   partsOfWord: [("Фа",Note(name:.fa, tone: .none, duration: .whole)),
-                                                ("соль",Note(name:.sol1, tone: .none, duration: .whole))]),
-        MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
-                                  notesArray: [ Note(name:.fa, tone:.none, duration:.whole),
-                                                Note(name:.sol1, tone:.none, duration:.whole)],
-                                  partsOfWord: [("Фа",Note(name:.fa, tone: .none, duration: .whole)),
-                                                ("соль",Note(name:.sol1, tone: .none, duration: .whole))]),
+                                                ("соль",Note(name:.sol1, tone: .none, duration: .whole))],
+                                  needToType: true),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.mi1, tone:.none, duration:.whole),
                                                 Note(name:.Do, tone:.none, duration:.whole)],
-                                  partsOfWord: [("По",nil),
-                                                ("ми",Note(name:.mi1, tone: .none, duration: .whole)),
-                                                ("до",Note(name:.Do, tone: .none, duration: .whole)),
-                                                ("р",nil)]),
+                                  partsOfWord: [
+                                    ("По",nil),
+                                    ("ми",Note(name:.mi1, tone: .none, duration: .whole)),
+                                    ("до",Note(name:.Do, tone: .none, duration: .whole)),
+                                    ("р",nil)],
+                                  needToType: true),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.la1, tone:.none, duration:.whole)],
-                                  partsOfWord: [("Свет",nil),
-                                                ("ля",Note(name:.la1, tone: .none, duration: .whole)),
-                                                ("чок",nil)])
+                                  partsOfWord: [
+                                    ("Свет",nil),
+                                    ("ля",Note(name:.la1, tone: .none, duration: .whole)),
+                                    ("чок",nil)],
+                                  needToType: true)
     ]
 }

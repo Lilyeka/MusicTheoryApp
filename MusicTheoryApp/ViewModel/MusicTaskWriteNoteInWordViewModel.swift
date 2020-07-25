@@ -9,6 +9,7 @@
 import UIKit
 
 class MusicTaskWriteNoteInWordViewModel {
+    
     let model: MusicTaskSelectNoteInWord
     var notesViewModels: [NoteViewModel]
     
@@ -24,6 +25,9 @@ class MusicTaskWriteNoteInWordViewModel {
     }
     
     func checkUserAnswer(userAnswer:String) -> Bool {
+        //TODO -
+        // userAnswer должен быть массивом String т.к. есть слова где надо написать больше одной ноты
+        // старнивать надо Uppercaserd строки т.к. пользователь не всегда пишет ответ с большой буквы
         for partOfWord in model.partsOfWord! {
             if let part = partOfWord.1 {
                 if userAnswer == part.noteRusName() {return true}

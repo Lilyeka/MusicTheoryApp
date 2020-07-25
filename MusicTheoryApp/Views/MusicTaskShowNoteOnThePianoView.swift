@@ -18,7 +18,6 @@ class MusicTaskShowNoteOnThePianoView: UIView {
     let TOP_OFFSET: CGFloat = 15.0
     let LEFT_OFFSET: CGFloat = 15.0
     let RIGHT_OFFSET: CGFloat = 15.0
-    let LABEL_HEIGHT: CGFloat = 45.0
     
     var viewModel: MusicTaskShowtNoteOnThePianoViewModel?
     var staffView: StaffView!

@@ -22,16 +22,20 @@ class QuizCollectionViewCell: UICollectionViewCell {
     }
     
     func config(withView: UIView) {
+        contentView.backgroundColor = .white
+        
         questionView = withView
         questionView!.translatesAutoresizingMaskIntoConstraints = false
         questionView?.clipsToBounds = true
-        contentView.backgroundColor = .brown
+       
         contentView.addSubview(questionView!)
         questionView!.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         questionView!.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
         questionView!.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
-        questionView!.heightAnchor.constraint(equalToConstant: 350).isActive = true
-        layoutIfNeeded()
+       // questionView!.heightAnchor.constraint(equalToConstant: 350).isActive = true
+        questionView!.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        
+        //layoutIfNeeded()
        // questionView!.bottomAnchor.constraint(greaterThanOrEqualTo: contentView.bottomAnchor).isActive = true
     }
     
@@ -42,6 +46,8 @@ class QuizCollectionViewCell: UICollectionViewCell {
     }
         
     override func prepareForReuse() {
-     
+        for v in contentView.subviews {
+            v.removeFromSuperview()
+        }
     }
 }
