@@ -24,8 +24,10 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
     //MARK: -Delegate
     var delegate: QuizSelectNoteCollectionViewCellDelegate?
     
-    //MARK: -Views
+    //MARK: -ViewModel
     var viewModel: MusicTaskSelectNoteViewModel?
+    
+    //MARK: -Views
     var staffView: StaffView!
     
     var questionLabel: UILabel = {
@@ -62,16 +64,18 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
         self.viewModel = viewModel
                 
         staffView = StaffView(notesViewModels: viewModel.notesViewModels,selectOnlyOneNote: false, frame:CGRect.zero)
+        staffView.delegate = self
         staffView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(staffView)
         staffView.topAnchor.constraint(equalTo:  self.contentView.topAnchor, constant: LBL_TOP_OFFSET).isActive = true
         staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 25).isActive = true
-        staffView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: 25).isActive = true
+        staffView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -25).isActive = true
         staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
         staffView.drawNotesOneByOne(notesAreTransparent: true)
         
-        self.contentView.addSubview(questionLabel)
+        
         questionLabel.text = viewModel.model.questionText
+        self.contentView.addSubview(questionLabel)
         questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: LBL_TOP_OFFSET).isActive = true
         questionLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor).isActive = true
         questionLabel.widthAnchor.constraint(equalToConstant: frame.size.width).isActive = true
@@ -79,11 +83,10 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
         questionLabel.superview!.bringSubviewToFront(questionLabel)
         
         self.addSubview(checkResultButton)
+        checkResultButton.isHidden = true
+     
         checkResultButton.topAnchor.constraint(equalTo: staffView.bottomAnchor, constant: BTN_TOP_OFFSET).isActive = true
         checkResultButton.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
-
-        //checkResultButton.heightAnchor.constraint(equalToConstant: 60.0).isActive = true
-        checkResultButton.widthAnchor.constraint(equalToConstant: 200.0).isActive = true
         checkResultButton.addTarget(self, action: #selector(checkButtonTapped(sender:)), for: .touchUpInside)
     }
     
@@ -102,4 +105,12 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
             v.removeFromSuperview()
         }
     }
+}
+
+extension QuizSelectNoteCollectionViewCell: StaffViewDelegate {
+    func pickedOutNotesIndexesDidChange(newValue: [Int]) {
+        checkResultButton.isHidden = newValue.count > 0 ? false : true
+    }
+    
+    
 }

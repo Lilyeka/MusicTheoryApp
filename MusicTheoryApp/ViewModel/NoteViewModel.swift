@@ -36,7 +36,7 @@ class NoteViewModel {
 
 extension NoteViewModel {
     // Функция возвращает названия картинок значка и ноты,
-    // из высоту, ширину и смещение центра картинки по Y (если не целая нота и/или не диез то центр смещен от реального центра)
+    // их. высоту, ширину и смещение центра картинки по Y (если не целая нота и/или не диез то центр смещен от реального центра)
     // высота ноты/значка подобрана так,чтобы круглешок ноты был равен расстоянию между линейками)
     func noteImagesHeightsAndCentersPositions() -> (tone:String?, toneHeight:CGFloat?, toneWidth: CGFloat?, toneCenterOffesetY:CGFloat?, duration:String?, durationHeight:CGFloat?,
         durationWidth: CGFloat?, durationCenterOffesetY:CGFloat?) {
@@ -66,8 +66,14 @@ extension NoteViewModel {
         switch model.duration {
         case .whole:
             durationImageName = "whole_note"
-            durationHeight = 52.0
-            durationWidth = 50.0
+            if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+                durationHeight = 52.0
+                durationWidth = 50.0
+            } else if DeviceType.IS_IPHONE_6_6s_7_8 {
+                durationHeight = 37.0
+                durationWidth = 35.0
+            }
+        // TODO: Для остальных нот тоже устанавливать значения в зависимости от типа девайса
         case .half:
             durationImageName = "half_note"
             durationHeight = 109.0
@@ -89,6 +95,8 @@ extension NoteViewModel {
              
         return (tone:toneImageName, toneWidth:toneWidth, toneHeight:toneHeight, toneCenterOffesetY:offsetFromToneCenter, duration: durationImageName, durationWidth:durationWidth, durationHeight:durationHeight, durationCenterOffesetY:offsetFromDurationCenter)
     }
+    
+    
     
     func didTapped() {
         self.selected = !self.selected

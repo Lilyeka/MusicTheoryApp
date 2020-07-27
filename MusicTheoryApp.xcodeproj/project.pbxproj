@@ -45,6 +45,7 @@
 		61A818BF2474858D009DCE07 /* MusicTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A818BE2474858D009DCE07 /* MusicTasks.swift */; };
 		61A818C1247AB591009DCE07 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A818C0247AB591009DCE07 /* String+Extension.swift */; };
 		61CDA927247C66E800780D04 /* PianoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CDA926247C66E800780D04 /* PianoView.swift */; };
+		61E3914B24CE079500603666 /* DeviceTypeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E3914A24CE079500603666 /* DeviceTypeManager.swift */; };
 		61E8ABEE24BC989D00B58A01 /* QuizShowNoteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E8ABED24BC989D00B58A01 /* QuizShowNoteCollectionViewCell.swift */; };
 		61E8ABF024BDB29100B58A01 /* QuizWriteNoteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E8ABEF24BDB29100B58A01 /* QuizWriteNoteCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -90,6 +91,7 @@
 		61A818BE2474858D009DCE07 /* MusicTasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTasks.swift; sourceTree = "<group>"; };
 		61A818C0247AB591009DCE07 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		61CDA926247C66E800780D04 /* PianoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PianoView.swift; sourceTree = "<group>"; };
+		61E3914A24CE079500603666 /* DeviceTypeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTypeManager.swift; sourceTree = "<group>"; };
 		61E8ABED24BC989D00B58A01 /* QuizShowNoteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizShowNoteCollectionViewCell.swift; sourceTree = "<group>"; };
 		61E8ABEF24BDB29100B58A01 /* QuizWriteNoteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizWriteNoteCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -125,6 +127,7 @@
 		6149ED0D245978CD00A1375A /* MusicTheoryApp */ = {
 			isa = PBXGroup;
 			children = (
+				61E3914924CE073E00603666 /* Managers */,
 				619BB53724B4FEE900D3076E /* Modules */,
 				61A818BB247477A7009DCE07 /* ViewControllers */,
 				617F7EC5245DFB9D00EE08AA /* Model */,
@@ -241,6 +244,14 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		61E3914924CE073E00603666 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				61E3914A24CE079500603666 /* DeviceTypeManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -325,6 +336,7 @@
 				6149ED0F245978CD00A1375A /* AppDelegate.swift in Sources */,
 				619BB54324B50F5A00D3076E /* MainRouter.swift in Sources */,
 				619E3E5424686F52003ECD16 /* UIImage+Extension.swift in Sources */,
+				61E3914B24CE079500603666 /* DeviceTypeManager.swift in Sources */,
 				6172FA18249C12A9009153BD /* MusicTaskWriteNoteInWordView.swift in Sources */,
 				61A4B509248999CF004A286E /* MusicTaskSelectNoteView.swift in Sources */,
 				619BB54524B5C7A900D3076E /* MainViewCollectionViewCell.swift in Sources */,

@@ -10,7 +10,7 @@ import UIKit
 
 class MusicTasks {
     var tasks: [MusicTask] = [
-       /* MusicTaskSelectNote(
+        MusicTaskSelectNote(
             questionText: "Выберите ноты 1-й октавы, расположенные на основных линейках нотного стана",
             notesArray: [ Note(name:.Do, tone:.none, duration:.whole),
                           Note(name:.re, tone:.none, duration:.whole),
@@ -204,7 +204,7 @@ class MusicTasks {
                                   partsOfWord: [("Бе",nil),
                                                 ("ре",Note(name: .re, tone: .none, duration: .whole)),
                                                 ("г",nil)],
-                                  needToType: false),*/
+                                  needToType: false),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.si, tone:.none, duration:.whole)],
                                   partsOfWord: [
