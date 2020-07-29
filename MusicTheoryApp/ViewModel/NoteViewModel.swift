@@ -29,6 +29,18 @@ class NoteViewModel {
         }
     }
     
+    var needsUnderLine: Bool { //как "подчеркивание"
+        get {
+            return self.model.name == .si1 ? true : false
+        }
+    }
+    
+    var needsUpperLine: Bool { //как "надчеркивание"
+        get {
+            return self.model.name == .si0 ? true : false
+        }
+    }
+    
     init(model:Note) {
         self.model = model
     }
@@ -95,8 +107,6 @@ extension NoteViewModel {
              
         return (tone:toneImageName, toneWidth:toneWidth, toneHeight:toneHeight, toneCenterOffesetY:offsetFromToneCenter, duration: durationImageName, durationWidth:durationWidth, durationHeight:durationHeight, durationCenterOffesetY:offsetFromDurationCenter)
     }
-    
-    
     
     func didTapped() {
         self.selected = !self.selected

@@ -9,7 +9,7 @@
 import UIKit
 
 protocol StaffViewDelegate {
-   func pickedOutNotesIndexesDidChange(newValue: [Int])
+    func pickedOutNotesIndexesDidChange(newValue: [Int])
 }
 
 class StaffView: UIView {
@@ -146,6 +146,21 @@ class StaffView: UIView {
                         toEndingX: Int(noteStartXPosition) + Int(noteWidth) + addLineXOffset,
                         startingY: StaffView.viewHeight() + Int(durationPositionY),
                         toEndingY: StaffView.viewHeight() + Int(durationPositionY),
+                        ofColor: .black,
+                        widthOfLine: 3,
+                        inView: self
+                    )
+                }
+                
+                //дополнительная линейка снизу
+                if note.needsUnderLine {
+                    let addLineXOffset = 7
+                    let noteStartXPosition = Int(StaffView.CLEFT_LEFT_OFFSET + StaffView.CLEF_WIDTH + leftOffsetFromClef)
+                    drawAdditionalLine(
+                        startX: noteStartXPosition - addLineXOffset,
+                        toEndingX: Int(noteStartXPosition) + Int(noteWidth) + addLineXOffset,
+                        startingY: StaffView.viewHeight() - StaffView.VERTICAL_OFFSET - Int(note.model.name.rawValue/2)*StaffView.LINE_OFFSET,
+                        toEndingY: StaffView.viewHeight() - StaffView.VERTICAL_OFFSET - Int(note.model.name.rawValue/2)*StaffView.LINE_OFFSET,
                         ofColor: .black,
                         widthOfLine: 3,
                         inView: self

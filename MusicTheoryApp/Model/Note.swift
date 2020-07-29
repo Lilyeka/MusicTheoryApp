@@ -71,7 +71,6 @@ struct Note {
             return "Ля"
         case .si0,.si,.si1:
             return "Си"
-        
         }
     }
 }
