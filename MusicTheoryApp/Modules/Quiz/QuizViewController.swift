@@ -13,6 +13,8 @@ class QuizViewController: UIViewController, QuizViewProtocol {
     var configurator: QuizConfiguratorProtocol = QuizConfigurator()
     var currentQuestionNumber: Int!
     
+    private let fireworkController = ClassicFireworkController()
+    
     lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -25,6 +27,7 @@ class QuizViewController: UIViewController, QuizViewProtocol {
     lazy var quizCollectionView: UICollectionView! = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.isScrollEnabled = false
         //collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .white
@@ -184,7 +187,16 @@ extension QuizViewController: UICollectionViewDelegate {
 }
 
 
-extension QuizViewController: QuizSelectNoteCollectionViewCellDelegate, QuizShowNoteCollectionViewCellDelegate, MusicTaskWriteNoteInWordViewDelegate, QuizWriteNoteCollectionViewCellDelegate {
+
+extension QuizViewController: QuizSelectNoteCollectionViewCellDelegate {
+
+    func rightNoteTappedReaction(noteView: UIView) {
+        fireworkController.addFireworks(count: 2, sparks: 8, around: noteView)
+        noteView.isUserInteractionEnabled = false
+    }
+}
+
+extension QuizViewController: QuizShowNoteCollectionViewCellDelegate, MusicTaskWriteNoteInWordViewDelegate, QuizWriteNoteCollectionViewCellDelegate {
     
     func rightAnswerReaction() {
         let alert = UIAlertController(title: "Верный ответ", message: "Поехали дальше!", preferredStyle: .alert)

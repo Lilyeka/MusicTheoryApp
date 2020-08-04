@@ -11,6 +11,8 @@ import UIKit
 protocol QuizSelectNoteCollectionViewCellDelegate {
     func rightAnswerReaction()
     func wrongAnswerReaction()
+    func rightNoteTappedReaction(noteView: UIView)
+    
 }
 
 class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
@@ -20,7 +22,14 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
     static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 20.0)
     let BTN_TOP_OFFSET: CGFloat = 25.0
     let LBL_TOP_OFFSET: CGFloat = 10.0
-    let STAF_TOP_OFFSET: CGFloat = 25.0
+    let STAF_TOP_OFFSET: CGFloat = 45.0
+    let STAF_VERT_OFFSET: CGFloat = {
+      if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+        return 25.0
+      } else {
+        return 10.0
+        }
+    }()
     
     //MARK: -Delegate
     var delegate: QuizSelectNoteCollectionViewCellDelegate?
@@ -64,13 +73,13 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
     func configureSubviews(viewModel:MusicTaskSelectNoteViewModel, frame:CGRect) {
         self.viewModel = viewModel
                 
-        staffView = StaffView(notesViewModels: viewModel.notesViewModels,selectOnlyOneNote: false, frame:CGRect.zero)
+        staffView = StaffView(notesViewModels: viewModel.notesViewModels,selectOnlyOneNote: false, frame:CGRect.zero,notesDelegate: self)
         staffView.delegate = self
         staffView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(staffView)
         staffView.topAnchor.constraint(equalTo:  self.contentView.topAnchor, constant: STAF_TOP_OFFSET).isActive = true
-        staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 25).isActive = true
-        staffView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -25).isActive = true
+        staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: STAF_VERT_OFFSET).isActive = true
+        staffView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -STAF_VERT_OFFSET).isActive = true
         staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
         staffView.drawNotesOneByOne(notesAreTransparent: true)
         
@@ -105,6 +114,18 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
             v.removeFromSuperview()
         }
     }
+}
+
+extension QuizSelectNoteCollectionViewCell: NoteViewModelDelegate {
+    func noteTaped(noteName: Note.NoteName, noteView: UIView) {
+        if let viewModel = viewModel {
+            if viewModel.noteIsFromRightAnswer(note:noteName) {
+                delegate?.rightNoteTappedReaction(noteView: noteView)
+            }
+        }
+    }
+    
+    
 }
 
 extension QuizSelectNoteCollectionViewCell: StaffViewDelegate {

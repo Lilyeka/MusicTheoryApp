@@ -68,7 +68,7 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
         let pianoViewWidth = staffViewWidth
         
         staffView = StaffView(notesViewModels:viewModel.notesViewModels,selectOnlyOneNote: true,
-                              frame: CGRect.zero)
+                              frame: CGRect.zero, notesDelegate: nil)
         staffView.translatesAutoresizingMaskIntoConstraints = false
         staffView.isUserInteractionEnabled = false
         self.contentView.addSubview(staffView)

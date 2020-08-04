@@ -12,12 +12,13 @@ protocol StaffViewDelegate {
     func pickedOutNotesIndexesDidChange(newValue: [Int])
 }
 
-class StaffView: UIView {
+class StaffView: UIView {    
     static let VERTICAL_OFFSET = 60
+    var noteDelegate: NoteViewModelDelegate?
     
     static var LINE_OFFSET: Int = {
         if (DeviceType.IS_IPHONE_6_6s_7_8)  {
-            return 24
+            return 28
         }
         return 30 // for iPhone 11
     }()
@@ -43,8 +44,15 @@ class StaffView: UIView {
         return 80.0 // for iPhone 11
     }()
     
+    static let CLEFT_LEFT_OFFSET: CGFloat = {
+        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+            return 10.0
+        } else {
+            return 5.0
+        }
+    }()
+    
     static let LINE_WIDTH: CGFloat = 2.0
-    static let CLEFT_LEFT_OFFSET: CGFloat = 10.0
     
     
     static func viewHeight() -> Int {
@@ -67,6 +75,7 @@ class StaffView: UIView {
     
     //MARK: -Views
     var previousSelectedNoteView: UIView?
+    var selectedNoteView: UIView?
     
     var clefImageView: UIImageView = {
         var imageView = UIImageView()
@@ -85,11 +94,14 @@ class StaffView: UIView {
         super.init(coder: aDecoder)
     }
     
-    init(notesViewModels:[NoteViewModel], selectOnlyOneNote: Bool, frame:CGRect) {
+    init(notesViewModels:[NoteViewModel], selectOnlyOneNote: Bool, frame:CGRect, notesDelegate: NoteViewModelDelegate?) {
         super.init(frame:frame)
         self.notesArray = notesViewModels
         self.selectOnlyOneNote = selectOnlyOneNote
         setupView()
+        if notesDelegate != nil {
+            setNotesDelegate(deleg: notesDelegate!)
+        }
     }
     
     override func draw(_ rect: CGRect) {
@@ -104,15 +116,34 @@ class StaffView: UIView {
         clefImageView.widthAnchor.constraint(equalToConstant: StaffView.CLEF_WIDTH).isActive = true
     }
     
+    func setNotesDelegate(deleg: NoteViewModelDelegate) {
+        self.noteDelegate = deleg
+    }
+    
     func drawNotesOneByOne(notesAreTransparent: Bool) {
-        let offsetBetwenNotes: CGFloat = 35.0
-        let offsetFromClef: CGFloat = 35.0
+        let offsetBetwenNotes: CGFloat = {
+            if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+                return 55.0
+            } else {
+                return 38.0
+            }
+        }()
+        
+        let offsetFromClef: CGFloat = {
+            if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+                return 35.0
+            } else {
+                return 20.0
+            }
+        }()
+        
         var previousNoteWidth: CGFloat = 0.0
         var previousLeftOffsetFromClef: CGFloat = 0.0
         
         var i = 0
         for note in notesArray! {
             note.alfa = notesAreTransparent ?  NoteViewModel.TRANSPARENT_ALFA : NoteViewModel.OPAQUE_ALFA
+            note.delegate = noteDelegate
             let noteCharacteristics = note.noteImagesHeightsAndCentersPositions()
             let leftOffsetFromClef = i == 0 ? offsetFromClef : (previousLeftOffsetFromClef + previousNoteWidth + offsetBetwenNotes)
             let offsetLinePositions = CGFloat(note.model.name.rawValue)/2.0*CGFloat(StaffView.LINE_OFFSET)
@@ -136,8 +167,8 @@ class StaffView: UIView {
                 imageView.heightAnchor.constraint(equalToConstant: noteHeight).isActive = true
                 imageView.widthAnchor.constraint(equalToConstant: noteWidth).isActive = true
                 imageView.centerYAnchor.constraint(equalTo: self.bottomAnchor, constant: durationPositionY).isActive = true
-                
-                //дополнительная линейка
+              
+                //дополнительная линейка по центру ноты
                 if note.needsAdditionalLine {
                     let addLineXOffset = 7
                     let noteStartXPosition = Int(StaffView.CLEFT_LEFT_OFFSET + StaffView.CLEF_WIDTH + leftOffsetFromClef)
@@ -152,7 +183,7 @@ class StaffView: UIView {
                     )
                 }
                 
-                //дополнительная линейка снизу
+                //дополнительная линейка снизу ноты
                 if note.needsUnderLine {
                     let addLineXOffset = 7
                     let noteStartXPosition = Int(StaffView.CLEFT_LEFT_OFFSET + StaffView.CLEF_WIDTH + leftOffsetFromClef)
@@ -170,7 +201,8 @@ class StaffView: UIView {
                 //Название ноты
                 let nameLabel = UILabel()
                 nameLabel.translatesAutoresizingMaskIntoConstraints = false
-                nameLabel.backgroundColor = .green
+                nameLabel.font = NoteViewModel.NOTE_LABEL_FONT
+               // nameLabel.backgroundColor = .green
                 nameLabel.text = note.noteTitle()
                 nameLabel.textColor = .black
                 nameLabel.textAlignment = .center
@@ -219,6 +251,7 @@ class StaffView: UIView {
     }
     
     @objc func noteTapped(tapGestureRecognizer:UITapGestureRecognizer) {
+        selectedNoteView = tapGestureRecognizer.view
         if selectOnlyOneNote {//можно выбрать только одну ноту из нескольких
             let noteViewModelNumber = tapGestureRecognizer.view?.tag
             tapGestureRecognizer.view?.alpha = NoteViewModel.OPAQUE_ALFA
@@ -235,7 +268,7 @@ class StaffView: UIView {
             let noteViewModelIndex = findNoteIndex(noteNumber: noteViewModelNumber!, inArray: notesArray!)
             let noteViewModel = notesArray![noteViewModelIndex]
             
-            noteViewModel.didTapped()
+            noteViewModel.didTapped(noteView:selectedNoteView!)
             tapGestureRecognizer.view?.alpha = noteViewModel.selected ? NoteViewModel.OPAQUE_ALFA : NoteViewModel.TRANSPARENT_ALFA
             
             if pickedOutNotesIndexes.contains(noteViewModelNumber!) {

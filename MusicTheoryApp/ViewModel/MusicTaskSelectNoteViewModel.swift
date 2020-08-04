@@ -29,4 +29,10 @@ class MusicTaskSelectNoteViewModel {
         return model.rightAnswer == userAnswer ? true : false
     }
     
+    func noteIsFromRightAnswer(note: Note.NoteName) -> Bool {
+        for n in model.rightAnswer! {
+            if n == note.rawValue {return true}
+        }
+        return false
+    }
 }

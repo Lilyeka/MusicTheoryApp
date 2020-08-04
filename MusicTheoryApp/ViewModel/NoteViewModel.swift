@@ -8,9 +8,16 @@
 
 import UIKit
 
+protocol NoteViewModelDelegate {
+    func noteTaped(noteName:Note.NoteName, noteView: UIView)
+}
+
 class NoteViewModel {
     static let TRANSPARENT_ALFA: CGFloat = 0.3
     static let OPAQUE_ALFA: CGFloat = 1.0
+    static let NOTE_LABEL_FONT =  UIFont.boldSystemFont(ofSize: 18.0)
+    
+    var delegate: NoteViewModelDelegate?
     
     let model: Note
     
@@ -82,9 +89,10 @@ extension NoteViewModel {
                 durationHeight = 52.0
                 durationWidth = 50.0
             } else if DeviceType.IS_IPHONE_6_6s_7_8 {
-                durationHeight = 37.0
-                durationWidth = 35.0
+                durationHeight = 45.0
+                durationWidth = 45.0
             }
+            offsetFromDurationCenter = 1
         // TODO: Для остальных нот тоже устанавливать значения в зависимости от типа девайса
         case .half:
             durationImageName = "half_note"
@@ -101,6 +109,7 @@ extension NoteViewModel {
             durationHeight = 109.0
             durationWidth = 60.0
             offsetFromDurationCenter = durationHeight!/4 + durationHeight!/8
+            
         default:
             durationImageName = nil
         }
@@ -108,8 +117,9 @@ extension NoteViewModel {
         return (tone:toneImageName, toneWidth:toneWidth, toneHeight:toneHeight, toneCenterOffesetY:offsetFromToneCenter, duration: durationImageName, durationWidth:durationWidth, durationHeight:durationHeight, durationCenterOffesetY:offsetFromDurationCenter)
     }
     
-    func didTapped() {
+    func didTapped(noteView: UIView) {
         self.selected = !self.selected
+        delegate?.noteTaped(noteName:self.model.name, noteView: noteView)
     }
     
     func noteTitle() -> String {

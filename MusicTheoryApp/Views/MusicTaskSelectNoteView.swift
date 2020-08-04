@@ -69,7 +69,10 @@ class MusicTaskSelectNoteView: UIView {
         questionLabel.widthAnchor.constraint(equalToConstant: withFrame.size.width).isActive = true
         questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: withFrame.size.width, font:MusicTaskSelectNoteView.QUESTION_FONT))!).isActive = true
         
-        staffView = StaffView(notesViewModels: viewModel!.notesViewModels,selectOnlyOneNote: false, frame:CGRect.zero)
+        staffView = StaffView(notesViewModels: viewModel!.notesViewModels,
+                              selectOnlyOneNote: false,
+                              frame: CGRect.zero,
+                              notesDelegate: nil)
         staffView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(staffView)
         staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 0).isActive = true
