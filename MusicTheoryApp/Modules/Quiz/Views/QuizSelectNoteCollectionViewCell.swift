@@ -22,7 +22,13 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
     static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 20.0)
     let BTN_TOP_OFFSET: CGFloat = 25.0
     let LBL_TOP_OFFSET: CGFloat = 10.0
-    let STAF_TOP_OFFSET: CGFloat = 45.0
+    let STAF_TOP_OFFSET: CGFloat = {//45.0
+        if DeviceType.IS_IPHONE_11Pro_X_Xs {
+            return 30.0
+        }
+        return 45.0
+    }()
+    
     let STAF_VERT_OFFSET: CGFloat = {
       if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
         return 25.0

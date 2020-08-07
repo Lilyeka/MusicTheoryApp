@@ -17,8 +17,12 @@ class StaffView: UIView {
     var noteDelegate: NoteViewModelDelegate?
     
     static var LINE_OFFSET: Int = {
-        if (DeviceType.IS_IPHONE_6_6s_7_8)  {
+        if DeviceType.IS_IPHONE_6_6s_7_8 {
             return 28
+        } else if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ {
+            return 32
+        } else if DeviceType.IS_IPHONE_11Pro_X_Xs {
+            return 33
         }
         return 30 // for iPhone 11
     }()
@@ -27,29 +31,53 @@ class StaffView: UIView {
         if (DeviceType.IS_IPHONE_6_6s_7_8)  {
             return 35.0
         }
+        if (DeviceType.IS_IPHONE_6P_6sP_7P_8P_)  {
+            return 15.0
+        }
+        if DeviceType.IS_IPHONE_11Pro_X_Xs {
+            return 15.0
+        }
         return 15.0 // for iPhone 11
     }()
     
     static var CLEF_BOTTOM_OFFSET: CGFloat = {
-        if(DeviceType.IS_IPHONE_6_6s_7_8){
+        if(DeviceType.IS_IPHONE_6_6s_7_8) {
             return -16.0
+        }
+       if (DeviceType.IS_IPHONE_6P_6sP_7P_8P_) {
+            return 6.0
+        }
+        if DeviceType.IS_IPHONE_11Pro_X_Xs {
+            return 9.0
         }
         return 0 // for iPhone 11
     }()
     
     static let CLEF_WIDTH: CGFloat = {
-        if (DeviceType.IS_IPHONE_6_6s_7_8)  {
+        if (DeviceType.IS_IPHONE_6_6s_7_8) {
             return 70.0
         }
+        if (DeviceType.IS_IPHONE_6P_6sP_7P_8P_) {
+            return 80.0
+        }
+        if DeviceType.IS_IPHONE_11Pro_X_Xs {
+            return 80.0
+        }
+        
         return 80.0 // for iPhone 11
     }()
     
     static let CLEFT_LEFT_OFFSET: CGFloat = {
-        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
-            return 10.0
-        } else {
+        if DeviceType.IS_IPHONE_6_6s_7_8 {
             return 5.0
         }
+        if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ {
+            return 8.0
+        }
+        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+            return 15.0
+        }
+        return 5.0
     }()
     
     static let LINE_WIDTH: CGFloat = 2.0
@@ -105,6 +133,7 @@ class StaffView: UIView {
     }
     
     override func draw(_ rect: CGRect) {
+        layer.backgroundColor = UIColor.green.cgColor
         drawLines(in: rect)
     }
     
@@ -122,11 +151,16 @@ class StaffView: UIView {
     
     func drawNotesOneByOne(notesAreTransparent: Bool) {
         let offsetBetwenNotes: CGFloat = {
-            if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
-                return 55.0
-            } else {
+            if DeviceType.IS_IPHONE_6_6s_7_8 {
                 return 38.0
             }
+            if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ {
+                return 40.0
+            }
+            if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+                return 55.0
+            }
+            return 38.0
         }()
         
         let offsetFromClef: CGFloat = {
