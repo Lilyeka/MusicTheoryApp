@@ -8,6 +8,15 @@
 
 import UIKit
 
+enum Octaves {
+    case TrebleFirst
+    case TrebleSecond
+    case TrebleThird
+    case BassBig
+    case BassLittle
+    case BassFirst
+}
+
 struct Note {
      enum Duration {
         case whole
@@ -17,8 +26,7 @@ struct Note {
         case none //для значков нет длительности
     }
     
-    public enum NoteName: Int{
-        case si0 = -3
+    public enum NoteName: Int {
         case Do = -2
         case re = -1
         case mi = 0
@@ -44,7 +52,7 @@ struct Note {
     var name: NoteName = .Do
     var tone: Tonality = .none
     var duration: Duration = .whole
-    
+        
     static func ==(lhs: Note, rhs: Note) -> Bool {
         return lhs.name == rhs.name && lhs.duration == rhs.duration && lhs.tone == rhs.tone
     }
@@ -69,9 +77,20 @@ struct Note {
             return "Соль"
         case .la,.la1:
             return "Ля"
-        case .si0,.si,.si1:
+        case .si,.si1:
             return "Си"
         }
+    }
+    
+    func noteOctave() -> Octaves {
+         switch self.name {
+         case  .Do, .re, .mi, .fa, .sol, .la, .si:
+             return Octaves.TrebleFirst
+         case .Do1, .re1, .mi1, .fa1, .sol1, .la1, .si1:
+            return Octaves.TrebleSecond
+         default:
+             return Octaves.TrebleFirst
+         }
     }
 }
 

@@ -237,9 +237,9 @@ class MusicTasks {
                                     ("рога",nil)],
                                   needToType: true),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
-                                  notesArray: [ Note(name:.si0, tone:.none, duration:.whole)],
+                                  notesArray: [ Note(name:.si, tone:.none, duration:.whole)],
                                   partsOfWord: [
-                                    ("Си",Note(name:.si0, tone: .none, duration: .whole)),
+                                    ("Си",Note(name:.si, tone: .none, duration: .whole)),
                                     ("роп",nil)],
                                   needToType: true),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",

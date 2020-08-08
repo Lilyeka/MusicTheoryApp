@@ -42,11 +42,11 @@ class NoteViewModel {
         }
     }
     
-    var needsUpperLine: Bool { //как "надчеркивание"
-        get {
-            return self.model.name == .si0 ? true : false
-        }
-    }
+//    var needsUpperLine: Bool { //как "надчеркивание"
+//        get {
+//         //   return self.model.name == .si0 ? true : false
+//        }
+//    }
     
     init(model:Note) {
         self.model = model
@@ -131,7 +131,7 @@ extension NoteViewModel {
             return "Соль"
         case .la,.la1:
             return "Ля"
-        case .si0,.si,.si1:
+        case .si,.si1:
             return "Си"
         }
     }
@@ -139,7 +139,7 @@ extension NoteViewModel {
     func noteTitleBottomOffset() -> CGFloat {
         switch model.name.rawValue {
         case 5...:
-            return -10.0
+            return -12.0
         default:
             return 12.0
         }

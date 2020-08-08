@@ -35,4 +35,15 @@ class MusicTaskSelectNoteViewModel {
         }
         return false
     }
+    
+    func notesOctave() -> Octaves? {
+        var octavesSet = Set<Octaves>()
+        for n in self.model.notesArray! {
+            octavesSet.insert(n.noteOctave())
+        }
+        if octavesSet.count == 1 {
+            return octavesSet.popFirst()!
+        }
+        return nil
+    }
 }

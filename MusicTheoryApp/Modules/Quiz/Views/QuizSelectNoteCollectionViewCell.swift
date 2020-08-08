@@ -22,7 +22,7 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
     
     let BTN_TOP_OFFSET: CGFloat = 25.0
     let LBL_TOP_OFFSET: CGFloat = 10.0
-    let STAF_TOP_OFFSET: CGFloat = {//45.0
+    let STAF_TOP_OFFSET: CGFloat = {
         if DeviceType.IS_IPHONE_11Pro_X_Xs {
             return 30.0
         }
@@ -31,10 +31,10 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
     
     let STAF_VERT_OFFSET: CGFloat = {
         if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
-        return 25.0
-      } else {
-        return 10.0
-    }
+            return 15.0
+        } else {
+            return 10.0
+        }
     }()
     
     //MARK: -Delegate
@@ -78,20 +78,22 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
     //MARK: -Public methods
     func configureSubviews(viewModel:MusicTaskSelectNoteViewModel, frame:CGRect) {
         self.viewModel = viewModel
-                
+        
         staffView = StaffView(notesViewModels: viewModel.notesViewModels,selectOnlyOneNote: false, frame:CGRect.zero,notesDelegate: self)
         staffView.delegate = self
         staffView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(staffView)
-        staffView.topAnchor.constraint(equalTo:  self.contentView.topAnchor, constant: STAF_TOP_OFFSET).isActive = true
         
-        //TODO: STAF_TOP_OFFSET сделать к нему дельту которая становится больше нуля в случае, если все ноты из viewModel.notesViewModels выше Do1
-        
+        //дельта, которая становится больше нуля в случае, если все ноты из viewModel.notesViewModels выше Do1
+        var additionalTopOffsetForStaff: CGFloat = 0.0
+        if let octave = viewModel.notesOctave(), octave == .TrebleSecond {
+            additionalTopOffsetForStaff = addTopOffsetForStaff()
+        }
+        staffView.topAnchor.constraint(equalTo:  self.contentView.topAnchor, constant: STAF_TOP_OFFSET+additionalTopOffsetForStaff).isActive = true
         staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: STAF_VERT_OFFSET).isActive = true
         staffView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -STAF_VERT_OFFSET).isActive = true
         staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
         staffView.drawNotesOneByOne(notesAreTransparent: true)
-        
         
         questionLabel.text = viewModel.model.questionText
         self.contentView.addSubview(questionLabel)
@@ -117,11 +119,29 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
             delegate?.wrongAnswerReaction()
         }
     }
+    
     //MARK: -Override methods
     override func prepareForReuse() {
         for v in contentView.subviews {
             v.removeFromSuperview()
         }
+    }
+    
+    //MARK: -Private methods
+    func addTopOffsetForStaff() -> CGFloat {
+        if DeviceType.IS_IPHONE_11Pro_X_Xs {
+            return 17.0
+        }
+        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+            return 21.0
+        }
+        if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ {
+            return 15.0
+        }
+        if DeviceType.IS_IPHONE_6_6s_7_8 {
+            return 12.0
+        }
+        return 0.0
     }
 }
 
@@ -133,8 +153,6 @@ extension QuizSelectNoteCollectionViewCell: NoteViewModelDelegate {
             }
         }
     }
-    
-    
 }
 
 extension QuizSelectNoteCollectionViewCell: StaffViewDelegate {
@@ -144,6 +162,4 @@ extension QuizSelectNoteCollectionViewCell: StaffViewDelegate {
         }
         //checkResultButton.isHidden = newValue.count > 0 ? false : true
     }
-    
-    
 }
