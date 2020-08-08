@@ -23,6 +23,8 @@ class StaffView: UIView {
             return 32
         } else if DeviceType.IS_IPHONE_11Pro_X_Xs {
             return 33
+        } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+            return 34
         }
         return 30 // for iPhone 11
     }()
@@ -35,6 +37,9 @@ class StaffView: UIView {
             return 15.0
         }
         if DeviceType.IS_IPHONE_11Pro_X_Xs {
+            return 15.0
+        }
+        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
             return 15.0
         }
         return 15.0 // for iPhone 11
@@ -50,6 +55,9 @@ class StaffView: UIView {
         if DeviceType.IS_IPHONE_11Pro_X_Xs {
             return 9.0
         }
+        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+            return 8.0
+        }
         return 0 // for iPhone 11
     }()
     
@@ -62,6 +70,9 @@ class StaffView: UIView {
         }
         if DeviceType.IS_IPHONE_11Pro_X_Xs {
             return 80.0
+        }
+        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+            return 90.0
         }
         
         return 80.0 // for iPhone 11
@@ -79,9 +90,8 @@ class StaffView: UIView {
         }
         return 5.0
     }()
-    
+
     static let LINE_WIDTH: CGFloat = 2.0
-    
     
     static func viewHeight() -> Int {
         let linesThicknessHeight = Int(LINE_WIDTH)*5
@@ -157,8 +167,12 @@ class StaffView: UIView {
             if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ {
                 return 40.0
             }
+            if DeviceType.IS_IPHONE_11Pro_X_Xs {
+                return 38.0
+            }
+            
             if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
-                return 55.0
+                return 40.0
             }
             return 38.0
         }()
@@ -180,7 +194,7 @@ class StaffView: UIView {
             note.delegate = noteDelegate
             let noteCharacteristics = note.noteImagesHeightsAndCentersPositions()
             let leftOffsetFromClef = i == 0 ? offsetFromClef : (previousLeftOffsetFromClef + previousNoteWidth + offsetBetwenNotes)
-            let offsetLinePositions = CGFloat(note.model.name.rawValue)/2.0*CGFloat(StaffView.LINE_OFFSET)
+            let offsetLinePositions = CGFloat(note.model.name.rawValue)/2.0 * CGFloat(StaffView.LINE_OFFSET)
             // картинка для ноты
             if let durationImageName = noteCharacteristics.duration,
                 let noteHeight = noteCharacteristics.durationHeight,
@@ -247,7 +261,7 @@ class StaffView: UIView {
                 nameLabel.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
                 nameLabel.heightAnchor.constraint(equalToConstant: 25.0).isActive = true
                 nameLabel.widthAnchor.constraint(equalToConstant: 50.0).isActive = true
-                nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 10.0).isActive = true
+                nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: note.noteTitleBottomOffset()).isActive = true
                 
                 let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(noteTapped(tapGestureRecognizer:)))
                 imageView.isUserInteractionEnabled = true

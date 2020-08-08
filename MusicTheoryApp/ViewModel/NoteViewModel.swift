@@ -135,6 +135,16 @@ extension NoteViewModel {
             return "Си"
         }
     }
+    
+    func noteTitleBottomOffset() -> CGFloat {
+        switch model.name.rawValue {
+        case 5...:
+            return -10.0
+        default:
+            return 12.0
+        }
+    }
+    
     func wholeNoteSize() -> (height: CGFloat,width: CGFloat) {
         var height: CGFloat = 0.0
         var width: CGFloat = 0.0
@@ -148,7 +158,7 @@ extension NoteViewModel {
             height = 50.0
             width = 50.0
         } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
-            height = 52.0
+            height = 50.0
             width = 50.0
         }
         return (height: height, width: width)

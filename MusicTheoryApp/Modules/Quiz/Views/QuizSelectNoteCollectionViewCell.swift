@@ -12,7 +12,6 @@ protocol QuizSelectNoteCollectionViewCellDelegate {
     func rightAnswerReaction()
     func wrongAnswerReaction()
     func rightNoteTappedReaction(noteView: UIView)
-    
 }
 
 class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
@@ -20,6 +19,7 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
         return String(describing: self)
     }
     static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 20.0)
+    
     let BTN_TOP_OFFSET: CGFloat = 25.0
     let LBL_TOP_OFFSET: CGFloat = 10.0
     let STAF_TOP_OFFSET: CGFloat = {//45.0
@@ -30,11 +30,11 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
     }()
     
     let STAF_VERT_OFFSET: CGFloat = {
-      if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
         return 25.0
       } else {
         return 10.0
-        }
+    }
     }()
     
     //MARK: -Delegate
@@ -84,6 +84,9 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
         staffView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(staffView)
         staffView.topAnchor.constraint(equalTo:  self.contentView.topAnchor, constant: STAF_TOP_OFFSET).isActive = true
+        
+        //TODO: STAF_TOP_OFFSET сделать к нему дельту которая становится больше нуля в случае, если все ноты из viewModel.notesViewModels выше Do1
+        
         staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: STAF_VERT_OFFSET).isActive = true
         staffView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -STAF_VERT_OFFSET).isActive = true
         staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
