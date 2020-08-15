@@ -11,7 +11,7 @@ import UIKit
 class QuizViewController: UIViewController, QuizViewProtocol {
     var presenter: QuizPresenterProtocol!
     var configurator: QuizConfiguratorProtocol = QuizConfigurator()
-    var currentQuestionNumber: Int!
+    var currentQuestionNumber: Int = 0
     
     private let fireworkController = ClassicFireworkController()
     
@@ -73,7 +73,8 @@ extension QuizViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        currentQuestionNumber = indexPath.row
+     //   currentQuestionNumber = indexPath.row
+        print("currentQuestionNumber = " + String(currentQuestionNumber) + " from cellForItemAt")
         let frame = quizCollectionView.frame
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! QuizCollectionViewCell
         
@@ -157,7 +158,8 @@ extension QuizViewController: UICollectionViewDataSource {
 
 extension QuizViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        currentQuestionNumber = indexPath.row
+      //  currentQuestionNumber = indexPath.row
+       // print("currentQuestionNumber = " + currentQuestionNumber + " from didSelectItemAt")
         let frame = quizCollectionView.frame
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! QuizCollectionViewCell
         
@@ -205,7 +207,6 @@ extension QuizViewController: QuizShowNoteCollectionViewCellDelegate, MusicTaskW
         self.present(alert, animated: true)
     }
     
-    
     func wrongAnswerReaction() {
         let alert = UIAlertController(title: "Неверный ответ", message: "Попробуй еще раз!", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -221,26 +222,25 @@ extension QuizViewController: QuizShowNoteCollectionViewCellDelegate, MusicTaskW
     }
     
     func moveToFrame(contentOffset : CGFloat) {
-        let frame: CGRect = CGRect(x : contentOffset ,y : self.quizCollectionView.contentOffset.y ,width : self.quizCollectionView.frame.width,height : self.quizCollectionView.frame.height)
+        let frame: CGRect = CGRect(x : contentOffset, y : self.quizCollectionView.contentOffset.y, width : self.quizCollectionView.frame.width, height: self.quizCollectionView.frame.height)
         self.quizCollectionView.scrollRectToVisible(frame, animated: true)
     }
-    
 }
 
 extension QuizViewController: PianoViewDelegate {
     func keyTapped(withNotes: [(Note.NoteName, Note.Tonality)]) {
-        //        var viewModel = MusicTaskShowtNoteOnThePianoViewModel(model: questions.tasks[currentQuestionNumber] as! MusicTaskShowNoteOnThePiano)
-        //            if viewModel.checkUserAnswer(userAnswer: withNotes) {
-        //                let alert = UIAlertController(title: "Верный ответ", message: "Поехали дальше!", preferredStyle: .alert)
-        //                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        //                self.present(alert, animated: true)
-        //            } else {
-        //                let alert = UIAlertController(title: "Неверный ответ", message: "Попробуй еще раз!", preferredStyle: .alert)
-        //                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        //                self.present(alert, animated: true)
-        //            }
-        print("Обработать нажатие клавиши")
-        okAction()
+        let viewModel = MusicTaskShowtNoteOnThePianoViewModel(model: questions.tasks[currentQuestionNumber] as! MusicTaskShowNoteOnThePiano)
+        if viewModel.checkUserAnswer(userAnswer: withNotes) {
+            let alert = UIAlertController(title: "Верный ответ", message: "Поехали дальше!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                self.okAction()}))
+            self.present(alert, animated: true)
+        } else {
+//            let alert = UIAlertController(title: "Неверный ответ", message: "Попробуй еще раз!", preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//            self.present(alert, animated: true)
+        }
+
     }
 }
 

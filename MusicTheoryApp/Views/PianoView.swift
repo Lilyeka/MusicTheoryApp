@@ -47,8 +47,6 @@ protocol PianoViewDelegate {
 
 class PianoView: UIView {
     var delegate: PianoViewDelegate?
-    let WHITE_KEY_WIDTH: Double = 20.0
-     
     let WHITE_KEYS_NUMBER: Int = 7
     let BLACK_KEYS_NUMBER: Int = 5
     
@@ -83,7 +81,7 @@ class PianoView: UIView {
     init(pianoWidth: CGFloat, blackKeysOffset: CGFloat, frame:CGRect) {
         super.init(frame:frame)
         let keyWidth:CGFloat = pianoWidth/CGFloat(WHITE_KEYS_NUMBER)
-        setupView(keyWidth: keyWidth,blackKeysOffset: blackKeysOffset)
+        setupView(keyWidth: keyWidth, blackKeysOffset: blackKeysOffset)
     }
     
     fileprivate func setupView(keyWidth:CGFloat, blackKeysOffset: CGFloat) {
@@ -92,8 +90,8 @@ class PianoView: UIView {
         while i < WHITE_KEYS_NUMBER {
             let whiteKey = WhiteKeyView(frame: .zero, notesForKey: whiteKeysNotes[i])
             self.addSubview(whiteKey)
-            whiteKey.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
-            whiteKey.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
+            whiteKey.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+            whiteKey.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
             whiteKey.widthAnchor.constraint(equalToConstant: keyWidth).isActive = true
             whiteKey.leftAnchor.constraint(equalTo: self.leftAnchor, constant: leftOffset).isActive = true
             leftOffset += keyWidth - 5.0
@@ -105,7 +103,7 @@ class PianoView: UIView {
         var jj = 0
         while j < BLACK_KEYS_NUMBER + 1, jj < BLACK_KEYS_NUMBER {
             let blackKeyWidth = keyWidth - blackKeysOffset
-            if j != 2 {
+            if j != 2 { // рисуем черные клавиши подряд,третьей быть не должно
                 let blackKey = BlackKeyView(frame: .zero, notesForKey: blackKeysNotes[jj])
                 self.addSubview(blackKey)
                 blackKey.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
@@ -113,7 +111,7 @@ class PianoView: UIView {
                 blackKey.widthAnchor.constraint(equalToConstant: blackKeyWidth).isActive = true
                 blackKey.leftAnchor.constraint(equalTo: self.leftAnchor, constant: leftOffset + keyWidth/2 + blackKeysOffset/2 - WhiteKeyView.BORDER_LINE_THICKNESS/2).isActive = true
                 setupTapBlackKey(forView: blackKey)
-            jj += 1
+                jj += 1
             }
             leftOffset += keyWidth - 5.0
             j += 1

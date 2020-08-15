@@ -11,7 +11,6 @@ import UIKit
 protocol QuizShowNoteCollectionViewCellDelegate {
     func rightAnswerReaction()
     func wrongAnswerReaction()
-   // func pianoKeyTapped(withNotes: [(Note.NoteName, Note.Tonality)])
 }
 
 class QuizShowNoteCollectionViewCell: UICollectionViewCell {
@@ -21,12 +20,21 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
     
     static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 20.0)
     let TOP_OFFSET: CGFloat = 15.0
-    let LEFT_OFFSET: CGFloat = 15.0
+    let PIANO_TOP_OFFSET: CGFloat = {
+        if DeviceType.IS_IPHONE_6_6s_7_8 {return 30.0}
+        if DeviceType.IS_IPHONE_6P_6sP_7P_8P_{return 40.0}
+        return 30.0
+    }()
+    let LEFT_OFFSET: CGFloat = {
+        if DeviceType.IS_IPHONE_6_6s_7_8 {return 15.0}
+        if DeviceType.IS_IPHONE_6P_6sP_7P_8P_{return 25.0}
+        return 15.0
+    }()
     let RIGHT_OFFSET: CGFloat = 15.0
-    
     //MARK: -Delegate
-    var delegate: QuizShowNoteCollectionViewCellDelegate?
     
+    var delegate: QuizShowNoteCollectionViewCellDelegate?
+        
     //MARK: -Views
     var viewModel: MusicTaskShowtNoteOnThePianoViewModel?
     var staffView: StaffView!
@@ -39,6 +47,7 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
         label.textColor = .white
         label.font = MusicTaskShowNoteOnThePianoView.QUESTION_FONT
         label.lineBreakMode = .byWordWrapping
+        label.textAlignment = .center
         label.numberOfLines = 0
         return label
     }()
@@ -58,14 +67,14 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
         
         self.contentView.addSubview(questionLabel)
         questionLabel.text = viewModel.model.questionText
-        questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0).isActive = true
-        questionLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 0).isActive = true
-        questionLabel.widthAnchor.constraint(equalToConstant: frame.size.width).isActive = true
+        questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: TOP_OFFSET).isActive = true
+        questionLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: LEFT_OFFSET).isActive = true
+        questionLabel.widthAnchor.constraint(equalToConstant: frame.size.width-2*LEFT_OFFSET).isActive = true
         questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: frame.size.width, font:MusicTaskShowNoteOnThePianoView.QUESTION_FONT))!).isActive = true
         
         let pianoLeftOffset:CGFloat = 20.0
-        let staffViewWidth = (frame.size.width - pianoLeftOffset)/2
-        let pianoViewWidth = staffViewWidth
+        let staffViewWidth = 1*(frame.size.width - 3*LEFT_OFFSET)/3
+        let pianoViewWidth = 2*(frame.size.width - 3*LEFT_OFFSET)/3
         
         staffView = StaffView(notesViewModels:viewModel.notesViewModels,selectOnlyOneNote: true,
                               frame: CGRect.zero, notesDelegate: nil)
@@ -73,7 +82,7 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
         staffView.isUserInteractionEnabled = false
         self.contentView.addSubview(staffView)
         staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: TOP_OFFSET).isActive = true
-        staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 0).isActive = true
+        staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: LEFT_OFFSET).isActive = true
         staffView.widthAnchor.constraint(equalToConstant: staffViewWidth).isActive = true
         staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
         staffView.drawNotesOneByOne(notesAreTransparent: false)
@@ -81,12 +90,10 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
         pianoView = PianoView(pianoWidth: pianoViewWidth, blackKeysOffset: 10.0, frame:CGRect.zero)
         pianoView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(pianoView)
-        pianoView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: TOP_OFFSET).isActive = true
-        pianoView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: 0).isActive = true
-        pianoView.widthAnchor.constraint(equalToConstant: pianoViewWidth).isActive = true
+        pianoView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: PIANO_TOP_OFFSET).isActive = true
+        pianoView.leftAnchor.constraint(equalTo: staffView.rightAnchor, constant: LEFT_OFFSET*2).isActive = true
+        pianoView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: LEFT_OFFSET).isActive = true
         pianoView.heightAnchor.constraint(equalToConstant: 200.0).isActive = true
-        
-      //  pianoView.delegate = self
     }
     
     //MARK: -Override methods
@@ -97,10 +104,3 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
     }
 }
 
-//extension QuizShowNoteCollectionViewCell: PianoViewDelegate {
-//    func keyTapped(withNotes: [(Note.NoteName, Note.Tonality)]) {
-//        self.delegate?.pianoKeyTapped(withNotes: <#T##[(Note.NoteName, Note.Tonality)]#>)
-//    }
-//
-//
-//}

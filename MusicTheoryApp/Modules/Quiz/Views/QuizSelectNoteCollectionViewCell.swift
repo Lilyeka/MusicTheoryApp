@@ -58,14 +58,6 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    var checkResultButton: UIButton = {
-        var btn = UIButton()
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.setTitle("Проверить", for: .normal)
-        btn.backgroundColor = .blue
-        return btn
-    }()
-    
     //MARK: - Life cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -93,7 +85,7 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
         staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: STAF_VERT_OFFSET).isActive = true
         staffView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -STAF_VERT_OFFSET).isActive = true
         staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
-        staffView.drawNotesOneByOne(notesAreTransparent: true)
+        staffView.drawNotesOneByOne1(notesAreTransparent: true, viewWidth: self.contentView.frame.width)
         
         questionLabel.text = viewModel.model.questionText
         self.contentView.addSubview(questionLabel)
@@ -102,24 +94,8 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
         questionLabel.widthAnchor.constraint(equalToConstant: frame.size.width - 50).isActive = true
         questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: frame.size.width - 50, font:MusicTaskSelectNoteView.QUESTION_FONT))!).isActive = true
         questionLabel.superview!.bringSubviewToFront(questionLabel)
+    }
         
-        self.addSubview(checkResultButton)
-        checkResultButton.isHidden = true
-        checkResultButton.topAnchor.constraint(equalTo: staffView.bottomAnchor, constant: BTN_TOP_OFFSET).isActive = true
-        checkResultButton.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
-        checkResultButton.addTarget(self, action: #selector(checkButtonTapped(sender:)), for: .touchUpInside)
-    }
-    
-    //MARK: -Actions
-    @objc func checkButtonTapped(sender: UIButton) {
-        let tappedSet = Set(staffView.pickedOutNotesIndexes)
-        if (viewModel?.checkUserAnswer(userAnswer: tappedSet))! {
-            delegate?.rightAnswerReaction()
-        } else {
-            delegate?.wrongAnswerReaction()
-        }
-    }
-    
     //MARK: -Override methods
     override func prepareForReuse() {
         for v in contentView.subviews {
@@ -160,6 +136,5 @@ extension QuizSelectNoteCollectionViewCell: StaffViewDelegate {
         if (viewModel?.checkUserAnswer(userAnswer: Set(newValue)))! {
             delegate?.rightAnswerReaction()
         }
-        //checkResultButton.isHidden = newValue.count > 0 ? false : true
     }
 }
