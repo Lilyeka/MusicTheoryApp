@@ -98,6 +98,7 @@ extension QuizViewController: UICollectionViewDataSource {
             cell?.configureSubViews(viewModel: viewModel, frame: frame)
             cell?.delegate = self
             cell?.pianoView.delegate = self
+            
             return cell!
         case is MusicTaskSelectNoteInWord:
             let q = question as! MusicTaskSelectNoteInWord
@@ -228,21 +229,30 @@ extension QuizViewController: QuizShowNoteCollectionViewCellDelegate, MusicTaskW
 }
 
 extension QuizViewController: PianoViewDelegate {
-    func keyTapped(withNotes: [(Note.NoteName, Note.Tonality)]) {
+    func keyTapped(withNotes: [(Note.NoteName, Note.Tonality)], view: UIView) {
+     
         let viewModel = MusicTaskShowtNoteOnThePianoViewModel(model: questions.tasks[currentQuestionNumber] as! MusicTaskShowNoteOnThePiano)
         if viewModel.checkUserAnswer(userAnswer: withNotes) {
+            fireworkController.addFireworks(count: 2, sparks: 8, around: view)
+            view.backgroundColor = .green
+            let note = withNotes[0]
+            if note != nil { // добавляем название ноты на клавишу
+                let noteLabelHeight:CGFloat = 40.0
+                var noteNameLabel = UILabel(frame:CGRect(x: view.bounds.minX + 5, y: view.bounds.maxY - noteLabelHeight, width: view.bounds.size.width - 10.0, height: noteLabelHeight))
+                noteNameLabel.text = note.0.noteRusName()
+                noteNameLabel.textAlignment = .center
+                view.addSubview(noteNameLabel)
+            }
+       
             let alert = UIAlertController(title: "Верный ответ", message: "Поехали дальше!", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
                 self.okAction()}))
             self.present(alert, animated: true)
-        } else {
-//            let alert = UIAlertController(title: "Неверный ответ", message: "Попробуй еще раз!", preferredStyle: .alert)
-//            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-//            self.present(alert, animated: true)
         }
-
     }
 }
+
+
 
 
 

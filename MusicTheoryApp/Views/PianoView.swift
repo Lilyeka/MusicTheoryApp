@@ -42,7 +42,7 @@ class BlackKeyView: UIView {
 }
 
 protocol PianoViewDelegate {
-    func keyTapped(withNotes:[(Note.NoteName,Note.Tonality)])
+    func keyTapped(withNotes:[(Note.NoteName,Note.Tonality)], view: UIView)
 }
 
 class PianoView: UIView {
@@ -135,7 +135,7 @@ class PianoView: UIView {
                 gesture.view?.layer.backgroundColor = UIColor.white.cgColor
             }) { _ in
                     let view = gesture.view! as! WhiteKeyView
-                    self.delegate?.keyTapped(withNotes: view.notesForKey!)
+                    self.delegate?.keyTapped(withNotes: view.notesForKey!, view: view)
                     self.isUserInteractionEnabled = true
                     print(view.notesForKey!)
             }
@@ -159,7 +159,7 @@ class PianoView: UIView {
                 gesture.view?.layer.backgroundColor = UIColor.black.cgColor
             }) { _ in
                     let view = gesture.view! as! BlackKeyView
-                    self.delegate?.keyTapped(withNotes: view.notesForKey!)
+                    self.delegate?.keyTapped(withNotes: view.notesForKey!,view:view)
                     self.isUserInteractionEnabled = true
                     print(view.notesForKey!)
             }

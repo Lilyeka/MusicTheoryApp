@@ -31,8 +31,8 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
         return 15.0
     }()
     let RIGHT_OFFSET: CGFloat = 15.0
-    //MARK: -Delegate
     
+    //MARK: -Delegate
     var delegate: QuizShowNoteCollectionViewCellDelegate?
         
     //MARK: -Views
@@ -87,13 +87,13 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
         staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
         staffView.drawNotesOneByOne(notesAreTransparent: false)
         
-        pianoView = PianoView(pianoWidth: pianoViewWidth, blackKeysOffset: 10.0, frame:CGRect.zero)
+        pianoView = PianoView(pianoWidth: pianoViewWidth, blackKeysOffset: 20.0, frame:CGRect.zero)
         pianoView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(pianoView)
         pianoView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: PIANO_TOP_OFFSET).isActive = true
         pianoView.leftAnchor.constraint(equalTo: staffView.rightAnchor, constant: LEFT_OFFSET*2).isActive = true
         pianoView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: LEFT_OFFSET).isActive = true
-        pianoView.heightAnchor.constraint(equalToConstant: 200.0).isActive = true
+        pianoView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())*0.9).isActive = true
     }
     
     //MARK: -Override methods

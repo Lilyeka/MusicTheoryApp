@@ -108,7 +108,7 @@ extension ViewController: MusicTaskSelectNoteViewDelegate, MusicTaskSelectNoteIn
 }
 
 extension ViewController: PianoViewDelegate {
-    func keyTapped(withNotes:[(Note.NoteName,Note.Tonality)]) {
+    func keyTapped(withNotes:[(Note.NoteName,Note.Tonality)], view: UIView) {
         let task8: MusicTaskShowNoteOnThePiano = tasksStorage.tasks[8] as! MusicTaskShowNoteOnThePiano
         let task8ViewModel = MusicTaskShowtNoteOnThePianoViewModel(model: task8)
         if task8ViewModel.checkUserAnswer(userAnswer: withNotes) {
