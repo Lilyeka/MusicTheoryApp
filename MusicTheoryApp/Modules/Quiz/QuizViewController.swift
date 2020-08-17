@@ -230,18 +230,24 @@ extension QuizViewController: QuizShowNoteCollectionViewCellDelegate, MusicTaskW
 
 extension QuizViewController: PianoViewDelegate {
     func keyTapped(withNotes: [(Note.NoteName, Note.Tonality)], view: UIView) {
-     
-        let viewModel = MusicTaskShowtNoteOnThePianoViewModel(model: questions.tasks[currentQuestionNumber] as! MusicTaskShowNoteOnThePiano)
+        
+        let model = questions.tasks[currentQuestionNumber] as? MusicTaskShowNoteOnThePiano
+        if let model = model {
+            let viewModel = MusicTaskShowtNoteOnThePianoViewModel(model: model)
         if viewModel.checkUserAnswer(userAnswer: withNotes) {
             fireworkController.addFireworks(count: 2, sparks: 8, around: view)
             view.backgroundColor = .green
-            let note = withNotes[0]
+            view.isUserInteractionEnabled = false
+            if (withNotes.count) > 0 {
+                let note = withNotes[0]
             if note != nil { // добавляем название ноты на клавишу
                 let noteLabelHeight:CGFloat = 40.0
                 var noteNameLabel = UILabel(frame:CGRect(x: view.bounds.minX + 5, y: view.bounds.maxY - noteLabelHeight, width: view.bounds.size.width - 10.0, height: noteLabelHeight))
+                noteNameLabel.font = QuizShowNoteCollectionViewCell.QUESTION_FONT
                 noteNameLabel.text = note.0.noteRusName()
                 noteNameLabel.textAlignment = .center
                 view.addSubview(noteNameLabel)
+            }
             }
        
             let alert = UIAlertController(title: "Верный ответ", message: "Поехали дальше!", preferredStyle: .alert)
@@ -249,6 +255,8 @@ extension QuizViewController: PianoViewDelegate {
                 self.okAction()}))
             self.present(alert, animated: true)
         }
+        }
+        
     }
 }
 

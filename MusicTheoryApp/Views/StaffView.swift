@@ -192,35 +192,35 @@ class StaffView: UIView {
                 imageView.widthAnchor.constraint(equalToConstant: noteWidth).isActive = true
                 imageView.centerYAnchor.constraint(equalTo: self.bottomAnchor, constant: durationPositionY).isActive = true
               
-//                //дополнительная линейка по центру ноты
-//                if note.needsAdditionalLine {
-//                    let addLineXOffset = 7
-//                    let noteStartXPosition = Int(StaffView.CLEFT_LEFT_OFFSET + StaffView.CLEF_WIDTH + leftOffsetFromClef)
-//                    drawAdditionalLine(
-//                        startX: noteStartXPosition - addLineXOffset,
-//                        toEndingX: Int(noteStartXPosition) + Int(noteWidth) + addLineXOffset,
-//                        startingY: StaffView.viewHeight() + Int(durationPositionY),
-//                        toEndingY: StaffView.viewHeight() + Int(durationPositionY),
-//                        ofColor: .black,
-//                        widthOfLine: 3,
-//                        inView: self
-//                    )
-//                }
-//
+                //дополнительная линейка по центру ноты
+                if note.needsAdditionalLine {
+                    let addLineXOffset = 7
+                    let noteStartXPosition = Int(StaffView.CLEFT_LEFT_OFFSET + StaffView.CLEF_WIDTH + noteCenterX*CGFloat(i+1) - noteWidth)
+                    drawAdditionalLine(
+                        startX: Int(noteStartXPosition) - addLineXOffset,
+                        toEndingX: Int(noteStartXPosition) + Int(noteWidth) + addLineXOffset,
+                        startingY: StaffView.viewHeight() + Int(durationPositionY),
+                        toEndingY: StaffView.viewHeight() + Int(durationPositionY),
+                        ofColor: .black,
+                        widthOfLine: 3,
+                        inView: self
+                    )
+                }
+
 //                //дополнительная линейка снизу ноты
-//                if note.needsUnderLine {
-//                    let addLineXOffset = 7
-//                    let noteStartXPosition = Int(StaffView.CLEFT_LEFT_OFFSET + StaffView.CLEF_WIDTH + leftOffsetFromClef)
-//                    drawAdditionalLine(
-//                        startX: noteStartXPosition - addLineXOffset,
-//                        toEndingX: Int(noteStartXPosition) + Int(noteWidth) + addLineXOffset,
-//                        startingY: StaffView.viewHeight() - StaffView.VERTICAL_OFFSET - Int(note.model.name.rawValue/2)*StaffView.LINE_OFFSET,
-//                        toEndingY: StaffView.viewHeight() - StaffView.VERTICAL_OFFSET - Int(note.model.name.rawValue/2)*StaffView.LINE_OFFSET,
-//                        ofColor: .black,
-//                        widthOfLine: 3,
-//                        inView: self
-//                    )
-//                }
+                if note.needsUnderLine {
+                    let addLineXOffset = 7
+                    let noteStartXPosition = Int(StaffView.CLEFT_LEFT_OFFSET + StaffView.CLEF_WIDTH + noteCenterX*CGFloat(i+1) - noteWidth)
+                    drawAdditionalLine(
+                        startX: noteStartXPosition - addLineXOffset,
+                        toEndingX: Int(noteStartXPosition) + Int(noteWidth) + addLineXOffset,
+                        startingY: StaffView.viewHeight() - StaffView.VERTICAL_OFFSET - Int(note.model.name.rawValue/2)*StaffView.LINE_OFFSET,
+                        toEndingY: StaffView.viewHeight() - StaffView.VERTICAL_OFFSET - Int(note.model.name.rawValue/2)*StaffView.LINE_OFFSET,
+                        ofColor: .black,
+                        widthOfLine: 3,
+                        inView: self
+                    )
+                }
                 
                 //Название ноты
                 let nameLabel = UILabel()

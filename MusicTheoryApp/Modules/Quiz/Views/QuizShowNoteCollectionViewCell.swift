@@ -20,18 +20,8 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
     
     static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 20.0)
     let TOP_OFFSET: CGFloat = 15.0
-    let PIANO_TOP_OFFSET: CGFloat = {
-        if DeviceType.IS_IPHONE_6_6s_7_8 {return 30.0}
-        if DeviceType.IS_IPHONE_6P_6sP_7P_8P_{return 40.0}
-        return 30.0
-    }()
-    let LEFT_OFFSET: CGFloat = {
-        if DeviceType.IS_IPHONE_6_6s_7_8 {return 15.0}
-        if DeviceType.IS_IPHONE_6P_6sP_7P_8P_{return 25.0}
-        return 15.0
-    }()
-    let RIGHT_OFFSET: CGFloat = 15.0
-    
+    let LEFT_OFFSET: CGFloat = 15.0
+   
     //MARK: -Delegate
     var delegate: QuizShowNoteCollectionViewCellDelegate?
         
@@ -43,8 +33,6 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
     var questionLabel: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.backgroundColor = .systemPink
-        label.textColor = .white
         label.font = MusicTaskShowNoteOnThePianoView.QUESTION_FONT
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .center
@@ -90,10 +78,10 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
         pianoView = PianoView(pianoWidth: pianoViewWidth, blackKeysOffset: 20.0, frame:CGRect.zero)
         pianoView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(pianoView)
-        pianoView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: PIANO_TOP_OFFSET).isActive = true
+        pianoView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: TOP_OFFSET).isActive = true
         pianoView.leftAnchor.constraint(equalTo: staffView.rightAnchor, constant: LEFT_OFFSET*2).isActive = true
         pianoView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: LEFT_OFFSET).isActive = true
-        pianoView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())*0.9).isActive = true
+        pianoView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
     }
     
     //MARK: -Override methods

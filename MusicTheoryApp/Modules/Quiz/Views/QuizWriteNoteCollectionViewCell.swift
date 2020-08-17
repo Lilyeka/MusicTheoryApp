@@ -109,10 +109,10 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
         staffView.clipsToBounds = true
         self.contentView.addSubview(staffView)
         staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 15.0).isActive = true
-        staffView.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.6).isActive = true
+        staffView.widthAnchor.constraint(equalTo: self.contentView.widthAnchor).isActive = true
         staffView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
         staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
-        staffView.drawNotesOneByOne(notesAreTransparent: false)
+        //staffView.drawNotesOneByOne1(notesAreTransparent: true, viewWidth: self.contentView.frame.width)
         
         var i = 0
         while i < viewModel.model.partsOfWord!.count {
