@@ -14,11 +14,11 @@ protocol QuizShowNoteCollectionViewCellDelegate {
 }
 
 class QuizShowNoteCollectionViewCell: UICollectionViewCell {
-    public static var cellIdentifier: String {
+    static var cellIdentifier: String {
         return String(describing: self)
     }
-    
     static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 20.0)
+    
     let TOP_OFFSET: CGFloat = 15.0
     let LEFT_OFFSET: CGFloat = 15.0
    

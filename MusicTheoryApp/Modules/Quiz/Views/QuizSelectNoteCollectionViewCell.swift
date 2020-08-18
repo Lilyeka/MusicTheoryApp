@@ -15,7 +15,7 @@ protocol QuizSelectNoteCollectionViewCellDelegate {
 }
 
 class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
-    public static var cellIdentifier: String {
+    static var cellIdentifier: String {
         return String(describing: self)
     }
     static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 20.0)
@@ -72,6 +72,7 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
         self.viewModel = viewModel
         
         staffView = StaffView(notesViewModels: viewModel.notesViewModels,selectOnlyOneNote: false, frame:CGRect.zero,notesDelegate: self)
+        staffView.setNotesDelegate(deleg: self)
         staffView.delegate = self
         staffView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(staffView)

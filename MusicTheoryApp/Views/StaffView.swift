@@ -243,7 +243,6 @@ class StaffView: UIView {
                 imageView.isUserInteractionEnabled = true
                 imageView.addGestureRecognizer(tapGestureRecognizer)
                 
-               // previousLeftOffsetFromClef = leftOffsetFromClef
                 previousNoteWidth = noteWidth
                 // TODO: если у ноты есть еще и тональность то отрисовать значок тональности в отдельной imageView
                 if let toneImageName = noteCharacteristics.tone {

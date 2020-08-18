@@ -55,7 +55,7 @@ class NoteViewModel {
 
 extension NoteViewModel {
     // Функция возвращает названия картинок значка и ноты,
-    // их. высоту, ширину и смещение центра картинки по Y (если не целая нота и/или не диез то центр смещен от реального центра)
+    // их высоту, ширину и смещение центра картинки по Y (если не целая нота и/или не диез то центр смещен от реального центра)
     // высота ноты/значка подобрана так,чтобы круглешок ноты был равен расстоянию между линейками)
     func noteImagesHeightsAndCentersPositions() -> (tone:String?, toneHeight:CGFloat?, toneWidth: CGFloat?, toneCenterOffesetY:CGFloat?, duration:String?, durationHeight:CGFloat?,
         durationWidth: CGFloat?, durationCenterOffesetY:CGFloat?) {

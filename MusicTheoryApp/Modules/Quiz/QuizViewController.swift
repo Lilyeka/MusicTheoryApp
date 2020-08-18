@@ -35,6 +35,7 @@ class QuizViewController: UIViewController, QuizViewProtocol {
         collectionView.register(QuizSelectNoteCollectionViewCell.self, forCellWithReuseIdentifier: QuizSelectNoteCollectionViewCell.cellIdentifier)
         collectionView.register(QuizShowNoteCollectionViewCell.self, forCellWithReuseIdentifier: QuizShowNoteCollectionViewCell.cellIdentifier)
         collectionView.register(QuizWriteNoteCollectionViewCell.self, forCellWithReuseIdentifier: QuizWriteNoteCollectionViewCell.cellIdentifier)
+        collectionView.register(QuizSelectNoteInWordCollectionViewCell.self, forCellWithReuseIdentifier: QuizSelectNoteInWordCollectionViewCell.cellIdentifier)
         return collectionView
     }()
     
@@ -98,7 +99,6 @@ extension QuizViewController: UICollectionViewDataSource {
             cell?.configureSubViews(viewModel: viewModel, frame: frame)
             cell?.delegate = self
             cell?.pianoView.delegate = self
-            
             return cell!
         case is MusicTaskSelectNoteInWord:
             let q = question as! MusicTaskSelectNoteInWord
@@ -116,9 +116,13 @@ extension QuizViewController: UICollectionViewDataSource {
                 return cell!
             } else {
                 let viewModel = MusicTaskSelectNoteInWordViewModel(model:questions.tasks[indexPath.row] as! MusicTaskSelectNoteInWord)
-                let view = MusicTaskSelectNoteInWordView(viewModel: viewModel, frame: frame)
-                cell.config(withView: view)
-                return cell
+                var cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizSelectNoteInWordCollectionViewCell.cellIdentifier, for: indexPath) as? QuizSelectNoteInWordCollectionViewCell
+                if cell == nil {
+                    cell = QuizSelectNoteInWordCollectionViewCell(frame: frame)
+                }
+                cell?.configureSubviews(viewModel: viewModel, frame: frame)
+                cell?.delegate = self
+                return cell!
             }
             
         default:
@@ -191,7 +195,7 @@ extension QuizViewController: UICollectionViewDelegate {
 
 
 
-extension QuizViewController: QuizSelectNoteCollectionViewCellDelegate {
+extension QuizViewController: QuizSelectNoteCollectionViewCellDelegate, QuizSelectNoteInWordCollectionViewCellDelegate {
 
     func rightNoteTappedReaction(noteView: UIView) {
         fireworkController.addFireworks(count: 2, sparks: 8, around: noteView)

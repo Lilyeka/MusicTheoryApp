@@ -13,14 +13,15 @@ class MusicTaskSelectNoteInWordViewModel {
     let model: MusicTaskSelectNoteInWord
     var notesViewModels: [NoteViewModel]
     
+    
     init(model: MusicTaskSelectNoteInWord) {
         self.model = model
         
         var resultArray:[NoteViewModel] = [NoteViewModel]()
-            for note in self.model.notesArray! {
-                let noteViewModel = NoteViewModel(model:note)
-                resultArray.append(noteViewModel)
-            }
+        for note in self.model.notesArray! {
+            let noteViewModel = NoteViewModel(model:note)
+            resultArray.append(noteViewModel)
+        }
         self.notesViewModels = resultArray
     }
     
@@ -34,11 +35,24 @@ class MusicTaskSelectNoteInWordViewModel {
     }
     
     func checkUserAnswer1(userAnswer: [Int]) -> Bool {
-         for partOfWord in model.partsOfWord! {
-            if let partNote = partOfWord.1, userAnswer.count > 0, partNote.name.rawValue == userAnswer[0] {
-                 return true
-             }
-         }
-         return false
-     }
+        let userAnswerSet = Set(userAnswer)
+        let notesInWordSet = notesInWord()
+        return userAnswerSet == notesInWordSet ? true : false
+    }
+    
+    func noteIsFromRightAnswer(note:Note.NoteName) -> Bool {
+        let userAnswerSet = notesInWord()
+        return userAnswerSet.contains(note.rawValue)
+    }
+    
+    fileprivate func notesInWord() -> Set<Int> {
+        var notesInWordSet = Set<Int>()
+        
+        for partOfWord in model.partsOfWord! {
+            if let note = partOfWord.1 {
+                notesInWordSet.insert(note.name.rawValue)
+            }
+        }
+        return notesInWordSet
+    }
 }

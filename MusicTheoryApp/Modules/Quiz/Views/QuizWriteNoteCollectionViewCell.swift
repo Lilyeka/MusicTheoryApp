@@ -14,10 +14,9 @@ protocol QuizWriteNoteCollectionViewCellDelegate {
 }
 
 class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
-    public static var cellIdentifier: String {
+    static var cellIdentifier: String {
         return String(describing: self)
     }
-    
     static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 20.0)
     static let WORD_FONT = UIFont.boldSystemFont(ofSize: 35.0)
     static let TEXTFIELD_LETTER_WIDTH = 30
@@ -158,6 +157,7 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
         partsOfWordViews = [UIView]()
     }
     
+    //MARK: - Actions
     @objc func checkButtonTapped(sender: UIButton) {
         if let userAnswerText = textField.text {
             print(userAnswerText)
