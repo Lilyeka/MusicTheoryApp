@@ -60,7 +60,7 @@ class QuizSelectNoteInWordCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Public methods
     func configureSubviews(viewModel:MusicTaskSelectNoteInWordViewModel, frame:CGRect) {
-        self.contentView.backgroundColor = .gray
+
         self.viewModel = viewModel
         self.addSubview(questionLabel)
         questionLabel.text = viewModel.model.questionText
@@ -75,11 +75,10 @@ class QuizSelectNoteInWordCollectionViewCell: UICollectionViewCell {
         staffView.delegate = self
         staffView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(staffView)
-        staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 15.0).isActive = true
-        staffView.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -STAF_VERT_OFFSET*2).isActive = true
-        staffView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        staffView.topAnchor.constraint(equalTo:questionLabel.bottomAnchor, constant: 15.0).isActive = true
+        staffView.leftAnchor.constraint(equalTo:contentView.leftAnchor, constant: STAF_VERT_OFFSET).isActive = true
+        staffView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -STAF_VERT_OFFSET).isActive = true
         staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
-        
         staffView.drawNotesOneByOne1(notesAreTransparent: true, viewWidth: self.contentView.frame.width)
         
         var i = 0
@@ -99,17 +98,15 @@ class QuizSelectNoteInWordCollectionViewCell: UICollectionViewCell {
         wordStackView.alignment = .center
         self.addSubview(wordStackView)
         wordStackView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 15.0).isActive = true
-        wordStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true
+        wordStackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
     }
     
     override func prepareForReuse() {
+        super.prepareForReuse()
         for view in contentView.subviews {
             view.removeFromSuperview()
         }
-        contentView.backgroundColor = .white
-        viewModel = nil
         partsOfWordLables = [UILabel]()
-  
     }
 }
 

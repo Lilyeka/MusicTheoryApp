@@ -143,6 +143,7 @@ class StaffView: UIView {
     }
     
     override func draw(_ rect: CGRect) {
+        super.draw(rect)
         layer.backgroundColor = UIColor.green.cgColor
         drawLines(in: rect)
     }
@@ -237,7 +238,7 @@ class StaffView: UIView {
                 nameLabel.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
                 nameLabel.heightAnchor.constraint(equalToConstant: 25.0).isActive = true
                 nameLabel.widthAnchor.constraint(equalToConstant: 50.0).isActive = true
-                nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: note.noteTitleBottomOffset()).isActive = true
+                nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor/*, constant: note.noteTitleBottomOffset()*/).isActive = true
                 
                 let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(noteTapped(tapGestureRecognizer:)))
                 imageView.isUserInteractionEnabled = true
