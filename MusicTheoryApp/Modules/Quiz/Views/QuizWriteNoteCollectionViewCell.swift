@@ -41,11 +41,11 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
     var questionLabel: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.backgroundColor = .systemPink
-        label.textColor = .white
+        label.textColor = .black
         label.font = MusicTaskWriteNoteInWordView.QUESTION_FONT
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
+        label.textAlignment = .center
         return label
     }()
     
@@ -80,10 +80,10 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+        
+  
     //MARK: - Public methods
     func configureSubviews(viewModel:MusicTaskWriteNoteInWordViewModel, frame:CGRect) {
-        self.backgroundView = UIImageView(image: UIImage(named: "background"))
         self.viewModel = viewModel
         
         self.contentView.addSubview(bgButton)
@@ -95,24 +95,29 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
         
         self.contentView.addSubview(questionLabel)
         questionLabel.text = viewModel.model.questionText
-        questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0).isActive = true
-        questionLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 0).isActive = true
-        questionLabel.widthAnchor.constraint(equalToConstant: frame.size.width).isActive = true
+        questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 15.0).isActive = true
+        questionLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 15.0).isActive = true
+        questionLabel.widthAnchor.constraint(equalToConstant: frame.size.width - 30.0).isActive = true
         questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: frame.size.width, font:MusicTaskShowNoteOnThePianoView.QUESTION_FONT))!).isActive = true
         
+        let halfWidth = (self.contentView.frame.width - 15.0*3)/2
         staffView = StaffView(notesViewModels:viewModel.notesViewModels,
                               selectOnlyOneNote: true,
                               frame: CGRect.zero, notesDelegate: nil)
         staffView.translatesAutoresizingMaskIntoConstraints = false
         staffView.isUserInteractionEnabled = false
-        staffView.clipsToBounds = true
+       // staffView.clipsToBounds = true
+
         self.contentView.addSubview(staffView)
         staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 15.0).isActive = true
-        staffView.widthAnchor.constraint(equalTo: self.contentView.widthAnchor).isActive = true
-        staffView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
+        staffView.widthAnchor.constraint(equalToConstant: halfWidth).isActive = true
+        staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 15.0).isActive = true
         staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
-        //staffView.drawNotesOneByOne1(notesAreTransparent: true, viewWidth: self.contentView.frame.width)
+        staffView.drawNotesOneByOne(notesAreTransparent: false)
         
+                staffView.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: 10).cgPath
+                staffView.layer.shouldRasterize = true
+                staffView.layer.rasterizationScale = UIScreen.main.scale
         var i = 0
         while i < viewModel.model.partsOfWord!.count {
             if let note = viewModel.model.partsOfWord![i].1 {
@@ -138,15 +143,8 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
         wordStackView.alignment = .center
         
         self.contentView.addSubview(wordStackView)
-        wordStackView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 15.0).isActive = true
-        wordStackView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor, constant: 0).isActive = true
-        
-        self.contentView.addSubview(checkResultButton)
-        checkResultButton.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
-        checkResultButton.topAnchor.constraint(equalTo: staffView.bottomAnchor, constant: 15.0).isActive = true
-        checkResultButton.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
-        checkResultButton.widthAnchor.constraint(equalToConstant: 200.0).isActive = true
-        checkResultButton.addTarget(self, action: #selector(checkButtonTapped(sender:)), for: .touchUpInside)
+        wordStackView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
+        wordStackView.centerXAnchor.constraint(equalTo: staffView.centerXAnchor, constant: 15.0 + halfWidth).isActive = true
     }
     
     override func prepareForReuse() {
@@ -157,18 +155,7 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
         partsOfWordViews = [UIView]()
     }
     
-    //MARK: - Actions
-    @objc func checkButtonTapped(sender: UIButton) {
-        if let userAnswerText = textField.text {
-            print(userAnswerText)
-            if (viewModel?.checkUserAnswer(userAnswer: userAnswerText))! {
-                delegate?.rightAnswerReaction()
-            } else {
-                delegate?.wrongAnswerReaction()
-            }
-        }
-    }
-    
+    //MARK: - Actions    
     @objc func bgButtonTapped(sender: UIButton) {
         self.endEditing(true)
     }

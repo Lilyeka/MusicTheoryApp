@@ -28,7 +28,6 @@ class MainViewCollectionViewCell: UICollectionViewCell {
     //MARK: - Life cycle
     override init(frame: CGRect) {
         super.init(frame:.zero)
-        
         contentView.addSubview(textLabel)
         textLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5).isActive = true
         textLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5).isActive = true

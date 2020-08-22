@@ -49,7 +49,7 @@ class StaffView: UIView {
         if(DeviceType.IS_IPHONE_6_6s_7_8) {
             return -16.0
         }
-       if (DeviceType.IS_IPHONE_6P_6sP_7P_8P_) {
+        if (DeviceType.IS_IPHONE_6P_6sP_7P_8P_) {
             return 6.0
         }
         if DeviceType.IS_IPHONE_11Pro_X_Xs {
@@ -90,7 +90,7 @@ class StaffView: UIView {
         }
         return 5.0
     }()
-
+    
     static let LINE_WIDTH: CGFloat = 2.0
     
     static func viewHeight() -> Int {
@@ -144,10 +144,9 @@ class StaffView: UIView {
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-        layer.backgroundColor = UIColor.green.cgColor
         drawLines(in: rect)
     }
-    
+        
     fileprivate func setupView() {
         self.addSubview(clefImageView)
         clefImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: StaffView.CLEFT_LEFT_OFFSET).isActive = true
@@ -192,7 +191,7 @@ class StaffView: UIView {
                 imageView.heightAnchor.constraint(equalToConstant: noteHeight).isActive = true
                 imageView.widthAnchor.constraint(equalToConstant: noteWidth).isActive = true
                 imageView.centerYAnchor.constraint(equalTo: self.bottomAnchor, constant: durationPositionY).isActive = true
-              
+                
                 //дополнительная линейка по центру ноты
                 if note.needsAdditionalLine {
                     let addLineXOffset = 7
@@ -207,8 +206,8 @@ class StaffView: UIView {
                         inView: self
                     )
                 }
-
-//                //дополнительная линейка снизу ноты
+                
+                //                //дополнительная линейка снизу ноты
                 if note.needsUnderLine {
                     let addLineXOffset = 7
                     let noteStartXPosition = Int(StaffView.CLEFT_LEFT_OFFSET + StaffView.CLEF_WIDTH + noteCenterX*CGFloat(i+1) - noteWidth)
@@ -227,7 +226,7 @@ class StaffView: UIView {
                 let nameLabel = UILabel()
                 nameLabel.translatesAutoresizingMaskIntoConstraints = false
                 nameLabel.font = NoteViewModel.NOTE_LABEL_FONT
-               // nameLabel.backgroundColor = .green
+                // nameLabel.backgroundColor = .green
                 nameLabel.text = note.noteTitle()
                 nameLabel.textColor = .black
                 nameLabel.textAlignment = .center
@@ -262,18 +261,18 @@ class StaffView: UIView {
                     imageView.image = UIImage(named: toneImageName)
                     // расположение тональности
                     self.addSubview(imageView)
-//                    imageView.leftAnchor.constraint(equalTo: clefImageView.rightAnchor, constant:leftOffsetFromClef).isActive = true
-//                    imageView.heightAnchor.constraint(equalToConstant: toneHeight).isActive = true
-//                    imageView.widthAnchor.constraint(equalToConstant: toneWidth).isActive = true
-//                    imageView.centerYAnchor.constraint(equalTo: self.bottomAnchor, constant: durationPositionY).isActive = true
-//                    previousLeftOffsetFromClef = leftOffsetFromClef
+                    //                    imageView.leftAnchor.constraint(equalTo: clefImageView.rightAnchor, constant:leftOffsetFromClef).isActive = true
+                    //                    imageView.heightAnchor.constraint(equalToConstant: toneHeight).isActive = true
+                    //                    imageView.widthAnchor.constraint(equalToConstant: toneWidth).isActive = true
+                    //                    imageView.centerYAnchor.constraint(equalTo: self.bottomAnchor, constant: durationPositionY).isActive = true
+                    //                    previousLeftOffsetFromClef = leftOffsetFromClef
                     previousNoteWidth = toneWidth
                 }
             }
             i += 1
         }
     }
-   
+    
     
     func drawNotesOneByOne(notesAreTransparent: Bool) {
         let offsetBetwenNotes: CGFloat = {
@@ -331,7 +330,7 @@ class StaffView: UIView {
                 imageView.heightAnchor.constraint(equalToConstant: noteHeight).isActive = true
                 imageView.widthAnchor.constraint(equalToConstant: noteWidth).isActive = true
                 imageView.centerYAnchor.constraint(equalTo: self.bottomAnchor, constant: durationPositionY).isActive = true
-              
+                
                 //дополнительная линейка по центру ноты
                 if note.needsAdditionalLine {
                     let addLineXOffset = 7
@@ -366,7 +365,7 @@ class StaffView: UIView {
                 let nameLabel = UILabel()
                 nameLabel.translatesAutoresizingMaskIntoConstraints = false
                 nameLabel.font = NoteViewModel.NOTE_LABEL_FONT
-               // nameLabel.backgroundColor = .green
+                // nameLabel.backgroundColor = .green
                 nameLabel.text = note.noteTitle()
                 nameLabel.textColor = .black
                 nameLabel.textAlignment = .center

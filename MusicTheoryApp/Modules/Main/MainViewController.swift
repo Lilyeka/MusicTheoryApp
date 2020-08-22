@@ -31,7 +31,6 @@ class MainViewController: UIViewController,MainViewProtocol {
 
     // MARK: - Lifecycle methods
     override func viewDidLoad() {
-        self.view.backgroundColor = .white
         super.viewDidLoad()
         configurator.configure(with: self)
         presenter.configureView()

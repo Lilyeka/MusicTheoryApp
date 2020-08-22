@@ -91,7 +91,7 @@ class MusicTasks {
                          Note(name: .re1, tone: .none, duration: .whole),
                          Note(name: .Do1, tone: .none, duration: .whole)
             ],
-            rightAnswer: [5,7]),*/
+            rightAnswer: [5,7]),
         MusicTaskShowNoteOnThePiano(questionText:"Нажмите на нужную ноту", note: Note(name:.fa, tone: .none, duration: .whole)),
         MusicTaskSelectNoteInWord(questionText: "Какая нота спряталась в слове?",
                                   notesArray: [
@@ -204,7 +204,7 @@ class MusicTasks {
                                   partsOfWord: [("Бе",nil),
                                                 ("ре",Note(name: .re, tone: .none, duration: .whole)),
                                                 ("г",nil)],
-                                  needToType: false),
+                                  needToType: false),*/
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.si, tone:.none, duration:.whole)],
                                   partsOfWord: [
