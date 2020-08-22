@@ -82,24 +82,24 @@ struct Note {
         self.duration = duration
     }
     
-    func noteRusName() -> String {
-        switch self.name {
-        case .Do,.Do1:
-            return "До"
-        case .re,.re1:
-            return "Ре"
-        case .mi, .mi1:
-            return "Ми"
-        case .fa, .fa1:
-            return "Фа"
-        case .sol,.sol1:
-            return "Соль"
-        case .la,.la1:
-            return "Ля"
-        case .si,.si1:
-            return "Си"
-        }
-    }
+//    func noteRusName() -> String {
+//        switch self.name {
+//        case .Do,.Do1:
+//            return "До"
+//        case .re,.re1:
+//            return "Ре"
+//        case .mi, .mi1:
+//            return "Ми"
+//        case .fa, .fa1:
+//            return "Фа"
+//        case .sol,.sol1:
+//            return "Соль"
+//        case .la,.la1:
+//            return "Ля"
+//        case .si,.si1:
+//            return "Си"
+//        }
+//    }
     
     func noteOctave() -> Octaves {
          switch self.name {

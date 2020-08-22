@@ -30,7 +30,7 @@ class MusicTaskWriteNoteInWordViewModel {
         // старнивать надо Uppercaserd строки т.к. пользователь не всегда пишет ответ с большой буквы
         for partOfWord in model.partsOfWord! {
             if let part = partOfWord.1 {
-                if userAnswer == part.noteRusName() {return true}
+                if userAnswer == part.name.noteRusName() {return true}
             }
         }
         return false

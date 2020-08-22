@@ -121,7 +121,7 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
         var i = 0
         while i < viewModel.model.partsOfWord!.count {
             if let note = viewModel.model.partsOfWord![i].1 {
-                numberOfLettersInTextField = note.noteRusName().count
+                numberOfLettersInTextField = note.name.noteRusName().count
                 let textFieldWidth: CGFloat = CGFloat(numberOfLettersInTextField * MusicTaskWriteNoteInWordView.TEXTFIELD_LETTER_WIDTH)
                 textField.delegate = self
                 textField.widthAnchor.constraint(equalToConstant: textFieldWidth).isActive = true
