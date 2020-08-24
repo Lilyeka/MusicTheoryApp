@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol QuizViewControllerDelegate {
+    func keyboardWillShowAction()
+    func keyboardWillHideAction()
+}
+
 class QuizViewController: UIViewController, QuizViewProtocol {
+    var delegate: QuizViewControllerDelegate?
     var presenter: QuizPresenterProtocol!
     var configurator: QuizConfiguratorProtocol = QuizConfigurator()
     var currentQuestionNumber: Int = 0
@@ -41,6 +47,19 @@ class QuizViewController: UIViewController, QuizViewProtocol {
     
     var questions = MusicTasks()
     
+    //Mark: -LifeCycle
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -48,7 +67,12 @@ class QuizViewController: UIViewController, QuizViewProtocol {
         configureCollectionView()
     }
     
-    func configureCollectionView() {
+    override func viewDidLayoutSubviews() {
+        layout.itemSize = CGSize(width:quizCollectionView.frame.width , height: quizCollectionView.frame.height)
+    }
+    
+    //MARK: -Private methods
+    fileprivate func configureCollectionView() {
         self.view.addSubview(self.quizCollectionView)
         quizCollectionView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
         quizCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0.0).isActive = true
@@ -56,15 +80,22 @@ class QuizViewController: UIViewController, QuizViewProtocol {
         quizCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
     
-    override func viewDidLayoutSubviews() {
-        layout.itemSize = CGSize(width:quizCollectionView.frame.width , height: quizCollectionView.frame.height)
-    }
-    
-    func getCenterIndex() -> IndexPath? {
+    fileprivate func getCenterIndex() -> IndexPath? {
         let center = self.view.convert(self.quizCollectionView.center, to: self.quizCollectionView)
         let index = quizCollectionView!.indexPathForItem(at: center)
         print(index ?? "index not found")
         return index
+    }
+    
+    //MARK: - NotificationCenter
+    @objc func keyboardWillShow(_ notification: Notification) {
+        self.delegate?.keyboardWillShowAction()
+        print("Клавиатуру показали")
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+         print("Клавиатуру скрыли")
+        self.delegate?.keyboardWillHideAction()
     }
 }
 
@@ -113,6 +144,7 @@ extension QuizViewController: UICollectionViewDataSource {
                 let viewModel = MusicTaskWriteNoteInWordViewModel(model: q)
                 cell?.configureSubviews(viewModel: viewModel, frame: frame)
                 cell?.delegate = self
+                self.delegate = cell
                 return cell!
             } else {
                 let viewModel = MusicTaskSelectNoteInWordViewModel(model:questions.tasks[indexPath.row] as! MusicTaskSelectNoteInWord)

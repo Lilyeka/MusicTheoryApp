@@ -20,6 +20,12 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
     static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 20.0)
     static let WORD_FONT = UIFont.boldSystemFont(ofSize: 35.0)
     static let TEXTFIELD_LETTER_WIDTH = 30
+    var KEYBOARD_DELTA: CGFloat = 40.0
+    
+    fileprivate var staffViewTopUpConstraint: NSLayoutConstraint?
+    fileprivate var staffViewTopNormalConstraint: NSLayoutConstraint?
+    fileprivate var wordStackTopUpConstraint: NSLayoutConstraint?
+    fileprivate var wordStackTopNormalConstraint: NSLayoutConstraint?
     
     //MARK: -Delegate
     var delegate: QuizWriteNoteCollectionViewCellDelegate?
@@ -109,7 +115,11 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
        // staffView.clipsToBounds = true
 
         self.contentView.addSubview(staffView)
-        staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 15.0).isActive = true
+        staffViewTopUpConstraint =  staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: -KEYBOARD_DELTA)
+        staffViewTopNormalConstraint =  staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 15.0)
+        
+        staffViewTopUpConstraint!.isActive = false
+        staffViewTopNormalConstraint!.isActive = true
         staffView.widthAnchor.constraint(equalToConstant: halfWidth).isActive = true
         staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 15.0).isActive = true
         staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
@@ -143,8 +153,13 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
         wordStackView.alignment = .center
         
         self.contentView.addSubview(wordStackView)
-        wordStackView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
+        wordStackTopUpConstraint = wordStackView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor, constant: -KEYBOARD_DELTA)
+        wordStackTopNormalConstraint = wordStackView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)
+        wordStackTopUpConstraint!.isActive = false
+        wordStackTopNormalConstraint!.isActive = true
         wordStackView.centerXAnchor.constraint(equalTo: staffView.centerXAnchor, constant: 15.0 + halfWidth).isActive = true
+        
+        questionLabel.superview?.bringSubviewToFront(questionLabel)
     }
     
     override func prepareForReuse() {
@@ -214,3 +229,39 @@ extension QuizWriteNoteCollectionViewCell: UITextFieldDelegate {
     }
 }
 // MARK: UITextFieldDelegate <---
+
+extension QuizWriteNoteCollectionViewCell: QuizViewControllerDelegate {
+    func keyboardWillShowAction() {
+       // self.staffViewTopUpConstraint!.isActive = true
+       // self.staffViewTopNormalConstraint!.isActive = false
+
+       // self.staffView.transform = CGAffineTransform.identity.scaledBy(x: 0.8, y: 0.8)
+        
+        // translate
+        var transform1 = CATransform3DMakeTranslation(0, -50, 0)
+        // scale
+        var transform2 = CATransform3DScale(transform1, 0.8, 0.8, 1)
+       
+        staffView.layer.transform =  CATransform3DConcat(transform1, transform2)
+        
+        wordStackTopUpConstraint!.isActive = true
+        wordStackTopNormalConstraint!.isActive = false
+    
+    }
+    
+    func keyboardWillHideAction() {
+        //KEYBOARD_DELTA = 30.0
+        staffView.transform = CGAffineTransform.identity
+        
+        UIView.animate(withDuration: 1.0) {
+            self.staffViewTopUpConstraint!.isActive = false
+            self.staffViewTopNormalConstraint!.isActive = true
+        }
+    
+        
+        wordStackTopUpConstraint!.isActive = false
+        wordStackTopNormalConstraint!.isActive = true
+    }
+    
+    
+}
