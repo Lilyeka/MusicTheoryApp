@@ -112,14 +112,14 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
                               frame: CGRect.zero, notesDelegate: nil)
         staffView.translatesAutoresizingMaskIntoConstraints = false
         staffView.isUserInteractionEnabled = false
-       // staffView.clipsToBounds = true
-
+   
         self.contentView.addSubview(staffView)
-        staffViewTopUpConstraint =  staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: -KEYBOARD_DELTA)
-        staffViewTopNormalConstraint =  staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 15.0)
-        
-        staffViewTopUpConstraint!.isActive = false
-        staffViewTopNormalConstraint!.isActive = true
+//        staffViewTopUpConstraint =  staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: -KEYBOARD_DELTA)
+//        staffViewTopNormalConstraint =  staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 15.0)
+//
+//        staffViewTopUpConstraint!.isActive = false
+//        staffViewTopNormalConstraint!.isActive = true
+        staffView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor, constant: -0).isActive = true
         staffView.widthAnchor.constraint(equalToConstant: halfWidth).isActive = true
         staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 15.0).isActive = true
         staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
@@ -133,6 +133,7 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
             if let note = viewModel.model.partsOfWord![i].1 {
                 numberOfLettersInTextField = note.name.noteRusName().count
                 let textFieldWidth: CGFloat = CGFloat(numberOfLettersInTextField * MusicTaskWriteNoteInWordView.TEXTFIELD_LETTER_WIDTH)
+                textField.keyboardType = .alphabet
                 textField.delegate = self
                 textField.widthAnchor.constraint(equalToConstant: textFieldWidth).isActive = true
                 partsOfWordViews.append(textField)
@@ -232,36 +233,16 @@ extension QuizWriteNoteCollectionViewCell: UITextFieldDelegate {
 
 extension QuizWriteNoteCollectionViewCell: QuizViewControllerDelegate {
     func keyboardWillShowAction() {
-       // self.staffViewTopUpConstraint!.isActive = true
-       // self.staffViewTopNormalConstraint!.isActive = false
+        let translate = CATransform3DMakeTranslation(0, -40, 0)
+        let scale = CATransform3DScale(translate, 0.7, 0.7, 1)
+        staffView.layer.transform = CATransform3DConcat(translate, scale)
 
-       // self.staffView.transform = CGAffineTransform.identity.scaledBy(x: 0.8, y: 0.8)
-        
-        // translate
-        var transform1 = CATransform3DMakeTranslation(0, -50, 0)
-        // scale
-        var transform2 = CATransform3DScale(transform1, 0.8, 0.8, 1)
-       
-        staffView.layer.transform =  CATransform3DConcat(transform1, transform2)
-        
-        wordStackTopUpConstraint!.isActive = true
-        wordStackTopNormalConstraint!.isActive = false
-    
+        let translate1 = CATransform3DMakeTranslation(0, -65, 0)
+        wordStackView.layer.transform = translate1
     }
     
     func keyboardWillHideAction() {
-        //KEYBOARD_DELTA = 30.0
         staffView.transform = CGAffineTransform.identity
-        
-        UIView.animate(withDuration: 1.0) {
-            self.staffViewTopUpConstraint!.isActive = false
-            self.staffViewTopNormalConstraint!.isActive = true
-        }
-    
-        
-        wordStackTopUpConstraint!.isActive = false
-        wordStackTopNormalConstraint!.isActive = true
+        wordStackView.transform = CGAffineTransform.identity
     }
-    
-    
 }

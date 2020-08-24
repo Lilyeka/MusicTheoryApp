@@ -75,6 +75,7 @@
 
 /* Begin PBXFileReference section */
 		610585FC2460B63700F56611 /* NoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewModel.swift; sourceTree = "<group>"; };
+		610C41DD24F45EA20028BE18 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		612AAA9224D74FFD00A3CC28 /* ClassicSparkTrajectoryFactoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassicSparkTrajectoryFactoryProtocol.swift; sourceTree = "<group>"; };
 		612AAA9324D74FFD00A3CC28 /* ClassicFireworkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassicFireworkController.swift; sourceTree = "<group>"; };
 		612AAA9424D74FFD00A3CC28 /* ClassicSparkTrajectoryFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassicSparkTrajectoryFactory.swift; sourceTree = "<group>"; };
@@ -411,6 +412,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 6149ED02245978CD00A1375A;
 			productRefGroup = 6149ED0C245978CD00A1375A /* Products */;
@@ -511,6 +513,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				6149ED1A245978D700A1375A /* Base */,
+				610C41DD24F45EA20028BE18 /* ru */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -522,6 +525,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -582,6 +586,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
