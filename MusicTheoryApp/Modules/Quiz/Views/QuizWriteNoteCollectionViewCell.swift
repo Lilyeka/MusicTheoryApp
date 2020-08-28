@@ -79,6 +79,12 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
     }()
     
     //MARK: -Init
+    
+    init(frame:CGRect, viewModel:MusicTaskWriteNoteInWordViewModel) {
+        super.init(frame: frame)
+        self.viewModel = viewModel
+    }
+    
     override init(frame:CGRect) {
         super.init(frame: frame)
     }
@@ -86,8 +92,8 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-        
-  
+    
+    
     //MARK: - Public methods
     func configureSubviews(viewModel:MusicTaskWriteNoteInWordViewModel, frame:CGRect) {
         self.viewModel = viewModel
@@ -112,28 +118,23 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
                               frame: CGRect.zero, notesDelegate: nil)
         staffView.translatesAutoresizingMaskIntoConstraints = false
         staffView.isUserInteractionEnabled = false
-   
+        
         self.contentView.addSubview(staffView)
-//        staffViewTopUpConstraint =  staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: -KEYBOARD_DELTA)
-//        staffViewTopNormalConstraint =  staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 15.0)
-//
-//        staffViewTopUpConstraint!.isActive = false
-//        staffViewTopNormalConstraint!.isActive = true
         staffView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor, constant: -0).isActive = true
         staffView.widthAnchor.constraint(equalToConstant: halfWidth).isActive = true
         staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 15.0).isActive = true
         staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
         staffView.drawNotesOneByOne(notesAreTransparent: false)
         
-                staffView.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: 10).cgPath
-                staffView.layer.shouldRasterize = true
-                staffView.layer.rasterizationScale = UIScreen.main.scale
+        staffView.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: 10).cgPath
+        staffView.layer.shouldRasterize = true
+        staffView.layer.rasterizationScale = UIScreen.main.scale
         var i = 0
         while i < viewModel.model.partsOfWord!.count {
             if let note = viewModel.model.partsOfWord![i].1 {
                 numberOfLettersInTextField = note.name.noteRusName().count
                 let textFieldWidth: CGFloat = CGFloat(numberOfLettersInTextField * MusicTaskWriteNoteInWordView.TEXTFIELD_LETTER_WIDTH)
-                textField.keyboardType = .alphabet
+                textField.keyboardType = .default
                 textField.delegate = self
                 textField.widthAnchor.constraint(equalToConstant: textFieldWidth).isActive = true
                 partsOfWordViews.append(textField)
@@ -168,12 +169,43 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
             view.removeFromSuperview()
         }
         viewModel = nil
+        textField.text = ""
+        staffView = nil
+        wordStackView = nil
         partsOfWordViews = [UIView]()
+    }
+    
+    override func didMoveToSuperview() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+    }
+    
+    override func removeFromSuperview() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     //MARK: - Actions    
     @objc func bgButtonTapped(sender: UIButton) {
         self.endEditing(true)
+    }
+    
+    //MARK: - NotificationCenter
+    @objc func keyboardWillShow(_ notification: Notification) {
+        print("Клавиатуру показали")
+        let translate = CATransform3DMakeTranslation(0, -40, 0)
+        let scale = CATransform3DScale(translate, 0.7, 0.7, 1)
+        staffView.layer.transform = CATransform3DConcat(translate, scale)
+        
+        let translate1 = CATransform3DMakeTranslation(0, -65, 0)
+        wordStackView.layer.transform = translate1
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        print("Клавиатуру скрыли")
+        staffView.transform  = CGAffineTransform.identity
+        wordStackView.transform  = CGAffineTransform.identity
     }
 }
 
@@ -202,7 +234,9 @@ extension QuizWriteNoteCollectionViewCell: UITextFieldDelegate {
     }
     
     internal func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-        // if implemented, called in place of textFieldDidEndEditing:
+        if let text = textField.text, text.count > 0 {
+            checkAnswer(answerString:text)
+        }
         print("TextField did end editing with reason method called")
     }
     
@@ -223,26 +257,19 @@ extension QuizWriteNoteCollectionViewCell: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        // called when 'return' key pressed. return NO to ignore.
-        print("TextField should return method called")
         textField.resignFirstResponder()
+        if let text = textField.text, text.count > 0 {
+            checkAnswer(answerString:text)
+        }
         return true
+    }
+    
+    fileprivate func checkAnswer(answerString: String) {
+        if  viewModel.checkUserAnswer(userAnswer: answerString) {
+            delegate?.rightAnswerReaction()
+        } else {
+            delegate?.wrongAnswerReaction()
+        }
     }
 }
 // MARK: UITextFieldDelegate <---
-
-extension QuizWriteNoteCollectionViewCell: QuizViewControllerDelegate {
-    func keyboardWillShowAction() {
-        let translate = CATransform3DMakeTranslation(0, -40, 0)
-        let scale = CATransform3DScale(translate, 0.7, 0.7, 1)
-        staffView.layer.transform = CATransform3DConcat(translate, scale)
-
-        let translate1 = CATransform3DMakeTranslation(0, -65, 0)
-        wordStackView.layer.transform = translate1
-    }
-    
-    func keyboardWillHideAction() {
-        staffView.transform = CGAffineTransform.identity
-        wordStackView.transform = CGAffineTransform.identity
-    }
-}
