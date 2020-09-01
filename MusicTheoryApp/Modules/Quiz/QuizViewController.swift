@@ -207,6 +207,12 @@ extension QuizViewController: QuizSelectNoteCollectionViewCellDelegate, QuizSele
 
 extension QuizViewController: QuizShowNoteCollectionViewCellDelegate, MusicTaskWriteNoteInWordViewDelegate, QuizWriteNoteCollectionViewCellDelegate {
     
+    func additionalRightAnswerReaction(view: UIView) {
+           fireworkController.addFireworks(count: 2, sparks: 8, around: view)
+           view.isUserInteractionEnabled = false
+    }
+    
+    
     func rightAnswerReaction() {
         let alert = UIAlertController(title: "Верный ответ", message: "Поехали дальше!", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in

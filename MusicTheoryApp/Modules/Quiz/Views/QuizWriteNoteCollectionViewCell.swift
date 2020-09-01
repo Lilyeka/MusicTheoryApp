@@ -11,6 +11,7 @@ import UIKit
 protocol QuizWriteNoteCollectionViewCellDelegate {
     func rightAnswerReaction()
     func wrongAnswerReaction()
+    func additionalRightAnswerReaction(view: UIView)
 }
 
 class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
@@ -19,13 +20,6 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
     }
     static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 20.0)
     static let WORD_FONT = UIFont.boldSystemFont(ofSize: 35.0)
-    static let TEXTFIELD_LETTER_WIDTH = 30
-    var KEYBOARD_DELTA: CGFloat = 40.0
-    
-    fileprivate var staffViewTopUpConstraint: NSLayoutConstraint?
-    fileprivate var staffViewTopNormalConstraint: NSLayoutConstraint?
-    fileprivate var wordStackTopUpConstraint: NSLayoutConstraint?
-    fileprivate var wordStackTopNormalConstraint: NSLayoutConstraint?
     
     //MARK: -Delegate
     var delegate: QuizWriteNoteCollectionViewCellDelegate?
@@ -34,7 +28,6 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
     var viewModel: MusicTaskWriteNoteInWordViewModel!
     var staffView: StaffView!
     var wordStackView: UIStackView!
-    var partsOfWordViews: [UIView] = [UIView]()
     var numberOfLettersInTextField = 0
     
     var bgButton: UIButton = {
@@ -48,7 +41,7 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
-        label.font = MusicTaskWriteNoteInWordView.QUESTION_FONT
+        label.font = QuizWriteNoteCollectionViewCell.QUESTION_FONT
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         label.textAlignment = .center
@@ -59,27 +52,18 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
         var textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = ""
-        textField.font = MusicTaskWriteNoteInWordView.WORD_FONT
+        textField.font = QuizWriteNoteCollectionViewCell.WORD_FONT
         textField.borderStyle = UITextField.BorderStyle.roundedRect
         textField.autocorrectionType = UITextAutocorrectionType.no
         textField.keyboardType = UIKeyboardType.alphabet
         textField.returnKeyType = UIReturnKeyType.done
-        textField.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.right
+        textField.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.center
         textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
         textField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
         return textField
     }()
     
-    var checkResultButton: UIButton = {
-        var btn = UIButton(type: .custom)
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.setTitle("Проверить", for: .normal)
-        btn.backgroundColor = .gray
-        return btn
-    }()
-    
     //MARK: -Init
-    
     init(frame:CGRect, viewModel:MusicTaskWriteNoteInWordViewModel) {
         super.init(frame: frame)
         self.viewModel = viewModel
@@ -93,16 +77,15 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     //MARK: - Public methods
     func configureSubviews(viewModel:MusicTaskWriteNoteInWordViewModel, frame:CGRect) {
         self.viewModel = viewModel
         
         self.contentView.addSubview(bgButton)
-        bgButton.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        bgButton.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        bgButton.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        bgButton.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        bgButton.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
+        bgButton.leftAnchor.constraint(equalTo: self.contentView.leftAnchor).isActive = true
+        bgButton.rightAnchor.constraint(equalTo: self.contentView.rightAnchor).isActive = true
+        bgButton.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor).isActive = true
         bgButton.addTarget(self, action: #selector(bgButtonTapped(sender:)), for: .touchUpInside)
         
         self.contentView.addSubview(questionLabel)
@@ -110,7 +93,7 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
         questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 15.0).isActive = true
         questionLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 15.0).isActive = true
         questionLabel.widthAnchor.constraint(equalToConstant: frame.size.width - 30.0).isActive = true
-        questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: frame.size.width, font:MusicTaskShowNoteOnThePianoView.QUESTION_FONT))!).isActive = true
+        questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: frame.size.width, font:QuizWriteNoteCollectionViewCell.QUESTION_FONT))!).isActive = true
         
         let halfWidth = (self.contentView.frame.width - 15.0*3)/2
         staffView = StaffView(notesViewModels:viewModel.notesViewModels,
@@ -124,41 +107,39 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
         staffView.widthAnchor.constraint(equalToConstant: halfWidth).isActive = true
         staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 15.0).isActive = true
         staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
-        staffView.drawNotesOneByOne(notesAreTransparent: false)
+        staffView.drawNotesOneByOne1(notesAreTransparent: false, viewWidth: halfWidth)
         
-        staffView.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: 10).cgPath
-        staffView.layer.shouldRasterize = true
-        staffView.layer.rasterizationScale = UIScreen.main.scale
-        var i = 0
-        while i < viewModel.model.partsOfWord!.count {
-            if let note = viewModel.model.partsOfWord![i].1 {
-                numberOfLettersInTextField = note.name.noteRusName().count
-                let textFieldWidth: CGFloat = CGFloat(numberOfLettersInTextField * MusicTaskWriteNoteInWordView.TEXTFIELD_LETTER_WIDTH)
-                textField.keyboardType = .default
-                textField.delegate = self
-                textField.widthAnchor.constraint(equalToConstant: textFieldWidth).isActive = true
-                partsOfWordViews.append(textField)
-            } else {
-                let label = UILabel()
-                label.text = viewModel.model.partsOfWord![i].0
-                label.textColor = .black
-                label.font = UIFont.systemFont(ofSize: 35, weight: .bold)
-                partsOfWordViews.append(label)
-            }
-            i += 1
-        }
-        wordStackView = UIStackView(arrangedSubviews: partsOfWordViews)
+        wordStackView = UIStackView()
         wordStackView.translatesAutoresizingMaskIntoConstraints = false
         wordStackView.axis = .horizontal
         wordStackView.distribution = .fill
         wordStackView.spacing = 5.0
         wordStackView.alignment = .center
         
+        var i = 0
+        while i < viewModel.model.partsOfWord!.count {
+            if let note = viewModel.model.partsOfWord![i].1 {
+                numberOfLettersInTextField = note.name.noteRusName().count
+                let textWidth = viewModel.model.partsOfWord![i].0.width(withConstrainedHeight: 50.0, font: QuizWriteNoteCollectionViewCell.WORD_FONT) + 25.0
+                textField.keyboardType = .default
+                textField.delegate = self
+                textField.widthAnchor.constraint(equalToConstant: textWidth).isActive = true
+                textField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                wordStackView.addArrangedSubview(textField)
+            } else {
+                let label = UILabel()
+                label.text = viewModel.model.partsOfWord![i].0
+                label.textColor = .black
+                label.font = QuizWriteNoteCollectionViewCell.WORD_FONT
+                label.textAlignment = i == 0 ? .right : .left
+                wordStackView.addArrangedSubview(label)
+            }
+            i += 1
+        }
+        
         self.contentView.addSubview(wordStackView)
-        wordStackTopUpConstraint = wordStackView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor, constant: -KEYBOARD_DELTA)
-        wordStackTopNormalConstraint = wordStackView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)
-        wordStackTopUpConstraint!.isActive = false
-        wordStackTopNormalConstraint!.isActive = true
+        wordStackView.backgroundColor = .black
+        wordStackView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
         wordStackView.centerXAnchor.constraint(equalTo: staffView.centerXAnchor, constant: 15.0 + halfWidth).isActive = true
         
         questionLabel.superview?.bringSubviewToFront(questionLabel)
@@ -172,13 +153,11 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
         textField.text = ""
         staffView = nil
         wordStackView = nil
-        partsOfWordViews = [UIView]()
     }
     
     override func didMoveToSuperview() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
     }
     
     override func removeFromSuperview() {
@@ -193,7 +172,6 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
     
     //MARK: - NotificationCenter
     @objc func keyboardWillShow(_ notification: Notification) {
-        print("Клавиатуру показали")
         let translate = CATransform3DMakeTranslation(0, -40, 0)
         let scale = CATransform3DScale(translate, 0.7, 0.7, 1)
         staffView.layer.transform = CATransform3DConcat(translate, scale)
@@ -203,7 +181,6 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
-        print("Клавиатуру скрыли")
         staffView.transform  = CGAffineTransform.identity
         wordStackView.transform  = CGAffineTransform.identity
     }
@@ -235,7 +212,7 @@ extension QuizWriteNoteCollectionViewCell: UITextFieldDelegate {
     
     internal func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         if let text = textField.text, text.count > 0 {
-            checkAnswer(answerString:text)
+            checkAnswer(answerString:text,textField:textField)
         }
         print("TextField did end editing with reason method called")
     }
@@ -259,14 +236,19 @@ extension QuizWriteNoteCollectionViewCell: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         if let text = textField.text, text.count > 0 {
-            checkAnswer(answerString:text)
+            checkAnswer(answerString:text, textField: textField)
         }
         return true
     }
     
-    fileprivate func checkAnswer(answerString: String) {
+    fileprivate func checkAnswer(answerString: String, textField: UITextField) {
         if  viewModel.checkUserAnswer(userAnswer: answerString) {
-            delegate?.rightAnswerReaction()
+               delegate?.additionalRightAnswerReaction(view: textField)
+            let seconds = 1.0
+            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                self.delegate?.rightAnswerReaction()
+                textField.isUserInteractionEnabled = true
+            }
         } else {
             delegate?.wrongAnswerReaction()
         }

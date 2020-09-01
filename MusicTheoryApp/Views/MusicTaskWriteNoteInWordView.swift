@@ -16,7 +16,7 @@ protocol MusicTaskWriteNoteInWordViewDelegate {
 class MusicTaskWriteNoteInWordView: UIView {
     static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 18.0)
     static let WORD_FONT = UIFont.boldSystemFont(ofSize: 35.0)
-    static let TEXTFIELD_LETTER_WIDTH = 30
+    static let TEXTFIELD_LETTER_WIDTH = 20
     //MARK: -Delegate
     var delegate: MusicTaskWriteNoteInWordViewDelegate?
 
@@ -40,7 +40,7 @@ class MusicTaskWriteNoteInWordView: UIView {
     
     var textField: UITextField = {
         var textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
+        //textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = ""
         textField.font = MusicTaskWriteNoteInWordView.WORD_FONT
         textField.borderStyle = UITextField.BorderStyle.roundedRect
@@ -101,7 +101,7 @@ class MusicTaskWriteNoteInWordView: UIView {
                 numberOfLettersInTextField = note.name.noteRusName().count
                  let textFieldWidth: CGFloat = CGFloat(numberOfLettersInTextField * MusicTaskWriteNoteInWordView.TEXTFIELD_LETTER_WIDTH)
                  textField.delegate = self
-                 textField.widthAnchor.constraint(equalToConstant: textFieldWidth).isActive = true
+                 //textField.widthAnchor.constraint(equalToConstant: textFieldWidth).isActive = true
                  partsOfWordViews.append(textField)
                  
              } else {

@@ -60,13 +60,12 @@ class QuizSelectNoteInWordCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Public methods
     func configureSubviews(viewModel:MusicTaskSelectNoteInWordViewModel, frame:CGRect) {
-
         self.viewModel = viewModel
         self.addSubview(questionLabel)
         questionLabel.text = viewModel.model.questionText
         questionLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        questionLabel.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        questionLabel.widthAnchor.constraint(equalToConstant: frame.size.width).isActive = true
+        questionLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 15.0).isActive = true
+        questionLabel.widthAnchor.constraint(equalToConstant: frame.size.width - 30.0).isActive = true
         questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: frame.size.width, font:QuizSelectNoteInWordCollectionViewCell.QUESTION_FONT))!).isActive = true
         
         staffView = StaffView(notesViewModels:viewModel.notesViewModels, selectOnlyOneNote: false,

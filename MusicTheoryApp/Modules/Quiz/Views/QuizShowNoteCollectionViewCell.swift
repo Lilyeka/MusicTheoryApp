@@ -33,7 +33,7 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
     var questionLabel: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = MusicTaskShowNoteOnThePianoView.QUESTION_FONT
+        label.font = QuizShowNoteCollectionViewCell.QUESTION_FONT
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -58,9 +58,8 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
         questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: TOP_OFFSET).isActive = true
         questionLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: LEFT_OFFSET).isActive = true
         questionLabel.widthAnchor.constraint(equalToConstant: frame.size.width-2*LEFT_OFFSET).isActive = true
-        questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: frame.size.width, font:MusicTaskShowNoteOnThePianoView.QUESTION_FONT))!).isActive = true
-        
-        let pianoLeftOffset:CGFloat = 20.0
+        questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: frame.size.width, font:QuizShowNoteCollectionViewCell.QUESTION_FONT))!).isActive = true
+
         let staffViewWidth = 1*(frame.size.width - 3*LEFT_OFFSET)/3
         let pianoViewWidth = 2*(frame.size.width - 3*LEFT_OFFSET)/3
         
