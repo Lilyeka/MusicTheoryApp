@@ -71,7 +71,7 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
     func configureSubviews(viewModel:MusicTaskSelectNoteViewModel, frame:CGRect) {
         self.viewModel = viewModel
         
-        staffView = StaffView(notesViewModels: viewModel.notesViewModels,selectOnlyOneNote: false, frame:CGRect.zero,notesDelegate: self)
+        staffView = StaffView(notesViewModels: viewModel.notesViewModels,selectOnlyOneNote: false, frame:CGRect.zero,notesDelegate: self, cleff: viewModel.model.cleffType)
         staffView.setNotesDelegate(deleg: self)
         staffView.delegate = self
         staffView.translatesAutoresizingMaskIntoConstraints = false

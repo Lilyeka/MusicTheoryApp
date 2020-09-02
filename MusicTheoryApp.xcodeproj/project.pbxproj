@@ -68,6 +68,7 @@
 		61A818C1247AB591009DCE07 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A818C0247AB591009DCE07 /* String+Extension.swift */; };
 		61CC250024EC6F9700424B96 /* QuizSelectNoteInWordCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CC24FF24EC6F9600424B96 /* QuizSelectNoteInWordCollectionViewCell.swift */; };
 		61CDA927247C66E800780D04 /* PianoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CDA926247C66E800780D04 /* PianoView.swift */; };
+		61D89B3224FF810000E04AB6 /* CleffTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D89B3124FF810000E04AB6 /* CleffTypes.swift */; };
 		61E3914B24CE079500603666 /* DeviceTypeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E3914A24CE079500603666 /* DeviceTypeManager.swift */; };
 		61E8ABEE24BC989D00B58A01 /* QuizShowNoteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E8ABED24BC989D00B58A01 /* QuizShowNoteCollectionViewCell.swift */; };
 		61E8ABF024BDB29100B58A01 /* QuizWriteNoteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E8ABEF24BDB29100B58A01 /* QuizWriteNoteCollectionViewCell.swift */; };
@@ -138,6 +139,7 @@
 		61A818C0247AB591009DCE07 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		61CC24FF24EC6F9600424B96 /* QuizSelectNoteInWordCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSelectNoteInWordCollectionViewCell.swift; sourceTree = "<group>"; };
 		61CDA926247C66E800780D04 /* PianoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PianoView.swift; sourceTree = "<group>"; };
+		61D89B3124FF810000E04AB6 /* CleffTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleffTypes.swift; sourceTree = "<group>"; };
 		61E3914A24CE079500603666 /* DeviceTypeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTypeManager.swift; sourceTree = "<group>"; };
 		61E8ABED24BC989D00B58A01 /* QuizShowNoteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizShowNoteCollectionViewCell.swift; sourceTree = "<group>"; };
 		61E8ABEF24BDB29100B58A01 /* QuizWriteNoteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizWriteNoteCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 			isa = PBXGroup;
 			children = (
 				6149ED24245A24D600A1375A /* Note.swift */,
+				61D89B3124FF810000E04AB6 /* CleffTypes.swift */,
 				61A818BC247477E2009DCE07 /* MusicTask.swift */,
 				61A4B502248843FF004A286E /* MusicTaskSelectNote.swift */,
 				61A4B74724917D2E00C0E92D /* MusicTaskSelectNoteInWord.swift */,
@@ -457,6 +460,7 @@
 				6175CA0824BA51820028BDBD /* QuizCollectionViewCell.swift in Sources */,
 				6172FA16249C084C009153BD /* MusicTaskWriteNoteInWordViewModel.swift in Sources */,
 				619BB54C24B7463200D3076E /* QuizConfigurator.swift in Sources */,
+				61D89B3224FF810000E04AB6 /* CleffTypes.swift in Sources */,
 				619BB54A24B743C100D3076E /* QuizProtocols.swift in Sources */,
 				612AAAC024D74FFE00A3CC28 /* FireworkSpark.swift in Sources */,
 				612AAAAC24D74FFE00A3CC28 /* ClassicSparkTrajectoryFactoryProtocol.swift in Sources */,

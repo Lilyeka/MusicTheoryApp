@@ -60,8 +60,11 @@ class MusicTaskShowNoteOnThePianoView: UIView {
         let staffViewWidth = (withFrame.size.width - pianoLeftOffset)/2
         let pianoViewWidth = staffViewWidth
 
-        staffView = StaffView(notesViewModels:viewModel!.notesViewModels, selectOnlyOneNote: true,
-                              frame: CGRect.zero, notesDelegate: nil)
+        staffView = StaffView(notesViewModels:viewModel!.notesViewModels,
+                              selectOnlyOneNote: true,
+                              frame: CGRect.zero,
+                              notesDelegate: nil,
+                              cleff:(viewModel?.model.cleffType)!)
         staffView.translatesAutoresizingMaskIntoConstraints = false
         staffView.isUserInteractionEnabled = false
         self.addSubview(staffView)

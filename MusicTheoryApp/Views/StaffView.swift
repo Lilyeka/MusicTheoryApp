@@ -14,7 +14,7 @@ protocol StaffViewDelegate {
 
 class StaffView: UIView {    
     static let VERTICAL_OFFSET = 60
-    var noteDelegate: NoteViewModelDelegate?
+    static let LINE_WIDTH: CGFloat = 2.0
     
     static var LINE_OFFSET: Int = {
         if DeviceType.IS_IPHONE_6_6s_7_8 {
@@ -29,7 +29,7 @@ class StaffView: UIView {
         return 30 // for iPhone 11
     }()
     
-    static var CLEFF_TOP_OFFSET: CGFloat = {
+    static var TREBLE_TOP_OFFSET: CGFloat = {
         if (DeviceType.IS_IPHONE_6_6s_7_8)  {
             return 35.0
         }
@@ -45,7 +45,7 @@ class StaffView: UIView {
         return 15.0 // for iPhone 11
     }()
     
-    static var CLEF_BOTTOM_OFFSET: CGFloat = {
+    static var TREBLE_BOTTOM_OFFSET: CGFloat = {
         if(DeviceType.IS_IPHONE_6_6s_7_8) {
             return -16.0
         }
@@ -61,7 +61,7 @@ class StaffView: UIView {
         return 0 // for iPhone 11
     }()
     
-    static let CLEF_WIDTH: CGFloat = {
+    static let TREBLE_WIDTH: CGFloat = {
         if (DeviceType.IS_IPHONE_6_6s_7_8) {
             return 70.0
         }
@@ -78,7 +78,7 @@ class StaffView: UIView {
         return 80.0 // for iPhone 11
     }()
     
-    static let CLEFT_LEFT_OFFSET: CGFloat = {
+    static let TREBLE_LEFT_OFFSET: CGFloat = {
         if DeviceType.IS_IPHONE_6_6s_7_8 {
             return 5.0
         }
@@ -91,7 +91,30 @@ class StaffView: UIView {
         return 5.0
     }()
     
-    static let LINE_WIDTH: CGFloat = 2.0
+    static var BASS_TOP_OFFSET: CGFloat = {
+        if DeviceType.IS_IPHONE_6_6s_7_8 {
+            return 6.0
+        }
+        return 6.0
+    }()
+    static var BASS_LEFT_OFFSET: CGFloat = {
+        if DeviceType.IS_IPHONE_6_6s_7_8 {
+            return 8.0
+        }
+        return 8.0
+    }()
+    static var BASS_BOTTOM_OFFSET: CGFloat = {
+        if DeviceType.IS_IPHONE_6_6s_7_8 {
+            return -16.0
+        }
+        return -16.0
+    }()
+    static var BASS_WIDTH: CGFloat = {
+        if DeviceType.IS_IPHONE_6_6s_7_8 {
+            return 77.0
+        }
+        return 77.0
+    }()
     
     static func viewHeight() -> Int {
         let linesThicknessHeight = Int(LINE_WIDTH)*5
@@ -99,7 +122,7 @@ class StaffView: UIView {
         let offsetFromTopAndBottom = VERTICAL_OFFSET*2
         return (offsetFromTopAndBottom + linesOffset + linesThicknessHeight)
     }
-    
+   
     var notesArray:[NoteViewModel]?
     var pickedOutNotesIndexes:[Int] = [Int]() {
         didSet {
@@ -107,9 +130,11 @@ class StaffView: UIView {
         }
     }
     var selectOnlyOneNote: Bool!
+    var cleff: CleffTypes!
     
     //MARK: - Delegate
     var delegate: StaffViewDelegate?
+    var noteDelegate: NoteViewModelDelegate?
     
     //MARK: -Views
     var previousSelectedNoteView: UIView?
@@ -118,7 +143,6 @@ class StaffView: UIView {
     var clefImageView: UIImageView = {
         var imageView = UIImageView()
         //imageView.backgroundColor = .green
-        imageView.image = UIImage(named: "clef_new")!
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -132,10 +156,11 @@ class StaffView: UIView {
         super.init(coder: aDecoder)
     }
     
-    init(notesViewModels:[NoteViewModel], selectOnlyOneNote: Bool, frame:CGRect, notesDelegate: NoteViewModelDelegate?) {
+    init(notesViewModels:[NoteViewModel], selectOnlyOneNote: Bool, frame:CGRect, notesDelegate: NoteViewModelDelegate?, cleff: CleffTypes) {
         super.init(frame:frame)
         self.notesArray = notesViewModels
         self.selectOnlyOneNote = selectOnlyOneNote
+        self.cleff = cleff
         setupView()
         if notesDelegate != nil {
             setNotesDelegate(deleg: notesDelegate!)
@@ -148,11 +173,19 @@ class StaffView: UIView {
     }
         
     fileprivate func setupView() {
+        let imageName = cleff == CleffTypes.Treble ? "trebleClef" : "bassClef"
+        clefImageView.image = UIImage(named: imageName)
+        
+        let leftOffset = cleff == CleffTypes.Treble ? StaffView.TREBLE_LEFT_OFFSET : StaffView.BASS_LEFT_OFFSET
+        let topOffset = cleff == CleffTypes.Treble ? StaffView.TREBLE_TOP_OFFSET : StaffView.BASS_TOP_OFFSET
+        let bottomOffset = cleff == CleffTypes.Treble ? StaffView.TREBLE_BOTTOM_OFFSET : StaffView.BASS_BOTTOM_OFFSET
+        let width =  cleff == CleffTypes.Treble ? StaffView.TREBLE_WIDTH : StaffView.BASS_WIDTH
+        
         self.addSubview(clefImageView)
-        clefImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: StaffView.CLEFT_LEFT_OFFSET).isActive = true
-        clefImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: StaffView.CLEFF_TOP_OFFSET).isActive = true
-        clefImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: StaffView.CLEF_BOTTOM_OFFSET).isActive = true
-        clefImageView.widthAnchor.constraint(equalToConstant: StaffView.CLEF_WIDTH).isActive = true
+        clefImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: leftOffset).isActive = true
+        clefImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: topOffset).isActive = true
+        clefImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: bottomOffset).isActive = true
+        clefImageView.widthAnchor.constraint(equalToConstant: width).isActive = true
     }
     
     func setNotesDelegate(deleg: NoteViewModelDelegate) {
@@ -160,10 +193,10 @@ class StaffView: UIView {
     }
     
     func drawNotesOneByOne1(notesAreTransparent: Bool,viewWidth: CGFloat) {
-        let width = viewWidth - StaffView.CLEFT_LEFT_OFFSET - StaffView.CLEF_WIDTH
+        let width = cleff == CleffTypes.Treble ? viewWidth - StaffView.TREBLE_LEFT_OFFSET - StaffView.TREBLE_WIDTH : viewWidth - StaffView.BASS_LEFT_OFFSET - StaffView.BASS_WIDTH
         let noteCenterX = width/CGFloat(notesArray!.count+1)
         
-        var previousNoteWidth: CGFloat = 0.0
+     //   var previousNoteWidth: CGFloat = 0.0
         var i = 0
         for note in notesArray! {
             note.alfa = notesAreTransparent ? NoteViewModel.TRANSPARENT_ALFA : NoteViewModel.OPAQUE_ALFA
@@ -195,7 +228,7 @@ class StaffView: UIView {
                 //дополнительная линейка по центру ноты
                 if note.needsAdditionalLine {
                     let addLineXOffset = 7
-                    let noteStartXPosition = Int(StaffView.CLEFT_LEFT_OFFSET + StaffView.CLEF_WIDTH + noteCenterX*CGFloat(i+1) - noteWidth)
+                    let noteStartXPosition = cleff == CleffTypes.Treble ? Int(StaffView.TREBLE_LEFT_OFFSET + StaffView.TREBLE_WIDTH + noteCenterX*CGFloat(i+1) - noteWidth) :  Int(StaffView.BASS_LEFT_OFFSET + StaffView.BASS_WIDTH + noteCenterX*CGFloat(i+1) - noteWidth) 
                     drawAdditionalLine(
                         startX: Int(noteStartXPosition) - addLineXOffset,
                         toEndingX: Int(noteStartXPosition) + Int(noteWidth) + addLineXOffset,
@@ -207,10 +240,10 @@ class StaffView: UIView {
                     )
                 }
                 
-                //                //дополнительная линейка снизу ноты
+                //дополнительная линейка снизу ноты
                 if note.needsUnderLine {
                     let addLineXOffset = 7
-                    let noteStartXPosition = Int(StaffView.CLEFT_LEFT_OFFSET + StaffView.CLEF_WIDTH + noteCenterX*CGFloat(i+1) - noteWidth)
+                    let noteStartXPosition = Int(StaffView.TREBLE_LEFT_OFFSET + StaffView.TREBLE_WIDTH + noteCenterX*CGFloat(i+1) - noteWidth)
                     drawAdditionalLine(
                         startX: noteStartXPosition - addLineXOffset,
                         toEndingX: Int(noteStartXPosition) + Int(noteWidth) + addLineXOffset,
@@ -243,7 +276,7 @@ class StaffView: UIView {
                 imageView.isUserInteractionEnabled = true
                 imageView.addGestureRecognizer(tapGestureRecognizer)
                 
-                previousNoteWidth = noteWidth
+                //previousNoteWidth = noteWidth
                 // TODO: если у ноты есть еще и тональность то отрисовать значок тональности в отдельной imageView
                 if let toneImageName = noteCharacteristics.tone {
                 }
@@ -266,7 +299,7 @@ class StaffView: UIView {
                     //                    imageView.widthAnchor.constraint(equalToConstant: toneWidth).isActive = true
                     //                    imageView.centerYAnchor.constraint(equalTo: self.bottomAnchor, constant: durationPositionY).isActive = true
                     //                    previousLeftOffsetFromClef = leftOffsetFromClef
-                    previousNoteWidth = toneWidth
+                    //previousNoteWidth = toneWidth
                 }
             }
             i += 1
@@ -334,7 +367,8 @@ class StaffView: UIView {
                 //дополнительная линейка по центру ноты
                 if note.needsAdditionalLine {
                     let addLineXOffset = 7
-                    let noteStartXPosition = Int(StaffView.CLEFT_LEFT_OFFSET + StaffView.CLEF_WIDTH + leftOffsetFromClef)
+                    let noteStartXPosition = cleff == CleffTypes.Treble ? Int(StaffView.TREBLE_LEFT_OFFSET + StaffView.TREBLE_WIDTH + leftOffsetFromClef) :
+                        Int(StaffView.BASS_LEFT_OFFSET + StaffView.BASS_WIDTH + leftOffsetFromClef)
                     drawAdditionalLine(
                         startX: noteStartXPosition - addLineXOffset,
                         toEndingX: Int(noteStartXPosition) + Int(noteWidth) + addLineXOffset,
@@ -349,7 +383,8 @@ class StaffView: UIView {
                 //дополнительная линейка снизу ноты
                 if note.needsUnderLine {
                     let addLineXOffset = 7
-                    let noteStartXPosition = Int(StaffView.CLEFT_LEFT_OFFSET + StaffView.CLEF_WIDTH + leftOffsetFromClef)
+                    let noteStartXPosition = cleff == CleffTypes.Treble ? Int(StaffView.TREBLE_LEFT_OFFSET + StaffView.TREBLE_WIDTH + leftOffsetFromClef) :
+                        Int(StaffView.BASS_LEFT_OFFSET + StaffView.BASS_WIDTH + leftOffsetFromClef)
                     drawAdditionalLine(
                         startX: noteStartXPosition - addLineXOffset,
                         toEndingX: Int(noteStartXPosition) + Int(noteWidth) + addLineXOffset,

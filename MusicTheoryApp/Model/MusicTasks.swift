@@ -19,7 +19,8 @@ class MusicTasks {
                           Note(name:.sol, tone:.none, duration:.whole),
                           Note(name:.la, tone:.none, duration:.whole),
                           Note(name:.si, tone:.none, duration:.whole)],
-            rightAnswer:   [0,2,4]),
+            rightAnswer:   [0,2,4],
+            cleff: CleffTypes.Treble),
         MusicTaskSelectNote(
             questionText: "Выберите ноты 1-й октавы, расположенные на основных линейках нотного стана",
             notesArray:[Note(name:.si, tone:.none, duration:.whole),
@@ -29,7 +30,8 @@ class MusicTasks {
                         Note(name:.mi, tone:.none, duration:.whole),
                         Note(name:.re, tone:.none, duration:.whole),
                         Note(name:.Do, tone:.none, duration:.whole)],
-            rightAnswer:   [0,2,4]),
+            rightAnswer:   [0,2,4],
+            cleff: CleffTypes.Treble),
         MusicTaskSelectNote(
             questionText: "Выберите ноты 2-й октавы, расположенные на основных линейках нотного стана",
             notesArray: [ Note(name: .Do1, tone: .none, duration: .whole),
@@ -39,7 +41,8 @@ class MusicTasks {
                           Note(name: .sol1, tone: .none, duration: .whole),
                           Note(name: .la1, tone: .none, duration: .whole),
                           Note(name: .si1, tone: .none, duration: .whole)],
-            rightAnswer: [6,8]),
+            rightAnswer: [6,8],
+            cleff: CleffTypes.Treble),
         MusicTaskSelectNote(
             questionText: "Выберите ноты 2-й октавы, расположенные на основных линейках нотного стана",
             notesArray: [Note(name: .si1, tone: .none, duration: .whole),
@@ -50,7 +53,8 @@ class MusicTasks {
                          Note(name: .re1, tone: .none, duration: .whole),
                          Note(name: .Do1, tone: .none, duration: .whole)
             ],
-            rightAnswer: [6,8]),
+            rightAnswer: [6,8],
+            cleff: CleffTypes.Treble),
         MusicTaskSelectNote(
             questionText: "Выберите ноты 1-й октавы, которые пишутся между линейками нотного стана",
             notesArray: [ Note(name:.Do, tone:.none, duration:.whole),
@@ -60,7 +64,8 @@ class MusicTasks {
                           Note(name:.sol, tone:.none, duration:.whole),
                           Note(name:.la, tone:.none, duration:.whole),
                           Note(name:.si, tone:.none, duration:.whole)],
-            rightAnswer:   [1,3]),
+            rightAnswer: [1,3],
+            cleff: CleffTypes.Treble),
         MusicTaskSelectNote(
             questionText: "Выберите ноты 1-й октавы, которые пишутся между линейками нотного стана",
             notesArray:[Note(name:.si, tone:.none, duration:.whole),
@@ -70,7 +75,8 @@ class MusicTasks {
                         Note(name:.mi, tone:.none, duration:.whole),
                         Note(name:.re, tone:.none, duration:.whole),
                         Note(name:.Do, tone:.none, duration:.whole)],
-            rightAnswer:   [1,3]),
+            rightAnswer: [1,3],
+            cleff: CleffTypes.Treble),
         MusicTaskSelectNote(
             questionText: "Выберите ноты 2-й октавы, которые пишутся между линейками нотного стана",
             notesArray: [ Note(name: .Do1, tone: .none, duration: .whole),
@@ -80,7 +86,8 @@ class MusicTasks {
                           Note(name: .sol1, tone: .none, duration: .whole),
                           Note(name: .la1, tone: .none, duration: .whole),
                           Note(name: .si1, tone: .none, duration: .whole)],
-            rightAnswer: [5,7]),
+            rightAnswer: [5,7],
+            cleff: CleffTypes.Treble),
         MusicTaskSelectNote(
             questionText: "Выберите ноты 2-й октавы, которые пишутся между линейками нотного стана",
             notesArray: [Note(name: .si1, tone: .none, duration: .whole),
@@ -91,8 +98,9 @@ class MusicTasks {
                          Note(name: .re1, tone: .none, duration: .whole),
                          Note(name: .Do1, tone: .none, duration: .whole)
             ],
-            rightAnswer: [5,7]),
-        MusicTaskShowNoteOnThePiano(questionText:"Нажмите на нужную ноту", note: Note(name:.fa, tone: .none, duration: .whole)),
+            rightAnswer: [5,7],
+            cleff: CleffTypes.Treble),
+        MusicTaskShowNoteOnThePiano(questionText:"Нажмите на нужную ноту", note: Note(name:.fa, tone: .none, duration: .whole), cleff: CleffTypes.Treble),
         MusicTaskSelectNoteInWord(questionText: "Какая нота спряталась в слове?",
                                   notesArray: [
                                     Note(name:.Do, tone:.none, duration:.whole),
@@ -106,7 +114,8 @@ class MusicTasks {
                                   partsOfWord:[("Ли",nil),
                                                ("си",Note(name: .si, tone:.none, duration: .whole)),
                                                ("ца",nil)],
-                                  needToType: false),
+                                  needToType: false,
+                                  cleff: CleffTypes.Treble),
         MusicTaskSelectNoteInWord(questionText:  "Какая нота спряталась в слове?",
                                   notesArray: [
                                     Note(name:.Do, tone:.none, duration:.whole),
@@ -120,7 +129,8 @@ class MusicTasks {
                                   partsOfWord: [("Ху",nil),
                                                 ("до",Note(name:.Do, tone: .none, duration: .whole)),
                                                 ("жник",nil)],
-                                                needToType: false),
+                                  needToType: false,
+                                  cleff: CleffTypes.Treble),
         MusicTaskSelectNoteInWord(questionText:  "Какая нота спряталась в слове?",
                                   notesArray: [
                                     Note(name:.Do, tone:.none, duration:.whole),
@@ -134,7 +144,8 @@ class MusicTasks {
                                   partsOfWord: [("Зем",nil),
                                                 ("ля",Note(name: .la, tone: .none, duration: .whole)),
                                                 ("ника",nil)],
-                                  needToType: false),
+                                  needToType: false,
+                                  cleff: CleffTypes.Treble),
         MusicTaskSelectNoteInWord(questionText:  "Какая нота спряталась в слове?",
                                   notesArray: [
                                     Note(name:.Do, tone:.none, duration:.whole),
@@ -148,7 +159,8 @@ class MusicTasks {
                                   partsOfWord: [("Ал",nil),
                                                 ("фа",Note(name: .fa, tone: .none, duration: .whole)),
                                                 ("вит",nil)],
-                                  needToType: false),
+                                  needToType: false,
+                                  cleff: CleffTypes.Treble),
         MusicTaskSelectNoteInWord(questionText:  "Какая нота спряталась в слове?",
                                   notesArray: [
                                     Note(name:.Do, tone:.none, duration:.whole),
@@ -162,7 +174,8 @@ class MusicTasks {
                                   partsOfWord: [("Ось",nil),
                                                 ("ми",Note(name: .mi, tone: .none, duration: .whole)),
                                                 ("ног",nil)],
-                                  needToType: false),
+                                  needToType: false,
+                                  cleff: CleffTypes.Treble),
         MusicTaskSelectNoteInWord(questionText:  "Какая нота спряталась в слове?",
                                   notesArray: [
                                     Note(name:.Do, tone:.none, duration:.whole),
@@ -176,7 +189,8 @@ class MusicTasks {
                                   partsOfWord: [("Ст",nil),
                                                 ("ре",Note(name: .re, tone: .none, duration: .whole)),
                                                 ("коза",nil)],
-                                  needToType: false),
+                                  needToType: false,
+                                  cleff: CleffTypes.Treble),
         MusicTaskSelectNoteInWord(questionText:  "Какая нота спряталась в слове?",
                                   notesArray: [
                                     Note(name:.Do, tone:.none, duration:.whole),
@@ -190,7 +204,8 @@ class MusicTasks {
                                   partsOfWord: [
                                     ("Соль",Note(name: .sol, tone: .none, duration: .whole)),
                                     ("феджио",nil)],
-                                  needToType: false),
+                                  needToType: false,
+                                  cleff: CleffTypes.Treble),
         MusicTaskSelectNoteInWord(questionText:  "Какая нота спряталась в слове?",
                                   notesArray: [
                                     Note(name:.Do, tone:.none, duration:.whole),
@@ -204,69 +219,80 @@ class MusicTasks {
                                   partsOfWord: [("Бе",nil),
                                                 ("ре",Note(name: .re, tone: .none, duration: .whole)),
                                                 ("г",nil)],
-                                  needToType: false),*/
+                                  needToType: false,
+                                  cleff: CleffTypes.Treble),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.si, tone:.none, duration:.whole)],
                                   partsOfWord: [
                                     ("Cи",Note(name: .si, tone: .none, duration: .whole)),
                                     ("ница",nil)],
-                                  needToType: true),
+                                  needToType: true,
+                                  cleff: CleffTypes.Treble),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.re1, tone:.none, duration:.whole)],
                                   partsOfWord: [
                                     ("Че",nil),
                                     ("ре",Note(name: .re1, tone: .none, duration: .whole)),
                                     ("паха",nil)],
-                                  needToType: true),
+                                  needToType: true,
+                                  cleff: CleffTypes.Treble),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.la, tone:.none, duration:.whole)],
                                   partsOfWord: [
                                     ("Ля",Note(name: .la, tone: .none, duration: .whole)),
                                     ("гушка",nil)],
-                                  needToType: true),
+                                  needToType: true,
+                                  cleff: CleffTypes.Treble),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.fa1, tone:.none, duration:.whole)],
                                   partsOfWord: [
                                     ("Фа",Note(name: .fa1, tone: .none, duration: .whole)),
                                     ("кел",nil)],
-                                  needToType: true),
+                                  needToType: true,
+                                  cleff: CleffTypes.Treble),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.Do1, tone:.none, duration:.whole)],
                                   partsOfWord: [
                                     ("До",Note(name: .Do1, tone: .none, duration: .whole)),
                                     ("рога",nil)],
-                                  needToType: true),
+                                  needToType: true,
+                                  cleff: CleffTypes.Treble),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.si, tone:.none, duration:.whole)],
                                   partsOfWord: [
                                     ("Си",Note(name:.si, tone: .none, duration: .whole)),
                                     ("роп",nil)],
-                                  needToType: true),
+                                  needToType: true,
+                                  cleff: CleffTypes.Treble),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.mi, tone:.none, duration:.whole)],
                                   partsOfWord: [
                                     ("Ми",Note(name:.mi, tone: .none, duration: .whole)),
                                     ("нута",nil)],
-                                  needToType: true),
+                                  needToType: true,
+                                  cleff: CleffTypes.Treble),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.mi1, tone:.none, duration:.whole)],
                                   partsOfWord: [
                                     ("Пира",nil),
                                     ("ми",Note(name:.mi1, tone: .none, duration: .whole)),
                                     ("да",nil)],
-                                  needToType: true),
+                                  needToType: true,
+                                  cleff: CleffTypes.Treble),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.fa1, tone:.none, duration:.whole)],
                                   partsOfWord: [
                                     ("Фа",Note(name:.fa1, tone: .none, duration: .whole)),
                                     ("нтазия",nil)],
-                                  needToType: true),
+                                  needToType: true,
+                                  cleff: CleffTypes.Treble),*/
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.la1, tone:.none, duration:.whole)],
                                   partsOfWord: [
                                     ("Свет",nil),
                                     ("ля",Note(name:.la1, tone: .none, duration: .whole)),
                                     ("чок",nil)],
-                                  needToType: true)
+                                  needToType: true,
+                                  cleff: CleffTypes.Bass)
     ]
 }

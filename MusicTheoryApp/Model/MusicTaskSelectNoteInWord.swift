@@ -12,8 +12,8 @@ class MusicTaskSelectNoteInWord: MusicTask {
     var partsOfWord:[(String,Note?)]?
     var needToTypeAnswer: Bool?
     
-    init(questionText: String, notesArray: [Note], partsOfWord:[(String,Note?)], needToType: Bool) {
-        super.init(questionText: questionText, notesArray: notesArray)
+    init(questionText: String, notesArray: [Note], partsOfWord:[(String,Note?)], needToType: Bool, cleff: CleffTypes) {
+        super.init(questionText: questionText, notesArray: notesArray, cleff: cleff)
         self.partsOfWord = partsOfWord
         self.needToTypeAnswer = needToType
     }

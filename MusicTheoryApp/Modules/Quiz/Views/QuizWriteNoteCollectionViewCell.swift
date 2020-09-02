@@ -96,9 +96,11 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
         questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: frame.size.width, font:QuizWriteNoteCollectionViewCell.QUESTION_FONT))!).isActive = true
         
         let halfWidth = (self.contentView.frame.width - 15.0*3)/2
-        staffView = StaffView(notesViewModels:viewModel.notesViewModels,
+        staffView = StaffView(notesViewModels: viewModel.notesViewModels,
                               selectOnlyOneNote: true,
-                              frame: CGRect.zero, notesDelegate: nil)
+                              frame: CGRect.zero,
+                              notesDelegate: nil,
+                              cleff: viewModel.model.cleffType)
         staffView.translatesAutoresizingMaskIntoConstraints = false
         staffView.isUserInteractionEnabled = false
         

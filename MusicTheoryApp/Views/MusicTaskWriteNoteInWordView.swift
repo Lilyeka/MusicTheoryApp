@@ -84,7 +84,9 @@ class MusicTaskWriteNoteInWordView: UIView {
        
         staffView = StaffView(notesViewModels:viewModel!.notesViewModels,
                               selectOnlyOneNote: true,
-                              frame: CGRect.zero, notesDelegate: nil)
+                              frame: CGRect.zero,
+                              notesDelegate: nil,
+                              cleff:viewModel.model.cleffType )
         staffView.translatesAutoresizingMaskIntoConstraints = false
         staffView.isUserInteractionEnabled = false
         staffView.clipsToBounds = true

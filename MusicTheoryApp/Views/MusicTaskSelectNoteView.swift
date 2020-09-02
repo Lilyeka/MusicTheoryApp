@@ -72,7 +72,8 @@ class MusicTaskSelectNoteView: UIView {
         staffView = StaffView(notesViewModels: viewModel!.notesViewModels,
                               selectOnlyOneNote: false,
                               frame: CGRect.zero,
-                              notesDelegate: nil)
+                              notesDelegate: nil,
+                              cleff: viewModel!.model.cleffType)
         staffView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(staffView)
         staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 0).isActive = true

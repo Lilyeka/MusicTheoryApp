@@ -12,11 +12,12 @@ class MusicTask {
    
     var questionText: String
     var notesArray: [Note]?
-  
+    var cleffType: CleffTypes
     
-    init(questionText: String, notesArray: [Note]) {
+    init(questionText: String, notesArray: [Note], cleff:CleffTypes ) {
         self.questionText = questionText
         self.notesArray = notesArray
+        self.cleffType = cleff
     }
     
 }

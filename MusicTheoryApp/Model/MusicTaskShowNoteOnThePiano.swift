@@ -10,8 +10,8 @@ import UIKit
 
 class MusicTaskShowNoteOnThePiano: MusicTask {
  
-    init(questionText: String, note: Note) {
-        super.init(questionText: questionText, notesArray: [note])
+    init(questionText: String, note: Note, cleff: CleffTypes) {
+        super.init(questionText: questionText, notesArray: [note], cleff: cleff)
     }
     
 
