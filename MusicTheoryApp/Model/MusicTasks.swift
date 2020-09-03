@@ -256,7 +256,7 @@ class MusicTasks {
                                     ("До",Note(name: .Do1, tone: .none, duration: .whole)),
                                     ("рога",nil)],
                                   needToType: true,
-                                  cleff: CleffTypes.Treble),
+                                  cleff: CleffTypes.Treble),*/
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.si, tone:.none, duration:.whole)],
                                   partsOfWord: [
@@ -285,7 +285,7 @@ class MusicTasks {
                                     ("Фа",Note(name:.fa1, tone: .none, duration: .whole)),
                                     ("нтазия",nil)],
                                   needToType: true,
-                                  cleff: CleffTypes.Treble),*/
+                                  cleff: CleffTypes.Treble),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.la1, tone:.none, duration:.whole)],
                                   partsOfWord: [
@@ -293,6 +293,6 @@ class MusicTasks {
                                     ("ля",Note(name:.la1, tone: .none, duration: .whole)),
                                     ("чок",nil)],
                                   needToType: true,
-                                  cleff: CleffTypes.Bass)
+                                  cleff: CleffTypes.Treble)
     ]
 }
