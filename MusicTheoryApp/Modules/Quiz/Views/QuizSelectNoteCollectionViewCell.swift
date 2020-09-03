@@ -18,12 +18,16 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
     static var cellIdentifier: String {
         return String(describing: self)
     }
-    static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 20.0)
+    static let QUESTION_FONT: UIFont = {
+        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+            return UIFont.boldSystemFont(ofSize: 23.0)
+        }
+        return UIFont.boldSystemFont(ofSize: 20.0)
+    }()
     
-    let BTN_TOP_OFFSET: CGFloat = 25.0
     let LBL_TOP_OFFSET: CGFloat = 10.0
     let STAF_TOP_OFFSET: CGFloat = {
-        if DeviceType.IS_IPHONE_11Pro_X_Xs {
+        if DeviceType.IS_IPHONE_11Pro_X_Xs || DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
             return 30.0
         }
         return 45.0
@@ -51,7 +55,7 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .clear
         label.textColor = .black
-        label.font = MusicTaskSelectNoteView.QUESTION_FONT
+        label.font = QuizSelectNoteCollectionViewCell.QUESTION_FONT
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         label.textAlignment = .center
@@ -70,6 +74,11 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
     //MARK: -Public methods
     func configureSubviews(viewModel:MusicTaskSelectNoteViewModel, frame:CGRect) {
         self.viewModel = viewModel
+        //дельта, которая становится больше нуля в случае, если все ноты из viewModel.notesViewModels выше Do1
+           var additionalTopOffsetForStaff: CGFloat = 0.0
+           if let octave = viewModel.notesOctave(), octave == .TrebleSecond {
+               additionalTopOffsetForStaff = addTopOffsetForStaff()
+           }
         
         staffView = StaffView(notesViewModels: viewModel.notesViewModels,selectOnlyOneNote: false, frame:CGRect.zero,notesDelegate: self, cleff: viewModel.model.cleffType)
         staffView.setNotesDelegate(deleg: self)
@@ -77,23 +86,20 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
         staffView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(staffView)
         
-        //дельта, которая становится больше нуля в случае, если все ноты из viewModel.notesViewModels выше Do1
-        var additionalTopOffsetForStaff: CGFloat = 0.0
-        if let octave = viewModel.notesOctave(), octave == .TrebleSecond {
-            additionalTopOffsetForStaff = addTopOffsetForStaff()
-        }
+   
         staffView.topAnchor.constraint(equalTo:  self.contentView.topAnchor, constant: STAF_TOP_OFFSET+additionalTopOffsetForStaff).isActive = true
         staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: STAF_VERT_OFFSET).isActive = true
         staffView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -STAF_VERT_OFFSET).isActive = true
         staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
-        staffView.drawNotesOneByOne1(notesAreTransparent: true, viewWidth: self.contentView.frame.width)
+        staffView.drawNotesOneByOne1(notesAreTransparent: true, viewWidth: self.contentView.frame.width,bottomOffsetForNoteNames: -additionalTopOffsetForStaff)
         
         questionLabel.text = viewModel.model.questionText
         self.contentView.addSubview(questionLabel)
         questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: LBL_TOP_OFFSET).isActive = true
         questionLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 25).isActive = true
         questionLabel.widthAnchor.constraint(equalToConstant: frame.size.width - 50).isActive = true
-        questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: frame.size.width - 50, font:MusicTaskSelectNoteView.QUESTION_FONT))!).isActive = true
+        questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: frame.size.width - 50, font:QuizSelectNoteCollectionViewCell.QUESTION_FONT))!).isActive = true
+       
         questionLabel.superview!.bringSubviewToFront(questionLabel)
     }
         

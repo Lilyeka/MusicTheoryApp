@@ -20,7 +20,7 @@ class MusicTasks {
                           Note(name:.la, tone:.none, duration:.whole),
                           Note(name:.si, tone:.none, duration:.whole)],
             rightAnswer:   [0,2,4],
-            cleff: CleffTypes.Treble),
+            cleff: CleffTypes.Bass),
         MusicTaskSelectNote(
             questionText: "Выберите ноты 1-й октавы, расположенные на основных линейках нотного стана",
             notesArray:[Note(name:.si, tone:.none, duration:.whole),
@@ -76,7 +76,7 @@ class MusicTasks {
                         Note(name:.re, tone:.none, duration:.whole),
                         Note(name:.Do, tone:.none, duration:.whole)],
             rightAnswer: [1,3],
-            cleff: CleffTypes.Treble),
+            cleff: CleffTypes.Treble),*/
         MusicTaskSelectNote(
             questionText: "Выберите ноты 2-й октавы, которые пишутся между линейками нотного стана",
             notesArray: [ Note(name: .Do1, tone: .none, duration: .whole),
@@ -256,7 +256,7 @@ class MusicTasks {
                                     ("До",Note(name: .Do1, tone: .none, duration: .whole)),
                                     ("рога",nil)],
                                   needToType: true,
-                                  cleff: CleffTypes.Treble),*/
+                                  cleff: CleffTypes.Treble),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.si, tone:.none, duration:.whole)],
                                   partsOfWord: [

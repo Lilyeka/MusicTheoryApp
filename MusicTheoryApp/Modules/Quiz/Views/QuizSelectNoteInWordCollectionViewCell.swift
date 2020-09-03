@@ -81,7 +81,7 @@ class QuizSelectNoteInWordCollectionViewCell: UICollectionViewCell {
         staffView.leftAnchor.constraint(equalTo:contentView.leftAnchor, constant: STAF_VERT_OFFSET).isActive = true
         staffView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -STAF_VERT_OFFSET).isActive = true
         staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
-        staffView.drawNotesOneByOne1(notesAreTransparent: true, viewWidth: self.contentView.frame.width)
+        staffView.drawNotesOneByOne1(notesAreTransparent: true, viewWidth: self.contentView.frame.width, bottomOffsetForNoteNames: 0.0)
         
         var i = 0
         while i < viewModel.model.partsOfWord!.count {
