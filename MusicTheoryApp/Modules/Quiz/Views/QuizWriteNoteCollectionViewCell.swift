@@ -119,7 +119,7 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
         staffView.widthAnchor.constraint(equalToConstant: halfWidth).isActive = true
         staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 15.0).isActive = true
         staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
-        staffView.drawNotesOneByOne1(notesAreTransparent: false, viewWidth: halfWidth, bottomOffsetForNoteNames: 0.0)
+        staffView.drawNotesOneByOne1(notesAreTransparent: false, viewWidth: halfWidth)
         
         wordStackView = UIStackView()
         wordStackView.translatesAutoresizingMaskIntoConstraints = false

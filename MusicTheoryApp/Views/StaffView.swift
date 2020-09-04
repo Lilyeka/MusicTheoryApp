@@ -225,7 +225,7 @@ class StaffView: UIView {
         self.noteDelegate = deleg
     }
     
-    func drawNotesOneByOne1(notesAreTransparent: Bool,viewWidth: CGFloat, bottomOffsetForNoteNames:CGFloat) {
+    func drawNotesOneByOne1(notesAreTransparent: Bool,viewWidth: CGFloat) {
         let width = cleff == CleffTypes.Treble ? viewWidth - StaffView.TREBLE_LEFT_OFFSET - StaffView.TREBLE_WIDTH : viewWidth - StaffView.BASS_LEFT_OFFSET - StaffView.BASS_WIDTH
         let noteCenterX = width/CGFloat(notesArray!.count+1)
         
@@ -303,7 +303,7 @@ class StaffView: UIView {
                 nameLabel.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
                 nameLabel.heightAnchor.constraint(equalToConstant: 25.0).isActive = true
                 nameLabel.widthAnchor.constraint(equalToConstant: 50.0).isActive = true
-                nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant:-35.0 /*bottomOffsetForNoteNames*/).isActive = true
+                nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: note.noteTitleBottomOffset()).isActive = true
                 
                 let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(noteTapped(tapGestureRecognizer:)))
                 imageView.isUserInteractionEnabled = true
@@ -525,6 +525,17 @@ class StaffView: UIView {
             i += 1
         }
         return i
+    }
+    
+    func notesOctave() -> Octaves? {
+        var octavesSet = Set<Octaves>()
+        for n in self.notesArray! {
+            octavesSet.insert(n.model.noteOctave())
+        }
+        if octavesSet.count == 1 {
+            return octavesSet.popFirst()!
+        }
+        return nil
     }
     
     //    fileprivate func drawLines() {

@@ -139,10 +139,14 @@ extension NoteViewModel {
     func noteTitleBottomOffset() -> CGFloat {
         switch model.name.rawValue {
         case 5...:
-            return -12.0
+            return noteTitleBottomOffsetForTrebleFirstOctave() 
         default:
-            return 12.0
+            return 0.0
         }
+    }
+    
+    fileprivate func noteTitleBottomOffsetForTrebleFirstOctave() -> CGFloat {
+        return -35.0 // it's good for all devices types
     }
     
     func wholeNoteSize() -> (height: CGFloat,width: CGFloat) {
