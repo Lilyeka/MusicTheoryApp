@@ -58,7 +58,7 @@ extension NoteViewModel {
     // их высоту, ширину и смещение центра картинки по Y (если не целая нота и/или не диез то центр смещен от реального центра)
     // высота ноты/значка подобрана так,чтобы круглешок ноты был равен расстоянию между линейками)
     func noteImagesHeightsAndCentersPositions() -> (tone:String?, toneHeight:CGFloat?, toneWidth: CGFloat?, toneCenterOffesetY:CGFloat?, duration:String?, durationHeight:CGFloat?,
-        durationWidth: CGFloat?, durationCenterOffesetY:CGFloat?) {
+        durationWidth: CGFloat?, durationCenterOffesetY:CGFloat) {
             var toneImageName: String?
             var durationImageName: String?
             var toneHeight: CGFloat? = nil
@@ -136,17 +136,34 @@ extension NoteViewModel {
         }
     }
     
-    func noteTitleBottomOffset() -> CGFloat {
+    func noteTitleBottomOffset(cleff: CleffTypes) -> CGFloat {
         switch model.name.rawValue {
-        case 5...:
-            return noteTitleBottomOffsetForTrebleFirstOctave() 
+        case 0...6:
+            return  cleff == CleffTypes.Treble ? noteTitleBottomOffsetForTrebleFirstOctave()
+                : noteTitleBottomOffsetForBassBigOctave()
+        case 7...13:
+            return cleff == CleffTypes.Treble ? noteTitleBottomOffsetForTrebleSecondOctave() :
+                noteTitleBottomOffsetForBassSmallOctave()
         default:
             return 0.0
         }
     }
     
+    func noteTitleBottomOffsetForBassSmallOctave() -> CGFloat {
+        return 0.0 // it's good for all device types
+    }
+    
+    func noteTitleBottomOffsetForBassBigOctave() -> CGFloat {
+        return -100.0 // it's good for all device types
+    }
+    
     fileprivate func noteTitleBottomOffsetForTrebleFirstOctave() -> CGFloat {
-        return -35.0 // it's good for all devices types
+        return 0.0 // it's good for all device types
+    }
+    
+    
+    fileprivate func noteTitleBottomOffsetForTrebleSecondOctave() -> CGFloat {
+        return -35.0 // it's good for all device types
     }
     
     func wholeNoteSize() -> (height: CGFloat,width: CGFloat) {

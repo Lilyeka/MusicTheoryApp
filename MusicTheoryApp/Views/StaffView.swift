@@ -154,7 +154,7 @@ class StaffView: UIView {
         let offsetFromTopAndBottom = VERTICAL_OFFSET*2
         return (offsetFromTopAndBottom + linesOffset + linesThicknessHeight)
     }
-   
+    
     var notesArray:[NoteViewModel]?
     var pickedOutNotesIndexes:[Int] = [Int]() {
         didSet {
@@ -203,7 +203,7 @@ class StaffView: UIView {
         super.draw(rect)
         drawLines(in: rect)
     }
-        
+    
     fileprivate func setupView() {
         //self.backgroundColor = .green
         let imageName = cleff == CleffTypes.Treble ? "trebleClef" : "bassClef"
@@ -221,7 +221,7 @@ class StaffView: UIView {
         clefImageView.widthAnchor.constraint(equalToConstant: width).isActive = true
     }
     
-    func setNotesDelegate(deleg: NoteViewModelDelegate) {
+    fileprivate func setNotesDelegate(deleg: NoteViewModelDelegate) {
         self.noteDelegate = deleg
     }
     
@@ -229,23 +229,21 @@ class StaffView: UIView {
         let width = cleff == CleffTypes.Treble ? viewWidth - StaffView.TREBLE_LEFT_OFFSET - StaffView.TREBLE_WIDTH : viewWidth - StaffView.BASS_LEFT_OFFSET - StaffView.BASS_WIDTH
         let noteCenterX = width/CGFloat(notesArray!.count+1)
         
-     //   var previousNoteWidth: CGFloat = 0.0
         var i = 0
         for note in notesArray! {
             note.alfa = notesAreTransparent ? NoteViewModel.TRANSPARENT_ALFA : NoteViewModel.OPAQUE_ALFA
             note.delegate = noteDelegate
             let noteCharacteristics = note.noteImagesHeightsAndCentersPositions()
-            let offsetLinePositions = CGFloat(note.model.name.rawValue)/2.0 * CGFloat(StaffView.LINE_OFFSET)
-            // картинка для ноты
+            let offsetFromCenterY = noteCharacteristics.durationCenterOffesetY
+            
+            // картинка для длительности ноты
             if let durationImageName = noteCharacteristics.duration,
                 let noteHeight = noteCharacteristics.durationHeight,
-                let noteWidth = noteCharacteristics.durationWidth,
-                let offsetFromCenterY = noteCharacteristics.durationCenterOffesetY {
-                let durationPositionY = -CGFloat(StaffView.VERTICAL_OFFSET) - offsetLinePositions - offsetFromCenterY
+                let noteWidth = noteCharacteristics.durationWidth {
+                let durationPositionY = noteYPosition(note: note, noteInnerOfsetFromCenter: offsetFromCenterY)
                 
                 let imageView = UIImageView()
                 imageView.tag = note.model.name.rawValue
-                //imageView.backgroundColor = .green
                 imageView.translatesAutoresizingMaskIntoConstraints = false
                 imageView.contentMode = .scaleAspectFit
                 let img = UIImage(named: durationImageName)
@@ -280,8 +278,8 @@ class StaffView: UIView {
                     drawAdditionalLine(
                         startX: noteStartXPosition - addLineXOffset,
                         toEndingX: Int(noteStartXPosition) + Int(noteWidth) + addLineXOffset,
-                        startingY: StaffView.viewHeight() - StaffView.VERTICAL_OFFSET - Int(note.model.name.rawValue/2)*StaffView.LINE_OFFSET,
-                        toEndingY: StaffView.viewHeight() - StaffView.VERTICAL_OFFSET - Int(note.model.name.rawValue/2)*StaffView.LINE_OFFSET,
+                        startingY: StaffView.viewHeight() + Int(durationPositionY) + StaffView.LINE_OFFSET/2,
+                        toEndingY: StaffView.viewHeight() + Int(durationPositionY) + StaffView.LINE_OFFSET/2,
                         ofColor: .black,
                         widthOfLine: 3,
                         inView: self
@@ -292,7 +290,6 @@ class StaffView: UIView {
                 let nameLabel = UILabel()
                 nameLabel.translatesAutoresizingMaskIntoConstraints = false
                 nameLabel.font = NoteViewModel.NOTE_LABEL_FONT
-                // nameLabel.backgroundColor = .green
                 nameLabel.text = note.noteTitle()
                 nameLabel.textColor = .black
                 nameLabel.textAlignment = .center
@@ -303,7 +300,7 @@ class StaffView: UIView {
                 nameLabel.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
                 nameLabel.heightAnchor.constraint(equalToConstant: 25.0).isActive = true
                 nameLabel.widthAnchor.constraint(equalToConstant: 50.0).isActive = true
-                nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: note.noteTitleBottomOffset()).isActive = true
+                nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: note.noteTitleBottomOffset(cleff: cleff)).isActive = true
                 
                 let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(noteTapped(tapGestureRecognizer:)))
                 imageView.isUserInteractionEnabled = true
@@ -313,13 +310,13 @@ class StaffView: UIView {
                 // TODO: если у ноты есть еще и тональность то отрисовать значок тональности в отдельной imageView
                 if let toneImageName = noteCharacteristics.tone {
                 }
-            } else {
-                //если просто тональность (без ноты)
+            } else { //если просто тональность (без ноты)
                 if let toneImageName = noteCharacteristics.tone,
                     let toneHeight = noteCharacteristics.toneHeight,
                     let toneWidth = noteCharacteristics.toneWidth,
                     let offsetFromCenterY = noteCharacteristics.toneCenterOffesetY {
-                    let durationPositionY = -CGFloat(StaffView.VERTICAL_OFFSET) - offsetLinePositions - offsetFromCenterY
+                    
+                    let durationPositionY = noteYPosition(note: note, noteInnerOfsetFromCenter: offsetFromCenterY)
                     let imageView = UIImageView()
                     //imageView.backgroundColor = .gray
                     imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -374,14 +371,13 @@ class StaffView: UIView {
             note.delegate = noteDelegate
             let noteCharacteristics = note.noteImagesHeightsAndCentersPositions()
             let leftOffsetFromClef = i == 0 ? offsetFromClef : (previousLeftOffsetFromClef + previousNoteWidth + offsetBetwenNotes)
-            let offsetLinePositions = CGFloat(note.model.name.rawValue)/2.0 * CGFloat(StaffView.LINE_OFFSET)
+            let offsetFromCenterY = noteCharacteristics.durationCenterOffesetY
+            
             // картинка для ноты
             if let durationImageName = noteCharacteristics.duration,
                 let noteHeight = noteCharacteristics.durationHeight,
-                let noteWidth = noteCharacteristics.durationWidth,
-                let offsetFromCenterY = noteCharacteristics.durationCenterOffesetY {
-                let durationPositionY = -CGFloat(StaffView.VERTICAL_OFFSET) - offsetLinePositions - offsetFromCenterY
-                
+                let noteWidth = noteCharacteristics.durationWidth {
+                let durationPositionY = noteYPosition(note: note, noteInnerOfsetFromCenter: offsetFromCenterY)
                 let imageView = UIImageView()
                 imageView.tag = note.model.name.rawValue
                 //imageView.backgroundColor = .green
@@ -421,8 +417,8 @@ class StaffView: UIView {
                     drawAdditionalLine(
                         startX: noteStartXPosition - addLineXOffset,
                         toEndingX: Int(noteStartXPosition) + Int(noteWidth) + addLineXOffset,
-                        startingY: StaffView.viewHeight() - StaffView.VERTICAL_OFFSET - Int(note.model.name.rawValue/2)*StaffView.LINE_OFFSET,
-                        toEndingY: StaffView.viewHeight() - StaffView.VERTICAL_OFFSET - Int(note.model.name.rawValue/2)*StaffView.LINE_OFFSET,
+                        startingY: StaffView.viewHeight() + Int(durationPositionY) + StaffView.LINE_OFFSET/2,
+                        toEndingY: StaffView.viewHeight() + Int(durationPositionY) + StaffView.LINE_OFFSET/2,
                         ofColor: .black,
                         widthOfLine: 3,
                         inView: self
@@ -433,7 +429,6 @@ class StaffView: UIView {
                 let nameLabel = UILabel()
                 nameLabel.translatesAutoresizingMaskIntoConstraints = false
                 nameLabel.font = NoteViewModel.NOTE_LABEL_FONT
-                // nameLabel.backgroundColor = .green
                 nameLabel.text = note.noteTitle()
                 nameLabel.textColor = .black
                 nameLabel.textAlignment = .center
@@ -444,7 +439,7 @@ class StaffView: UIView {
                 nameLabel.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
                 nameLabel.heightAnchor.constraint(equalToConstant: 25.0).isActive = true
                 nameLabel.widthAnchor.constraint(equalToConstant: 50.0).isActive = true
-                nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: note.noteTitleBottomOffset()).isActive = true
+                nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: note.noteTitleBottomOffset(cleff: cleff)).isActive = true
                 
                 let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(noteTapped(tapGestureRecognizer:)))
                 imageView.isUserInteractionEnabled = true
@@ -461,9 +456,9 @@ class StaffView: UIView {
                     let toneHeight = noteCharacteristics.toneHeight,
                     let toneWidth = noteCharacteristics.toneWidth,
                     let offsetFromCenterY = noteCharacteristics.toneCenterOffesetY {
-                    let durationPositionY = -CGFloat(StaffView.VERTICAL_OFFSET) - offsetLinePositions - offsetFromCenterY
+                    let durationPositionY = noteYPosition(note: note, noteInnerOfsetFromCenter: offsetFromCenterY)
+                    
                     let imageView = UIImageView()
-                    //imageView.backgroundColor = .gray
                     imageView.translatesAutoresizingMaskIntoConstraints = false
                     imageView.contentMode = .scaleAspectFit
                     imageView.image = UIImage(named: toneImageName)
@@ -481,13 +476,39 @@ class StaffView: UIView {
         }
     }
     
+    fileprivate func noteYPosition(note: NoteViewModel, noteInnerOfsetFromCenter: CGFloat) -> CGFloat{
+        let offsetFromFirstLine = CGFloat(positionOnTheLine(note: note))/2.0 * CGFloat(StaffView.LINE_OFFSET)
+        let durationPositionY = -CGFloat(StaffView.VERTICAL_OFFSET) - offsetFromFirstLine - noteInnerOfsetFromCenter
+        return durationPositionY
+    }
+    
+    fileprivate func positionOnTheLine(note: NoteViewModel) -> Int {
+        let noteDoPosition = cleff == CleffTypes.Treble ? -2 : -4
+        return noteDoPosition + note.model.name.rawValue
+    }
+    
     @objc func noteTapped(tapGestureRecognizer:UITapGestureRecognizer) {
         selectedNoteView = tapGestureRecognizer.view
+        let noteViewModelNumber = tapGestureRecognizer.view?.tag
+        let noteViewModelIndex = findNoteIndex(noteNumber: noteViewModelNumber!, inArray: notesArray!)
+        let noteViewModel = notesArray![noteViewModelIndex]
+        noteViewModel.didTapped(noteView:selectedNoteView!)
+        
         if selectOnlyOneNote {//можно выбрать только одну ноту из нескольких
             let noteViewModelNumber = tapGestureRecognizer.view?.tag
             tapGestureRecognizer.view?.alpha = NoteViewModel.OPAQUE_ALFA
-            if  previousSelectedNoteView != nil, previousSelectedNoteView != tapGestureRecognizer.view {
+            if previousSelectedNoteView != nil, previousSelectedNoteView != tapGestureRecognizer.view {
                 previousSelectedNoteView?.alpha = NoteViewModel.TRANSPARENT_ALFA
+                for view in self.subviews { //имя предыдущей выбраной ноты скрываем
+                    if view.tag == ((previousSelectedNoteView!.tag + 999)*999) {
+                        view.isHidden = true
+                    }
+                }
+            }
+            for view in self.subviews { //имя выбранной ноты показываем
+                if view.tag == ((noteViewModelNumber!+999)*999) {
+                    view.isHidden = false
+                }
             }
             if !pickedOutNotesIndexes.contains(noteViewModelNumber!) {
                 pickedOutNotesIndexes.removeAll()
@@ -495,11 +516,6 @@ class StaffView: UIView {
             }
             previousSelectedNoteView = tapGestureRecognizer.view
         } else {// можно выбрать несколько нот из нескольких
-            let noteViewModelNumber = tapGestureRecognizer.view?.tag
-            let noteViewModelIndex = findNoteIndex(noteNumber: noteViewModelNumber!, inArray: notesArray!)
-            let noteViewModel = notesArray![noteViewModelIndex]
-            
-            noteViewModel.didTapped(noteView:selectedNoteView!)
             tapGestureRecognizer.view?.alpha = noteViewModel.selected ? NoteViewModel.OPAQUE_ALFA : NoteViewModel.TRANSPARENT_ALFA
             
             if pickedOutNotesIndexes.contains(noteViewModelNumber!) {
@@ -508,13 +524,13 @@ class StaffView: UIView {
             } else {
                 pickedOutNotesIndexes.append(noteViewModelNumber!)
             }
-            
             for view in self.subviews {
                 if view.tag == ((tapGestureRecognizer.view!.tag+999)*999) {//имя ноты
                     view.isHidden = !view.isHidden
                 }
             }
         }
+        
         print(pickedOutNotesIndexes)
     }
     

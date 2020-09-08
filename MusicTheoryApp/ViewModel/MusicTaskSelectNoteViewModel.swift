@@ -25,13 +25,13 @@ class MusicTaskSelectNoteViewModel {
         self.notesViewModels = resultArray
     }
     
-    func checkUserAnswer(userAnswer: Set<Int>) -> Bool {
+    func checkUserAnswer(userAnswer: Set<Note.NoteName>) -> Bool {
         return model.rightAnswer == userAnswer ? true : false
     }
     
     func noteIsFromRightAnswer(note: Note.NoteName) -> Bool {
         for n in model.rightAnswer! {
-            if n == note.rawValue {return true}
+            if n == note {return true}
         }
         return false
     }

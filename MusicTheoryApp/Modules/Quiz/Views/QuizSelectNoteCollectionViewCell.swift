@@ -82,8 +82,11 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
             return 0.0
         }()
         
-        staffView = StaffView(notesViewModels: viewModel.notesViewModels,selectOnlyOneNote: false, frame:CGRect.zero,notesDelegate: self, cleff: viewModel.model.cleffType)
-        staffView.setNotesDelegate(deleg: self)
+        staffView = StaffView(notesViewModels: viewModel.notesViewModels,
+                              selectOnlyOneNote: false,
+                              frame:CGRect.zero,
+                              notesDelegate: self,
+                              cleff: viewModel.model.cleffType)
         staffView.delegate = self
         staffView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(staffView)
@@ -141,7 +144,13 @@ extension QuizSelectNoteCollectionViewCell: NoteViewModelDelegate {
 
 extension QuizSelectNoteCollectionViewCell: StaffViewDelegate {
     func pickedOutNotesIndexesDidChange(newValue: [Int]) {
-        if (viewModel?.checkUserAnswer(userAnswer: Set(newValue)))! {
+        var noteNamesSet = Set<Note.NoteName>()
+        for n in newValue {
+            if let noteName = Note.NoteName(rawValue: n) {
+                noteNamesSet.insert(noteName)
+            }
+        }
+        if (viewModel?.checkUserAnswer(userAnswer: noteNamesSet))! {
             delegate?.rightAnswerReaction()
         }
     }

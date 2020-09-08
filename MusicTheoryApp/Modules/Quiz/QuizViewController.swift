@@ -205,7 +205,7 @@ extension QuizViewController: QuizSelectNoteCollectionViewCellDelegate, QuizSele
     }
 }
 
-extension QuizViewController: QuizShowNoteCollectionViewCellDelegate, MusicTaskWriteNoteInWordViewDelegate, QuizWriteNoteCollectionViewCellDelegate {
+extension QuizViewController: QuizShowNoteCollectionViewCellDelegate, QuizWriteNoteCollectionViewCellDelegate {
     
     func additionalRightAnswerReaction(view: UIView) {
            fireworkController.addFireworks(count: 2, sparks: 8, around: view)

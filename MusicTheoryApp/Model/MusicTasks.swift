@@ -11,7 +11,7 @@ import UIKit
 class MusicTasks {
     var tasks: [MusicTask] = [/*
         MusicTaskSelectNote(
-            questionText: "Выберите ноты 1-й октавы, расположенные на основных линейках нотного стана",
+            questionText: "Выберите ноты первой октавы, расположенные на основных линейках нотного стана",
             notesArray: [ Note(name:.Do, tone:.none, duration:.whole),
                           Note(name:.re, tone:.none, duration:.whole),
                           Note(name:.mi, tone:.none, duration:.whole),
@@ -19,10 +19,10 @@ class MusicTasks {
                           Note(name:.sol, tone:.none, duration:.whole),
                           Note(name:.la, tone:.none, duration:.whole),
                           Note(name:.si, tone:.none, duration:.whole)],
-            rightAnswer:   [0,2,4],
-            cleff: CleffTypes.Bass),
+            rightAnswer:   [.mi,.sol,.si],
+            cleff: CleffTypes.Treble),
         MusicTaskSelectNote(
-            questionText: "Выберите ноты 1-й октавы, расположенные на основных линейках нотного стана",
+            questionText: "Выберите ноты первой октавы, расположенные на основных линейках нотного стана",
             notesArray:[Note(name:.si, tone:.none, duration:.whole),
                         Note(name:.la, tone:.none, duration:.whole),
                         Note(name:.sol, tone:.none, duration:.whole),
@@ -30,10 +30,10 @@ class MusicTasks {
                         Note(name:.mi, tone:.none, duration:.whole),
                         Note(name:.re, tone:.none, duration:.whole),
                         Note(name:.Do, tone:.none, duration:.whole)],
-            rightAnswer:   [0,2,4],
+            rightAnswer:   [.mi,.sol,.si],
             cleff: CleffTypes.Treble),
         MusicTaskSelectNote(
-            questionText: "Выберите ноты 2-й октавы, расположенные на основных линейках нотного стана",
+            questionText: "Выберите ноты второй октавы, расположенные на основных линейках нотного стана",
             notesArray: [ Note(name: .Do1, tone: .none, duration: .whole),
                           Note(name: .re1, tone: .none, duration: .whole),
                           Note(name: .mi1, tone: .none, duration: .whole),
@@ -41,10 +41,10 @@ class MusicTasks {
                           Note(name: .sol1, tone: .none, duration: .whole),
                           Note(name: .la1, tone: .none, duration: .whole),
                           Note(name: .si1, tone: .none, duration: .whole)],
-            rightAnswer: [6,8],
+            rightAnswer: [.re1,.fa1],
             cleff: CleffTypes.Treble),
         MusicTaskSelectNote(
-            questionText: "Выберите ноты 2-й октавы, расположенные на основных линейках нотного стана",
+            questionText: "Выберите ноты второй октавы, расположенные на основных линейках нотного стана",
             notesArray: [Note(name: .si1, tone: .none, duration: .whole),
                          Note(name: .la1, tone: .none, duration: .whole),
                          Note(name: .sol1, tone: .none, duration: .whole),
@@ -53,10 +53,10 @@ class MusicTasks {
                          Note(name: .re1, tone: .none, duration: .whole),
                          Note(name: .Do1, tone: .none, duration: .whole)
             ],
-            rightAnswer: [6,8],
+            rightAnswer: [.re1,.fa1],
             cleff: CleffTypes.Treble),
         MusicTaskSelectNote(
-            questionText: "Выберите ноты 1-й октавы, которые пишутся между линейками нотного стана",
+            questionText: "Выберите ноты первой октавы, которые пишутся между линейками нотного стана",
             notesArray: [ Note(name:.Do, tone:.none, duration:.whole),
                           Note(name:.re, tone:.none, duration:.whole),
                           Note(name:.mi, tone:.none, duration:.whole),
@@ -64,10 +64,10 @@ class MusicTasks {
                           Note(name:.sol, tone:.none, duration:.whole),
                           Note(name:.la, tone:.none, duration:.whole),
                           Note(name:.si, tone:.none, duration:.whole)],
-            rightAnswer: [1,3],
+            rightAnswer: [.fa,.la],
             cleff: CleffTypes.Treble),
         MusicTaskSelectNote(
-            questionText: "Выберите ноты 1-й октавы, которые пишутся между линейками нотного стана",
+            questionText: "Выберите ноты первой октавы, которые пишутся между линейками нотного стана",
             notesArray:[Note(name:.si, tone:.none, duration:.whole),
                         Note(name:.la, tone:.none, duration:.whole),
                         Note(name:.sol, tone:.none, duration:.whole),
@@ -75,10 +75,10 @@ class MusicTasks {
                         Note(name:.mi, tone:.none, duration:.whole),
                         Note(name:.re, tone:.none, duration:.whole),
                         Note(name:.Do, tone:.none, duration:.whole)],
-            rightAnswer: [1,3],
-            cleff: CleffTypes.Treble),*/
+            rightAnswer: [.fa,.la],
+            cleff: CleffTypes.Treble),
         MusicTaskSelectNote(
-            questionText: "Выберите ноты 2-й октавы, которые пишутся между линейками нотного стана",
+            questionText: "Выберите ноты второй октавы, которые пишутся между линейками нотного стана",
             notesArray: [ Note(name: .Do1, tone: .none, duration: .whole),
                           Note(name: .re1, tone: .none, duration: .whole),
                           Note(name: .mi1, tone: .none, duration: .whole),
@@ -86,10 +86,10 @@ class MusicTasks {
                           Note(name: .sol1, tone: .none, duration: .whole),
                           Note(name: .la1, tone: .none, duration: .whole),
                           Note(name: .si1, tone: .none, duration: .whole)],
-            rightAnswer: [5,7],
+            rightAnswer: [.Do1,.mi1],
             cleff: CleffTypes.Treble),
         MusicTaskSelectNote(
-            questionText: "Выберите ноты 2-й октавы, которые пишутся между линейками нотного стана",
+            questionText: "Выберите ноты второй октавы, которые пишутся между линейками нотного стана",
             notesArray: [Note(name: .si1, tone: .none, duration: .whole),
                          Note(name: .la1, tone: .none, duration: .whole),
                          Note(name: .sol1, tone: .none, duration: .whole),
@@ -98,7 +98,7 @@ class MusicTasks {
                          Note(name: .re1, tone: .none, duration: .whole),
                          Note(name: .Do1, tone: .none, duration: .whole)
             ],
-            rightAnswer: [5,7],
+            rightAnswer: [.Do1,.mi1],
             cleff: CleffTypes.Treble),
         MusicTaskShowNoteOnThePiano(questionText:"Нажмите на нужную ноту", note: Note(name:.fa, tone: .none, duration: .whole), cleff: CleffTypes.Treble),
         MusicTaskSelectNoteInWord(questionText: "Какая нота спряталась в слове?",
@@ -145,7 +145,7 @@ class MusicTasks {
                                                 ("ля",Note(name: .la, tone: .none, duration: .whole)),
                                                 ("ника",nil)],
                                   needToType: false,
-                                  cleff: CleffTypes.Treble),
+                                  cleff: CleffTypes.Treble),*/
         MusicTaskSelectNoteInWord(questionText:  "Какая нота спряталась в слове?",
                                   notesArray: [
                                     Note(name:.Do, tone:.none, duration:.whole),

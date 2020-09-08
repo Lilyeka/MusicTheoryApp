@@ -90,7 +90,12 @@ class MusicTaskSelectNoteView: UIView {
     }
     
     @objc func checkButtonTapped(sender: UIButton) {
-        let tappedSet = Set(staffView.pickedOutNotesIndexes)
+        var tappedSet = Set<Note.NoteName>()//Set(staffView.pickedOutNotesIndexes)
+        for n in staffView.pickedOutNotesIndexes {
+            if let noteName = Note.NoteName(rawValue: n) {
+                tappedSet.insert(noteName)
+            }
+        }
         if (viewModel?.checkUserAnswer(userAnswer: tappedSet))! {
             delegate?.rightAnswerReaction()
         } else {

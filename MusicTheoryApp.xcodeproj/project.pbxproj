@@ -37,6 +37,7 @@
 		6149ED28245B69E500A1375A /* StaffView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6149ED27245B69E500A1375A /* StaffView.swift */; };
 		6172FA16249C084C009153BD /* MusicTaskWriteNoteInWordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6172FA15249C084C009153BD /* MusicTaskWriteNoteInWordViewModel.swift */; };
 		6172FA18249C12A9009153BD /* MusicTaskWriteNoteInWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6172FA17249C12A9009153BD /* MusicTaskWriteNoteInWordView.swift */; };
+		617592C52503D21C00FB372D /* MusicTasksBass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617592C42503D21C00FB372D /* MusicTasksBass.swift */; };
 		6175CA0824BA51820028BDBD /* QuizCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6175CA0724BA51820028BDBD /* QuizCollectionViewCell.swift */; };
 		6175CA0A24BC5C920028BDBD /* QuizSelectNoteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6175CA0924BC5C920028BDBD /* QuizSelectNoteCollectionViewCell.swift */; };
 		617F7EC7245E05F900EE08AA /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6149ED24245A24D600A1375A /* Note.swift */; };
@@ -109,6 +110,7 @@
 		6149ED27245B69E500A1375A /* StaffView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffView.swift; sourceTree = "<group>"; };
 		6172FA15249C084C009153BD /* MusicTaskWriteNoteInWordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskWriteNoteInWordViewModel.swift; sourceTree = "<group>"; };
 		6172FA17249C12A9009153BD /* MusicTaskWriteNoteInWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskWriteNoteInWordView.swift; sourceTree = "<group>"; };
+		617592C42503D21C00FB372D /* MusicTasksBass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTasksBass.swift; sourceTree = "<group>"; };
 		6175CA0724BA51820028BDBD /* QuizCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCollectionViewCell.swift; sourceTree = "<group>"; };
 		6175CA0924BC5C920028BDBD /* QuizSelectNoteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSelectNoteCollectionViewCell.swift; sourceTree = "<group>"; };
 		619BB53824B4FF3C00D3076E /* MainConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainConfigurator.swift; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 				61A4B74724917D2E00C0E92D /* MusicTaskSelectNoteInWord.swift */,
 				61A4B5042488477F004A286E /* MusicTaskShowNoteOnThePiano.swift */,
 				61A818BE2474858D009DCE07 /* MusicTasks.swift */,
+				617592C42503D21C00FB372D /* MusicTasksBass.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -507,6 +510,7 @@
 				619BB54724B7234C00D3076E /* QuizViewController.swift in Sources */,
 				617F7EC7245E05F900EE08AA /* Note.swift in Sources */,
 				619BB54124B5096E00D3076E /* MainInteractor.swift in Sources */,
+				617592C52503D21C00FB372D /* MusicTasksBass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

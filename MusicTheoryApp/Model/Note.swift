@@ -27,20 +27,20 @@ struct Note {
     }
     
     public enum NoteName: Int {
-        case Do = -2
-        case re = -1
-        case mi = 0
-        case fa = 1
-        case sol = 2
-        case la = 3
-        case si = 4
-        case Do1 = 5
-        case re1 = 6
-        case mi1 = 7
-        case fa1 = 8
-        case sol1 = 9
-        case la1 = 10
-        case si1 = 11
+        case Do = 0
+        case re = 1
+        case mi = 2
+        case fa = 3
+        case sol = 4
+        case la = 5
+        case si = 6
+        case Do1 = 7
+        case re1 = 8
+        case mi1 = 9
+        case fa1 = 10
+        case sol1 = 11
+        case la1 = 12
+        case si1 = 13
         
         func noteRusName() -> String {
                switch self {
