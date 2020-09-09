@@ -144,13 +144,14 @@ extension QuizSelectNoteCollectionViewCell: NoteViewModelDelegate {
 
 extension QuizSelectNoteCollectionViewCell: StaffViewDelegate {
     func pickedOutNotesIndexesDidChange(newValue: [Int]) {
-        var noteNamesSet = Set<Note.NoteName>()
+        var noteNamesArray = [Note.NoteName]()
         for n in newValue {
             if let noteName = Note.NoteName(rawValue: n) {
-                noteNamesSet.insert(noteName)
+                noteNamesArray.append(noteName)
             }
         }
-        if (viewModel?.checkUserAnswer(userAnswer: noteNamesSet))! {
+        noteNamesArray.sort{$0.rawValue < $1.rawValue}
+        if (viewModel?.checkUserAnswer(userAnswer: noteNamesArray))! {
             delegate?.rightAnswerReaction()
         }
     }

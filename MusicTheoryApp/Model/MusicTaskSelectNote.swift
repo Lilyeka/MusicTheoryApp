@@ -9,9 +9,9 @@
 import UIKit
 
 class MusicTaskSelectNote: MusicTask {
-    var rightAnswer: Set<Note.NoteName>?
+    var rightAnswer: [Note.NoteName]?
     
-    init(questionText: String, notesArray: [Note], rightAnswer: Set<Note.NoteName>, cleff: CleffTypes) {
+    init(questionText: String, notesArray: [Note], rightAnswer: [Note.NoteName], cleff: CleffTypes) {
         super.init(questionText: questionText, notesArray: notesArray, cleff: cleff)
         self.rightAnswer = rightAnswer
     }

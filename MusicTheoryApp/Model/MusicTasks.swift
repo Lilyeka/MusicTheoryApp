@@ -9,7 +9,7 @@
 import UIKit
 
 class MusicTasks {
-    var tasks: [MusicTask] = [/*
+    var tasks: [MusicTask] = [
         MusicTaskSelectNote(
             questionText: "Выберите ноты первой октавы, расположенные на основных линейках нотного стана",
             notesArray: [ Note(name:.Do, tone:.none, duration:.whole),
@@ -51,8 +51,7 @@ class MusicTasks {
                          Note(name: .fa1, tone: .none, duration: .whole),
                          Note(name: .mi1, tone: .none, duration: .whole),
                          Note(name: .re1, tone: .none, duration: .whole),
-                         Note(name: .Do1, tone: .none, duration: .whole)
-            ],
+                         Note(name: .Do1, tone: .none, duration: .whole)],
             rightAnswer: [.re1,.fa1],
             cleff: CleffTypes.Treble),
         MusicTaskSelectNote(
@@ -145,7 +144,7 @@ class MusicTasks {
                                                 ("ля",Note(name: .la, tone: .none, duration: .whole)),
                                                 ("ника",nil)],
                                   needToType: false,
-                                  cleff: CleffTypes.Treble),*/
+                                  cleff: CleffTypes.Treble),
         MusicTaskSelectNoteInWord(questionText:  "Какая нота спряталась в слове?",
                                   notesArray: [
                                     Note(name:.Do, tone:.none, duration:.whole),

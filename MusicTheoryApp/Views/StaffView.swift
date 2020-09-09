@@ -158,9 +158,10 @@ class StaffView: UIView {
     var notesArray:[NoteViewModel]?
     var pickedOutNotesIndexes:[Int] = [Int]() {
         didSet {
-            delegate?.pickedOutNotesIndexesDidChange(newValue: pickedOutNotesIndexes)
+            delegate?.pickedOutNotesIndexesDidChange(newValue: notesRowValuesByIndexes(indexes: pickedOutNotesIndexes))
         }
     }
+    
     var selectOnlyOneNote: Bool!
     var cleff: CleffTypes!
     
@@ -243,7 +244,7 @@ class StaffView: UIView {
                 let durationPositionY = noteYPosition(note: note, noteInnerOfsetFromCenter: offsetFromCenterY)
                 
                 let imageView = UIImageView()
-                imageView.tag = note.model.name.rawValue
+                imageView.tag = i
                 imageView.translatesAutoresizingMaskIntoConstraints = false
                 imageView.contentMode = .scaleAspectFit
                 let img = UIImage(named: durationImageName)
@@ -294,7 +295,7 @@ class StaffView: UIView {
                 nameLabel.textColor = .black
                 nameLabel.textAlignment = .center
                 nameLabel.isHidden = !note.selected
-                nameLabel.tag = (note.model.name.rawValue+999)*999
+                nameLabel.tag = i + 1000
                 
                 self.addSubview(nameLabel)
                 nameLabel.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
@@ -379,7 +380,7 @@ class StaffView: UIView {
                 let noteWidth = noteCharacteristics.durationWidth {
                 let durationPositionY = noteYPosition(note: note, noteInnerOfsetFromCenter: offsetFromCenterY)
                 let imageView = UIImageView()
-                imageView.tag = note.model.name.rawValue
+                imageView.tag = i
                 //imageView.backgroundColor = .green
                 imageView.translatesAutoresizingMaskIntoConstraints = false
                 imageView.contentMode = .scaleAspectFit
@@ -433,7 +434,7 @@ class StaffView: UIView {
                 nameLabel.textColor = .black
                 nameLabel.textAlignment = .center
                 nameLabel.isHidden = !note.selected
-                nameLabel.tag = (note.model.name.rawValue+999)*999
+                nameLabel.tag = i + 1000
                 
                 self.addSubview(nameLabel)
                 nameLabel.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
@@ -476,6 +477,43 @@ class StaffView: UIView {
         }
     }
     
+    //MARK - Actions
+       @objc func noteTapped(tapGestureRecognizer:UITapGestureRecognizer) {
+           selectedNoteView = tapGestureRecognizer.view
+           let noteViewModelIndex = tapGestureRecognizer.view?.tag
+           let noteViewModel = notesArray![noteViewModelIndex!]
+           noteViewModel.didTapped(noteView:selectedNoteView!)
+           
+           if selectOnlyOneNote {//можно выбрать только одну ноту из нескольких
+               tapGestureRecognizer.view?.alpha = NoteViewModel.OPAQUE_ALFA
+               if previousSelectedNoteView != nil, previousSelectedNoteView != tapGestureRecognizer.view {
+                   previousSelectedNoteView?.alpha = NoteViewModel.TRANSPARENT_ALFA
+                   for view in self.subviews { //имя предыдущей выбраной ноты скрываем
+                       if view.tag == previousSelectedNoteView!.tag + 1000 {
+                           view.isHidden = true
+                       }
+                   }
+               }
+               if !pickedOutNotesIndexes.contains(noteViewModelIndex!) {
+                   pickedOutNotesIndexes.removeAll()
+                   pickedOutNotesIndexes.append(noteViewModelIndex!)
+               }
+               previousSelectedNoteView = tapGestureRecognizer.view
+           } else {// можно выбрать несколько нот из нескольких
+               tapGestureRecognizer.view?.alpha = noteViewModel.selected ? NoteViewModel.OPAQUE_ALFA : NoteViewModel.TRANSPARENT_ALFA
+               
+               if pickedOutNotesIndexes.contains(noteViewModelIndex!) {
+                   let index = pickedOutNotesIndexes.firstIndex(of: noteViewModelIndex!)
+                   pickedOutNotesIndexes.remove(at: index!)
+               } else {
+                   pickedOutNotesIndexes.append(noteViewModelIndex!)
+               }
+           }
+           showNoteName(notePosition:noteViewModelIndex!)
+           print(pickedOutNotesIndexes)
+       }
+    
+    //MARK - Private methods
     fileprivate func noteYPosition(note: NoteViewModel, noteInnerOfsetFromCenter: CGFloat) -> CGFloat{
         let offsetFromFirstLine = CGFloat(positionOnTheLine(note: note))/2.0 * CGFloat(StaffView.LINE_OFFSET)
         let durationPositionY = -CGFloat(StaffView.VERTICAL_OFFSET) - offsetFromFirstLine - noteInnerOfsetFromCenter
@@ -487,97 +525,22 @@ class StaffView: UIView {
         return noteDoPosition + note.model.name.rawValue
     }
     
-    @objc func noteTapped(tapGestureRecognizer:UITapGestureRecognizer) {
-        selectedNoteView = tapGestureRecognizer.view
-        let noteViewModelNumber = tapGestureRecognizer.view?.tag
-        let noteViewModelIndex = findNoteIndex(noteNumber: noteViewModelNumber!, inArray: notesArray!)
-        let noteViewModel = notesArray![noteViewModelIndex]
-        noteViewModel.didTapped(noteView:selectedNoteView!)
-        
-        if selectOnlyOneNote {//можно выбрать только одну ноту из нескольких
-            let noteViewModelNumber = tapGestureRecognizer.view?.tag
-            tapGestureRecognizer.view?.alpha = NoteViewModel.OPAQUE_ALFA
-            if previousSelectedNoteView != nil, previousSelectedNoteView != tapGestureRecognizer.view {
-                previousSelectedNoteView?.alpha = NoteViewModel.TRANSPARENT_ALFA
-                for view in self.subviews { //имя предыдущей выбраной ноты скрываем
-                    if view.tag == ((previousSelectedNoteView!.tag + 999)*999) {
-                        view.isHidden = true
-                    }
-                }
-            }
-            for view in self.subviews { //имя выбранной ноты показываем
-                if view.tag == ((noteViewModelNumber!+999)*999) {
-                    view.isHidden = false
-                }
-            }
-            if !pickedOutNotesIndexes.contains(noteViewModelNumber!) {
-                pickedOutNotesIndexes.removeAll()
-                pickedOutNotesIndexes.append(noteViewModelNumber!)
-            }
-            previousSelectedNoteView = tapGestureRecognizer.view
-        } else {// можно выбрать несколько нот из нескольких
-            tapGestureRecognizer.view?.alpha = noteViewModel.selected ? NoteViewModel.OPAQUE_ALFA : NoteViewModel.TRANSPARENT_ALFA
-            
-            if pickedOutNotesIndexes.contains(noteViewModelNumber!) {
-                let index = pickedOutNotesIndexes.firstIndex(of: noteViewModelNumber!)
-                pickedOutNotesIndexes.remove(at: index!)
-            } else {
-                pickedOutNotesIndexes.append(noteViewModelNumber!)
-            }
-            for view in self.subviews {
-                if view.tag == ((tapGestureRecognizer.view!.tag+999)*999) {//имя ноты
-                    view.isHidden = !view.isHidden
-                }
+    fileprivate func showNoteName(notePosition:Int) {
+        for view in self.subviews {
+            if view.tag == notePosition + 1000 {//имя ноты
+                view.isHidden = !view.isHidden
             }
         }
-        
-        print(pickedOutNotesIndexes)
     }
     
-    func findNoteIndex(noteNumber:Int,inArray array:[NoteViewModel]) -> Int {
-        var i = 0
-        for note in array {
-            if note.model.name.rawValue == noteNumber {return i}
-            i += 1
+    fileprivate func notesRowValuesByIndexes(indexes: [Int]) -> [Int] {
+        var resultArray = [Int]()
+        for i in indexes {
+            let element = notesArray![i]
+            resultArray.append(element.model.name.rawValue)
         }
-        return i
+        return resultArray
     }
-    
-    func notesOctave() -> Octaves? {
-        var octavesSet = Set<Octaves>()
-        for n in self.notesArray! {
-            octavesSet.insert(n.model.noteOctave())
-        }
-        if octavesSet.count == 1 {
-            return octavesSet.popFirst()!
-        }
-        return nil
-    }
-    
-    //    fileprivate func drawLines() {
-    //        let lineStartX = 0
-    //        let lineEndX = Int(self.bounds.maxX)
-    //
-    //        var i = 0
-    //        while i < 5 {
-    //            let lineY = Int(self.bounds.maxY) - StaffView.VERTICAL_OFFSET - i*StaffView.LINE_OFFSET
-    //            drawLine(startX: lineStartX, toEndingX: lineEndX, startingY: lineY, toEndingY: lineY, ofColor: .black, widthOfLine: StaffView.LINE_WIDTH, inView: self)
-    //            i += 1
-    //        }
-    //    }
-    //
-    //    fileprivate func drawLine(startX: Int, toEndingX endX: Int, startingY startY: Int, toEndingY endY: Int, ofColor lineColor: UIColor, widthOfLine lineWidth: CGFloat, inView view: UIView) {
-    //
-    //        let path = UIBezierPath()
-    //        path.move(to: CGPoint(x: startX, y: startY))
-    //        path.addLine(to: CGPoint(x: endX, y: endY))
-    //
-    //        let shapeLayer = CAShapeLayer()
-    //        shapeLayer.path = path.cgPath
-    //        shapeLayer.strokeColor = lineColor.cgColor
-    //        shapeLayer.lineWidth = lineWidth
-    //        view.layer.addSublayer(shapeLayer)
-    //    }
     
     fileprivate func drawAdditionalLine(startX: Int, toEndingX endX: Int, startingY startY: Int, toEndingY endY: Int, ofColor lineColor: UIColor, widthOfLine lineWidth: CGFloat, inView view: UIView) {
         
