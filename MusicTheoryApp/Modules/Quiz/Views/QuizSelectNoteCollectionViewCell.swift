@@ -84,7 +84,7 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
         
         staffView = StaffView(notesViewModels: viewModel.notesViewModels,
                               selectOnlyOneNote: false,
-                              frame:CGRect.zero,
+                              frame: CGRect.zero,
                               notesDelegate: self,
                               cleff: viewModel.model.cleffType)
         staffView.delegate = self

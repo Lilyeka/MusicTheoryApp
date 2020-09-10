@@ -258,7 +258,7 @@ class StaffView: UIView {
                 imageView.centerYAnchor.constraint(equalTo: self.bottomAnchor, constant: durationPositionY).isActive = true
                 
                 //дополнительная линейка по центру ноты
-                if note.needsAdditionalLine {
+                if note.additionalLine(cleff: cleff) {
                     let addLineXOffset = 7
                     let noteStartXPosition = cleff == CleffTypes.Treble ? Int(StaffView.TREBLE_LEFT_OFFSET + StaffView.TREBLE_WIDTH + noteCenterX*CGFloat(i+1) - noteWidth) :  Int(StaffView.BASS_LEFT_OFFSET + StaffView.BASS_WIDTH + noteCenterX*CGFloat(i+1) - noteWidth) 
                     drawAdditionalLine(
@@ -273,9 +273,9 @@ class StaffView: UIView {
                 }
                 
                 //дополнительная линейка снизу ноты
-                if note.needsUnderLine {
+                if note.underline(cleff: cleff) {
                     let addLineXOffset = 7
-                    let noteStartXPosition = Int(StaffView.TREBLE_LEFT_OFFSET + StaffView.TREBLE_WIDTH + noteCenterX*CGFloat(i+1) - noteWidth)
+                    let noteStartXPosition = cleff == CleffTypes.Treble ? Int(StaffView.TREBLE_LEFT_OFFSET + StaffView.TREBLE_WIDTH + noteCenterX*CGFloat(i+1) - noteWidth) :  Int(StaffView.BASS_LEFT_OFFSET + StaffView.BASS_WIDTH + noteCenterX*CGFloat(i+1) - noteWidth)
                     drawAdditionalLine(
                         startX: noteStartXPosition - addLineXOffset,
                         toEndingX: Int(noteStartXPosition) + Int(noteWidth) + addLineXOffset,
@@ -287,11 +287,41 @@ class StaffView: UIView {
                     )
                 }
                 
+                //дополнительная линейка сверху ноты
+                if note.upperLine(cleff: cleff) {
+                    let addLineXOffset = 7
+                    let noteStartXPosition = cleff == CleffTypes.Treble ? Int(StaffView.TREBLE_LEFT_OFFSET + StaffView.TREBLE_WIDTH + noteCenterX*CGFloat(i+1) - noteWidth) :  Int(StaffView.BASS_LEFT_OFFSET + StaffView.BASS_WIDTH + noteCenterX*CGFloat(i+1) - noteWidth)
+                    drawAdditionalLine(
+                        startX: noteStartXPosition - addLineXOffset,
+                        toEndingX: Int(noteStartXPosition) + Int(noteWidth) + addLineXOffset,
+                        startingY: StaffView.viewHeight() + Int(durationPositionY) - StaffView.LINE_OFFSET/2,
+                        toEndingY: StaffView.viewHeight() + Int(durationPositionY) - StaffView.LINE_OFFSET/2,
+                        ofColor: .black,
+                        widthOfLine: 3,
+                        inView: self
+                    )
+                }
+                
+                //дополнительная линейка над нотой
+                if note.topAdditionalLine(cleff: cleff) {
+                    let addLineXOffset = 7
+                    let noteStartXPosition = cleff == CleffTypes.Treble ? Int(StaffView.TREBLE_LEFT_OFFSET + StaffView.TREBLE_WIDTH + noteCenterX*CGFloat(i+1) - noteWidth) :  Int(StaffView.BASS_LEFT_OFFSET + StaffView.BASS_WIDTH + noteCenterX*CGFloat(i+1) - noteWidth)
+                    drawAdditionalLine(
+                        startX: noteStartXPosition - addLineXOffset,
+                        toEndingX: Int(noteStartXPosition) + Int(noteWidth) + addLineXOffset,
+                        startingY: StaffView.viewHeight() + Int(durationPositionY) - StaffView.LINE_OFFSET,
+                        toEndingY: StaffView.viewHeight() + Int(durationPositionY) - StaffView.LINE_OFFSET,
+                        ofColor: .black,
+                        widthOfLine: 3,
+                        inView: self
+                    )
+                }
+                
                 //Название ноты
                 let nameLabel = UILabel()
                 nameLabel.translatesAutoresizingMaskIntoConstraints = false
                 nameLabel.font = NoteViewModel.NOTE_LABEL_FONT
-                nameLabel.text = note.noteTitle()
+                nameLabel.text = note.model.name.noteRusName()
                 nameLabel.textColor = .black
                 nameLabel.textAlignment = .center
                 nameLabel.isHidden = !note.selected
@@ -395,7 +425,7 @@ class StaffView: UIView {
                 imageView.centerYAnchor.constraint(equalTo: self.bottomAnchor, constant: durationPositionY).isActive = true
                 
                 //дополнительная линейка по центру ноты
-                if note.needsAdditionalLine {
+                if note.additionalLine(cleff: cleff) {
                     let addLineXOffset = 7
                     let noteStartXPosition = cleff == CleffTypes.Treble ? Int(StaffView.TREBLE_LEFT_OFFSET + StaffView.TREBLE_WIDTH + leftOffsetFromClef) :
                         Int(StaffView.BASS_LEFT_OFFSET + StaffView.BASS_WIDTH + leftOffsetFromClef)
@@ -411,7 +441,7 @@ class StaffView: UIView {
                 }
                 
                 //дополнительная линейка снизу ноты
-                if note.needsUnderLine {
+                if note.underline(cleff: cleff) {
                     let addLineXOffset = 7
                     let noteStartXPosition = cleff == CleffTypes.Treble ? Int(StaffView.TREBLE_LEFT_OFFSET + StaffView.TREBLE_WIDTH + leftOffsetFromClef) :
                         Int(StaffView.BASS_LEFT_OFFSET + StaffView.BASS_WIDTH + leftOffsetFromClef)
@@ -426,11 +456,42 @@ class StaffView: UIView {
                     )
                 }
                 
+                //дополнительная линейка сверху ноты "надчеркивание"
+                if note.upperLine(cleff: cleff) {
+                    let addLineXOffset = 7
+                    let noteStartXPosition = cleff == CleffTypes.Treble ? Int(StaffView.TREBLE_LEFT_OFFSET + StaffView.TREBLE_WIDTH + leftOffsetFromClef) :
+                        Int(StaffView.BASS_LEFT_OFFSET + StaffView.BASS_WIDTH + leftOffsetFromClef)
+                    drawAdditionalLine(
+                        startX: noteStartXPosition - addLineXOffset,
+                        toEndingX: Int(noteStartXPosition) + Int(noteWidth) + addLineXOffset,
+                        startingY: StaffView.viewHeight() + Int(durationPositionY) - StaffView.LINE_OFFSET/2,
+                        toEndingY: StaffView.viewHeight() + Int(durationPositionY) - StaffView.LINE_OFFSET/2,
+                        ofColor: .black,
+                        widthOfLine: 3,
+                        inView: self
+                    )
+                }
+                //дополнительная линейка над нотой
+                if note.upperLine(cleff: cleff) {
+                    let addLineXOffset = 7
+                    let noteStartXPosition = cleff == CleffTypes.Treble ? Int(StaffView.TREBLE_LEFT_OFFSET + StaffView.TREBLE_WIDTH + leftOffsetFromClef) :
+                        Int(StaffView.BASS_LEFT_OFFSET + StaffView.BASS_WIDTH + leftOffsetFromClef)
+                    drawAdditionalLine(
+                        startX: noteStartXPosition - addLineXOffset,
+                        toEndingX: Int(noteStartXPosition) + Int(noteWidth) + addLineXOffset,
+                        startingY: StaffView.viewHeight() + Int(durationPositionY) - StaffView.LINE_OFFSET,
+                        toEndingY: StaffView.viewHeight() + Int(durationPositionY) - StaffView.LINE_OFFSET,
+                        ofColor: .black,
+                        widthOfLine: 3,
+                        inView: self
+                    )
+                }
+                
                 //Название ноты
                 let nameLabel = UILabel()
                 nameLabel.translatesAutoresizingMaskIntoConstraints = false
                 nameLabel.font = NoteViewModel.NOTE_LABEL_FONT
-                nameLabel.text = note.noteTitle()
+                nameLabel.text = note.model.name.noteRusName()
                 nameLabel.textColor = .black
                 nameLabel.textAlignment = .center
                 nameLabel.isHidden = !note.selected
@@ -478,40 +539,40 @@ class StaffView: UIView {
     }
     
     //MARK - Actions
-       @objc func noteTapped(tapGestureRecognizer:UITapGestureRecognizer) {
-           selectedNoteView = tapGestureRecognizer.view
-           let noteViewModelIndex = tapGestureRecognizer.view?.tag
-           let noteViewModel = notesArray![noteViewModelIndex!]
-           noteViewModel.didTapped(noteView:selectedNoteView!)
-           
-           if selectOnlyOneNote {//можно выбрать только одну ноту из нескольких
-               tapGestureRecognizer.view?.alpha = NoteViewModel.OPAQUE_ALFA
-               if previousSelectedNoteView != nil, previousSelectedNoteView != tapGestureRecognizer.view {
-                   previousSelectedNoteView?.alpha = NoteViewModel.TRANSPARENT_ALFA
-                   for view in self.subviews { //имя предыдущей выбраной ноты скрываем
-                       if view.tag == previousSelectedNoteView!.tag + 1000 {
-                           view.isHidden = true
-                       }
-                   }
-               }
-               if !pickedOutNotesIndexes.contains(noteViewModelIndex!) {
-                   pickedOutNotesIndexes.removeAll()
-                   pickedOutNotesIndexes.append(noteViewModelIndex!)
-               }
-               previousSelectedNoteView = tapGestureRecognizer.view
-           } else {// можно выбрать несколько нот из нескольких
-               tapGestureRecognizer.view?.alpha = noteViewModel.selected ? NoteViewModel.OPAQUE_ALFA : NoteViewModel.TRANSPARENT_ALFA
-               
-               if pickedOutNotesIndexes.contains(noteViewModelIndex!) {
-                   let index = pickedOutNotesIndexes.firstIndex(of: noteViewModelIndex!)
-                   pickedOutNotesIndexes.remove(at: index!)
-               } else {
-                   pickedOutNotesIndexes.append(noteViewModelIndex!)
-               }
-           }
-           showNoteName(notePosition:noteViewModelIndex!)
-           print(pickedOutNotesIndexes)
-       }
+    @objc func noteTapped(tapGestureRecognizer:UITapGestureRecognizer) {
+        selectedNoteView = tapGestureRecognizer.view
+        let noteViewModelIndex = tapGestureRecognizer.view?.tag
+        let noteViewModel = notesArray![noteViewModelIndex!]
+        noteViewModel.didTapped(noteView:selectedNoteView!)
+        
+        if selectOnlyOneNote {//можно выбрать только одну ноту из нескольких
+            tapGestureRecognizer.view?.alpha = NoteViewModel.OPAQUE_ALFA
+            if previousSelectedNoteView != nil, previousSelectedNoteView != tapGestureRecognizer.view {
+                previousSelectedNoteView?.alpha = NoteViewModel.TRANSPARENT_ALFA
+                for view in self.subviews { //имя предыдущей выбраной ноты скрываем
+                    if view.tag == previousSelectedNoteView!.tag + 1000 {
+                        view.isHidden = true
+                    }
+                }
+            }
+            if !pickedOutNotesIndexes.contains(noteViewModelIndex!) {
+                pickedOutNotesIndexes.removeAll()
+                pickedOutNotesIndexes.append(noteViewModelIndex!)
+            }
+            previousSelectedNoteView = tapGestureRecognizer.view
+        } else {// можно выбрать несколько нот из нескольких
+            tapGestureRecognizer.view?.alpha = noteViewModel.selected ? NoteViewModel.OPAQUE_ALFA : NoteViewModel.TRANSPARENT_ALFA
+            
+            if pickedOutNotesIndexes.contains(noteViewModelIndex!) {
+                let index = pickedOutNotesIndexes.firstIndex(of: noteViewModelIndex!)
+                pickedOutNotesIndexes.remove(at: index!)
+            } else {
+                pickedOutNotesIndexes.append(noteViewModelIndex!)
+            }
+        }
+        showNoteName(notePosition:noteViewModelIndex!)
+        print(pickedOutNotesIndexes)
+    }
     
     //MARK - Private methods
     fileprivate func noteYPosition(note: NoteViewModel, noteInnerOfsetFromCenter: CGFloat) -> CGFloat{

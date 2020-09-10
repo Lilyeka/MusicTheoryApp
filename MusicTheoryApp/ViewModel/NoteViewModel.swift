@@ -25,28 +25,44 @@ class NoteViewModel {
     var selected: Bool = false
     
     var imageView = UIImageView()
-    var needsAdditionalLine:Bool {
-        get {
+        
+    func additionalLine(cleff: CleffTypes) -> Bool {
+        if cleff == .Treble {
             switch self.model.name {
-            case .Do,.la1:
+            case .Do,.la1,.do2,.mi2:
                 return true
             default:
                 return false
             }
         }
-    }
-    
-    var needsUnderLine: Bool { //как "подчеркивание"
-        get {
-            return self.model.name == .si1 ? true : false
+        switch self.model.name {
+        case .Do,.mi,.do2,.mi2:
+            return true
+        default:
+            return false
         }
     }
+
+    func underline(cleff: CleffTypes) -> Bool {  //как "подчеркивание"
+        if cleff == .Treble {
+            return self.model.name == .si1 ? true : false
+        }
+        return self.model.name == .re2 ? true : false
+    }
     
-//    var needsUpperLine: Bool { //как "надчеркивание"
-//        get {
-//         //   return self.model.name == .si0 ? true : false
-//        }
-//    }
+    func upperLine(cleff: CleffTypes) -> Bool {//как "надчеркивание"
+        if cleff == .Bass {
+            return self.model.name == .re ? true : false
+        }
+        return false
+    }
+    
+    func topAdditionalLine(cleff: CleffTypes) -> Bool { //как доп. линейка над нотой сверху
+        if cleff == .Bass {
+            return self.model.name == .Do ? true : false
+        }
+        return false
+    }
     
     init(model:Note) {
         self.model = model
@@ -115,25 +131,6 @@ extension NoteViewModel {
     func didTapped(noteView: UIView) {
         self.selected = !self.selected
         delegate?.noteTaped(noteName:self.model.name, noteView: noteView)
-    }
-    
-    func noteTitle() -> String {
-        switch model.name {
-        case .Do,.Do1:
-            return "До"
-        case .re,.re1:
-            return "Ре"
-        case .mi,.mi1:
-            return "Ми"
-        case .fa,.fa1:
-            return "Фа"
-        case .sol, .sol1:
-            return "Соль"
-        case .la,.la1:
-            return "Ля"
-        case .si,.si1:
-            return "Си"
-        }
     }
     
     func noteTitleBottomOffset(cleff: CleffTypes) -> CGFloat {
