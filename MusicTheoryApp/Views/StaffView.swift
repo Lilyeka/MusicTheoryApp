@@ -228,6 +228,7 @@ class StaffView: UIView {
     
     func drawNotesOneByOne1(notesAreTransparent: Bool,viewWidth: CGFloat) {
         let width = cleff == CleffTypes.Treble ? viewWidth - StaffView.TREBLE_LEFT_OFFSET - StaffView.TREBLE_WIDTH : viewWidth - StaffView.BASS_LEFT_OFFSET - StaffView.BASS_WIDTH
+       
         let noteCenterX = width/CGFloat(notesArray!.count+1)
         
         var i = 0

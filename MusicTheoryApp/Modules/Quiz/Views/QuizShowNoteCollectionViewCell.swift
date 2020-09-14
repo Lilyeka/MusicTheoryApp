@@ -75,7 +75,7 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
         staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: LEFT_OFFSET).isActive = true
         staffView.widthAnchor.constraint(equalToConstant: staffViewWidth).isActive = true
         staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
-        staffView.drawNotesOneByOne(notesAreTransparent: false)
+        staffView.drawNotesOneByOne1(notesAreTransparent: false, viewWidth: staffViewWidth)
         
         pianoView = PianoView(pianoWidth: pianoViewWidth, blackKeysOffset: 20.0, frame:CGRect.zero)
         pianoView.translatesAutoresizingMaskIntoConstraints = false
