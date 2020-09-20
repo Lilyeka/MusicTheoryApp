@@ -77,7 +77,9 @@ class QuizSelectNoteInWordCollectionViewCell: UICollectionViewCell {
         staffView.delegate = self
         staffView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(staffView)
-        staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 15.0).isActive = true
+        
+        let staffViewTopOffset = viewModel.notesAreInBigOctave() ? 0 : 15
+        staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: CGFloat(staffViewTopOffset)).isActive = true
         staffView.leftAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leftAnchor, constant: STAF_HORIZ_OFFSET).isActive = true
         staffView.rightAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.rightAnchor, constant: -STAF_HORIZ_OFFSET).isActive = true
         staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true

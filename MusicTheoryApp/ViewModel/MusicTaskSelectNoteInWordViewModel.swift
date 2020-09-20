@@ -44,6 +44,14 @@ class MusicTaskSelectNoteInWordViewModel {
         let userAnswerSet = notesInWord()
         return userAnswerSet.contains(note.rawValue)
     }
+
+    func notesAreInBigOctave() -> Bool {
+        var notesAreLessThenSeven = notesViewModels.map({ (note) -> Bool in
+               return note.model.name.rawValue < 7
+           }).reduce(true){$0 && $1}
+        
+        return model.cleffType == .Bass && notesAreLessThenSeven ? true : false
+    }
     
     fileprivate func notesInWord() -> Set<Int> {
         var notesInWordSet = Set<Int>()

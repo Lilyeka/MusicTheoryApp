@@ -136,8 +136,7 @@ extension NoteViewModel {
     func noteTitleBottomOffset(cleff: CleffTypes) -> CGFloat {
         switch model.name.rawValue {
         case 0...6:
-            return  cleff == CleffTypes.Treble ? noteTitleBottomOffsetForTrebleFirstOctave()
-                : noteTitleBottomOffsetForBassBigOctave()
+            return cleff == CleffTypes.Treble ? noteTitleBottomOffsetForTrebleFirstOctave() : noteTitleBottomOffsetForBassBigOctave()
         case 7...13:
             return cleff == CleffTypes.Treble ? noteTitleBottomOffsetForTrebleSecondOctave() :
                 noteTitleBottomOffsetForBassSmallOctave()
@@ -146,18 +145,17 @@ extension NoteViewModel {
         }
     }
     
-    func noteTitleBottomOffsetForBassSmallOctave() -> CGFloat {
-        return 0.0 // it's good for all device types
+    func noteTitleBottomOffsetForBassBigOctave() -> CGFloat {
+        return -35.0 // it's good for all device types
     }
     
-    func noteTitleBottomOffsetForBassBigOctave() -> CGFloat {
-        return -100.0 // it's good for all device types
+    func noteTitleBottomOffsetForBassSmallOctave() -> CGFloat {
+        return -35.0 // it's good for all device types
     }
     
     fileprivate func noteTitleBottomOffsetForTrebleFirstOctave() -> CGFloat {
         return 0.0 // it's good for all device types
     }
-    
     
     fileprivate func noteTitleBottomOffsetForTrebleSecondOctave() -> CGFloat {
         return -35.0 // it's good for all device types

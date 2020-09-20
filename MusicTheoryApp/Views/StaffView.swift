@@ -175,7 +175,6 @@ class StaffView: UIView {
     
     var clefImageView: UIImageView = {
         var imageView = UIImageView()
-        //imageView.backgroundColor = .green
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -206,7 +205,6 @@ class StaffView: UIView {
     }
     
     fileprivate func setupView() {
-        //self.backgroundColor = .green
         let imageName = cleff == CleffTypes.Treble ? "trebleClef" : "bassClef"
         clefImageView.image = UIImage(named: imageName)
         
@@ -332,8 +330,12 @@ class StaffView: UIView {
                 nameLabel.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
                 nameLabel.heightAnchor.constraint(equalToConstant: 25.0).isActive = true
                 nameLabel.widthAnchor.constraint(equalToConstant: 50.0).isActive = true
+                let range = (0...4)
+                if (cleff == .Bass) && (range.contains(note.model.name.rawValue)) {
+                    nameLabel.topAnchor.constraint(equalTo:imageView.bottomAnchor).isActive = true
+                } else {
                 nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: note.noteTitleBottomOffset(cleff: cleff)).isActive = true
-                
+                }
                 let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(noteTapped(tapGestureRecognizer:)))
                 imageView.isUserInteractionEnabled = true
                 imageView.addGestureRecognizer(tapGestureRecognizer)
@@ -502,7 +504,12 @@ class StaffView: UIView {
                 nameLabel.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
                 nameLabel.heightAnchor.constraint(equalToConstant: 25.0).isActive = true
                 nameLabel.widthAnchor.constraint(equalToConstant: 50.0).isActive = true
-                nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: note.noteTitleBottomOffset(cleff: cleff)).isActive = true
+                let range = (0...4)
+                if (cleff == .Bass) && (range.contains(note.model.name.rawValue)) {
+                    nameLabel.topAnchor.constraint(equalTo:imageView.bottomAnchor).isActive = true
+                } else {
+                    nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: note.noteTitleBottomOffset(cleff: cleff)).isActive = true
+                }
                 
                 let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(noteTapped(tapGestureRecognizer:)))
                 imageView.isUserInteractionEnabled = true
