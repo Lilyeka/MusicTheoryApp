@@ -23,7 +23,7 @@ struct Note {
         case half
         case quarter
         case eighth
-        case none //для значков нет длительности
+        case none //для значков тональности нет длительности
     }
     
     public enum NoteName: Int {

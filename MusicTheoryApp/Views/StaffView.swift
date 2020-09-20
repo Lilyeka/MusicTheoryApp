@@ -162,7 +162,7 @@ class StaffView: UIView {
         }
     }
     
-    var selectOnlyOneNote: Bool!
+    var selectOnlyOneNote: Bool?
     var cleff: CleffTypes!
     
     //MARK: - Delegate
@@ -198,6 +198,12 @@ class StaffView: UIView {
             setNotesDelegate(deleg: notesDelegate!)
         }
     }
+    
+    init(cleff: CleffTypes, frame: CGRect) {
+        super.init(frame:frame)
+        self.cleff = cleff
+        setupView()
+    }
         
     override func draw(_ rect: CGRect) {
         super.draw(rect)
@@ -223,6 +229,27 @@ class StaffView: UIView {
     fileprivate func setNotesDelegate(deleg: NoteViewModelDelegate) {
         self.noteDelegate = deleg
     }
+    
+    func drawPause(pause: PauseViewModel, viewWidth: CGFloat) {
+        let width = cleff == CleffTypes.Treble ? viewWidth - StaffView.TREBLE_LEFT_OFFSET - StaffView.TREBLE_WIDTH : viewWidth - StaffView.BASS_LEFT_OFFSET - StaffView.BASS_WIDTH
+        
+        let pauseCenterX = width/2
+        
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        let img = UIImage(named: pause.imageName)
+        imageView.image = img
+        
+        let pausePositionY = pauseYPosition(pauseInnerOfsetFromCenter: pause.innerOffsetFromCenter)
+    
+        // расположение паузы
+        self.addSubview(imageView)
+        imageView.centerXAnchor.constraint(equalTo: clefImageView.rightAnchor, constant: pauseCenterX - pause.width/2).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: pause.height).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: pause.width).isActive = true
+        imageView.centerYAnchor.constraint(equalTo: self.bottomAnchor, constant: pausePositionY).isActive = true
+    }
 
     func drawNotesOneByOne1(notesAreTransparent: Bool,viewWidth: CGFloat) {
         let width = cleff == CleffTypes.Treble ? viewWidth - StaffView.TREBLE_LEFT_OFFSET - StaffView.TREBLE_WIDTH : viewWidth - StaffView.BASS_LEFT_OFFSET - StaffView.BASS_WIDTH
@@ -237,32 +264,30 @@ class StaffView: UIView {
             let offsetFromCenterY = noteCharacteristics.durationCenterOffesetY
             
             // картинка для длительности ноты
-            if let durationImageName = noteCharacteristics.duration,
-                let noteHeight = noteCharacteristics.durationHeight,
-                let noteWidth = noteCharacteristics.durationWidth {
+            if note.model.duration != .none {
                 let durationPositionY = noteYPosition(note: note, noteInnerOfsetFromCenter: offsetFromCenterY)
                 
                 let imageView = UIImageView()
                 imageView.tag = i
                 imageView.translatesAutoresizingMaskIntoConstraints = false
                 imageView.contentMode = .scaleAspectFit
-                let img = UIImage(named: durationImageName)
+                let img = UIImage(named: note.durationImageName)
                 imageView.image = img
                 imageView.alpha = note.alfa
                 // расположение ноты
                 self.addSubview(imageView)
-                imageView.centerXAnchor.constraint(equalTo: clefImageView.rightAnchor, constant: noteCenterX*CGFloat(i+1) - noteWidth/2).isActive = true
-                imageView.heightAnchor.constraint(equalToConstant: noteHeight).isActive = true
-                imageView.widthAnchor.constraint(equalToConstant: noteWidth).isActive = true
+                imageView.centerXAnchor.constraint(equalTo: clefImageView.rightAnchor, constant: noteCenterX*CGFloat(i+1) - note.durationWidth/2).isActive = true
+                imageView.heightAnchor.constraint(equalToConstant: note.durationHeight).isActive = true
+                imageView.widthAnchor.constraint(equalToConstant: note.durationWidth).isActive = true
                 imageView.centerYAnchor.constraint(equalTo: self.bottomAnchor, constant: durationPositionY).isActive = true
                 
                 //дополнительная линейка по центру ноты
                 if note.additionalLine(cleff: cleff) {
                     let addLineXOffset = 7
-                    let noteStartXPosition = cleff == CleffTypes.Treble ? Int(StaffView.TREBLE_LEFT_OFFSET + StaffView.TREBLE_WIDTH + noteCenterX*CGFloat(i+1) - noteWidth) :  Int(StaffView.BASS_LEFT_OFFSET + StaffView.BASS_WIDTH + noteCenterX*CGFloat(i+1) - noteWidth) 
+                    let noteStartXPosition = cleff == CleffTypes.Treble ? Int(StaffView.TREBLE_LEFT_OFFSET + StaffView.TREBLE_WIDTH + noteCenterX*CGFloat(i+1) - note.durationWidth) :  Int(StaffView.BASS_LEFT_OFFSET + StaffView.BASS_WIDTH + noteCenterX*CGFloat(i+1) - note.durationWidth)
                     drawAdditionalLine(
                         startX: Int(noteStartXPosition) - addLineXOffset,
-                        toEndingX: Int(noteStartXPosition) + Int(noteWidth) + addLineXOffset,
+                        toEndingX: Int(noteStartXPosition) + Int(note.durationWidth) + addLineXOffset,
                         startingY: StaffView.viewHeight() + Int(durationPositionY),
                         toEndingY: StaffView.viewHeight() + Int(durationPositionY),
                         ofColor: .black,
@@ -274,10 +299,10 @@ class StaffView: UIView {
                 //дополнительная линейка снизу ноты
                 if note.underline(cleff: cleff) {
                     let addLineXOffset = 7
-                    let noteStartXPosition = cleff == CleffTypes.Treble ? Int(StaffView.TREBLE_LEFT_OFFSET + StaffView.TREBLE_WIDTH + noteCenterX*CGFloat(i+1) - noteWidth) :  Int(StaffView.BASS_LEFT_OFFSET + StaffView.BASS_WIDTH + noteCenterX*CGFloat(i+1) - noteWidth)
+                    let noteStartXPosition = cleff == CleffTypes.Treble ? Int(StaffView.TREBLE_LEFT_OFFSET + StaffView.TREBLE_WIDTH + noteCenterX*CGFloat(i+1) - note.durationWidth) :  Int(StaffView.BASS_LEFT_OFFSET + StaffView.BASS_WIDTH + noteCenterX*CGFloat(i+1) - note.durationWidth)
                     drawAdditionalLine(
                         startX: noteStartXPosition - addLineXOffset,
-                        toEndingX: Int(noteStartXPosition) + Int(noteWidth) + addLineXOffset,
+                        toEndingX: Int(noteStartXPosition) + Int(note.durationWidth) + addLineXOffset,
                         startingY: StaffView.viewHeight() + Int(durationPositionY) + StaffView.LINE_OFFSET/2,
                         toEndingY: StaffView.viewHeight() + Int(durationPositionY) + StaffView.LINE_OFFSET/2,
                         ofColor: .black,
@@ -289,10 +314,10 @@ class StaffView: UIView {
                 //дополнительная линейка сверху ноты
                 if note.upperLine(cleff: cleff) {
                     let addLineXOffset = 7
-                    let noteStartXPosition = cleff == CleffTypes.Treble ? Int(StaffView.TREBLE_LEFT_OFFSET + StaffView.TREBLE_WIDTH + noteCenterX*CGFloat(i+1) - noteWidth) :  Int(StaffView.BASS_LEFT_OFFSET + StaffView.BASS_WIDTH + noteCenterX*CGFloat(i+1) - noteWidth)
+                    let noteStartXPosition = cleff == CleffTypes.Treble ? Int(StaffView.TREBLE_LEFT_OFFSET + StaffView.TREBLE_WIDTH + noteCenterX*CGFloat(i+1) - note.durationWidth) :  Int(StaffView.BASS_LEFT_OFFSET + StaffView.BASS_WIDTH + noteCenterX*CGFloat(i+1) - note.durationWidth)
                     drawAdditionalLine(
                         startX: noteStartXPosition - addLineXOffset,
-                        toEndingX: Int(noteStartXPosition) + Int(noteWidth) + addLineXOffset,
+                        toEndingX: Int(noteStartXPosition) + Int(note.durationWidth) + addLineXOffset,
                         startingY: StaffView.viewHeight() + Int(durationPositionY) - StaffView.LINE_OFFSET/2,
                         toEndingY: StaffView.viewHeight() + Int(durationPositionY) - StaffView.LINE_OFFSET/2,
                         ofColor: .black,
@@ -304,10 +329,10 @@ class StaffView: UIView {
                 //дополнительная линейка над нотой
                 if note.topAdditionalLine(cleff: cleff) {
                     let addLineXOffset = 7
-                    let noteStartXPosition = cleff == CleffTypes.Treble ? Int(StaffView.TREBLE_LEFT_OFFSET + StaffView.TREBLE_WIDTH + noteCenterX*CGFloat(i+1) - noteWidth) :  Int(StaffView.BASS_LEFT_OFFSET + StaffView.BASS_WIDTH + noteCenterX*CGFloat(i+1) - noteWidth)
+                    let noteStartXPosition = cleff == CleffTypes.Treble ? Int(StaffView.TREBLE_LEFT_OFFSET + StaffView.TREBLE_WIDTH + noteCenterX*CGFloat(i+1) - note.durationWidth) :  Int(StaffView.BASS_LEFT_OFFSET + StaffView.BASS_WIDTH + noteCenterX*CGFloat(i+1) - note.durationWidth)
                     drawAdditionalLine(
                         startX: noteStartXPosition - addLineXOffset,
-                        toEndingX: Int(noteStartXPosition) + Int(noteWidth) + addLineXOffset,
+                        toEndingX: Int(noteStartXPosition) + Int(note.durationWidth) + addLineXOffset,
                         startingY: StaffView.viewHeight() + Int(durationPositionY) - StaffView.LINE_OFFSET,
                         toEndingY: StaffView.viewHeight() + Int(durationPositionY) - StaffView.LINE_OFFSET,
                         ofColor: .black,
@@ -408,23 +433,20 @@ class StaffView: UIView {
             let offsetFromCenterY = noteCharacteristics.durationCenterOffesetY
             
             // картинка для ноты
-            if let durationImageName = noteCharacteristics.duration,
-                let noteHeight = noteCharacteristics.durationHeight,
-                let noteWidth = noteCharacteristics.durationWidth {
+            if note.model.duration != .none { // если просто тональность
                 let durationPositionY = noteYPosition(note: note, noteInnerOfsetFromCenter: offsetFromCenterY)
                 let imageView = UIImageView()
                 imageView.tag = i
-                //imageView.backgroundColor = .green
                 imageView.translatesAutoresizingMaskIntoConstraints = false
                 imageView.contentMode = .scaleAspectFit
-                let img = UIImage(named: durationImageName)
+                let img = UIImage(named: note.durationImageName)
                 imageView.image = img
                 imageView.alpha = note.alfa
                 // расположение ноты
                 self.addSubview(imageView)
                 imageView.leftAnchor.constraint(equalTo: clefImageView.rightAnchor, constant:leftOffsetFromClef).isActive = true
-                imageView.heightAnchor.constraint(equalToConstant: noteHeight).isActive = true
-                imageView.widthAnchor.constraint(equalToConstant: noteWidth).isActive = true
+                imageView.heightAnchor.constraint(equalToConstant: note.durationHeight).isActive = true
+                imageView.widthAnchor.constraint(equalToConstant: note.durationWidth).isActive = true
                 imageView.centerYAnchor.constraint(equalTo: self.bottomAnchor, constant: durationPositionY).isActive = true
                 
                 //дополнительная линейка по центру ноты
@@ -434,7 +456,7 @@ class StaffView: UIView {
                         Int(StaffView.BASS_LEFT_OFFSET + StaffView.BASS_WIDTH + leftOffsetFromClef)
                     drawAdditionalLine(
                         startX: noteStartXPosition - addLineXOffset,
-                        toEndingX: Int(noteStartXPosition) + Int(noteWidth) + addLineXOffset,
+                        toEndingX: Int(noteStartXPosition) + Int(note.durationWidth) + addLineXOffset,
                         startingY: StaffView.viewHeight() + Int(durationPositionY),
                         toEndingY: StaffView.viewHeight() + Int(durationPositionY),
                         ofColor: .black,
@@ -450,7 +472,7 @@ class StaffView: UIView {
                         Int(StaffView.BASS_LEFT_OFFSET + StaffView.BASS_WIDTH + leftOffsetFromClef)
                     drawAdditionalLine(
                         startX: noteStartXPosition - addLineXOffset,
-                        toEndingX: Int(noteStartXPosition) + Int(noteWidth) + addLineXOffset,
+                        toEndingX: Int(noteStartXPosition) + Int(note.durationWidth) + addLineXOffset,
                         startingY: StaffView.viewHeight() + Int(durationPositionY) + StaffView.LINE_OFFSET/2,
                         toEndingY: StaffView.viewHeight() + Int(durationPositionY) + StaffView.LINE_OFFSET/2,
                         ofColor: .black,
@@ -466,7 +488,7 @@ class StaffView: UIView {
                         Int(StaffView.BASS_LEFT_OFFSET + StaffView.BASS_WIDTH + leftOffsetFromClef)
                     drawAdditionalLine(
                         startX: noteStartXPosition - addLineXOffset,
-                        toEndingX: Int(noteStartXPosition) + Int(noteWidth) + addLineXOffset,
+                        toEndingX: Int(noteStartXPosition) + Int(note.durationWidth) + addLineXOffset,
                         startingY: StaffView.viewHeight() + Int(durationPositionY) - StaffView.LINE_OFFSET/2,
                         toEndingY: StaffView.viewHeight() + Int(durationPositionY) - StaffView.LINE_OFFSET/2,
                         ofColor: .black,
@@ -481,7 +503,7 @@ class StaffView: UIView {
                         Int(StaffView.BASS_LEFT_OFFSET + StaffView.BASS_WIDTH + leftOffsetFromClef)
                     drawAdditionalLine(
                         startX: noteStartXPosition - addLineXOffset,
-                        toEndingX: Int(noteStartXPosition) + Int(noteWidth) + addLineXOffset,
+                        toEndingX: Int(noteStartXPosition) + Int(note.durationWidth) + addLineXOffset,
                         startingY: StaffView.viewHeight() + Int(durationPositionY) - StaffView.LINE_OFFSET,
                         toEndingY: StaffView.viewHeight() + Int(durationPositionY) - StaffView.LINE_OFFSET,
                         ofColor: .black,
@@ -516,12 +538,11 @@ class StaffView: UIView {
                 imageView.addGestureRecognizer(tapGestureRecognizer)
                 
                 previousLeftOffsetFromClef = leftOffsetFromClef
-                previousNoteWidth = noteWidth
+                previousNoteWidth = note.durationWidth
                 // TODO: если у ноты есть еще и тональность то отрисовать значок тональности в отдельной imageView
                 if let toneImageName = noteCharacteristics.tone {
                 }
-            } else {
-                //если просто тональность (без ноты)
+            } else { //если просто тональность (без ноты)
                 if let toneImageName = noteCharacteristics.tone,
                     let toneHeight = noteCharacteristics.toneHeight,
                     let toneWidth = noteCharacteristics.toneWidth,
@@ -545,8 +566,7 @@ class StaffView: UIView {
             i += 1
         }
     }
-      
-    
+          
     //MARK - Actions
     @objc func noteTapped(tapGestureRecognizer:UITapGestureRecognizer) {
         selectedNoteView = tapGestureRecognizer.view
@@ -554,7 +574,7 @@ class StaffView: UIView {
         let noteViewModel = notesArray![noteViewModelIndex!]
         noteViewModel.didTapped(noteView:selectedNoteView!)
         
-        if selectOnlyOneNote {//можно выбрать только одну ноту из нескольких
+        if let selectOne = selectOnlyOneNote, selectOne == true{//можно выбрать только одну ноту из нескольких
             tapGestureRecognizer.view?.alpha = NoteViewModel.OPAQUE_ALFA
             if previousSelectedNoteView != nil, previousSelectedNoteView != tapGestureRecognizer.view {
                 previousSelectedNoteView?.alpha = NoteViewModel.TRANSPARENT_ALFA
@@ -594,6 +614,15 @@ class StaffView: UIView {
         let noteDoPosition = cleff == CleffTypes.Treble ? -2 : -4
         return noteDoPosition + note.model.name.rawValue
     }
+    
+    fileprivate func pauseYPosition(pauseInnerOfsetFromCenter: CGFloat) -> CGFloat{
+        let positionOnTheLine: CGFloat = 6.0
+        let offsetFromFirstLine = positionOnTheLine/2 * CGFloat(StaffView.LINE_OFFSET)
+        let durationPositionY = -CGFloat(StaffView.VERTICAL_OFFSET) - offsetFromFirstLine - pauseInnerOfsetFromCenter
+        return durationPositionY
+    }
+    
+    
     
     fileprivate func showNoteName(notePosition:Int) {
         for view in self.subviews {

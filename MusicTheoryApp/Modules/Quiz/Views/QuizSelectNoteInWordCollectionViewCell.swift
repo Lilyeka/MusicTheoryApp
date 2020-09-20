@@ -32,8 +32,10 @@ class QuizSelectNoteInWordCollectionViewCell: UICollectionViewCell {
     //MARK: -Delegate
     var delegate: QuizSelectNoteInWordCollectionViewCellDelegate?
     
-    //MARK: -Views
+    //MARK: -ViewModel
     var viewModel: MusicTaskSelectNoteInWordViewModel!
+    
+    //MARK: -Views
     var staffView: StaffView!
     var wordStackView: UIStackView!
     var partsOfWordLables: [UILabel] = [UILabel]()

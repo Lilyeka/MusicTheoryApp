@@ -28,7 +28,6 @@ class QuizViewController: UIViewController, QuizViewProtocol {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.isScrollEnabled = false
-        //collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .white
         collectionView.register(QuizCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
@@ -36,10 +35,11 @@ class QuizViewController: UIViewController, QuizViewProtocol {
         collectionView.register(QuizShowNoteCollectionViewCell.self, forCellWithReuseIdentifier: QuizShowNoteCollectionViewCell.cellIdentifier)
         collectionView.register(QuizWriteNoteCollectionViewCell.self, forCellWithReuseIdentifier: QuizWriteNoteCollectionViewCell.cellIdentifier)
         collectionView.register(QuizSelectNoteInWordCollectionViewCell.self, forCellWithReuseIdentifier: QuizSelectNoteInWordCollectionViewCell.cellIdentifier)
+        collectionView.register(QuizPauseAndDurationCollectionViewCell.self, forCellWithReuseIdentifier: QuizPauseAndDurationCollectionViewCell.cellIdentifier)
         return collectionView
     }()
     
-    var questions = /* MusicTasks() */ MusicTasksBass()
+    var questions = MusicTasksPauses()/*MusicTasks()*//* MusicTasksBass()*/
     
     //Mark: -LifeCycle
     override func viewDidLoad() {
@@ -124,7 +124,12 @@ extension QuizViewController: UICollectionViewDataSource {
                 cell?.delegate = self
                 return cell!
             }
-            
+        case is MusicTaskPauseAndDuration:
+            let viewModel = MusicTaskPauseAndDurationViewModel(model: questions.tasks[indexPath.row] as! MusicTaskPauseAndDuration)
+            var cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizPauseAndDurationCollectionViewCell.cellIdentifier, for: indexPath) as? QuizPauseAndDurationCollectionViewCell
+            if cell == nil { cell = QuizPauseAndDurationCollectionViewCell(frame: frame)}
+            cell!.configureSubviews(viewModel: viewModel, frame: frame)
+            return cell!
         default:
             return cell
         }
