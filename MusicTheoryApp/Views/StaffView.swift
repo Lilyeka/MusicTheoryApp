@@ -199,7 +199,7 @@ class StaffView: UIView {
             setNotesDelegate(deleg: notesDelegate!)
         }
     }
-    
+        
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         drawLines(in: rect)
@@ -225,7 +225,7 @@ class StaffView: UIView {
     fileprivate func setNotesDelegate(deleg: NoteViewModelDelegate) {
         self.noteDelegate = deleg
     }
-    
+
     func drawNotesOneByOne1(notesAreTransparent: Bool,viewWidth: CGFloat) {
         let width = cleff == CleffTypes.Treble ? viewWidth - StaffView.TREBLE_LEFT_OFFSET - StaffView.TREBLE_WIDTH : viewWidth - StaffView.BASS_LEFT_OFFSET - StaffView.BASS_WIDTH
        
@@ -538,6 +538,7 @@ class StaffView: UIView {
             i += 1
         }
     }
+      
     
     //MARK - Actions
     @objc func noteTapped(tapGestureRecognizer:UITapGestureRecognizer) {

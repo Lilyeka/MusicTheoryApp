@@ -21,11 +21,11 @@ class QuizSelectNoteInWordCollectionViewCell: UICollectionViewCell {
     static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 18.0)
     static let WORD_FONT = UIFont.systemFont(ofSize: 35, weight: .bold)
     
-    let STAF_VERT_OFFSET: CGFloat = {
+    let STAF_HORIZ_OFFSET: CGFloat = {
         if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
-            return 15.0
+            return 25.0//15.0
         } else {
-            return 10.0
+            return 20.0//10.0
         }
     }()
     
@@ -55,13 +55,14 @@ class QuizSelectNoteInWordCollectionViewCell: UICollectionViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
     }
     
     //MARK: - Public methods
     func configureSubviews(viewModel:MusicTaskSelectNoteInWordViewModel, frame:CGRect) {
+        self.contentView.backgroundColor = .white
         self.viewModel = viewModel
-        self.addSubview(questionLabel)
+        self.contentView.addSubview(questionLabel)
         questionLabel.text = viewModel.model.questionText
         questionLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         questionLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 15.0).isActive = true
@@ -75,12 +76,13 @@ class QuizSelectNoteInWordCollectionViewCell: UICollectionViewCell {
                               cleff: viewModel.model.cleffType)
         staffView.delegate = self
         staffView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(staffView)
-        staffView.topAnchor.constraint(equalTo:questionLabel.bottomAnchor, constant: 15.0).isActive = true
-        staffView.leftAnchor.constraint(equalTo:contentView.leftAnchor, constant: STAF_VERT_OFFSET).isActive = true
-        staffView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -STAF_VERT_OFFSET).isActive = true
+        self.contentView.addSubview(staffView)
+        staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 15.0).isActive = true
+        staffView.leftAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leftAnchor, constant: STAF_HORIZ_OFFSET).isActive = true
+        staffView.rightAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.rightAnchor, constant: -STAF_HORIZ_OFFSET).isActive = true
         staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
-        staffView.drawNotesOneByOne1(notesAreTransparent: true, viewWidth: self.contentView.frame.width)
+        staffView.drawNotesOneByOne1(notesAreTransparent: true, viewWidth: self.contentView.frame.width - STAF_HORIZ_OFFSET*2)
+        
         var i = 0
         while i < viewModel.model.partsOfWord!.count {
             let label = UILabel()
@@ -96,18 +98,22 @@ class QuizSelectNoteInWordCollectionViewCell: UICollectionViewCell {
         wordStackView.axis = .horizontal
         wordStackView.distribution = .fill
         wordStackView.alignment = .center
-        self.addSubview(wordStackView)
+        self.contentView.addSubview(wordStackView)
         wordStackView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 15.0).isActive = true
         wordStackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
     }
     
     override func prepareForReuse() {
-        super.prepareForReuse()
         for view in contentView.subviews {
             view.removeFromSuperview()
         }
         partsOfWordLables = [UILabel]()
+        staffView = nil
+        viewModel = nil
+        wordStackView = nil
     }
+    
+    
 }
 
 extension QuizSelectNoteInWordCollectionViewCell: NoteViewModelDelegate {

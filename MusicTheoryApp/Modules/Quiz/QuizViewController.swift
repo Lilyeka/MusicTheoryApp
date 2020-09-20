@@ -128,39 +128,8 @@ extension QuizViewController: UICollectionViewDataSource {
         default:
             return cell
         }
-        
-    
-        
-        //        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! QuizCollectionViewCell
-        //        let frame = quizCollectionView.frame
-        //        let question = questions.tasks[indexPath.row]
-        //
-        //        if question is MusicTaskSelectNote {
-        //            let viewModel = MusicTaskSelectNoteViewModel(model: questions.tasks[indexPath.row] as! MusicTaskSelectNote)
-        //            let view = MusicTaskSelectNoteView(viewModel: viewModel,frame: frame)
-        //            cell.config(withView:view)
-        //        }
-        //
-        //        if question is MusicTaskShowNoteOnThePiano {
-        //            let viewModel = MusicTaskShowtNoteOnThePianoViewModel(model: questions.tasks[indexPath.row] as! MusicTaskShowNoteOnThePiano)
-        //            let view = MusicTaskShowNoteOnThePianoView(viewModel: viewModel, frame: frame)
-        //            cell.config(withView: view)
-        //        }
-        //
-        //        if question is MusicTaskSelectNoteInWord  {
-        //            let q = question as! MusicTaskSelectNoteInWord
-        //            if q.needToTypeAnswer! {
-        //                let viewModel = MusicTaskWriteNoteInWordViewModel(model: q)
-        //                let view = MusicTaskWriteNoteInWordView(viewModel: viewModel, frame: frame)
-        //                cell.config(withView: view)
-        //            } else {
-        //                let viewModel = MusicTaskSelectNoteInWordViewModel(model:questions.tasks[indexPath.row] as! MusicTaskSelectNoteInWord)
-        //                let view = MusicTaskSelectNoteInWordView(viewModel: viewModel, frame: frame)
-        //                cell.config(withView: view)
-        //            }
-        //        }
-        //        return cell
     }
+    
 }
 
 extension QuizViewController: UICollectionViewDelegate {
@@ -183,7 +152,6 @@ extension QuizViewController: UICollectionViewDelegate {
                 if cell == nil {
                     cell = QuizWriteNoteCollectionViewCell(frame: frame)
                 }
-                print("dsdsdsdsd")
                 cell!.endEditing(true)
             } else {
                 
@@ -192,6 +160,54 @@ extension QuizViewController: UICollectionViewDelegate {
         default:
             break
         }
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        quizCollectionView.removeNaughtyLingeringCells()
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if (!decelerate) {
+            quizCollectionView.removeNaughtyLingeringCells()
+        }
+    }
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        quizCollectionView.removeNaughtyLingeringCells()
+    }
+
+}
+
+extension UICollectionView {
+
+    func removeNaughtyLingeringCells() {
+
+        // 1. Find the visible cells
+        let visibleCells = self.visibleCells
+        //NSLog("We have %i visible cells", visibleCells.count)
+
+
+        // 2. Find the visible rect of the collection view on screen now
+        let visibleRect = bounds.offsetBy(dx: contentOffset.x, dy: contentOffset.y)
+        //NSLog("Rect %@", NSStringFromCGRect(visibleRect))
+
+
+        // 3. Find the subviews that shouldn't be there and remove them
+        //NSLog("We have %i subviews", subviews.count)
+        for aView in subviews {
+            if let aCollectionViewCell = aView as? UICollectionViewCell {
+
+                let origin = aView.frame.origin
+                if (visibleRect.contains(origin)) {
+                    if (!visibleCells.contains(aCollectionViewCell)) {
+                        aView.removeFromSuperview()
+                    }
+                }
+
+            }
+        }
+
+        // 4. Refresh the collection view display
+        setNeedsDisplay()
     }
 }
 

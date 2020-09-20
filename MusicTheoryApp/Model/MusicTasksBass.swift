@@ -9,7 +9,7 @@
 import UIKit
 
 class MusicTasksBass {
-    var tasks: [MusicTask] = [
+    var tasks: [MusicTask] = [/*
         MusicTaskSelectNote(
             questionText: "Выберите ноты большой октавы, расположенные на основных линейках нотного стана",
             notesArray:[Note(name:.Do, tone:.none, duration:.whole),
@@ -80,7 +80,7 @@ class MusicTasksBass {
         MusicTaskShowNoteOnThePiano(questionText:"Нажмите на нужную ноту", note: Note(name:.fa, tone: .none, duration: .whole), cleff: CleffTypes.Bass),
         MusicTaskShowNoteOnThePiano(questionText:"Нажмите на нужную ноту", note: Note(name:.re1, tone: .none, duration: .whole), cleff: CleffTypes.Bass),
         MusicTaskShowNoteOnThePiano(questionText:"Нажмите на нужную ноту", note: Note(name:.sol1, tone: .none, duration: .whole), cleff: CleffTypes.Bass),
-          MusicTaskShowNoteOnThePiano(questionText:"Нажмите на нужную ноту", note: Note(name:.si1, tone: .none, duration: .whole), cleff: CleffTypes.Bass),
+          MusicTaskShowNoteOnThePiano(questionText:"Нажмите на нужную ноту", note: Note(name:.si1, tone: .none, duration: .whole), cleff: CleffTypes.Bass),*/
           MusicTaskSelectNoteInWord(questionText: "Какая нота большой октавы спряталась в слове?",
                                 notesArray: [
                                   Note(name:.Do, tone:.none, duration:.whole),
