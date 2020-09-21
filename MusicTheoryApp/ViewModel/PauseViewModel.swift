@@ -16,9 +16,11 @@ class PauseViewModel {
             case .half:
                 return "half_note"
             case .quarter:
-                return "quarter_note"
+                return "quarter_rest"
             case .eighth:
-                return "eighth_note"
+                return "eight_rest"
+            case .sixteen:
+                return "sixteen_rest"
             default:
                 return "whole_note"
             }
@@ -28,8 +30,14 @@ class PauseViewModel {
     var height: CGFloat {
         get {
             switch model.duration {
+            case .sixteen:
+                return sixteenRestSize().height
+            case .eighth :
+                return eightRestSize().height
+            case .quarter:
+                return quarterRestSize().height
             case .whole:
-                return wholeNoteSize().height
+                return wholeRestSize().height
             default:
                 return  109.0
             }
@@ -39,8 +47,14 @@ class PauseViewModel {
     var width: CGFloat {
         get {
             switch model.duration {
+            case .sixteen:
+                return sixteenRestSize().width
+            case .eighth:
+                return eightRestSize().width
+            case .quarter:
+                return quarterRestSize().width
             case .whole:
-                return wholeNoteSize().width
+                return wholeRestSize().width
             default:
                 return 60.0
             }
@@ -49,7 +63,16 @@ class PauseViewModel {
     
     var innerOffsetFromCenter: CGFloat {
         get {
-            return 5.0
+            switch model.duration {
+            case .sixteen:
+                return sixteenRestSize().offsetFromCenter
+            case .eighth:
+                return eightRestSize().offsetFromCenter
+            case .quarter:
+                return quarterRestSize().offsetFromCenter
+            default:
+                return 0.0
+            }
         }
     }
     
@@ -58,9 +81,77 @@ class PauseViewModel {
         self.model = model
     }
     
-    func wholeNoteSize() -> (height: CGFloat,width: CGFloat) {
+    func sixteenRestSize() -> (height: CGFloat, width: CGFloat, offsetFromCenter: CGFloat){
         var height: CGFloat = 0.0
         var width: CGFloat = 0.0
+        var offsetFromCenter: CGFloat = 0.0
+        if DeviceType.IS_IPHONE_6_6s_7_8 {
+            height = 90.0
+            width = 37.0
+            offsetFromCenter = -14
+        } else if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ {
+            height = 90.0
+            width = 44.0
+            offsetFromCenter = -18
+        } else if DeviceType.IS_IPHONE_11Pro_X_Xs {
+            height = 93.0
+            width = 48.0
+            offsetFromCenter = -18
+        } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+            height = 68.0
+            width = 29.0
+        }
+        return (height: height, width: width, offsetFromCenter:offsetFromCenter)
+    }
+    
+    func eightRestSize() -> (height: CGFloat, width: CGFloat, offsetFromCenter: CGFloat){
+        var height: CGFloat = 0.0
+        var width: CGFloat = 0.0
+        var offsetFromCenter: CGFloat = 0.0
+        if DeviceType.IS_IPHONE_6_6s_7_8 {
+            height = 68.0
+            width = 24.0
+        } else if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ {
+            height = 68.0
+            width = 28.0
+        } else if DeviceType.IS_IPHONE_11Pro_X_Xs {
+            height = 68.0
+            width = 29.0
+        } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+            height = 68.0
+            width = 29.0
+        }
+        return (height: height, width: width, offsetFromCenter:offsetFromCenter)
+    }
+    
+    func quarterRestSize() -> (height: CGFloat, width: CGFloat, offsetFromCenter: CGFloat) {
+        var height: CGFloat = 0.0
+        var width: CGFloat = 0.0
+        var offsetFromCenter: CGFloat = 0.0
+        if DeviceType.IS_IPHONE_6_6s_7_8 {
+            height = 83.0
+            width = 37.0
+            offsetFromCenter = -3.0
+        } else if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ {
+            height = 86.0
+            width = 40.0
+            offsetFromCenter = -3.0
+        } else if DeviceType.IS_IPHONE_11Pro_X_Xs {
+            height = 93.0
+            width = 40.0
+            offsetFromCenter = -4.0
+        } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+             height = 93.0
+             width = 40.0
+             offsetFromCenter = -4.0
+        }
+        return (height: height, width: width, offsetFromCenter:offsetFromCenter)
+    }
+    
+    func wholeRestSize() -> (height: CGFloat,width: CGFloat, offsetFromCenter: CGFloat) {
+        var height: CGFloat = 0.0
+        var width: CGFloat = 0.0
+        var offsetFromCenter: CGFloat = 0.0
         if DeviceType.IS_IPHONE_6_6s_7_8 {
             height = 45.0
             width = 45.0
@@ -74,6 +165,8 @@ class PauseViewModel {
             height = 50.0
             width = 50.0
         }
-        return (height: height, width: width)
+        return (height: height, width: width, offsetFromCenter: offsetFromCenter)
     }
+    
+    
 }

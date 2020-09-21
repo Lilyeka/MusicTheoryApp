@@ -23,6 +23,7 @@ struct Note {
         case half
         case quarter
         case eighth
+        case sixteen
         case none //для значков тональности нет длительности
     }
     

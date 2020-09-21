@@ -143,11 +143,13 @@ extension NoteViewModel {
                 offsetFromDurationCenter = durationHeight!/4 + durationHeight!/8 - 1
             case .quarter:
                 /*durationHeight = 109.0*/
-                durationWidth = 60.0
+               /* durationWidth = 60.0*/
                 offsetFromDurationCenter = durationHeight!/4 + durationHeight!/8 - 1
             case .eighth:
                 /*durationHeight = 109.0*/
                 //durationWidth = 60.0
+                offsetFromDurationCenter = durationHeight!/4 + durationHeight!/8
+            case .sixteen:
                 offsetFromDurationCenter = durationHeight!/4 + durationHeight!/8
             case.none:
                 offsetFromDurationCenter = 0.0

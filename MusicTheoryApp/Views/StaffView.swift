@@ -245,7 +245,7 @@ class StaffView: UIView {
     
         // расположение паузы
         self.addSubview(imageView)
-        imageView.centerXAnchor.constraint(equalTo: clefImageView.rightAnchor, constant: pauseCenterX - pause.width/2).isActive = true
+        imageView.centerXAnchor.constraint(equalTo: clefImageView.rightAnchor, constant: pauseCenterX - pause.width/2 + 12).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: pause.height).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: pause.width).isActive = true
         imageView.centerYAnchor.constraint(equalTo: self.bottomAnchor, constant: pausePositionY).isActive = true
@@ -616,13 +616,11 @@ class StaffView: UIView {
     }
     
     fileprivate func pauseYPosition(pauseInnerOfsetFromCenter: CGFloat) -> CGFloat{
-        let positionOnTheLine: CGFloat = 6.0
+        let positionOnTheLine: CGFloat = 4.0
         let offsetFromFirstLine = positionOnTheLine/2 * CGFloat(StaffView.LINE_OFFSET)
         let durationPositionY = -CGFloat(StaffView.VERTICAL_OFFSET) - offsetFromFirstLine - pauseInnerOfsetFromCenter
         return durationPositionY
     }
-    
-    
     
     fileprivate func showNoteName(notePosition:Int) {
         for view in self.subviews {
