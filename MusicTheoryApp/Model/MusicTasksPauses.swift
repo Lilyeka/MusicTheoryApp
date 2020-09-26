@@ -11,13 +11,14 @@ import UIKit
 class MusicTasksPauses {
     var tasks: [MusicTask] = [
         MusicTaskPauseAndDuration(
-            questionText: "Какая длительность соответствует данной паузе?",
+            questionText: "Выберите длительность, которая соответствует данной паузе",
             notesArray: [
                 Note(name: .Do, tone: .none, duration: .quarter),
                 Note(name: .Do, tone: .none, duration: .half),
                 Note(name: .Do, tone: .none, duration: .whole),
-                Note(name: .Do, tone: .none, duration: .eighth)],
+                Note(name: .Do, tone: .none, duration: .eighth),
+                Note(name: .Do, tone: .none, duration: .sixteen)],
             cleff: .Treble,
-            pause: Pause(duration: .quarter))
+            pause: Pause(duration: .half))
     ]
 }

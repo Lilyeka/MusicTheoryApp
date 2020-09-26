@@ -10,11 +10,7 @@ import UIKit
 
 class QuizCollectionViewCell: UICollectionViewCell {
     // MARK: - UIElements
-    var questionView: UIView? /*= {
-        var view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()*/
+    var questionView: UIView? 
     
     //MARK: - Life cycle
     override init(frame: CGRect) {

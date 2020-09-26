@@ -139,8 +139,6 @@ extension QuizViewController: UICollectionViewDataSource {
 
 extension QuizViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-      //  currentQuestionNumber = indexPath.row
-       // print("currentQuestionNumber = " + currentQuestionNumber + " from didSelectItemAt")
         let frame = quizCollectionView.frame
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! QuizCollectionViewCell
         let question = questions.tasks[indexPath.row]
@@ -166,56 +164,7 @@ extension QuizViewController: UICollectionViewDelegate {
             break
         }
     }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        quizCollectionView.removeNaughtyLingeringCells()
-    }
-    
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if (!decelerate) {
-            quizCollectionView.removeNaughtyLingeringCells()
-        }
-    }
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        quizCollectionView.removeNaughtyLingeringCells()
-    }
-
 }
-
-extension UICollectionView {
-
-    func removeNaughtyLingeringCells() {
-
-        // 1. Find the visible cells
-        let visibleCells = self.visibleCells
-        //NSLog("We have %i visible cells", visibleCells.count)
-
-
-        // 2. Find the visible rect of the collection view on screen now
-        let visibleRect = bounds.offsetBy(dx: contentOffset.x, dy: contentOffset.y)
-        //NSLog("Rect %@", NSStringFromCGRect(visibleRect))
-
-
-        // 3. Find the subviews that shouldn't be there and remove them
-        //NSLog("We have %i subviews", subviews.count)
-        for aView in subviews {
-            if let aCollectionViewCell = aView as? UICollectionViewCell {
-
-                let origin = aView.frame.origin
-                if (visibleRect.contains(origin)) {
-                    if (!visibleCells.contains(aCollectionViewCell)) {
-                        aView.removeFromSuperview()
-                    }
-                }
-
-            }
-        }
-
-        // 4. Refresh the collection view display
-        setNeedsDisplay()
-    }
-}
-
 
 
 extension QuizViewController: QuizSelectNoteCollectionViewCellDelegate, QuizSelectNoteInWordCollectionViewCellDelegate {

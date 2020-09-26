@@ -33,6 +33,8 @@ class NoteViewModel {
                 return "quarter_note"
             case .eighth:
                 return "eighth_note"
+            case .sixteen:
+                return "sixteenth_note"
             default:
                 return "whole_note"
             }
@@ -55,8 +57,25 @@ class NoteViewModel {
             switch model.duration {
             case .whole:
                 return wholeNoteSize().width
+            case .sixteen:
+                return 64.0
             default:
                 return 60.0
+            }
+        }
+    }
+    
+    var offsetFromDurationCenter: CGFloat {
+        get {
+            switch  model.duration {
+            case .whole:
+                return 1.0
+            case .half,.quarter:
+                return durationHeight/4 + durationHeight/8 - 1
+            case .eighth, .sixteen:
+                return durationHeight/4 + durationHeight/8
+            default:
+                return 0.0
             }
         }
     }
@@ -108,15 +127,12 @@ extension NoteViewModel {
     // Функция возвращает названия картинок значка и ноты,
     // их высоту, ширину и смещение центра картинки по Y (если не целая нота и/или не диез то центр смещен от реального центра)
     // высота ноты/значка подобрана так,чтобы круглешок ноты был равен расстоянию между линейками)
-    func noteImagesHeightsAndCentersPositions() -> (tone:String?, toneHeight:CGFloat?, toneWidth: CGFloat?, toneCenterOffesetY:CGFloat?, durationCenterOffesetY:CGFloat) {
+    func noteImagesHeightsAndCentersPositions() -> (tone:String?, toneHeight:CGFloat?, toneWidth: CGFloat?, toneCenterOffesetY:CGFloat?) {
             var toneImageName: String?
             var toneHeight: CGFloat? = nil
-            var durationHeight: CGFloat? = nil
             var toneWidth: CGFloat? = nil
-            var durationWidth: CGFloat? = nil
             var offsetFromToneCenter: CGFloat = 0.0
-            var offsetFromDurationCenter: CGFloat = 0.0
-            
+           // var offsetFromDurationCenter: CGFloat = 0.0
             switch model.tone {
             case .dies:
                 toneImageName = "dies_new"
@@ -131,31 +147,31 @@ extension NoteViewModel {
                 toneImageName = nil
             }
             
-            switch model.duration {
-            case .whole:
-                /*durationHeight = wholeNoteSize().height*/
-               // durationWidth = wholeNoteSize().width
-                offsetFromDurationCenter = 1
-            // TODO: Для остальных нот тоже устанавливать значения в зависимости от типа девайса
-            case .half:
-                /*durationHeight = 109.0*/
-                //durationWidth = 60.0
-                offsetFromDurationCenter = durationHeight!/4 + durationHeight!/8 - 1
-            case .quarter:
-                /*durationHeight = 109.0*/
-               /* durationWidth = 60.0*/
-                offsetFromDurationCenter = durationHeight!/4 + durationHeight!/8 - 1
-            case .eighth:
-                /*durationHeight = 109.0*/
-                //durationWidth = 60.0
-                offsetFromDurationCenter = durationHeight!/4 + durationHeight!/8
-            case .sixteen:
-                offsetFromDurationCenter = durationHeight!/4 + durationHeight!/8
-            case.none:
-                offsetFromDurationCenter = 0.0
-            }
+//            switch model.duration {
+//            case .whole:
+//                /*durationHeight = wholeNoteSize().height*/
+//               // durationWidth = wholeNoteSize().width
+//             //   offsetFromDurationCenter = 1
+//            // TODO: Для остальных нот тоже устанавливать значения в зависимости от типа девайса
+//            case .half:
+//                /*durationHeight = 109.0*/
+//                //durationWidth = 60.0
+//                offsetFromDurationCenter = durationHeight!/4 + durationHeight!/8 - 1
+//            case .quarter:
+//                /*durationHeight = 109.0*/
+//               /* durationWidth = 60.0*/
+//                offsetFromDurationCenter = durationHeight!/4 + durationHeight!/8 - 1
+//            case .eighth:
+//                /*durationHeight = 109.0*/
+//                //durationWidth = 60.0
+//                offsetFromDurationCenter = durationHeight!/4 + durationHeight!/8
+//            case .sixteen:
+//                offsetFromDurationCenter = durationHeight!/4 + durationHeight!/8
+//            case.none:
+//                offsetFromDurationCenter = 0.0
+//            }
             
-            return (tone:toneImageName, toneWidth:toneWidth, toneHeight:toneHeight, toneCenterOffesetY:offsetFromToneCenter, durationCenterOffesetY:offsetFromDurationCenter)
+            return (tone:toneImageName, toneWidth:toneWidth, toneHeight:toneHeight, toneCenterOffesetY:offsetFromToneCenter)
     }
     
     func didTapped(noteView: UIView) {

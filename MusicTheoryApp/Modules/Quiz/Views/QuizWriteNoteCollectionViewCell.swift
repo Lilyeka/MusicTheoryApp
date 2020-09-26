@@ -18,7 +18,12 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
     static var cellIdentifier: String {
         return String(describing: self)
     }
-    static let QUESTION_FONT = UIFont.boldSystemFont(ofSize: 20.0)
+   static let QUESTION_FONT: UIFont = {
+        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_11Pro_X_Xs {
+            return UIFont.boldSystemFont(ofSize: 23.0)
+        }
+        return UIFont.boldSystemFont(ofSize: 20.0)
+    }()
     static let WORD_FONT: UIFont = {
         if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
             return UIFont.boldSystemFont(ofSize: 45.0)

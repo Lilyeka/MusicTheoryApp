@@ -241,14 +241,14 @@ class StaffView: UIView {
         let img = UIImage(named: pause.imageName)
         imageView.image = img
         
-        let pausePositionY = pauseYPosition(pauseInnerOfsetFromCenter: pause.innerOffsetFromCenter)
+        let pausePositionY = pauseYPosition(pause:pause,pauseInnerOfsetFromCenter: pause.innerOffsetFromCenter)
     
-        // расположение паузы
-        self.addSubview(imageView)
-        imageView.centerXAnchor.constraint(equalTo: clefImageView.rightAnchor, constant: pauseCenterX - pause.width/2 + 12).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: pause.height).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: pause.width).isActive = true
-        imageView.centerYAnchor.constraint(equalTo: self.bottomAnchor, constant: pausePositionY).isActive = true
+            self.addSubview(imageView)
+            imageView.centerXAnchor.constraint(equalTo: clefImageView.rightAnchor, constant: pauseCenterX - pause.width/2 + 12).isActive = true
+            imageView.heightAnchor.constraint(equalToConstant: pause.height).isActive = true
+            imageView.widthAnchor.constraint(equalToConstant: pause.width).isActive = true
+            imageView.centerYAnchor.constraint(equalTo: self.bottomAnchor, constant: pausePositionY).isActive = true
+
     }
 
     func drawNotesOneByOne1(notesAreTransparent: Bool,viewWidth: CGFloat) {
@@ -261,7 +261,7 @@ class StaffView: UIView {
             note.alfa = notesAreTransparent ? NoteViewModel.TRANSPARENT_ALFA : NoteViewModel.OPAQUE_ALFA
             note.delegate = noteDelegate
             let noteCharacteristics = note.noteImagesHeightsAndCentersPositions()
-            let offsetFromCenterY = noteCharacteristics.durationCenterOffesetY
+            let offsetFromCenterY = note.offsetFromDurationCenter
             
             // картинка для длительности ноты
             if note.model.duration != .none {
@@ -383,12 +383,6 @@ class StaffView: UIView {
                     imageView.image = UIImage(named: toneImageName)
                     // расположение тональности
                     self.addSubview(imageView)
-                    //                    imageView.leftAnchor.constraint(equalTo: clefImageView.rightAnchor, constant:leftOffsetFromClef).isActive = true
-                    //                    imageView.heightAnchor.constraint(equalToConstant: toneHeight).isActive = true
-                    //                    imageView.widthAnchor.constraint(equalToConstant: toneWidth).isActive = true
-                    //                    imageView.centerYAnchor.constraint(equalTo: self.bottomAnchor, constant: durationPositionY).isActive = true
-                    //                    previousLeftOffsetFromClef = leftOffsetFromClef
-                    //previousNoteWidth = toneWidth
                 }
             }
             i += 1
@@ -430,10 +424,10 @@ class StaffView: UIView {
             note.delegate = noteDelegate
             let noteCharacteristics = note.noteImagesHeightsAndCentersPositions()
             let leftOffsetFromClef = i == 0 ? offsetFromClef : (previousLeftOffsetFromClef + previousNoteWidth + offsetBetwenNotes)
-            let offsetFromCenterY = noteCharacteristics.durationCenterOffesetY
+            let offsetFromCenterY = note.offsetFromDurationCenter
             
             // картинка для ноты
-            if note.model.duration != .none { // если просто тональность
+            if note.model.duration != .none { //если просто тональность
                 let durationPositionY = noteYPosition(note: note, noteInnerOfsetFromCenter: offsetFromCenterY)
                 let imageView = UIImageView()
                 imageView.tag = i
@@ -604,7 +598,7 @@ class StaffView: UIView {
     }
     
     //MARK - Private methods
-    fileprivate func noteYPosition(note: NoteViewModel, noteInnerOfsetFromCenter: CGFloat) -> CGFloat{
+    fileprivate func noteYPosition(note: NoteViewModel, noteInnerOfsetFromCenter: CGFloat) -> CGFloat {
         let offsetFromFirstLine = CGFloat(positionOnTheLine(note: note))/2.0 * CGFloat(StaffView.LINE_OFFSET)
         let durationPositionY = -CGFloat(StaffView.VERTICAL_OFFSET) - offsetFromFirstLine - noteInnerOfsetFromCenter
         return durationPositionY
@@ -615,8 +609,10 @@ class StaffView: UIView {
         return noteDoPosition + note.model.name.rawValue
     }
     
-    fileprivate func pauseYPosition(pauseInnerOfsetFromCenter: CGFloat) -> CGFloat{
-        let positionOnTheLine: CGFloat = 4.0
+    fileprivate func pauseYPosition(pause: PauseViewModel,pauseInnerOfsetFromCenter: CGFloat) -> CGFloat {
+        var positionOnTheLine: CGFloat = 4.0
+        if pause.model.duration == .whole {positionOnTheLine = 6}
+        if pause.model.duration == .half {positionOnTheLine = 3}
         let offsetFromFirstLine = positionOnTheLine/2 * CGFloat(StaffView.LINE_OFFSET)
         let durationPositionY = -CGFloat(StaffView.VERTICAL_OFFSET) - offsetFromFirstLine - pauseInnerOfsetFromCenter
         return durationPositionY
@@ -651,7 +647,6 @@ class StaffView: UIView {
         shapeLayer.lineWidth = lineWidth
         view.layer.addSublayer(shapeLayer)
     }
-    
     
     fileprivate func drawLines(in rect: CGRect) {
         let backgroundColor = UIColor.white
