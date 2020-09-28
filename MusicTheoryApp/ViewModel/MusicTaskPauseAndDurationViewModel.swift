@@ -30,4 +30,8 @@ class MusicTaskPauseAndDurationViewModel {
     init(model:MusicTaskPauseAndDuration) {
         self.model = model
     }
+    
+    func checkUserAnswers(userAnswer: Note.Duration) -> Bool {
+        return userAnswer == model.pause.duration ? true : false
+    }
 }

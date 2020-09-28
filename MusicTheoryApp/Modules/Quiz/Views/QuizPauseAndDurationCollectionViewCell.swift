@@ -8,6 +8,12 @@
 
 import UIKit
 
+protocol QuizPauseAndDurationCollectionViewCellDelegate {
+    func rightAnswerReaction()
+    func wrongAnswerReaction()
+    func additionalRightAnswerReaction(view: UIView)
+}
+
 class QuizPauseAndDurationCollectionViewCell: UICollectionViewCell {
     static var cellIdentifier: String {
         return String(describing: self)
@@ -29,7 +35,11 @@ class QuizPauseAndDurationCollectionViewCell: UICollectionViewCell {
         }
         return 150.0
     }()
-  
+    var previousVariantIndexPath: IndexPath!
+     private let fireworkController = ClassicFireworkController()
+    //MARK: -Delegate
+    var delegate: QuizPauseAndDurationCollectionViewCellDelegate?
+    
     //MARK: -Views
     var staffView: StaffView!
     var variantsImageViews = [UIImageView]()
@@ -80,8 +90,6 @@ class QuizPauseAndDurationCollectionViewCell: UICollectionViewCell {
         let staffViewWidth = 1*(frame.size.width - 3*LEFT_OFFSET)/3
         let variantsWidth = 2*(frame.size.width - 3*LEFT_OFFSET)/3
         
-       // var collectoinViewHight = 150.0
-        
         staffView = StaffView(cleff: .Treble, frame: frame)
         staffView.translatesAutoresizingMaskIntoConstraints = false
         staffView.isUserInteractionEnabled = false
@@ -98,12 +106,13 @@ class QuizPauseAndDurationCollectionViewCell: UICollectionViewCell {
         layout.minimumInteritemSpacing = 5
         layout.minimumLineSpacing = 5
         layout.itemSize = CGSize(width: (variantsWidth - 6*5.0)/5, height: collectoinViewHight)
-
+        
         let variantsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
         variantsCollectionView.translatesAutoresizingMaskIntoConstraints = false
         variantsCollectionView.isScrollEnabled = false
         variantsCollectionView.dataSource = self
+        variantsCollectionView.delegate = self
         variantsCollectionView.backgroundColor = .white
         variantsCollectionView.register(QuizVariantCollectionViewCell.self, forCellWithReuseIdentifier: QuizVariantCollectionViewCell.cellIdentifier)
         
@@ -112,44 +121,74 @@ class QuizPauseAndDurationCollectionViewCell: UICollectionViewCell {
         variantsCollectionView.leftAnchor.constraint(equalTo: staffView.rightAnchor, constant: LEFT_OFFSET).isActive = true
         variantsCollectionView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -LEFT_OFFSET).isActive = true
         variantsCollectionView.heightAnchor.constraint(equalToConstant: CGFloat(collectoinViewHight)).isActive = true
-
-//        let allNotesWidth = notesViewModel.map({return $0.durationWidth}).reduce(0){$0 + $1}
-//        let notesHorisOffset = (variantsWidth - allNotesWidth)/CGFloat(notesViewModel.count + 1)
-//        var previousView: UIImageView?
-//        var i = 0
-//        while i < notesViewModel.count {
-//            let noteViewModel = notesViewModel[i]
-//            let image = UIImage(named: noteViewModel.durationImageName)
-//            let imageView = UIImageView()
-//            imageView.image = image
-//            imageView.contentMode = .scaleAspectFit
-//            imageView.layer.borderWidth = 2.0
-//            imageView.layer.borderColor = UIColor.red.cgColor
-//            imageView.translatesAutoresizingMaskIntoConstraints = false
-//            self.contentView.addSubview(imageView)
-//            imageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 60.0 - noteViewModel.offsetFromDurationCenter).isActive = true
-//            imageView.widthAnchor.constraint(equalToConstant: noteViewModel.durationWidth).isActive = true
-//            imageView.heightAnchor.constraint(equalToConstant: noteViewModel.durationHeight).isActive = true
-//            if previousView == nil {
-//                imageView.leftAnchor.constraint(equalTo: staffView.rightAnchor, constant: notesHorisOffset + LEFT_OFFSET).isActive = true
-//            } else {
-//                imageView.leftAnchor.constraint(equalTo: previousView!.rightAnchor, constant: notesHorisOffset).isActive = true
-//            }
-//            previousView = imageView
-//            i += 1
-//        }
+        
+        //        let allNotesWidth = notesViewModel.map({return $0.durationWidth}).reduce(0){$0 + $1}
+        //        let notesHorisOffset = (variantsWidth - allNotesWidth)/CGFloat(notesViewModel.count + 1)
+        //        var previousView: UIImageView?
+        //        var i = 0
+        //        while i < notesViewModel.count {
+        //            let noteViewModel = notesViewModel[i]
+        //            let image = UIImage(named: noteViewModel.durationImageName)
+        //            let imageView = UIImageView()
+        //            imageView.image = image
+        //            imageView.contentMode = .scaleAspectFit
+        //            imageView.layer.borderWidth = 2.0
+        //            imageView.layer.borderColor = UIColor.red.cgColor
+        //            imageView.translatesAutoresizingMaskIntoConstraints = false
+        //            self.contentView.addSubview(imageView)
+        //            imageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 60.0 - noteViewModel.offsetFromDurationCenter).isActive = true
+        //            imageView.widthAnchor.constraint(equalToConstant: noteViewModel.durationWidth).isActive = true
+        //            imageView.heightAnchor.constraint(equalToConstant: noteViewModel.durationHeight).isActive = true
+        //            if previousView == nil {
+        //                imageView.leftAnchor.constraint(equalTo: staffView.rightAnchor, constant: notesHorisOffset + LEFT_OFFSET).isActive = true
+        //            } else {
+        //                imageView.leftAnchor.constraint(equalTo: previousView!.rightAnchor, constant: notesHorisOffset).isActive = true
+        //            }
+        //            previousView = imageView
+        //            i += 1
+        //        }
     }
 }
 
 extension QuizPauseAndDurationCollectionViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-      return 5
+        return 5
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizVariantCollectionViewCell.cellIdentifier, for: indexPath) as? QuizVariantCollectionViewCell
         cell?.configureSubviews(viewModel: viewModel.notesViewModels[indexPath.row])
         return cell!
     }    
 }
+
+extension QuizPauseAndDurationCollectionViewCell: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let cell = collectionView.cellForItem(at: indexPath)
+        let selectedDuration = viewModel.notesViewModels[indexPath.row].model.duration
+        if viewModel.checkUserAnswers(userAnswer: selectedDuration) {
+            if previousVariantIndexPath != nil {
+                let previousCell = collectionView.cellForItem(at: previousVariantIndexPath)
+                previousCell?.layer.borderColor = UIColor.gray.cgColor
+            }
+            cell?.layer.borderColor = UIColor.green.cgColor
+            fireworkController.addFireworks(count: 2, sparks: 8, around: cell!.contentView)
+            collectionView.isUserInteractionEnabled = false
+            let seconds = 1.0
+            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                self.delegate?.rightAnswerReaction()
+            }
+        } else {
+            if previousVariantIndexPath != nil {
+                let previousCell = collectionView.cellForItem(at: previousVariantIndexPath)
+                previousCell?.layer.borderColor = UIColor.gray.cgColor
+            }
+            cell!.layer.borderColor = UIColor.red.cgColor
+        }
+        previousVariantIndexPath = indexPath
+    }
+}
+
+
 

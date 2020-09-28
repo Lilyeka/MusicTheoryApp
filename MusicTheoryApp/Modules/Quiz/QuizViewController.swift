@@ -129,6 +129,7 @@ extension QuizViewController: UICollectionViewDataSource {
             var cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizPauseAndDurationCollectionViewCell.cellIdentifier, for: indexPath) as? QuizPauseAndDurationCollectionViewCell
             if cell == nil { cell = QuizPauseAndDurationCollectionViewCell(frame: frame)}
             cell!.configureSubviews(viewModel: viewModel, frame: frame)
+            cell?.delegate = self
             return cell!
         default:
             return cell
@@ -175,13 +176,12 @@ extension QuizViewController: QuizSelectNoteCollectionViewCellDelegate, QuizSele
     }
 }
 
-extension QuizViewController: QuizShowNoteCollectionViewCellDelegate, QuizWriteNoteCollectionViewCellDelegate {
+extension QuizViewController: QuizShowNoteCollectionViewCellDelegate, QuizWriteNoteCollectionViewCellDelegate, QuizPauseAndDurationCollectionViewCellDelegate {
     
     func additionalRightAnswerReaction(view: UIView) {
-           fireworkController.addFireworks(count: 2, sparks: 8, around: view)
-           view.isUserInteractionEnabled = false
+        fireworkController.addFireworks(count: 2, sparks: 8, around: view)
+        view.isUserInteractionEnabled = false
     }
-    
     
     func rightAnswerReaction() {
         let alert = UIAlertController(title: "Верный ответ", message: "Поехали дальше!", preferredStyle: .alert)
