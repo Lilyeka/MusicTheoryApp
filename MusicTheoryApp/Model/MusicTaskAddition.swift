@@ -11,15 +11,16 @@ import UIKit
 enum MathSigns {
     case addition
     case subtraction
+    case equation
 }
 
 class MusicTaskAddition: MusicTask {
     var additionAnswer: Duration!
-    var variables: [(Duration,MathSigns?)]!
+    var variables: [(Duration,MathSigns)]!
     var variants: [Duration]!
     var variantsAreNotes: Bool!
        
-    init(questionText: String, answer: Duration, variables: [(Duration,MathSigns?)],
+    init(questionText: String, answer: Duration, variables: [(Duration,MathSigns)],
          variants: [Duration], variantsAreNotes: Bool) {
         super.init(questionText: questionText, notesArray: nil, cleff: CleffTypes.Treble)
         self.additionAnswer = answer

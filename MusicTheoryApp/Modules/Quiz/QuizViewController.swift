@@ -36,6 +36,7 @@ class QuizViewController: UIViewController, QuizViewProtocol {
         collectionView.register(QuizWriteNoteCollectionViewCell.self, forCellWithReuseIdentifier: QuizWriteNoteCollectionViewCell.cellIdentifier)
         collectionView.register(QuizSelectNoteInWordCollectionViewCell.self, forCellWithReuseIdentifier: QuizSelectNoteInWordCollectionViewCell.cellIdentifier)
         collectionView.register(QuizPauseAndDurationCollectionViewCell.self, forCellWithReuseIdentifier: QuizPauseAndDurationCollectionViewCell.cellIdentifier)
+        collectionView.register(QuizAdditionCollectionViewCell.self, forCellWithReuseIdentifier: QuizAdditionCollectionViewCell.cellIdentifier)
         return collectionView
     }()
     
@@ -129,11 +130,20 @@ extension QuizViewController: UICollectionViewDataSource {
             var cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizPauseAndDurationCollectionViewCell.cellIdentifier, for: indexPath) as? QuizPauseAndDurationCollectionViewCell
             if cell == nil { cell = QuizPauseAndDurationCollectionViewCell(frame: frame)}
             cell!.configureSubviews(viewModel: viewModel, frame: frame)
-            cell?.delegate = self
+            cell!.delegate = self
+            return cell!
+        case is MusicTaskAddition:
+            let viewModel = MusicTaskAdditionViewModel(model: questions.tasks[indexPath.row] as! MusicTaskAddition)
+            var cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizAdditionCollectionViewCell.cellIdentifier, for: indexPath) as? QuizAdditionCollectionViewCell
+            if cell == nil {
+                cell = QuizAdditionCollectionViewCell(frame: frame)
+            }
+            cell!.configureSubviews(viewModel: viewModel, frame: frame)
             return cell!
         default:
             return cell
         }
+      
     }
     
 }

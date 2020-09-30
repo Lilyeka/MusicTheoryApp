@@ -86,6 +86,10 @@ struct Note {
         self.duration = duration
     }
     
+    init(duration: Duration) {
+        self.duration = duration
+    }
+    
     func noteOctave() -> Octaves {
         switch self.name {
         case  .Do, .re, .mi, .fa, .sol, .la, .si:

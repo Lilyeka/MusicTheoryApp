@@ -9,7 +9,7 @@
 import UIKit
 
 class MusicTasksPausesDurations {
-    var tasks: [MusicTask] = [
+    var tasks: [MusicTask] = [/*
         MusicTaskPauseAndDuration(
             questionText: "Выберите длительность, которая соответствует данной паузе",
             notesArray: [
@@ -59,12 +59,12 @@ class MusicTasksPausesDurations {
                          Note(name: .Do, tone: .none, duration: .eighth),
                          Note(name: .Do, tone: .none, duration: .sixteen)],
                      cleff: .Treble,
-                     pause: Pause(duration: .eighth)),
+                     pause: Pause(duration: .eighth)),*/
         
         MusicTaskAddition(
             questionText: "Решите пример с паузами",
             answer: Duration.quarter,
-            variables: [(Duration.eighth,.addition),(Duration.eighth, nil)],
+            variables: [(Duration.eighth,.addition),(Duration.eighth, .equation)],
             variants: [Duration.whole,
                        Duration.half,
                        Duration.quarter,
@@ -75,7 +75,7 @@ class MusicTasksPausesDurations {
         MusicTaskAddition(
                questionText: "Решите пример с паузами",
                answer: Duration.half,
-               variables: [(Duration.quarter,.addition),(Duration.quarter, nil)],
+               variables: [(Duration.quarter,.addition),(Duration.quarter, .equation)],
                variants: [Duration.whole,
                           Duration.half,
                           Duration.quarter,
@@ -85,7 +85,7 @@ class MusicTasksPausesDurations {
         MusicTaskAddition(
                questionText: "Решите пример с паузами",
                answer: Duration.quarter,
-               variables: [(Duration.half,.subtraction),(Duration.quarter, nil)],
+               variables: [(Duration.half,.subtraction),(Duration.quarter, .equation)],
                variants: [Duration.whole,
                           Duration.half,
                           Duration.quarter,
@@ -95,7 +95,7 @@ class MusicTasksPausesDurations {
         MusicTaskAddition(
                         questionText: "Решите пример с паузами",
                         answer: Duration.eighth,
-                        variables: [(Duration.sixteen,.addition),(Duration.sixteen, nil)],
+                        variables: [(Duration.sixteen,.addition),(Duration.sixteen, .equation)],
                         variants: [Duration.whole,
                                    Duration.half,
                                    Duration.quarter,
@@ -105,7 +105,7 @@ class MusicTasksPausesDurations {
         MusicTaskAddition(
                         questionText: "Решите пример с паузами",
                         answer: Duration.whole,
-                        variables: [(Duration.quarter,.addition),(Duration.quarter, .addition),(Duration.quarter, .addition), (Duration.quarter, nil)],
+                        variables: [(Duration.quarter,.addition),(Duration.quarter, .addition),(Duration.quarter, .addition), (Duration.quarter, .equation)],
                         variants: [Duration.whole,
                                    Duration.half,
                                    Duration.quarter,
@@ -115,7 +115,7 @@ class MusicTasksPausesDurations {
         MusicTaskAddition(
                            questionText: "Решите пример с паузами",
                            answer: Duration.half,
-                           variables: [(Duration.quarter,.addition),(Duration.eighth,.addition),(Duration.eighth,nil)],
+                           variables: [(Duration.quarter,.addition),(Duration.eighth,.addition),(Duration.eighth,.equation)],
                            variants: [Duration.whole,
                                       Duration.half,
                                       Duration.quarter,
@@ -125,12 +125,32 @@ class MusicTasksPausesDurations {
         MusicTaskAddition(
                            questionText: "Решите пример с паузами",
                            answer: Duration.half,
-                           variables: [(Duration.whole,.subtraction),(Duration.quarter,.subtraction),(Duration.quarter,nil)],
+                           variables: [(Duration.whole,.subtraction),(Duration.quarter,.subtraction),(Duration.quarter,.equation)],
                            variants: [Duration.whole,
                                       Duration.half,
                                       Duration.quarter,
                                       Duration.eighth,
                                       Duration.sixteen],
-                           variantsAreNotes: false)
+                           variantsAreNotes: false),
+        MusicTaskAddition(
+        questionText: "Решите музыкально-математические примеры",
+        answer: Duration.half,
+        variables: [(Duration.quarter,.addition),(Duration.quarter,.equation)],
+        variants: [Duration.whole,
+                   Duration.half,
+                   Duration.quarter,
+                   Duration.eighth,
+                   Duration.sixteen],
+        variantsAreNotes: true),
+        MusicTaskAddition(
+              questionText: "Решите музыкально-математические примеры",
+              answer: Duration.whole,
+              variables: [(Duration.quarter,.addition),(Duration.quarter,.addition),(Duration.half,.equation)],
+              variants: [Duration.whole,
+                         Duration.half,
+                         Duration.quarter,
+                         Duration.eighth,
+                         Duration.sixteen],
+              variantsAreNotes: true)
     ]
 }
