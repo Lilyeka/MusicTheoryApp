@@ -17,16 +17,16 @@ enum Octaves {
     case BassFirst
 }
 
+enum Duration {
+    case whole
+    case half
+    case quarter
+    case eighth
+    case sixteen
+    case none //для значков тональности нет длительности
+}
+
 struct Note {
-    enum Duration {
-        case whole
-        case half
-        case quarter
-        case eighth
-        case sixteen
-        case none //для значков тональности нет длительности
-    }
-    
     public enum NoteName: Int {
         case Do = 0
         case re = 1

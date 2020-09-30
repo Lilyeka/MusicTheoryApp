@@ -40,8 +40,9 @@
 		6168104C2517C5110095754E /* Pause.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6168104B2517C5110095754E /* Pause.swift */; };
 		6168104E2517C7D00095754E /* PauseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6168104D2517C7D00095754E /* PauseViewModel.swift */; };
 		616810502517CB750095754E /* MusicTaskPauseAndDurationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6168104F2517CB750095754E /* MusicTaskPauseAndDurationViewModel.swift */; };
-		616810522517D9750095754E /* MusicTasksPauses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616810512517D9750095754E /* MusicTasksPauses.swift */; };
+		616810522517D9750095754E /* MusicTasksPausesDurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616810512517D9750095754E /* MusicTasksPausesDurations.swift */; };
 		61681054251FD7CC0095754E /* QuizVariantCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61681053251FD7CC0095754E /* QuizVariantCollectionViewCell.swift */; };
+		6168105625234A9C0095754E /* MusicTaskAddition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6168105525234A9B0095754E /* MusicTaskAddition.swift */; };
 		6172FA16249C084C009153BD /* MusicTaskWriteNoteInWordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6172FA15249C084C009153BD /* MusicTaskWriteNoteInWordViewModel.swift */; };
 		6172FA18249C12A9009153BD /* MusicTaskWriteNoteInWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6172FA17249C12A9009153BD /* MusicTaskWriteNoteInWordView.swift */; };
 		617592C52503D21C00FB372D /* MusicTasksBass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617592C42503D21C00FB372D /* MusicTasksBass.swift */; };
@@ -120,8 +121,9 @@
 		6168104B2517C5110095754E /* Pause.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pause.swift; sourceTree = "<group>"; };
 		6168104D2517C7D00095754E /* PauseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseViewModel.swift; sourceTree = "<group>"; };
 		6168104F2517CB750095754E /* MusicTaskPauseAndDurationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskPauseAndDurationViewModel.swift; sourceTree = "<group>"; };
-		616810512517D9750095754E /* MusicTasksPauses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTasksPauses.swift; sourceTree = "<group>"; };
+		616810512517D9750095754E /* MusicTasksPausesDurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTasksPausesDurations.swift; sourceTree = "<group>"; };
 		61681053251FD7CC0095754E /* QuizVariantCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizVariantCollectionViewCell.swift; sourceTree = "<group>"; };
+		6168105525234A9B0095754E /* MusicTaskAddition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskAddition.swift; sourceTree = "<group>"; };
 		6172FA15249C084C009153BD /* MusicTaskWriteNoteInWordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskWriteNoteInWordViewModel.swift; sourceTree = "<group>"; };
 		6172FA17249C12A9009153BD /* MusicTaskWriteNoteInWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskWriteNoteInWordView.swift; sourceTree = "<group>"; };
 		617592C42503D21C00FB372D /* MusicTasksBass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTasksBass.swift; sourceTree = "<group>"; };
@@ -311,12 +313,13 @@
 				61D89B3124FF810000E04AB6 /* CleffTypes.swift */,
 				61A818BC247477E2009DCE07 /* MusicTask.swift */,
 				616810492517C4760095754E /* MusicTaskPauseAndDuration.swift */,
+				6168105525234A9B0095754E /* MusicTaskAddition.swift */,
 				61A4B502248843FF004A286E /* MusicTaskSelectNote.swift */,
 				61A4B74724917D2E00C0E92D /* MusicTaskSelectNoteInWord.swift */,
 				61A4B5042488477F004A286E /* MusicTaskShowNoteOnThePiano.swift */,
 				61A818BE2474858D009DCE07 /* MusicTasks.swift */,
 				617592C42503D21C00FB372D /* MusicTasksBass.swift */,
-				616810512517D9750095754E /* MusicTasksPauses.swift */,
+				616810512517D9750095754E /* MusicTasksPausesDurations.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -471,7 +474,7 @@
 				612AAABB24D74FFE00A3CC28 /* FireworkSparkScheduler.swift in Sources */,
 				610585FD2460B63700F56611 /* NoteViewModel.swift in Sources */,
 				612AAAB624D74FFE00A3CC28 /* CircleColorSparkViewFactory.swift in Sources */,
-				616810522517D9750095754E /* MusicTasksPauses.swift in Sources */,
+				616810522517D9750095754E /* MusicTasksPausesDurations.swift in Sources */,
 				6168104A2517C4760095754E /* MusicTaskPauseAndDuration.swift in Sources */,
 				612AAABD24D74FFE00A3CC28 /* SparkViewAnimator.swift in Sources */,
 				61E8ABEE24BC989D00B58A01 /* QuizShowNoteCollectionViewCell.swift in Sources */,
@@ -494,6 +497,7 @@
 				612AAAAE24D74FFE00A3CC28 /* ClassicSparkTrajectoryFactory.swift in Sources */,
 				6149ED0F245978CD00A1375A /* AppDelegate.swift in Sources */,
 				612AAAB524D74FFE00A3CC28 /* ImageSparkViewFactory.swift in Sources */,
+				6168105625234A9C0095754E /* MusicTaskAddition.swift in Sources */,
 				612AAABA24D74FFE00A3CC28 /* SparkTrajectoryFactory.swift in Sources */,
 				612AAAB024D74FFE00A3CC28 /* ClassicFirework.swift in Sources */,
 				619BB54324B50F5A00D3076E /* MainRouter.swift in Sources */,

@@ -39,7 +39,7 @@ class QuizViewController: UIViewController, QuizViewProtocol {
         return collectionView
     }()
     
-    var questions = MusicTasksPauses()/*MusicTasks()*//* MusicTasksBass()*/
+    var questions = MusicTasksPausesDurations()/*MusicTasks()*//* MusicTasksBass()*/
     
     //Mark: -LifeCycle
     override func viewDidLoad() {

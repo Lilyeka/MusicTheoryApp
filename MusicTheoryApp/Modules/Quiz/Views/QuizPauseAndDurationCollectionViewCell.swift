@@ -36,7 +36,7 @@ class QuizPauseAndDurationCollectionViewCell: UICollectionViewCell {
         return 150.0
     }()
     var previousVariantIndexPath: IndexPath!
-     private let fireworkController = ClassicFireworkController()
+
     //MARK: -Delegate
     var delegate: QuizPauseAndDurationCollectionViewCellDelegate?
     
@@ -165,15 +165,15 @@ extension QuizPauseAndDurationCollectionViewCell: UICollectionViewDataSource {
 extension QuizPauseAndDurationCollectionViewCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let cell = collectionView.cellForItem(at: indexPath)
+        let cell = collectionView.cellForItem(at: indexPath) as! QuizVariantCollectionViewCell
         let selectedDuration = viewModel.notesViewModels[indexPath.row].model.duration
         if viewModel.checkUserAnswers(userAnswer: selectedDuration) {
             if previousVariantIndexPath != nil {
                 let previousCell = collectionView.cellForItem(at: previousVariantIndexPath)
                 previousCell?.layer.borderColor = UIColor.gray.cgColor
             }
-            cell?.layer.borderColor = UIColor.green.cgColor
-            fireworkController.addFireworks(count: 2, sparks: 8, around: cell!.contentView)
+            cell.layer.borderColor = UIColor.green.cgColor
+            self.delegate?.additionalRightAnswerReaction(view: cell.viewForFireworks)
             collectionView.isUserInteractionEnabled = false
             let seconds = 1.0
             DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
@@ -184,7 +184,7 @@ extension QuizPauseAndDurationCollectionViewCell: UICollectionViewDelegate {
                 let previousCell = collectionView.cellForItem(at: previousVariantIndexPath)
                 previousCell?.layer.borderColor = UIColor.gray.cgColor
             }
-            cell!.layer.borderColor = UIColor.red.cgColor
+            cell.layer.borderColor = UIColor.red.cgColor
         }
         previousVariantIndexPath = indexPath
     }

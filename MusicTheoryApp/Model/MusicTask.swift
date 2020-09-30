@@ -9,12 +9,11 @@
 import UIKit
 
 class MusicTask {
-   
     var questionText: String
     var notesArray: [Note]?
-    var cleffType: CleffTypes
+    var cleffType: CleffTypes = CleffTypes.Treble
     
-    init(questionText: String, notesArray: [Note], cleff:CleffTypes ) {
+    init(questionText: String, notesArray: [Note]?, cleff:CleffTypes ) {
         self.questionText = questionText
         self.notesArray = notesArray
         self.cleffType = cleff

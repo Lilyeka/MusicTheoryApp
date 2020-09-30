@@ -25,12 +25,21 @@ class QuizVariantCollectionViewCell: UICollectionViewCell {
         super.init(coder: aDecoder)
     }
     
+    var viewForFireworks: UIView = {
+       var view = UIView()
+       view.translatesAutoresizingMaskIntoConstraints = false
+       view.backgroundColor = .clear
+       return view
+    }()
+    
     //MARK: -Public methods
     func configureSubviews(viewModel:NoteViewModel) {
         self.viewModel = viewModel
+        
         self.layer.borderColor = UIColor.gray.cgColor
         self.layer.borderWidth = 2.0
         self.layer.cornerRadius = 13.0
+        
         let image = UIImage(named: self.viewModel.durationImageName)
         let imageView = UIImageView()
         imageView.image = image
@@ -41,5 +50,12 @@ class QuizVariantCollectionViewCell: UICollectionViewCell {
         imageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 50.0 - viewModel.offsetFromDurationCenter).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: viewModel.durationWidth).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: viewModel.durationHeight).isActive = true
+    
+        self.contentView.addSubview(viewForFireworks)
+        viewForFireworks.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
+        viewForFireworks.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
+        viewForFireworks.widthAnchor.constraint(equalToConstant: 10.0).isActive = true
+        viewForFireworks.heightAnchor.constraint(equalToConstant: 10.0).isActive = true
+        
     }
 }

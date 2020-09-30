@@ -9,5 +9,5 @@
 import UIKit
 
 struct Pause {
-    var duration: Note.Duration
+    var duration: Duration
 }
