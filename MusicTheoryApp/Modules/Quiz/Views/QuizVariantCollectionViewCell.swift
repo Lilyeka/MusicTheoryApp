@@ -13,6 +13,13 @@ class QuizVariantCollectionViewCell: UICollectionViewCell {
         return String(describing: self)
     }
     
+    var viewForFireworks: UIView = {
+        var view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
+        return view
+     }()
+    
     //MARK: -ViewModel
     var viewModel: NoteViewModel!
     
@@ -24,13 +31,6 @@ class QuizVariantCollectionViewCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
-    var viewForFireworks: UIView = {
-       var view = UIView()
-       view.translatesAutoresizingMaskIntoConstraints = false
-       view.backgroundColor = .clear
-       return view
-    }()
     
     //MARK: -Public methods
     func configureSubviews(viewModel:NoteViewModel) {
@@ -56,6 +56,5 @@ class QuizVariantCollectionViewCell: UICollectionViewCell {
         viewForFireworks.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
         viewForFireworks.widthAnchor.constraint(equalToConstant: 10.0).isActive = true
         viewForFireworks.heightAnchor.constraint(equalToConstant: 10.0).isActive = true
-        
     }
 }

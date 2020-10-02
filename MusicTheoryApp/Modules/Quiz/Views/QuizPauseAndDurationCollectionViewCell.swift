@@ -55,14 +55,7 @@ class QuizPauseAndDurationCollectionViewCell: UICollectionViewCell {
         label.numberOfLines = 0
         return label
     }()
-    
-    var tempView: UIView = {
-        var view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .red
-        return view
-    }()
-    
+        
     //MARK: -ViewModel
     var viewModel: MusicTaskPauseAndDurationViewModel!
     
@@ -165,7 +158,10 @@ extension QuizPauseAndDurationCollectionViewCell: UICollectionViewDataSource {
 extension QuizPauseAndDurationCollectionViewCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let cell = collectionView.cellForItem(at: indexPath) as! QuizVariantCollectionViewCell
+        var cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizVariantCollectionViewCell.cellIdentifier, for: indexPath) as! QuizVariantCollectionViewCell
+        if cell == nil {
+        cell = collectionView.cellForItem(at: indexPath) as! QuizVariantCollectionViewCell
+        }
         let selectedDuration = viewModel.notesViewModels[indexPath.row].model.duration
         if viewModel.checkUserAnswers(userAnswer: selectedDuration) {
             if previousVariantIndexPath != nil {

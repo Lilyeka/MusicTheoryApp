@@ -20,6 +20,7 @@ class MusicTaskAdditionViewModel {
                     let noteViewModel = NoteViewModel(model: noteModel)
                     resArray.append((noteViewModel,sign))
                 }
+                return resArray
             }
             return nil
         }
