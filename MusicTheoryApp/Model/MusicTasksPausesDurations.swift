@@ -101,7 +101,7 @@ class MusicTasksPausesDurations {
                                    Duration.quarter,
                                    Duration.eighth,
                                    Duration.sixteen],
-                        variantsAreNotes: false),*/
+                        variantsAreNotes: false),
         MusicTaskAddition(
                         questionText: "Решите пример с паузами",
                         answer: Duration.whole,
@@ -114,7 +114,7 @@ class MusicTasksPausesDurations {
                                    Duration.quarter,
                                    Duration.eighth,
                                    Duration.sixteen],
-                        variantsAreNotes: false),/*
+                        variantsAreNotes: false),
         MusicTaskAddition(
                            questionText: "Решите пример с паузами",
                            answer: Duration.half,
@@ -135,7 +135,7 @@ class MusicTasksPausesDurations {
                                       Duration.eighth,
                                       Duration.sixteen],
                            variantsAreNotes: false),*/
-        /*
+        
         MusicTaskAddition(
         questionText: "Решите музыкально-математические примеры",
         answer: Duration.half,
@@ -155,6 +155,6 @@ class MusicTasksPausesDurations {
                          Duration.quarter,
                          Duration.eighth,
                          Duration.sixteen],
-              variantsAreNotes: true)*/
+              variantsAreNotes: true)
     ]
 }

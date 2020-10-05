@@ -12,6 +12,7 @@ enum MathSigns {
     case addition
     case subtraction
     case equation
+    case question
 }
 
 class MusicTaskAddition: MusicTask {
