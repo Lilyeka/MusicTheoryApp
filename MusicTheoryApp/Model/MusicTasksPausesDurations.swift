@@ -60,7 +60,7 @@ class MusicTasksPausesDurations {
                          Note(name: .Do, tone: .none, duration: .sixteen)],
                      cleff: .Treble,
                      pause: Pause(duration: .eighth)),*/
-        /*
+        
         MusicTaskAddition(
             questionText: "Решите пример с паузами",
             answer: Duration.quarter,
@@ -134,7 +134,8 @@ class MusicTasksPausesDurations {
                                       Duration.quarter,
                                       Duration.eighth,
                                       Duration.sixteen],
-                           variantsAreNotes: false),*/
+                           variantsAreNotes: false),
+ /*
         
         MusicTaskAddition(
         questionText: "Решите музыкально-математические примеры",
@@ -155,6 +156,6 @@ class MusicTasksPausesDurations {
                          Duration.quarter,
                          Duration.eighth,
                          Duration.sixteen],
-              variantsAreNotes: true)
+              variantsAreNotes: true) */
     ]
 }

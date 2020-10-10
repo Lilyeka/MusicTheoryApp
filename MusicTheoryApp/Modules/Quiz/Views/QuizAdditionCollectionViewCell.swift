@@ -20,13 +20,6 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
         return UIFont.boldSystemFont(ofSize: 20.0)
     }()
     
-    let CELLS_OFFSET: CGFloat = 0.0
-    
-    let LEFT_OFFSET: CGFloat = 15.0
-    let TOP_OFFSET: CGFloat = 15.0
-    var numberOfTaskElements = 0
-    
-    
     lazy var collectoinViewHight: CGFloat = {
         if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_11Pro_X_Xs {
             return 200.0
@@ -34,6 +27,11 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
         return 150.0
     }()
     
+    let CELLS_OFFSET: CGFloat = 0.0
+    let LEFT_OFFSET: CGFloat = 15.0
+    let TOP_OFFSET: CGFloat = 15.0
+    var numberOfTaskElements = 0
+        
     var questionLabel: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -46,11 +44,7 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
     }()
     
     var pickerView: UIPickerView!
-    var pickerData = ["Item 1", "Item 2", "Item 3"]
-    var imagesArray: [UIImage] = [UIImage(named: "whole_note")!,
-                                  UIImage(named: "quarter_note")!,
-                                  UIImage(named: "eighth_note")!]
-    
+   
     //MARK: -ViewModel
     var viewModel: MusicTaskAdditionViewModel!
     
@@ -66,14 +60,8 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
     //MARK: - Public methods
     func configureSubviews(viewModel: MusicTaskAdditionViewModel, frame: CGRect) {
         
-        //pickerView = UIPickerView()
-        
-        // pickerView.delegate = self
-        // pickerView.dataSource = self
-        
         self.viewModel = viewModel
-        //contentView.backgroundColor = .cyan
-        //question
+   
         questionLabel.text = viewModel.model.questionText
         self.contentView.addSubview(questionLabel)
         questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
@@ -84,11 +72,11 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
         let taskCollectionViewWidth = 2*(frame.size.width - 2*LEFT_OFFSET)/3
         
         if let notesVariables = viewModel.notesVariables {
-            numberOfTaskElements = notesVariables.count * 2 + 1 //1 для ячейки со знаком ?
+            numberOfTaskElements = notesVariables.count * 2 + 1 //+1 для ячейки со знаком ?
         }
         
         if let pausesVariables = viewModel.pausesVariables {
-            numberOfTaskElements = pausesVariables.count * 2 + 1//1 для ячейки со знаком ?
+            numberOfTaskElements = pausesVariables.count * 2 + 1//+1 для ячейки со знаком ?
         }
         
         let layout = UICollectionViewFlowLayout()
@@ -198,10 +186,17 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
             pickerView.setValue(UIColor.black, forKey: "textColor")
             pickerView.autoresizingMask = .flexibleWidth
             pickerView.contentMode = .center
-            pickerView.frame = CGRect.init(x: (contentView.bounds.width - collectionView.bounds.size.width)/2, y: self.contentView.bounds.height - self.contentView.bounds.height/3, width: collectionView.bounds.size.width, height: self.contentView.bounds.height/3)
+        
+            let cell = collectionView.cellForItem(at: indexPath)            
+            pickerView.frame = CGRect.init(x:(contentView.bounds.width - collectionView.bounds.size.width)/2, y: self.contentView.bounds.height - self.contentView.bounds.height/3, width: self.contentView.bounds.height/3, height: collectionView.bounds.size.width)
             self.contentView.addSubview(pickerView)
-            
-            //               toolBar = UIToolbar.init(frame: CGRect.init(x: 0.0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 50))
+           pickerView.transform = CGAffineTransform(rotationAngle: 3.14159/2)
+            var frameForChange = pickerView.frame
+            frameForChange.origin.x = (contentView.bounds.width - collectionView.bounds.size.width)/2
+            frameForChange.origin.y = self.contentView.bounds.height - self.contentView.bounds.height/3
+            pickerView.frame = frameForChange
+         
+            //  toolBar = UIToolbar.init(frame: CGRect.init(x: 0.0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 50))
             //               toolBar.barStyle = .blackTranslucent
             //               toolBar.items = [UIBarButtonItem.init(title: "Done", style: .done, target: self, action: #selector(onDoneButtonTapped))]
             //               self.view.addSubview(toolBar)
@@ -216,7 +211,13 @@ extension QuizAdditionCollectionViewCell: UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return imagesArray.count//pickerData.count
+        if let notesArray = viewModel.notesVariants {
+            return notesArray.count
+        }
+        if let pausesArray = viewModel.pausesVariants {
+            return pausesArray.count
+        }
+        return 0
     }
     //
     //    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
@@ -230,10 +231,20 @@ extension QuizAdditionCollectionViewCell: UIPickerViewDataSource {
 extension QuizAdditionCollectionViewCell: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        let image = UIImage(named: "bemol")
-        let imageView: UIImageView = UIImageView(image:image/*imagesArray[row]*/)
+       
+        var imageName = ""
+        if let notesVariants = viewModel.notesVariants {
+           imageName = notesVariants[row].durationImageName
+        }
+        if let pausesVariants = viewModel.pausesVariants {
+            imageName = pausesVariants[row].imageName
+        }
+        
+        let image = UIImage(named:imageName)
+        let imageView: UIImageView = UIImageView(image:image)
         imageView.contentMode = .scaleAspectFit
         imageView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        imageView.transform = CGAffineTransform(rotationAngle: 3*3.14159/2)
         return imageView
     }
     
