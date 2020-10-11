@@ -26,7 +26,19 @@ class QuizAdditionPausesCollectionViewCell: UICollectionViewCell {
     }
     
     //MARK: -Public methods
-//    func configureSubviews(viewModel:PauseViewModel) {
-//        self.contentView.backgroundColor = .orange
-//    }
+    func configureSubviews(viewModel:PauseViewModel) {
+        self.viewModel = viewModel
+        
+        let image = UIImage(named: self.viewModel.imageName)
+        let imageView = UIImageView()
+        imageView.image = image
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.contentView.addSubview(imageView)
+        imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 0.0).isActive = true
+        imageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 0.0/*50.0 - viewModel.offsetFromDurationCenter*/).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: viewModel.width).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: viewModel.height).isActive = true
+    }
 }

@@ -27,11 +27,12 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
         return 150.0
     }()
     
+    let pickerToolBarHeight = 50
     let CELLS_OFFSET: CGFloat = 0.0
     let LEFT_OFFSET: CGFloat = 15.0
     let TOP_OFFSET: CGFloat = 15.0
     var numberOfTaskElements = 0
-        
+    
     var questionLabel: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -43,8 +44,12 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    var taskCollectionViewWidth: CGFloat = 0.0
+    var taskCollectionView: UICollectionView!
     var pickerView: UIPickerView!
-   
+    var pickerToolBar: UIToolbar!
+    var pickeViewIsShown: Bool = false
+    
     //MARK: -ViewModel
     var viewModel: MusicTaskAdditionViewModel!
     
@@ -61,7 +66,7 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
     func configureSubviews(viewModel: MusicTaskAdditionViewModel, frame: CGRect) {
         
         self.viewModel = viewModel
-   
+        
         questionLabel.text = viewModel.model.questionText
         self.contentView.addSubview(questionLabel)
         questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
@@ -69,7 +74,7 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
         questionLabel.widthAnchor.constraint(equalToConstant: frame.size.width - 2*LEFT_OFFSET).isActive = true
         questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: frame.size.width, font:QuizPauseAndDurationCollectionViewCell.QUESTION_FONT))!).isActive = true
         
-        let taskCollectionViewWidth = 2*(frame.size.width - 2*LEFT_OFFSET)/3
+        taskCollectionViewWidth = 2*(frame.size.width - 2*LEFT_OFFSET)/3
         
         if let notesVariables = viewModel.notesVariables {
             numberOfTaskElements = notesVariables.count * 2 + 1 //+1 для ячейки со знаком ?
@@ -89,8 +94,7 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
             width: itemWidth,
             height: collectoinViewHight)
         
-        let taskCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        
+        taskCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         taskCollectionView.translatesAutoresizingMaskIntoConstraints = false
         taskCollectionView.isScrollEnabled = false
         taskCollectionView.dataSource = self
@@ -106,6 +110,41 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
         taskCollectionView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
         taskCollectionView.heightAnchor.constraint(equalToConstant: CGFloat(collectoinViewHight)).isActive = true
         taskCollectionView.widthAnchor.constraint(equalToConstant: taskCollectionViewWidth).isActive = true
+        
+        pickerView = UIPickerView.init()
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        pickerView.backgroundColor = UIColor.green
+        pickerView.contentMode = .center
+        pickerView.autoresizingMask = .flexibleWidth
+        
+        self.pickerView.frame = CGRect(
+            x:(self.contentView.frame.width - taskCollectionViewWidth)/2,
+            y: self.contentView.frame.height - self.contentView.frame.height/3,
+            width: self.contentView.frame.height/3,
+            height: taskCollectionViewWidth)
+        
+        self.contentView.addSubview(self.pickerView)
+        self.pickerView.transform = CGAffineTransform(rotationAngle: 3.14159/2)
+        
+        var frameForChange = self.pickerView.frame
+        frameForChange.origin.x = (self.contentView.frame.width - taskCollectionViewWidth)/2
+        frameForChange.origin.y = self.contentView.frame.height + CGFloat(pickerToolBarHeight)
+        self.pickerView.frame = frameForChange
+        
+        pickerToolBar = UIToolbar()
+        pickerToolBar.barStyle = .default
+        pickerToolBar.clipsToBounds = true
+        pickerToolBar.layer.cornerRadius = 10.0
+        pickerToolBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        pickerToolBar.items = [UIBarButtonItem.init(title: "Выбрать", style: .done, target: self, action: #selector(onDoneButtonTapped))]
+        
+        self.pickerToolBar.frame = CGRect(
+                     x: Int(self.pickerView.frame.origin.x),
+                     y: Int(self.pickerView.frame.origin.y) - 48,
+                     width: Int(self.pickerView.frame.size.width),
+                     height: pickerToolBarHeight)
+        self.contentView.addSubview(self.pickerToolBar)
     }
 }
 
@@ -178,28 +217,42 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDataSource {
 
 extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)  {
-        if indexPath.row == (numberOfTaskElements - 1) {
-            pickerView = UIPickerView.init()
-            pickerView.delegate = self
-            pickerView.dataSource = self
-            pickerView.backgroundColor = UIColor.green
-            pickerView.setValue(UIColor.black, forKey: "textColor")
-            pickerView.autoresizingMask = .flexibleWidth
-            pickerView.contentMode = .center
-        
-            let cell = collectionView.cellForItem(at: indexPath)            
-            pickerView.frame = CGRect.init(x:(contentView.bounds.width - collectionView.bounds.size.width)/2, y: self.contentView.bounds.height - self.contentView.bounds.height/3, width: self.contentView.bounds.height/3, height: collectionView.bounds.size.width)
-            self.contentView.addSubview(pickerView)
-           pickerView.transform = CGAffineTransform(rotationAngle: 3.14159/2)
-            var frameForChange = pickerView.frame
-            frameForChange.origin.x = (contentView.bounds.width - collectionView.bounds.size.width)/2
-            frameForChange.origin.y = self.contentView.bounds.height - self.contentView.bounds.height/3
-            pickerView.frame = frameForChange
-         
-            //  toolBar = UIToolbar.init(frame: CGRect.init(x: 0.0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 50))
-            //               toolBar.barStyle = .blackTranslucent
-            //               toolBar.items = [UIBarButtonItem.init(title: "Done", style: .done, target: self, action: #selector(onDoneButtonTapped))]
-            //               self.view.addSubview(toolBar)
+        if indexPath.row == (numberOfTaskElements - 1) && !pickeViewIsShown{
+            UIView.animate(withDuration: 0.3) {
+                var frameForChange = self.pickerView.frame
+                frameForChange.origin.x = (self.contentView.bounds.width - collectionView.bounds.size.width)/2
+                frameForChange.origin.y = self.contentView.bounds.height - self.contentView.bounds.height/3
+                self.pickerView.frame = frameForChange
+                
+                self.pickerToolBar.frame = CGRect(
+                    x: Int(self.pickerView.frame.origin.x),
+                    y: Int(self.pickerView.frame.origin.y) - self.pickerToolBarHeight,
+                    width: Int(self.pickerView.frame.size.width),
+                    height: self.pickerToolBarHeight)
+                
+                let translate = CATransform3DMakeTranslation(0, -20, 0)
+                let scale = CATransform3DScale(translate, 0.8, 0.8, 1)
+                         collectionView.layer.transform = CATransform3DConcat(translate, scale)
+            }
+            pickeViewIsShown = true
+        }
+    }
+    
+    @objc func onDoneButtonTapped() {
+        pickeViewIsShown = false
+        UIView.animate(withDuration: 0.3) {
+            self.taskCollectionView.transform  = CGAffineTransform.identity
+            
+            var frameForChange = self.pickerView.frame
+            frameForChange.origin.x = (self.contentView.frame.width - self.taskCollectionViewWidth)/2
+            frameForChange.origin.y = self.contentView.frame.height + CGFloat(self.pickerToolBarHeight)
+            self.pickerView.frame = frameForChange
+            
+            self.pickerToolBar.frame = CGRect(
+                x: Int(self.pickerView.frame.origin.x),
+                y: Int(self.pickerView.frame.origin.y) - self.pickerToolBarHeight,
+                width: Int(self.pickerView.frame.size.width),
+                height: self.pickerToolBarHeight)
         }
     }
 }
@@ -224,17 +277,17 @@ extension QuizAdditionCollectionViewCell: UIPickerViewDataSource {
     //        return "www"//pickerData[row]
     //    }
     
-//    func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-//        return 200
-//    }
+    //    func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+    //        return 200
+    //    }
 }
 extension QuizAdditionCollectionViewCell: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-       
+        
         var imageName = ""
         if let notesVariants = viewModel.notesVariants {
-           imageName = notesVariants[row].durationImageName
+            imageName = notesVariants[row].durationImageName
         }
         if let pausesVariants = viewModel.pausesVariants {
             imageName = pausesVariants[row].imageName
@@ -251,8 +304,8 @@ extension QuizAdditionCollectionViewCell: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
         return 50.0
     }
-
-  
+    
+    
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         return 50.0
     }
