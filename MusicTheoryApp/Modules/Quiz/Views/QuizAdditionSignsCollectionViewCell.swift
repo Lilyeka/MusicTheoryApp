@@ -21,8 +21,6 @@ class QuizAdditionSignsCollectionViewCell: UICollectionViewCell {
     }()
     
     var signFontColor: UIColor = .black
-//    var pickerView: UIPickerView!
-//    var pickerData = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6"]
     
     //MARK: -Views
     var signLabel: UILabel = {
@@ -35,8 +33,26 @@ class QuizAdditionSignsCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    var textField: UITextField = {
+        var textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.isUserInteractionEnabled = false
+        textField.textAlignment = .center
+        textField.font = QuizAdditionSignsCollectionViewCell.SIGN_FONT
+        textField.borderStyle = UITextField.BorderStyle.roundedRect
+        return textField
+    }()
+    
+    var imageView: UIImageView = {
+        var imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "bemol")
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+    
     //MARK: -ViewModel
-    var model: MathSigns!
+    var model: MathSignViewModel!
     
     //MARK: - Life cycle
     override init(frame: CGRect) {
@@ -48,50 +64,20 @@ class QuizAdditionSignsCollectionViewCell: UICollectionViewCell {
     }
     
     //MARK: -Public methods
-    func configureSubviews(model: MathSigns) {
+    func configureSubviews(model: MathSignViewModel) {
         self.model = model
-        let signLabelHight:CGFloat = 120.0
-        var signText = ""
-        switch model {
-        case .addition:
-            signText = "+"
-        case .subtraction:
-            signText = "-"
-        case .equation:
-            signText = "="
-        case .question:
-            signText = "?"
-            signFontColor = UIColor.gray
-        }
-        
-        if model != .question {
-            signLabel.text = signText
-            signLabel.textColor = signFontColor
-            //signLabel.backgroundColor = UIColor.yellow
-            //self.contentView.backgroundColor = UIColor.gray
+       
+        if model.model.sign != .question {
+            let signLabelHight:CGFloat = 120.0
+            signLabel.text = model.signText
+            signLabel.textColor = model.signFontColor
             self.contentView.addSubview(signLabel)
             signLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 0.0).isActive = true
             signLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor/*, constant: 50.0 - viewModel.offsetFromDurationCenter*/).isActive = true
             signLabel.widthAnchor.constraint(equalTo:contentView.widthAnchor ).isActive = true
             signLabel.heightAnchor.constraint(equalToConstant: signLabelHight).isActive = true
         } else {
-          //  pickerView = UIPickerView()
-          //  pickerView.dataSource = self
-            
-            var textField = UITextField()
-            textField.translatesAutoresizingMaskIntoConstraints = false
-            textField.isUserInteractionEnabled = false
-            textField.textAlignment = .center
-            textField.placeholder = signText
-            textField.font = QuizAdditionSignsCollectionViewCell.SIGN_FONT
-            textField.borderStyle = UITextField.BorderStyle.roundedRect
-          //  textField.inputView = pickerView
-//            textField.autocorrectionType = UITextAutocorrectionType.no
-//            textField.keyboardType = UIKeyboardType.alphabet
-//            textField.returnKeyType = UIReturnKeyType.done
-//            textField.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.center
-//            textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
-            
+            textField.placeholder = model.signText
             self.contentView.addSubview(textField)
             textField.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 0.0).isActive = true
             textField.centerYAnchor.constraint(equalTo: contentView.centerYAnchor/*, constant: 50.0 - viewModel.offsetFromDurationCenter*/).isActive = true
@@ -99,18 +85,14 @@ class QuizAdditionSignsCollectionViewCell: UICollectionViewCell {
             textField.heightAnchor.constraint(equalTo:contentView.heightAnchor).isActive = true
         }
     }
+    
+
+    
+    override func prepareForReuse() {
+        textField.removeFromSuperview()
+        signLabel.removeFromSuperview()
+    }
+    
 }
 
-//extension QuizAdditionSignsCollectionViewCell: UIPickerViewDataSource {
-//    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-//        return 1
-//    }
-//    
-//    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-//        pickerData.count
-//    }
-//    
-//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-//        return "dsdsdsd"//pickerData[row]
-//    }
-//}
+

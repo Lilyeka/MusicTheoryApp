@@ -12,7 +12,7 @@ protocol NoteViewModelDelegate {
     func noteTaped(noteName:Note.NoteName, noteView: UIView)
 }
 
-class NoteViewModel {
+class NoteViewModel: MathElementViewModel {
     static let TRANSPARENT_ALFA: CGFloat = 0.3
     static let OPAQUE_ALFA: CGFloat = 1.0
     static let NOTE_LABEL_FONT =  UIFont.boldSystemFont(ofSize: 18.0)
@@ -27,6 +27,8 @@ class NoteViewModel {
     var durationImageName: String {
         get {
             switch model.duration {
+            case .whole:
+                return "whole_note"
             case .half:
                 return "half_note"
             case .quarter:
@@ -35,7 +37,7 @@ class NoteViewModel {
                 return "eighth_note"
             case .sixteen:
                 return "sixteenth_note"
-            default:
+            case .none:
                 return "whole_note"
             }
         }

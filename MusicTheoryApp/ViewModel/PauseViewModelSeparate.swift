@@ -1,20 +1,20 @@
 //
-//  PauseViewModel.swift
+//  PauseViewModelSeparate.swift
 //  MusicTheoryApp
 //
-//  Created by Лилия Левина on 20.09.2020.
+//  Created by Лилия Левина on 12.10.2020.
 //  Copyright © 2020 Лилия Левина. All rights reserved.
 //
 
 import UIKit
 
-class PauseViewModel:MathElementViewModel {
+class PauseViewModelSeparate {
     var model: Pause
     var imageName: String {
         get {
             switch model.duration {
             case .half:
-                return "whole_rest"
+                return "half_rest_separate"
             case .quarter:
                 return "quarter_rest"
             case .eighth:
@@ -22,10 +22,9 @@ class PauseViewModel:MathElementViewModel {
             case .sixteen:
                 return "sixteen_rest"
             default:
-                return "whole_rest"
+                return "whole_rest_separate"
             }
         }
-        set {}
     }
     
     var height: CGFloat {
@@ -207,3 +206,4 @@ class PauseViewModel:MathElementViewModel {
     
     
 }
+
