@@ -45,7 +45,7 @@ class QuizViewController: UIViewController, QuizViewProtocol {
     //Mark: -LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .orange
         configurator.configure(with: self)
         configureCollectionView()
     }

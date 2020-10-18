@@ -86,13 +86,10 @@ class QuizAdditionSignsCollectionViewCell: UICollectionViewCell {
         }
     }
     
-
-    
     override func prepareForReuse() {
         textField.removeFromSuperview()
         signLabel.removeFromSuperview()
     }
-    
 }
 
 

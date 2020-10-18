@@ -11,7 +11,6 @@ import UIKit
 class MusicTaskAdditionViewModel {
     let model: MusicTaskAddition
     
-    
     var mathElements:[MathElementViewModel] {
         get {
             var resArray = [MathElementViewModel]()
@@ -27,7 +26,9 @@ class MusicTaskAdditionViewModel {
                         resArray.append(pauseViewModel)
                     }
                 }
-                resArray.append(MathSignViewModel(model: sign))
+                if let sign = sign {
+                    resArray.append(MathSignViewModel(model: sign))
+                }
             }
             return resArray
         }
@@ -44,7 +45,9 @@ class MusicTaskAdditionViewModel {
                         noteModel = Note(duration: duration)
                         noteViewModel = NoteViewModel(model: noteModel!)
                     }
-                    resArray.append((noteViewModel,MathSignViewModel(model: sign)))
+                    if let sign = sign {
+                        resArray.append((noteViewModel,MathSignViewModel(model: sign)))
+                    }
                 }
                 return resArray
             }
@@ -77,7 +80,9 @@ class MusicTaskAdditionViewModel {
                         pauseModel = Pause(duration: duration)
                         pauseViewModel = PauseViewModel(model: pauseModel!)
                     }
-                    resArray.append((pauseViewModel,MathSignViewModel(model: sign)))
+                    if let sign = sign {
+                        resArray.append((pauseViewModel,MathSignViewModel(model: sign)))
+                    }
                 }
                 return resArray
             }
@@ -104,9 +109,11 @@ class MusicTaskAdditionViewModel {
         self.model = model
     }
     
-    func checkUserAnswers(userAnswer: Duration) -> Bool {
-        return userAnswer == model.additionAnswer ? true : false
+    func checkUserAnswer(userAnswer: Duration) -> Bool {
+        return userAnswer == model.rightAnswer
     }
     
-    
+    func getQuestionText() -> String {
+        return model.questionText
+    }
 }

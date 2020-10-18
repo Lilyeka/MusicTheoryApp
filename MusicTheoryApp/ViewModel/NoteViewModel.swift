@@ -24,6 +24,10 @@ class NoteViewModel: MathElementViewModel {
     var alfa: CGFloat = NoteViewModel.OPAQUE_ALFA
     var selected: Bool = false
     
+    var duration: Duration {
+        get {return model.duration}
+    }
+
     var durationImageName: String {
         get {
             switch model.duration {

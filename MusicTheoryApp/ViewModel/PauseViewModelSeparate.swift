@@ -10,6 +10,11 @@ import UIKit
 
 class PauseViewModelSeparate {
     var model: Pause
+    
+    var duration: Duration {
+        get {return model.duration}
+    }
+    
     var imageName: String {
         get {
             switch model.duration {
@@ -83,7 +88,6 @@ class PauseViewModelSeparate {
             }
         }
     }
-    
     
     init(model: Pause) {
         self.model = model

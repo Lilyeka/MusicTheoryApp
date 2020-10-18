@@ -9,15 +9,15 @@
 import UIKit
 
 class MusicTaskAddition: MusicTask {
-    var additionAnswer: Duration!
-    var variables: [(Duration?,MathSign)]!
+    var rightAnswer: Duration!
+    var variables: [(Duration?,MathSign?)]!
     var variants: [Duration]!
     var variantsAreNotes: Bool!
        
-    init(questionText: String, answer: Duration, variables: [(Duration?,MathSign)],
+    init(questionText: String, answer: Duration, variables: [(Duration?,MathSign?)],
          variants: [Duration], variantsAreNotes: Bool) {
         super.init(questionText: questionText, notesArray: nil, cleff: CleffTypes.Treble)
-        self.additionAnswer = answer
+        self.rightAnswer = answer
         self.variables = variables
         self.variants = variants
         self.variantsAreNotes = variantsAreNotes

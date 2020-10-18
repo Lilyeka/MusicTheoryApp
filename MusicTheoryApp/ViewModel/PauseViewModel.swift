@@ -10,6 +10,7 @@ import UIKit
 
 class PauseViewModel:MathElementViewModel {
     var model: Pause
+        
     var imageName: String {
         get {
             switch model.duration {
@@ -150,35 +151,35 @@ class PauseViewModel:MathElementViewModel {
             width = 40.0
             offsetFromCenter = -4.0
         } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
-             height = 93.0
-             width = 40.0
-             offsetFromCenter = -4.0
+            height = 93.0
+            width = 40.0
+            offsetFromCenter = -4.0
         }
         return (height: height, width: width, offsetFromCenter:offsetFromCenter)
     }
     
     func halfRestSize() -> (height: CGFloat,width: CGFloat, offsetFromCenter: CGFloat) {
         var height: CGFloat = 0.0
-          var width: CGFloat = 0.0
-          var offsetFromCenter: CGFloat = 0.0
-          if DeviceType.IS_IPHONE_6_6s_7_8 {
-              height = 45.0
-              width = 45.0
-              offsetFromCenter = 23.0
-          } else if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ {
-              height = 49.0
-              width = 49.0
-              offsetFromCenter = 26.0
-          } else if DeviceType.IS_IPHONE_11Pro_X_Xs {
-              height = 50.0
-              width = 50.0
-              offsetFromCenter = 27.0
-          } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
-              height = 50.0
-              width = 50.0
-              offsetFromCenter = 27.0
-          }
-          return (height: height, width: width, offsetFromCenter: offsetFromCenter)
+        var width: CGFloat = 0.0
+        var offsetFromCenter: CGFloat = 0.0
+        if DeviceType.IS_IPHONE_6_6s_7_8 {
+            height = 45.0
+            width = 45.0
+            offsetFromCenter = 23.0
+        } else if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ {
+            height = 49.0
+            width = 49.0
+            offsetFromCenter = 26.0
+        } else if DeviceType.IS_IPHONE_11Pro_X_Xs {
+            height = 50.0
+            width = 50.0
+            offsetFromCenter = 27.0
+        } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+            height = 50.0
+            width = 50.0
+            offsetFromCenter = 27.0
+        }
+        return (height: height, width: width, offsetFromCenter: offsetFromCenter)
     }
     
     func wholeRestSize() -> (height: CGFloat,width: CGFloat, offsetFromCenter: CGFloat) {

@@ -21,13 +21,13 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
     }()
     
     lazy var collectoinViewHight: CGFloat = {
-        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_11Pro_X_Xs {
-            return 200.0
-        }
+//        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_11Pro_X_Xs {
+//            return 200.0
+//        }
         return 150.0
     }()
     
-    let pickerToolBarHeight = 50
+    let pickerToolBarHeight: CGFloat = 50.0
     let CELLS_OFFSET: CGFloat = 0.0
     let LEFT_OFFSET: CGFloat = 15.0
     let TOP_OFFSET: CGFloat = 15.0
@@ -50,9 +50,9 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
     var pickerToolBar: UIToolbar!
     var pickeViewIsShown: Bool = false
     
-    
     //MARK: -ViewModel
     var viewModel: MusicTaskAdditionViewModel!
+    var mathElements: [MathElementViewModel]!
     
     //MARK: -Init
     override init(frame:CGRect) {
@@ -65,10 +65,10 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Public methods
     func configureSubviews(viewModel: MusicTaskAdditionViewModel, frame: CGRect) {
-        
         self.viewModel = viewModel
+        self.mathElements = viewModel.mathElements
         
-        questionLabel.text = viewModel.model.questionText
+        questionLabel.text = viewModel.getQuestionText()
         self.contentView.addSubview(questionLabel)
         questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
         questionLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: LEFT_OFFSET).isActive = true
@@ -77,11 +77,7 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
         
         taskCollectionViewWidth = 2*(frame.size.width - 2*LEFT_OFFSET)/3
         
-        if let notesVariables = viewModel.notesVariables {
-            numberOfTaskElements = notesVariables.count * 2 + 1
-        } else if let pausesVariables = viewModel.pausesVariables {
-            numberOfTaskElements = pausesVariables.count * 2 + 1
-        }
+        numberOfTaskElements = mathElements.count
         
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0.0, bottom: 0, right: 0.0)
@@ -107,8 +103,8 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
         self.contentView.addSubview(taskCollectionView)
         taskCollectionView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor, constant: -20.0).isActive = true
         taskCollectionView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
-        taskCollectionView.heightAnchor.constraint(equalToConstant: CGFloat(collectoinViewHight)).isActive = true
         taskCollectionView.widthAnchor.constraint(equalToConstant: taskCollectionViewWidth).isActive = true
+        taskCollectionView.heightAnchor.constraint(equalToConstant: CGFloat(collectoinViewHight)).isActive = true
         
         pickerView = UIPickerView.init()
         pickerView.delegate = self
@@ -128,7 +124,7 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
         
         var frameForChange = self.pickerView.frame
         frameForChange.origin.x = (self.contentView.frame.width - taskCollectionViewWidth)/2
-        frameForChange.origin.y = self.contentView.frame.height + CGFloat(pickerToolBarHeight)
+        frameForChange.origin.y = self.contentView.frame.height + self.contentView.frame.height/3 + CGFloat(pickerToolBarHeight)
         self.pickerView.frame = frameForChange
         
         pickerToolBar = UIToolbar()
@@ -139,9 +135,9 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
         pickerToolBar.items = [UIBarButtonItem.init(title: "Выбрать", style: .done, target: self, action: #selector(onDoneButtonTapped))]
         
         self.pickerToolBar.frame = CGRect(
-            x: Int(self.pickerView.frame.origin.x),
-            y: Int(self.pickerView.frame.origin.y) - 48,
-            width: Int(self.pickerView.frame.size.width),
+            x: self.pickerView.frame.origin.x,
+            y: self.pickerView.frame.origin.y - pickerToolBarHeight,
+            width: self.pickerView.frame.size.width,
             height: pickerToolBarHeight)
         self.contentView.addSubview(self.pickerToolBar)
     }
@@ -149,67 +145,42 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
 
 extension QuizAdditionCollectionViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //        if let notesVariables = viewModel.notesVariables {
-        //            return notesVariables.count * 2
-        //        } else if let pausesVariables = viewModel.pausesVariables {
-        //            return pausesVariables.count * 2
-        //        }
         return numberOfTaskElements
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.row != (numberOfTaskElements - 1) {
-            let elemtIndex = elementIndex(index: indexPath.row)
-            if let notesVars = viewModel.notesVariables {//ячейки для ноты/знака
-                let noteAndSign = notesVars[elemtIndex.0]
-                if elemtIndex.1 == 0 {//ячейка для ноты
-                    if let noteViewModel = noteAndSign.0 {
-                        var cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizAdditionNotesCollectionViewCell.cellIdentifier, for: indexPath) as? QuizAdditionNotesCollectionViewCell
-                        if cell == nil {
-                            cell = collectionView.cellForItem(at: indexPath) as? QuizAdditionNotesCollectionViewCell
-                        }
-                        cell!.configureSubviews(viewModel: noteViewModel)
-                        return cell!
-                    }
-                } else {//ячейка для знака
-                    let signViewModel = noteAndSign.1
-                    var cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizAdditionSignsCollectionViewCell.cellIdentifier, for: indexPath) as? QuizAdditionSignsCollectionViewCell
-                    if cell == nil {
-                        cell = collectionView.cellForItem(at: indexPath) as? QuizAdditionSignsCollectionViewCell
-                    }
-                    cell!.configureSubviews(model: signViewModel)
-                    return cell!
-                }
+        let element = mathElements[indexPath.row]
+        switch element {
+        case is NoteViewModel:
+            var cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizAdditionNotesCollectionViewCell.cellIdentifier, for: indexPath) as? QuizAdditionNotesCollectionViewCell
+            if cell == nil {
+                cell = collectionView.cellForItem(at: indexPath) as? QuizAdditionNotesCollectionViewCell
             }
-            if let pauseVars = viewModel.pausesVariables { //ячейки для паузы/знака
-                let pauseAndSign = pauseVars[elemtIndex.0]
-                if elemtIndex.1 == 0 {//ячейка для паузы
-                    if let pauseViewModel = pauseAndSign.0 {
-                        var cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizAdditionPausesCollectionViewCell.cellIdentifier, for: indexPath) as? QuizAdditionPausesCollectionViewCell
-                        if cell == nil {
-                            cell = collectionView.cellForItem(at: indexPath) as? QuizAdditionPausesCollectionViewCell
-                        }
-                        cell!.configureSubviews(viewModel: pauseViewModel)
-                        return cell!
-                    }
-                } else {//ячейка для знака
-                    let signViewModel = pauseAndSign.1
-                    var cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizAdditionSignsCollectionViewCell.cellIdentifier, for: indexPath) as? QuizAdditionSignsCollectionViewCell
-                    if cell == nil {
-                        cell = collectionView.cellForItem(at: indexPath) as? QuizAdditionSignsCollectionViewCell
-                    }
-                    cell!.configureSubviews(model: signViewModel)
-                    return cell!
-                }
+            cell!.configureSubviews(viewModel: element as! NoteViewModel)
+            return cell!
+        case is PauseViewModel:
+            var cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizAdditionPausesCollectionViewCell.cellIdentifier, for: indexPath) as? QuizAdditionPausesCollectionViewCell
+            if cell == nil {
+                cell = collectionView.cellForItem(at: indexPath) as? QuizAdditionPausesCollectionViewCell
             }
+            cell!.configureSubviews(viewModel: element as! PauseViewModel)
+            return cell!
+        case is MathSignViewModel:
+            var cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizAdditionSignsCollectionViewCell.cellIdentifier, for: indexPath) as? QuizAdditionSignsCollectionViewCell
+            if cell == nil {
+                cell = collectionView.cellForItem(at: indexPath) as? QuizAdditionSignsCollectionViewCell
+            }
+            cell!.configureSubviews(model: element as! MathSignViewModel)
+            return cell!
+        default:
+            let signViewModel = MathSignViewModel(model: MathSign(sign:.question))
+            var cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizAdditionSignsCollectionViewCell.cellIdentifier, for: indexPath) as? QuizAdditionSignsCollectionViewCell
+            if cell == nil {
+                cell = collectionView.cellForItem(at: indexPath) as? QuizAdditionSignsCollectionViewCell
+            }
+            cell!.configureSubviews(model: signViewModel)
+            return cell!
         }
-        let signViewModel = MathSignViewModel(model: MathSign(sign:.question)) 
-        var cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizAdditionSignsCollectionViewCell.cellIdentifier, for: indexPath) as? QuizAdditionSignsCollectionViewCell
-        if cell == nil {
-            cell = collectionView.cellForItem(at: indexPath) as? QuizAdditionSignsCollectionViewCell
-        }
-        cell!.configureSubviews(model: signViewModel)
-        return cell!
     }
     
     func elementIndex(index: Int) -> (tupleIndex: Int, indexInTuple: Int) {
@@ -238,18 +209,22 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
             self.pickerView.frame = frameForChange
             
             self.pickerToolBar.frame = CGRect(
-                x: Int(self.pickerView.frame.origin.x),
-                y: Int(self.pickerView.frame.origin.y) - self.pickerToolBarHeight,
-                width: Int(self.pickerView.frame.size.width),
+                x: self.pickerView.frame.origin.x,
+                y: self.pickerView.frame.origin.y - self.pickerToolBarHeight,
+                width: self.pickerView.frame.size.width,
                 height: self.pickerToolBarHeight)
             
-            let translate = CATransform3DMakeTranslation(0, -20, 0)
-            let scale = CATransform3DScale(translate, 0.8, 0.8, 1)
-            self.taskCollectionView.layer.transform = CATransform3DConcat(translate, scale)
+            self.squeeseTaskCollectionView()
         }
         pickeViewIsShown = true
     }
     
+    func squeeseTaskCollectionView() {
+        let translate = CATransform3DMakeTranslation(0, -25, 0)
+        let scale = CATransform3DScale(translate, 0.8, 0.8, 1)
+        self.taskCollectionView.layer.transform = CATransform3DConcat(translate, scale)
+    }
+        
     @objc func onDoneButtonTapped() {
         pickeViewIsShown = false
         
@@ -262,16 +237,30 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
             self.pickerView.frame = newPickerViewFrame
             
             self.pickerToolBar.frame = CGRect(
-                x: Int(self.pickerView.frame.origin.x),
-                y: Int(self.pickerView.frame.origin.y) - self.pickerToolBarHeight,
-                width: Int(self.pickerView.frame.size.width),
+                x: self.pickerView.frame.origin.x,
+                y: self.pickerView.frame.origin.y - self.pickerToolBarHeight,
+                width: self.pickerView.frame.size.width,
                 height: self.pickerToolBarHeight)
         }
         
-//        let indexPath = IndexPath(row: numberOfTaskElements - 1, section: 0)
-//        var cell = collectionView(taskCollectionView, cellForItemAt: indexPath) as! QuizAdditionSignsCollectionViewCell
-//     
-//        taskCollectionView.reloadData()
+        let index = pickerView.selectedRow(inComponent: 0)
+        var selectedDuration: Duration? = nil
+         if let notesVariants = viewModel.notesVariants {
+            selectedDuration = notesVariants[index].duration
+            mathElements[mathElements.count - 1] = notesVariants[index]
+         }
+         if let pausesVariants = viewModel.pausesVariants {
+            selectedDuration = pausesVariants[index].duration
+            mathElements[mathElements.count - 1] = PauseViewModel(model: Pause(duration: selectedDuration!))
+         }
+        taskCollectionView.reloadItems(at: [IndexPath(row: mathElements.count - 1, section: 0)])
+        
+        if viewModel.checkUserAnswer(userAnswer: selectedDuration!){
+           print("Yes")
+        } else {
+            print("No")
+        }
+        print(selectedDuration!)
     }
     
 }
@@ -283,25 +272,10 @@ extension QuizAdditionCollectionViewCell: UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        //        if let notesArray = viewModel.notesVariants {
-        //            return notesArray.count
-        //        }
-        //        if let pausesArray = viewModel.pausesVariants {
-        //            return pausesArray.count
-        //        }
         return numberOfTaskElements
     }
-    //
-    //    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-    //        return "www"//pickerData[row]
-    //    }
-    
-    //    func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-    //        return 200
-    //    }
 }
 extension QuizAdditionCollectionViewCell: UIPickerViewDelegate {
-    
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         
         var imageName = ""

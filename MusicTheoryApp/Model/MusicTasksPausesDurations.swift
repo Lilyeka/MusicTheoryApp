@@ -60,11 +60,13 @@ class MusicTasksPausesDurations {
                          Note(name: .Do, tone: .none, duration: .sixteen)],
                      cleff: .Treble,
                      pause: Pause(duration: .eighth)),*/
-        
+   /*
         MusicTaskAddition(
             questionText: "Решите пример с паузами",
             answer: Duration.quarter,
-            variables: [(Duration.eighth,MathSign(sign: .addition)),(Duration.eighth, MathSign(sign:.equation))],
+            variables: [(Duration.eighth,MathSign(sign:.addition)),
+                        (Duration.eighth,MathSign(sign:.equation)),
+                        (nil,MathSign(sign:.question))],
             variants: [Duration.whole,
                        Duration.half,
                        Duration.quarter,
@@ -75,7 +77,9 @@ class MusicTasksPausesDurations {
         MusicTaskAddition(
                questionText: "Решите пример с паузами",
                answer: Duration.half,
-               variables: [(Duration.quarter,MathSign(sign:.addition)),(Duration.quarter,MathSign(sign:.equation))],
+               variables: [(Duration.quarter,MathSign(sign:.addition)),
+                           (Duration.quarter,MathSign(sign:.equation)),
+                           (nil,MathSign(sign:.question))],
                variants: [Duration.whole,
                           Duration.half,
                           Duration.quarter,
@@ -85,7 +89,9 @@ class MusicTasksPausesDurations {
         MusicTaskAddition(
                questionText: "Решите пример с паузами",
                answer: Duration.quarter,
-               variables: [(Duration.half,MathSign(sign:.subtraction)),(Duration.quarter, MathSign(sign:.equation))],
+               variables: [(Duration.half,MathSign(sign:.subtraction)),
+                           (Duration.quarter, MathSign(sign:.equation)),
+                           (nil,MathSign(sign:.question))],
                variants: [Duration.whole,
                           Duration.half,
                           Duration.quarter,
@@ -95,7 +101,9 @@ class MusicTasksPausesDurations {
         MusicTaskAddition(
                         questionText: "Решите пример с паузами",
                         answer: Duration.eighth,
-                        variables: [(Duration.sixteen,MathSign(sign:.addition)),(Duration.sixteen,MathSign(sign: .equation))],
+                        variables: [(Duration.sixteen,MathSign(sign:.addition)),
+                                    (Duration.sixteen,MathSign(sign: .equation)),
+                                    (nil,MathSign(sign:.question))],
                         variants: [Duration.whole,
                                    Duration.half,
                                    Duration.quarter,
@@ -108,7 +116,8 @@ class MusicTasksPausesDurations {
                         variables: [(Duration.quarter,MathSign(sign:.addition)),
                                     (Duration.quarter,MathSign(sign:.addition)),
                                     (Duration.quarter,MathSign(sign:.addition)),
-                                    (Duration.quarter,MathSign(sign:.equation))],
+                                    (Duration.quarter,MathSign(sign:.equation)),
+                                    (nil,MathSign(sign:.question))],
                         variants: [Duration.whole,
                                    Duration.half,
                                    Duration.quarter,
@@ -118,7 +127,10 @@ class MusicTasksPausesDurations {
         MusicTaskAddition(
                            questionText: "Решите пример с паузами",
                            answer: Duration.half,
-                           variables: [(Duration.quarter,MathSign(sign:.addition)),(Duration.eighth,MathSign(sign:.addition)),(Duration.eighth,MathSign(sign:.equation))],
+                           variables: [(Duration.quarter,MathSign(sign:.addition)),
+                                       (Duration.eighth,MathSign(sign:.addition)),
+                                       (Duration.eighth,MathSign(sign:.equation)),
+                                       (nil,MathSign(sign:.question))],
                            variants: [Duration.whole,
                                       Duration.half,
                                       Duration.quarter,
@@ -128,19 +140,23 @@ class MusicTasksPausesDurations {
         MusicTaskAddition(
                            questionText: "Решите пример с паузами",
                            answer: Duration.half,
-                           variables: [(Duration.whole,MathSign(sign:.subtraction)),(Duration.quarter,MathSign(sign:.subtraction)),(Duration.quarter,MathSign(sign:.equation))],
+                           variables: [(Duration.whole,MathSign(sign:.subtraction)),
+                                       (Duration.quarter,MathSign(sign:.subtraction)),
+                                       (Duration.quarter,MathSign(sign:.equation)),
+                                       (nil,MathSign(sign:.question))],
                            variants: [Duration.whole,
                                       Duration.half,
                                       Duration.quarter,
                                       Duration.eighth,
                                       Duration.sixteen],
-                           variantsAreNotes: false),
- /*
+                           variantsAreNotes: false),*/
         
         MusicTaskAddition(
         questionText: "Решите музыкально-математические примеры",
         answer: Duration.half,
-        variables: [(Duration.quarter,.addition),(Duration.quarter,.equation)],
+        variables: [(Duration.quarter,MathSign(sign:.addition)),
+                    (Duration.quarter,MathSign(sign:.equation)),
+                    (nil,MathSign(sign:.question))],
         variants: [Duration.whole,
                    Duration.half,
                    Duration.quarter,
@@ -150,12 +166,14 @@ class MusicTasksPausesDurations {
         MusicTaskAddition(
               questionText: "Решите музыкально-математические примеры",
               answer: Duration.whole,
-              variables: [(Duration.quarter,.addition),(Duration.quarter,.addition),(Duration.half,.equation)],
+              variables:[(Duration.quarter,MathSign(sign:.addition)),
+                         (Duration.quarter,MathSign(sign:.addition)),
+                         (Duration.half,MathSign(sign:.equation))],
               variants: [Duration.whole,
                          Duration.half,
                          Duration.quarter,
                          Duration.eighth,
                          Duration.sixteen],
-              variantsAreNotes: true) */
+              variantsAreNotes: true)
     ]
 }
