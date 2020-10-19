@@ -139,6 +139,7 @@ extension QuizViewController: UICollectionViewDataSource {
                 cell = QuizAdditionCollectionViewCell(frame: frame)
             }
             cell!.configureSubviews(viewModel: viewModel, frame: frame)
+            cell?.delegate = self
             return cell!
         default:
             return cell
@@ -186,7 +187,7 @@ extension QuizViewController: QuizSelectNoteCollectionViewCellDelegate, QuizSele
     }
 }
 
-extension QuizViewController: QuizShowNoteCollectionViewCellDelegate, QuizWriteNoteCollectionViewCellDelegate, QuizPauseAndDurationCollectionViewCellDelegate {
+extension QuizViewController: QuizShowNoteCollectionViewCellDelegate, QuizWriteNoteCollectionViewCellDelegate, QuizPauseAndDurationCollectionViewCellDelegate, QuizAdditionCollectionViewCellDelegate {
     
     func additionalRightAnswerReaction(view: UIView) {
         fireworkController.addFireworks(count: 2, sparks: 8, around: view)

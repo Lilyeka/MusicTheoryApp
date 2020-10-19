@@ -8,17 +8,25 @@
 
 import UIKit
 
+protocol QuizAdditionCollectionViewCellDelegate {
+    func rightAnswerReaction()
+    func wrongAnswerReaction()
+    func additionalRightAnswerReaction(view: UIView)
+}
+
 class QuizAdditionCollectionViewCell: UICollectionViewCell {
     static var cellIdentifier: String {
         return String(describing: self)
     }
-    
     static let QUESTION_FONT: UIFont = {
         if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_11Pro_X_Xs {
             return UIFont.boldSystemFont(ofSize: 23.0)
         }
         return UIFont.boldSystemFont(ofSize: 20.0)
     }()
+    
+    ////MARK: -Delegate
+    var delegate: QuizAdditionCollectionViewCellDelegate?
     
     lazy var collectoinViewHight: CGFloat = {
 //        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_11Pro_X_Xs {
@@ -253,10 +261,17 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
             selectedDuration = pausesVariants[index].duration
             mathElements[mathElements.count - 1] = PauseViewModel(model: Pause(duration: selectedDuration!))
          }
-        taskCollectionView.reloadItems(at: [IndexPath(row: mathElements.count - 1, section: 0)])
+       taskCollectionView.reloadItems(at: [IndexPath(row: mathElements.count - 1, section: 0)])
+        
+    
+        let cell = taskCollectionView.cellForItem(at: IndexPath(row: mathElements.count - 1, section: 0)) as! QuizAdditionNotesCollectionViewCell
         
         if viewModel.checkUserAnswer(userAnswer: selectedDuration!){
-           print("Yes")
+             self.delegate?.additionalRightAnswerReaction(view: cell.viewForFireworks)
+            let seconds = 1.0
+                 DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                   self.delegate?.rightAnswerReaction()
+            }
         } else {
             print("No")
         }
