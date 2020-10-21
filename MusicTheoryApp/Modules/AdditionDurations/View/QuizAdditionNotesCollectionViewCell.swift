@@ -14,10 +14,8 @@ class QuizAdditionNotesCollectionViewCell: UICollectionViewCell {
     }
     //MARK: -ViewModel
     var viewModel: NoteViewModel!
-    var imageViewHeightAnchor: NSLayoutConstraint!
     
     //MARK: -Views
-    
     var imageView: UIImageView = {
         var imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -25,12 +23,12 @@ class QuizAdditionNotesCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    var viewForFireworks: UIView!/* = {
-          var view = UIView()
-          view.translatesAutoresizingMaskIntoConstraints = false
-          view.backgroundColor = UIColor.red//.clear
-          return view
-       }()*/
+    var viewForFireworks: UIView! = {
+        var view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
+        return view
+    }()
     
     //MARK: - Life cycle
     override init(frame: CGRect) {
@@ -54,14 +52,9 @@ class QuizAdditionNotesCollectionViewCell: UICollectionViewCell {
         self.contentView.addSubview(imageView)
         imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 0.0).isActive = true
         imageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 50.0 - viewModel.offsetFromDurationCenter).isActive = true
-        imageViewHeightAnchor = imageView.heightAnchor.constraint(equalToConstant: viewModel.durationHeight)
-        imageViewHeightAnchor.isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: viewModel.durationHeight).isActive = true
         imageView.setNeedsDisplay()
         
-        viewForFireworks = UIView()
-        viewForFireworks.translatesAutoresizingMaskIntoConstraints = false
-        viewForFireworks.backgroundColor = UIColor.red//.clear
-
         self.contentView.addSubview(viewForFireworks)
         viewForFireworks.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
         viewForFireworks.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
@@ -70,9 +63,7 @@ class QuizAdditionNotesCollectionViewCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
-        imageViewHeightAnchor.isActive = false
         imageView.removeFromSuperview()
-       // viewForFireworks.removeFromSuperview()
+        viewForFireworks.removeFromSuperview()
     }
-
 }

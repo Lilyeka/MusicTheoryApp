@@ -12,6 +12,20 @@ class QuizAdditionPausesCollectionViewCell: UICollectionViewCell {
     static var cellIdentifier: String {
         return String(describing: self)
     }
+    //MARK: -Views
+    var imageView: UIImageView = {
+        var imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    var viewForFireworks: UIView! = {
+         var view = UIView()
+         view.translatesAutoresizingMaskIntoConstraints = false
+         view.backgroundColor = .clear
+         return view
+     }()
     
     //MARK: -ViewModel
     var viewModel: PauseViewModel!
@@ -40,5 +54,10 @@ class QuizAdditionPausesCollectionViewCell: UICollectionViewCell {
         imageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 0.0/*50.0 - viewModel.offsetFromDurationCenter*/).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: viewModel.width).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: viewModel.height).isActive = true
+    }
+    
+    override func prepareForReuse() {
+        imageView.removeFromSuperview()
+        viewForFireworks.removeFromSuperview()
     }
 }

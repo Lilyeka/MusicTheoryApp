@@ -29,9 +29,9 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
     var delegate: QuizAdditionCollectionViewCellDelegate?
     
     lazy var collectoinViewHight: CGFloat = {
-//        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_11Pro_X_Xs {
-//            return 200.0
-//        }
+        //        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_11Pro_X_Xs {
+        //            return 200.0
+        //        }
         return 150.0
     }()
     
@@ -232,10 +232,15 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
         let scale = CATransform3DScale(translate, 0.8, 0.8, 1)
         self.taskCollectionView.layer.transform = CATransform3DConcat(translate, scale)
     }
-        
+    
     @objc func onDoneButtonTapped() {
         pickeViewIsShown = false
-        
+        hidePickerViewAndIncreaseTaskCollectionView()
+       let selectedDuration = getSelectedDurationAndRedrawCollectionView()
+       checkUserAnswer(duration:selectedDuration)
+    }
+    
+    func hidePickerViewAndIncreaseTaskCollectionView() {
         var newPickerViewFrame = self.pickerView.frame
         newPickerViewFrame.origin.x = (self.contentView.frame.width - self.taskCollectionViewWidth)/2
         newPickerViewFrame.origin.y = self.contentView.frame.height + CGFloat(self.pickerToolBarHeight)
@@ -250,33 +255,39 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
                 width: self.pickerView.frame.size.width,
                 height: self.pickerToolBarHeight)
         }
-        
+    }
+    
+    func getSelectedDurationAndRedrawCollectionView() -> Duration {
         let index = pickerView.selectedRow(inComponent: 0)
-        var selectedDuration: Duration? = nil
-         if let notesVariants = viewModel.notesVariants {
+        
+        var selectedDuration: Duration = .whole
+        if let notesVariants = viewModel.notesVariants {
             selectedDuration = notesVariants[index].duration
             mathElements[mathElements.count - 1] = notesVariants[index]
-         }
-         if let pausesVariants = viewModel.pausesVariants {
+        }
+        if let pausesVariants = viewModel.pausesVariants {
             selectedDuration = pausesVariants[index].duration
-            mathElements[mathElements.count - 1] = PauseViewModel(model: Pause(duration: selectedDuration!))
-         }
-       taskCollectionView.reloadItems(at: [IndexPath(row: mathElements.count - 1, section: 0)])
-        
+            mathElements[mathElements.count - 1] = PauseViewModel(model: Pause(duration: selectedDuration))
+        }
+        taskCollectionView.reloadItems(at: [IndexPath(row: mathElements.count - 1, section: 0)])
+        return selectedDuration
+    }
     
+    func checkUserAnswer(duration: Duration) {
         let cell = taskCollectionView.cellForItem(at: IndexPath(row: mathElements.count - 1, section: 0)) as! QuizAdditionNotesCollectionViewCell
         
-        if viewModel.checkUserAnswer(userAnswer: selectedDuration!){
-             self.delegate?.additionalRightAnswerReaction(view: cell.viewForFireworks)
+        if viewModel.checkUserAnswer(userAnswer: duration) {
+            self.delegate?.additionalRightAnswerReaction(view: cell.viewForFireworks)
             let seconds = 1.0
-                 DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
-                   self.delegate?.rightAnswerReaction()
+            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                self.delegate?.rightAnswerReaction()
             }
         } else {
             print("No")
         }
-        print(selectedDuration!)
     }
+    
+
     
 }
 

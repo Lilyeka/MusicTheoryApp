@@ -30,7 +30,7 @@ class QuizViewController: UIViewController, QuizViewProtocol {
         collectionView.isScrollEnabled = false
         collectionView.dataSource = self
         collectionView.backgroundColor = .white
-        collectionView.register(QuizCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         collectionView.register(QuizSelectNoteCollectionViewCell.self, forCellWithReuseIdentifier: QuizSelectNoteCollectionViewCell.cellIdentifier)
         collectionView.register(QuizShowNoteCollectionViewCell.self, forCellWithReuseIdentifier: QuizShowNoteCollectionViewCell.cellIdentifier)
         collectionView.register(QuizWriteNoteCollectionViewCell.self, forCellWithReuseIdentifier: QuizWriteNoteCollectionViewCell.cellIdentifier)
@@ -80,7 +80,7 @@ extension QuizViewController: UICollectionViewDataSource {
      //   currentQuestionNumber = indexPath.row
         print("currentQuestionNumber = " + String(currentQuestionNumber) + " from cellForItemAt")
         let frame = quizCollectionView.frame
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! QuizCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
         
         let question = questions.tasks[indexPath.row]
         switch question {
@@ -152,7 +152,7 @@ extension QuizViewController: UICollectionViewDataSource {
 extension QuizViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let frame = quizCollectionView.frame
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! QuizCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
         let question = questions.tasks[indexPath.row]
         
         switch question {

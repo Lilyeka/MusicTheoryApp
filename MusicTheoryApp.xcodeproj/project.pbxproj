@@ -33,7 +33,6 @@
 		6149ED0F245978CD00A1375A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6149ED0E245978CD00A1375A /* AppDelegate.swift */; };
 		6149ED15245978D700A1375A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6149ED14245978D700A1375A /* Assets.xcassets */; };
 		6149ED1B245978D700A1375A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6149ED19245978D700A1375A /* LaunchScreen.storyboard */; };
-		6149ED23245A1DCE00A1375A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6149ED22245A1DCE00A1375A /* ViewController.swift */; };
 		6149ED28245B69E500A1375A /* StaffView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6149ED27245B69E500A1375A /* StaffView.swift */; };
 		616810482517C35B0095754E /* QuizPauseAndDurationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616810472517C35B0095754E /* QuizPauseAndDurationCollectionViewCell.swift */; };
 		6168104A2517C4760095754E /* MusicTaskPauseAndDuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616810492517C4760095754E /* MusicTaskPauseAndDuration.swift */; };
@@ -55,9 +54,7 @@
 		616863312538282C000BD9F8 /* MathSignViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616863302538282C000BD9F8 /* MathSignViewModel.swift */; };
 		6168633325382849000BD9F8 /* MathElementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6168633225382849000BD9F8 /* MathElementViewModel.swift */; };
 		6172FA16249C084C009153BD /* MusicTaskWriteNoteInWordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6172FA15249C084C009153BD /* MusicTaskWriteNoteInWordViewModel.swift */; };
-		6172FA18249C12A9009153BD /* MusicTaskWriteNoteInWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6172FA17249C12A9009153BD /* MusicTaskWriteNoteInWordView.swift */; };
 		617592C52503D21C00FB372D /* MusicTasksBass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617592C42503D21C00FB372D /* MusicTasksBass.swift */; };
-		6175CA0824BA51820028BDBD /* QuizCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6175CA0724BA51820028BDBD /* QuizCollectionViewCell.swift */; };
 		6175CA0A24BC5C920028BDBD /* QuizSelectNoteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6175CA0924BC5C920028BDBD /* QuizSelectNoteCollectionViewCell.swift */; };
 		617F7EC7245E05F900EE08AA /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6149ED24245A24D600A1375A /* Note.swift */; };
 		619BB53924B4FF3C00D3076E /* MainConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619BB53824B4FF3C00D3076E /* MainConfigurator.swift */; };
@@ -77,12 +74,9 @@
 		61A4B503248843FF004A286E /* MusicTaskSelectNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A4B502248843FF004A286E /* MusicTaskSelectNote.swift */; };
 		61A4B5052488477F004A286E /* MusicTaskShowNoteOnThePiano.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A4B5042488477F004A286E /* MusicTaskShowNoteOnThePiano.swift */; };
 		61A4B507248998F5004A286E /* MusicTaskSelectNoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A4B506248998F5004A286E /* MusicTaskSelectNoteViewModel.swift */; };
-		61A4B509248999CF004A286E /* MusicTaskSelectNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A4B508248999CF004A286E /* MusicTaskSelectNoteView.swift */; };
 		61A4B744248ECC2A00C0E92D /* MusicTaskShowNoteOnThePianoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A4B743248ECC2A00C0E92D /* MusicTaskShowNoteOnThePianoViewModel.swift */; };
-		61A4B746248ECDC500C0E92D /* MusicTaskShowNoteOnThePianoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A4B745248ECDC500C0E92D /* MusicTaskShowNoteOnThePianoView.swift */; };
 		61A4B74824917D2E00C0E92D /* MusicTaskSelectNoteInWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A4B74724917D2E00C0E92D /* MusicTaskSelectNoteInWord.swift */; };
 		61A4B74A2491860D00C0E92D /* MusicTaskSelectNoteInWordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A4B7492491860D00C0E92D /* MusicTaskSelectNoteInWordViewModel.swift */; };
-		61A4B74C24918ADB00C0E92D /* MusicTaskSelectNoteInWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A4B74B24918ADB00C0E92D /* MusicTaskSelectNoteInWordView.swift */; };
 		61A818BD247477E2009DCE07 /* MusicTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A818BC247477E2009DCE07 /* MusicTask.swift */; };
 		61A818BF2474858D009DCE07 /* MusicTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A818BE2474858D009DCE07 /* MusicTasks.swift */; };
 		61A818C1247AB591009DCE07 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A818C0247AB591009DCE07 /* String+Extension.swift */; };
@@ -124,7 +118,6 @@
 		6149ED14245978D700A1375A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6149ED1A245978D700A1375A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6149ED1C245978D700A1375A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6149ED22245A1DCE00A1375A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		6149ED24245A24D600A1375A /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		6149ED27245B69E500A1375A /* StaffView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffView.swift; sourceTree = "<group>"; };
 		616810472517C35B0095754E /* QuizPauseAndDurationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizPauseAndDurationCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -147,9 +140,7 @@
 		616863302538282C000BD9F8 /* MathSignViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathSignViewModel.swift; sourceTree = "<group>"; };
 		6168633225382849000BD9F8 /* MathElementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathElementViewModel.swift; sourceTree = "<group>"; };
 		6172FA15249C084C009153BD /* MusicTaskWriteNoteInWordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskWriteNoteInWordViewModel.swift; sourceTree = "<group>"; };
-		6172FA17249C12A9009153BD /* MusicTaskWriteNoteInWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskWriteNoteInWordView.swift; sourceTree = "<group>"; };
 		617592C42503D21C00FB372D /* MusicTasksBass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTasksBass.swift; sourceTree = "<group>"; };
-		6175CA0724BA51820028BDBD /* QuizCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCollectionViewCell.swift; sourceTree = "<group>"; };
 		6175CA0924BC5C920028BDBD /* QuizSelectNoteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSelectNoteCollectionViewCell.swift; sourceTree = "<group>"; };
 		619BB53824B4FF3C00D3076E /* MainConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainConfigurator.swift; sourceTree = "<group>"; };
 		619BB53A24B5008F00D3076E /* MainProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainProtocols.swift; sourceTree = "<group>"; };
@@ -168,12 +159,9 @@
 		61A4B502248843FF004A286E /* MusicTaskSelectNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskSelectNote.swift; sourceTree = "<group>"; };
 		61A4B5042488477F004A286E /* MusicTaskShowNoteOnThePiano.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskShowNoteOnThePiano.swift; sourceTree = "<group>"; };
 		61A4B506248998F5004A286E /* MusicTaskSelectNoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskSelectNoteViewModel.swift; sourceTree = "<group>"; };
-		61A4B508248999CF004A286E /* MusicTaskSelectNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskSelectNoteView.swift; sourceTree = "<group>"; };
 		61A4B743248ECC2A00C0E92D /* MusicTaskShowNoteOnThePianoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskShowNoteOnThePianoViewModel.swift; sourceTree = "<group>"; };
-		61A4B745248ECDC500C0E92D /* MusicTaskShowNoteOnThePianoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskShowNoteOnThePianoView.swift; sourceTree = "<group>"; };
 		61A4B74724917D2E00C0E92D /* MusicTaskSelectNoteInWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskSelectNoteInWord.swift; sourceTree = "<group>"; };
 		61A4B7492491860D00C0E92D /* MusicTaskSelectNoteInWordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskSelectNoteInWordViewModel.swift; sourceTree = "<group>"; };
-		61A4B74B24918ADB00C0E92D /* MusicTaskSelectNoteInWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTaskSelectNoteInWordView.swift; sourceTree = "<group>"; };
 		61A818BC247477E2009DCE07 /* MusicTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTask.swift; sourceTree = "<group>"; };
 		61A818BE2474858D009DCE07 /* MusicTasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTasks.swift; sourceTree = "<group>"; };
 		61A818C0247AB591009DCE07 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
@@ -196,6 +184,213 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		61068AA5253F683B00E234D4 /* SelectNote */ = {
+			isa = PBXGroup;
+			children = (
+				61068AB4253F719500E234D4 /* Model */,
+				61068AB5253F71A000E234D4 /* ViewModel */,
+				61068AB6253F71B000E234D4 /* View */,
+			);
+			path = SelectNote;
+			sourceTree = "<group>";
+		};
+		61068AA6253F68BD00E234D4 /* ShowNoteOnPiano */ = {
+			isa = PBXGroup;
+			children = (
+				61068AB7253F71DE00E234D4 /* Model */,
+				61068AB8253F71E700E234D4 /* ViewModel */,
+				61068AB9253F720700E234D4 /* View */,
+			);
+			path = ShowNoteOnPiano;
+			sourceTree = "<group>";
+		};
+		61068AA7253F68EF00E234D4 /* WriteNoteInWord */ = {
+			isa = PBXGroup;
+			children = (
+				61068AB2253F703200E234D4 /* Model */,
+				61068AB3253F703B00E234D4 /* ViewModel */,
+				61068AB1253F702200E234D4 /* View */,
+			);
+			path = WriteNoteInWord;
+			sourceTree = "<group>";
+		};
+		61068AA8253F690A00E234D4 /* SelectNoteInWord */ = {
+			isa = PBXGroup;
+			children = (
+				61068ABA253F73C000E234D4 /* Model */,
+				61068ABB253F73CC00E234D4 /* ViewModel */,
+				61068ABC253F73D900E234D4 /* View */,
+			);
+			path = SelectNoteInWord;
+			sourceTree = "<group>";
+		};
+		61068AA9253F694600E234D4 /* PauseAndDuration */ = {
+			isa = PBXGroup;
+			children = (
+				61068AAF253F6FC000E234D4 /* Model */,
+				61068AB0253F6FD100E234D4 /* ViewModel */,
+				61068AAB253F69C700E234D4 /* View */,
+			);
+			path = PauseAndDuration;
+			sourceTree = "<group>";
+		};
+		61068AAA253F698700E234D4 /* AdditionDurations */ = {
+			isa = PBXGroup;
+			children = (
+				61068AAD253F6E4100E234D4 /* Model */,
+				61068AAE253F6E6500E234D4 /* ViewModel */,
+				61068AAC253F69DB00E234D4 /* View */,
+			);
+			path = AdditionDurations;
+			sourceTree = "<group>";
+		};
+		61068AAB253F69C700E234D4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				616810472517C35B0095754E /* QuizPauseAndDurationCollectionViewCell.swift */,
+				61681053251FD7CC0095754E /* QuizVariantCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		61068AAC253F69DB00E234D4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				61681057252481160095754E /* QuizAdditionCollectionViewCell.swift */,
+				6168105D2527A9ED0095754E /* QuizAdditionSignsCollectionViewCell.swift */,
+				6168105F2527D21B0095754E /* QuizAdditionPausesCollectionViewCell.swift */,
+				6168105B2527A62A0095754E /* QuizAdditionNotesCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		61068AAD253F6E4100E234D4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6168105525234A9B0095754E /* MusicTaskAddition.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		61068AAE253F6E6500E234D4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				616810592524818D0095754E /* MusicTaskAdditionViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		61068AAF253F6FC000E234D4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				616810492517C4760095754E /* MusicTaskPauseAndDuration.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		61068AB0253F6FD100E234D4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				6168104F2517CB750095754E /* MusicTaskPauseAndDurationViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		61068AB1253F702200E234D4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				61E8ABEF24BDB29100B58A01 /* QuizWriteNoteCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		61068AB2253F703200E234D4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				61A4B74724917D2E00C0E92D /* MusicTaskSelectNoteInWord.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		61068AB3253F703B00E234D4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				6172FA15249C084C009153BD /* MusicTaskWriteNoteInWordViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		61068AB4253F719500E234D4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				61A4B502248843FF004A286E /* MusicTaskSelectNote.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		61068AB5253F71A000E234D4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				61A4B506248998F5004A286E /* MusicTaskSelectNoteViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		61068AB6253F71B000E234D4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6175CA0924BC5C920028BDBD /* QuizSelectNoteCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		61068AB7253F71DE00E234D4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				61A4B5042488477F004A286E /* MusicTaskShowNoteOnThePiano.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		61068AB8253F71E700E234D4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				61A4B743248ECC2A00C0E92D /* MusicTaskShowNoteOnThePianoViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		61068AB9253F720700E234D4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				61E8ABED24BC989D00B58A01 /* QuizShowNoteCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		61068ABA253F73C000E234D4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		61068ABB253F73CC00E234D4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				61A4B7492491860D00C0E92D /* MusicTaskSelectNoteInWordViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		61068ABC253F73D900E234D4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				61CC24FF24EC6F9600424B96 /* QuizSelectNoteInWordCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		612AAA9024D74FFD00A3CC28 /* Fireworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -269,7 +464,6 @@
 			isa = PBXGroup;
 			children = (
 				6149ED0E245978CD00A1375A /* AppDelegate.swift */,
-				612AAA9024D74FFD00A3CC28 /* Fireworks */,
 				6149ED0D245978CD00A1375A /* MusicTheoryApp */,
 				6149ED0C245978CD00A1375A /* Products */,
 			);
@@ -288,11 +482,11 @@
 			children = (
 				61E3914924CE073E00603666 /* Managers */,
 				619BB53724B4FEE900D3076E /* Modules */,
-				61A818BB247477A7009DCE07 /* ViewControllers */,
 				617F7EC5245DFB9D00EE08AA /* Model */,
 				61A818BA24747761009DCE07 /* ViewModel */,
-				6149ED26245B697700A1375A /* Views */,
+				6149ED26245B697700A1375A /* Common views */,
 				619E3E5224686F1A003ECD16 /* Extensions */,
+				612AAA9024D74FFD00A3CC28 /* Fireworks */,
 				6149ED14245978D700A1375A /* Assets.xcassets */,
 				6149ED19245978D700A1375A /* LaunchScreen.storyboard */,
 				6149ED1C245978D700A1375A /* Info.plist */,
@@ -300,35 +494,13 @@
 			path = MusicTheoryApp;
 			sourceTree = "<group>";
 		};
-		6149ED26245B697700A1375A /* Views */ = {
+		6149ED26245B697700A1375A /* Common views */ = {
 			isa = PBXGroup;
 			children = (
 				6149ED27245B69E500A1375A /* StaffView.swift */,
 				61CDA926247C66E800780D04 /* PianoView.swift */,
-				61A4B508248999CF004A286E /* MusicTaskSelectNoteView.swift */,
-				61A4B745248ECDC500C0E92D /* MusicTaskShowNoteOnThePianoView.swift */,
-				61A4B74B24918ADB00C0E92D /* MusicTaskSelectNoteInWordView.swift */,
-				6172FA17249C12A9009153BD /* MusicTaskWriteNoteInWordView.swift */,
 			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		6175CA0624B902630028BDBD /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				6175CA0724BA51820028BDBD /* QuizCollectionViewCell.swift */,
-				6175CA0924BC5C920028BDBD /* QuizSelectNoteCollectionViewCell.swift */,
-				61E8ABED24BC989D00B58A01 /* QuizShowNoteCollectionViewCell.swift */,
-				61E8ABEF24BDB29100B58A01 /* QuizWriteNoteCollectionViewCell.swift */,
-				61CC24FF24EC6F9600424B96 /* QuizSelectNoteInWordCollectionViewCell.swift */,
-				616810472517C35B0095754E /* QuizPauseAndDurationCollectionViewCell.swift */,
-				61681053251FD7CC0095754E /* QuizVariantCollectionViewCell.swift */,
-				61681057252481160095754E /* QuizAdditionCollectionViewCell.swift */,
-				6168105B2527A62A0095754E /* QuizAdditionNotesCollectionViewCell.swift */,
-				6168105F2527D21B0095754E /* QuizAdditionPausesCollectionViewCell.swift */,
-				6168105D2527A9ED0095754E /* QuizAdditionSignsCollectionViewCell.swift */,
-			);
-			path = Views;
+			path = "Common views";
 			sourceTree = "<group>";
 		};
 		617F7EC5245DFB9D00EE08AA /* Model */ = {
@@ -340,11 +512,6 @@
 				6168104B2517C5110095754E /* Pause.swift */,
 				61D89B3124FF810000E04AB6 /* CleffTypes.swift */,
 				61A818BC247477E2009DCE07 /* MusicTask.swift */,
-				616810492517C4760095754E /* MusicTaskPauseAndDuration.swift */,
-				6168105525234A9B0095754E /* MusicTaskAddition.swift */,
-				61A4B502248843FF004A286E /* MusicTaskSelectNote.swift */,
-				61A4B74724917D2E00C0E92D /* MusicTaskSelectNoteInWord.swift */,
-				61A4B5042488477F004A286E /* MusicTaskShowNoteOnThePiano.swift */,
 				61A818BE2474858D009DCE07 /* MusicTasks.swift */,
 				617592C42503D21C00FB372D /* MusicTasksBass.swift */,
 				616810512517D9750095754E /* MusicTasksPausesDurations.swift */,
@@ -369,8 +536,14 @@
 		619BB53724B4FEE900D3076E /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				619BB54824B7235500D3076E /* Quiz */,
 				619BB53624B4F6C400D3076E /* Main */,
+				619BB54824B7235500D3076E /* Quiz */,
+				61068AAA253F698700E234D4 /* AdditionDurations */,
+				61068AA8253F690A00E234D4 /* SelectNoteInWord */,
+				61068AA7253F68EF00E234D4 /* WriteNoteInWord */,
+				61068AA9253F694600E234D4 /* PauseAndDuration */,
+				61068AA6253F68BD00E234D4 /* ShowNoteOnPiano */,
+				61068AA5253F683B00E234D4 /* SelectNote */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -384,7 +557,6 @@
 				619BB54F24B749EF00D3076E /* QuizInteractor.swift */,
 				619BB55124B74A2300D3076E /* QuizRouter.swift */,
 				619BB54924B743C100D3076E /* QuizProtocols.swift */,
-				6175CA0624B902630028BDBD /* Views */,
 			);
 			path = Quiz;
 			sourceTree = "<group>";
@@ -407,22 +579,8 @@
 				6168633225382849000BD9F8 /* MathElementViewModel.swift */,
 				6168104D2517C7D00095754E /* PauseViewModel.swift */,
 				616863282534E026000BD9F8 /* PauseViewModelSeparate.swift */,
-				61A4B506248998F5004A286E /* MusicTaskSelectNoteViewModel.swift */,
-				6168104F2517CB750095754E /* MusicTaskPauseAndDurationViewModel.swift */,
-				61A4B743248ECC2A00C0E92D /* MusicTaskShowNoteOnThePianoViewModel.swift */,
-				61A4B7492491860D00C0E92D /* MusicTaskSelectNoteInWordViewModel.swift */,
-				6172FA15249C084C009153BD /* MusicTaskWriteNoteInWordViewModel.swift */,
-				616810592524818D0095754E /* MusicTaskAdditionViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		61A818BB247477A7009DCE07 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				6149ED22245A1DCE00A1375A /* ViewController.swift */,
-			);
-			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		61E3914924CE073E00603666 /* Managers */ = {
@@ -516,12 +674,10 @@
 				61A818C1247AB591009DCE07 /* String+Extension.swift in Sources */,
 				612AAAB424D74FFE00A3CC28 /* FountainSparkTrajectoryFactory.swift in Sources */,
 				612AAAB324D74FFE00A3CC28 /* FountainFireworkController.swift in Sources */,
-				6149ED23245A1DCE00A1375A /* ViewController.swift in Sources */,
 				61A4B74824917D2E00C0E92D /* MusicTaskSelectNoteInWord.swift in Sources */,
 				61CC250024EC6F9700424B96 /* QuizSelectNoteInWordCollectionViewCell.swift in Sources */,
 				612AAAAF24D74FFE00A3CC28 /* ClassicFireworkAnimator.swift in Sources */,
 				61A818BF2474858D009DCE07 /* MusicTasks.swift in Sources */,
-				6175CA0824BA51820028BDBD /* QuizCollectionViewCell.swift in Sources */,
 				6172FA16249C084C009153BD /* MusicTaskWriteNoteInWordViewModel.swift in Sources */,
 				619BB54C24B7463200D3076E /* QuizConfigurator.swift in Sources */,
 				61D89B3224FF810000E04AB6 /* CleffTypes.swift in Sources */,
@@ -543,13 +699,11 @@
 				619E3E5424686F52003ECD16 /* UIImage+Extension.swift in Sources */,
 				61E3914B24CE079500603666 /* DeviceTypeManager.swift in Sources */,
 				616810502517CB750095754E /* MusicTaskPauseAndDurationViewModel.swift in Sources */,
-				6172FA18249C12A9009153BD /* MusicTaskWriteNoteInWordView.swift in Sources */,
 				612AAABC24D74FFE00A3CC28 /* Firework.swift in Sources */,
 				616863312538282C000BD9F8 /* MathSignViewModel.swift in Sources */,
 				616810482517C35B0095754E /* QuizPauseAndDurationCollectionViewCell.swift in Sources */,
 				612AAAAD24D74FFE00A3CC28 /* ClassicFireworkController.swift in Sources */,
 				612AAABF24D74FFE00A3CC28 /* SparkViewFactory.swift in Sources */,
-				61A4B509248999CF004A286E /* MusicTaskSelectNoteView.swift in Sources */,
 				619BB54524B5C7A900D3076E /* MainViewCollectionViewCell.swift in Sources */,
 				619BB54E24B7475200D3076E /* QuizPresenter.swift in Sources */,
 				612AAAC124D74FFE00A3CC28 /* CGPoint+Extensions.swift in Sources */,
@@ -563,7 +717,6 @@
 				619BB53D24B5021B00D3076E /* MainViewController.swift in Sources */,
 				6168633325382849000BD9F8 /* MathElementViewModel.swift in Sources */,
 				61A4B74A2491860D00C0E92D /* MusicTaskSelectNoteInWordViewModel.swift in Sources */,
-				61A4B746248ECDC500C0E92D /* MusicTaskShowNoteOnThePianoView.swift in Sources */,
 				6168105A2524818D0095754E /* MusicTaskAdditionViewModel.swift in Sources */,
 				612AAAB924D74FFE00A3CC28 /* SparkTrajectory.swift in Sources */,
 				6168104E2517C7D00095754E /* PauseViewModel.swift in Sources */,
@@ -575,7 +728,6 @@
 				612AAABE24D74FFE00A3CC28 /* SparkView.swift in Sources */,
 				61A4B5052488477F004A286E /* MusicTaskShowNoteOnThePiano.swift in Sources */,
 				61A4B503248843FF004A286E /* MusicTaskSelectNote.swift in Sources */,
-				61A4B74C24918ADB00C0E92D /* MusicTaskSelectNoteInWordView.swift in Sources */,
 				619BB55024B749EF00D3076E /* QuizInteractor.swift in Sources */,
 				6168104C2517C5110095754E /* Pause.swift in Sources */,
 				619BB55224B74A2300D3076E /* QuizRouter.swift in Sources */,
