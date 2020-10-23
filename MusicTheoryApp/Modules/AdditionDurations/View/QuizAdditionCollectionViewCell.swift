@@ -117,16 +117,16 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
         pickerView = UIPickerView.init()
         pickerView.delegate = self
         pickerView.dataSource = self
-        pickerView.backgroundColor = UIColor.green
         pickerView.contentMode = .center
         pickerView.autoresizingMask = .flexibleWidth
+        pickerView.layer.borderWidth = 1.0
+        pickerView.layer.borderColor = UIColor.gray.withAlphaComponent(0.1).cgColor
         
         self.pickerView.frame = CGRect(
             x:(self.contentView.frame.width - taskCollectionViewWidth)/2,
             y: self.contentView.frame.height - self.contentView.frame.height/3,
             width: self.contentView.frame.height/3,
             height: taskCollectionViewWidth)
-        
         self.contentView.addSubview(self.pickerView)
         self.pickerView.transform = CGAffineTransform(rotationAngle: 3.14159/2)
         
@@ -137,10 +137,16 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
         
         pickerToolBar = UIToolbar()
         pickerToolBar.barStyle = .default
+        pickerToolBar.sizeToFit()
         pickerToolBar.clipsToBounds = true
         pickerToolBar.layer.cornerRadius = 10.0
         pickerToolBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        pickerToolBar.items = [UIBarButtonItem.init(title: "Выбрать", style: .done, target: self, action: #selector(onDoneButtonTapped))]
+        
+        let doneButton =  UIBarButtonItem(title: "Выбрать", style: .done, target: self, action: #selector(onDoneButtonTapped))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Отмена", style: .plain, target: self, action: #selector(onCancelPickerViewTapped))
+        
+        pickerToolBar.items = [cancelButton,spaceButton,doneButton]
         
         self.pickerToolBar.frame = CGRect(
             x: self.pickerView.frame.origin.x,
@@ -148,6 +154,19 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
             width: self.pickerView.frame.size.width,
             height: pickerToolBarHeight)
         self.contentView.addSubview(self.pickerToolBar)
+    }
+    
+    //MARK: - Actions
+    @objc func onDoneButtonTapped() {
+        pickeViewIsShown = false
+        hidePickerViewAndIncreaseTaskCollectionView()
+        let selectedDuration = getSelectedDurationAndRedrawCollectionView()
+        checkUserAnswer(duration:selectedDuration)
+    }
+    
+    @objc func onCancelPickerViewTapped() {
+        pickeViewIsShown = false
+        hidePickerViewAndIncreaseTaskCollectionView()
     }
 }
 
@@ -232,14 +251,7 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
         let scale = CATransform3DScale(translate, 0.8, 0.8, 1)
         self.taskCollectionView.layer.transform = CATransform3DConcat(translate, scale)
     }
-    
-    @objc func onDoneButtonTapped() {
-        pickeViewIsShown = false
-        hidePickerViewAndIncreaseTaskCollectionView()
-       let selectedDuration = getSelectedDurationAndRedrawCollectionView()
-       checkUserAnswer(duration:selectedDuration)
-    }
-    
+
     func hidePickerViewAndIncreaseTaskCollectionView() {
         var newPickerViewFrame = self.pickerView.frame
         newPickerViewFrame.origin.x = (self.contentView.frame.width - self.taskCollectionViewWidth)/2
@@ -286,8 +298,6 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
             print("No")
         }
     }
-    
-
     
 }
 
