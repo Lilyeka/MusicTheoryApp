@@ -286,10 +286,21 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
     }
     
     func checkUserAnswer(duration: Duration) {
-        let cell = taskCollectionView.cellForItem(at: IndexPath(row: mathElements.count - 1, section: 0)) as! QuizAdditionNotesCollectionViewCell
-        
+        var cell: UICollectionViewCell!
+        if viewModel.notesVariants != nil {
+             cell = taskCollectionView.cellForItem(at: IndexPath(row: mathElements.count - 1, section: 0)) as! QuizAdditionNotesCollectionViewCell
+            checkAndReactInView(duration: duration, view: cell)
+        }
+        if viewModel.pausesVariants != nil {
+             cell = taskCollectionView.cellForItem(at: IndexPath(row: mathElements.count - 1, section: 0)) as! QuizAdditionPausesCollectionViewCell
+            checkAndReactInView(duration: duration, view: cell)
+        }
+
+    }
+    
+    func checkAndReactInView(duration: Duration,view: UIView) {
         if viewModel.checkUserAnswer(userAnswer: duration) {
-            self.delegate?.additionalRightAnswerReaction(view: cell.viewForFireworks)
+            self.delegate?.additionalRightAnswerReaction(view: view/*cell.viewForFireworks*/)
             let seconds = 1.0
             DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
                 self.delegate?.rightAnswerReaction()
@@ -297,7 +308,9 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
         } else {
             print("No")
         }
+        
     }
+    
     
 }
 
@@ -308,7 +321,14 @@ extension QuizAdditionCollectionViewCell: UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return numberOfTaskElements
+        var numberOfVariantsElements = 0
+        if let notesVariants = viewModel.notesVariants {
+            numberOfVariantsElements = notesVariants.count
+        }
+        if let pausesVariants = viewModel.pausesVariants {
+            numberOfVariantsElements = pausesVariants.count
+        }
+        return numberOfVariantsElements
     }
 }
 extension QuizAdditionCollectionViewCell: UIPickerViewDelegate {
