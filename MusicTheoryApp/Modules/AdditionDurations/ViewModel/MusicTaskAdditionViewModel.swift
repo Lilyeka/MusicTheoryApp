@@ -22,7 +22,7 @@ class MusicTaskAdditionViewModel {
                         resArray.append(noteViewModel)
                     } else {
                         let pauseModel = Pause(duration: duration)
-                        let pauseViewModel = PauseViewModel(model: pauseModel)
+                        let pauseViewModel = PauseViewModelSeparate(model: pauseModel)
                         resArray.append(pauseViewModel)
                     }
                 }
@@ -69,16 +69,16 @@ class MusicTaskAdditionViewModel {
         }
     }
     
-    var pausesVariables: [(PauseViewModel?, MathSignViewModel)]? {
+    var pausesVariables: [(PauseViewModelSeparate?, MathSignViewModel)]? {
         get {
             if !model.variantsAreNotes {
-                var resArray = [(PauseViewModel?,MathSignViewModel)]()
+                var resArray = [(PauseViewModelSeparate?,MathSignViewModel)]()
                 for (duration, sign) in model.variables {
                     let pauseModel:Pause?
-                    var pauseViewModel: PauseViewModel? = nil
+                    var pauseViewModel: PauseViewModelSeparate? = nil
                     if let duration = duration {
                         pauseModel = Pause(duration: duration)
-                        pauseViewModel = PauseViewModel(model: pauseModel!)
+                        pauseViewModel = PauseViewModelSeparate(model: pauseModel!)
                     }
                     if let sign = sign {
                         resArray.append((pauseViewModel,MathSignViewModel(model: sign)))

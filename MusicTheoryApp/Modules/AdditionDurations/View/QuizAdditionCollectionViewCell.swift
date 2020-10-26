@@ -168,6 +168,10 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
         pickeViewIsShown = false
         hidePickerViewAndIncreaseTaskCollectionView()
     }
+    
+    override func prepareForReuse() {
+        taskCollectionView.removeFromSuperview()
+    }
 }
 
 extension QuizAdditionCollectionViewCell: UICollectionViewDataSource {
@@ -185,12 +189,12 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDataSource {
             }
             cell!.configureSubviews(viewModel: element as! NoteViewModel)
             return cell!
-        case is PauseViewModel:
+        case is PauseViewModelSeparate:
             var cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizAdditionPausesCollectionViewCell.cellIdentifier, for: indexPath) as? QuizAdditionPausesCollectionViewCell
             if cell == nil {
                 cell = collectionView.cellForItem(at: indexPath) as? QuizAdditionPausesCollectionViewCell
             }
-            cell!.configureSubviews(viewModel: element as! PauseViewModel)
+            cell!.configureSubviews(viewModel: element as! PauseViewModelSeparate)
             return cell!
         case is MathSignViewModel:
             var cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizAdditionSignsCollectionViewCell.cellIdentifier, for: indexPath) as? QuizAdditionSignsCollectionViewCell
@@ -279,7 +283,7 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
         }
         if let pausesVariants = viewModel.pausesVariants {
             selectedDuration = pausesVariants[index].duration
-            mathElements[mathElements.count - 1] = PauseViewModel(model: Pause(duration: selectedDuration))
+            mathElements[mathElements.count - 1] = PauseViewModelSeparate(model: Pause(duration: selectedDuration))
         }
         taskCollectionView.reloadItems(at: [IndexPath(row: mathElements.count - 1, section: 0)])
         return selectedDuration

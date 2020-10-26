@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PauseViewModelSeparate {
+class PauseViewModelSeparate:MathElementViewModel {
     var model: Pause
     
     var duration: Duration {
