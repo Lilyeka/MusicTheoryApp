@@ -50,10 +50,10 @@ class QuizSelectNoteInWordCollectionViewCell: UICollectionViewCell {
     var questionLabel: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.backgroundColor = .systemPink
-        label.textColor = .white
+        label.textColor = .black
         label.font = QuizSelectNoteInWordCollectionViewCell.QUESTION_FONT
         label.lineBreakMode = .byWordWrapping
+        label.textAlignment = .center
         label.numberOfLines = 0
         return label
     }()

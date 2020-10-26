@@ -40,12 +40,16 @@ class QuizViewController: UIViewController, QuizViewProtocol {
         return collectionView
     }()
     
-    var questions = MusicTasksPausesDurations()/*MusicTasks()*//* MusicTasksBass()*/
+    var questions = [MusicTask]() /*MusicTasksPausesDurations()*//*MusicTasks()*//* MusicTasksBass()*/
     
     //Mark: -LifeCycle
+//    override func init(questions:[MusicTasks]) {
+//        
+//    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .orange
+        //self.view.backgroundColor = .orange
         configurator.configure(with: self)
         configureCollectionView()
     }
@@ -73,7 +77,7 @@ class QuizViewController: UIViewController, QuizViewProtocol {
 
 extension QuizViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        questions.tasks.count
+        questions.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -82,7 +86,7 @@ extension QuizViewController: UICollectionViewDataSource {
         let frame = quizCollectionView.frame
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
         
-        let question = questions.tasks[indexPath.row]
+        let question = questions[indexPath.row]
         switch question {
         case is MusicTaskSelectNote:
             var cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizSelectNoteCollectionViewCell.cellIdentifier, for: indexPath) as? QuizSelectNoteCollectionViewCell
@@ -116,7 +120,7 @@ extension QuizViewController: UICollectionViewDataSource {
                 cell?.delegate = self
                 return cell!
             } else {
-                let viewModel = MusicTaskSelectNoteInWordViewModel(model:questions.tasks[indexPath.row] as! MusicTaskSelectNoteInWord)
+                let viewModel = MusicTaskSelectNoteInWordViewModel(model:questions[indexPath.row] as! MusicTaskSelectNoteInWord)
                 var cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizSelectNoteInWordCollectionViewCell.cellIdentifier, for: indexPath) as? QuizSelectNoteInWordCollectionViewCell
                 if cell == nil {
                     cell = QuizSelectNoteInWordCollectionViewCell(frame: frame)
@@ -126,14 +130,14 @@ extension QuizViewController: UICollectionViewDataSource {
                 return cell!
             }
         case is MusicTaskPauseAndDuration:
-            let viewModel = MusicTaskPauseAndDurationViewModel(model: questions.tasks[indexPath.row] as! MusicTaskPauseAndDuration)
+            let viewModel = MusicTaskPauseAndDurationViewModel(model: questions[indexPath.row] as! MusicTaskPauseAndDuration)
             var cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizPauseAndDurationCollectionViewCell.cellIdentifier, for: indexPath) as? QuizPauseAndDurationCollectionViewCell
             if cell == nil { cell = QuizPauseAndDurationCollectionViewCell(frame: frame)}
             cell!.configureSubviews(viewModel: viewModel, frame: frame)
             cell!.delegate = self
             return cell!
         case is MusicTaskAddition:
-            let viewModel = MusicTaskAdditionViewModel(model: questions.tasks[indexPath.row] as! MusicTaskAddition)
+            let viewModel = MusicTaskAdditionViewModel(model: questions[indexPath.row] as! MusicTaskAddition)
             var cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizAdditionCollectionViewCell.cellIdentifier, for: indexPath) as? QuizAdditionCollectionViewCell
             if cell == nil {
                 cell = QuizAdditionCollectionViewCell(frame: frame)
@@ -153,7 +157,7 @@ extension QuizViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let frame = quizCollectionView.frame
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-        let question = questions.tasks[indexPath.row]
+        let question = questions[indexPath.row]
         
         switch question {
         case is MusicTaskSelectNote:
@@ -211,7 +215,7 @@ extension QuizViewController: QuizShowNoteCollectionViewCellDelegate, QuizWriteN
         let collectionBounds = quizCollectionView.bounds
         var contentOffset: CGFloat = 0
         contentOffset = CGFloat(floor(self.quizCollectionView.contentOffset.x + collectionBounds.size.width))
-        currentQuestionNumber += currentQuestionNumber >= questions.tasks.count ? 0 : 1
+        currentQuestionNumber += currentQuestionNumber >= questions.count ? 0 : 1
         self.moveToFrame(contentOffset: contentOffset)
     }
     
@@ -224,7 +228,7 @@ extension QuizViewController: QuizShowNoteCollectionViewCellDelegate, QuizWriteN
 extension QuizViewController: PianoViewDelegate {
     func keyTapped(withNotes: [(Note.NoteName, Note.Tonality)], view: UIView) {
         
-        let model = questions.tasks[currentQuestionNumber] as? MusicTaskShowNoteOnThePiano
+        let model = questions[currentQuestionNumber] as? MusicTaskShowNoteOnThePiano
         if let model = model {
             let viewModel = MusicTaskShowtNoteOnThePianoViewModel(model: model)
         if viewModel.checkUserAnswer(userAnswer: withNotes) {

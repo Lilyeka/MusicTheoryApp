@@ -13,14 +13,9 @@ class MainInteractor: MainInteractorProtocol {
     weak var presenter: MainPresenterProtocol!
     var arrayOfArticles: [String] {
         get {// TODO: need return from service!
-            return ["Ноты в скрипичном ключе", "Ноты в басовом ключе", "И т.д."]
+            return ["Ноты в скрипичном ключе", "Ноты в басовом ключе", "Длительности и паузы"]
         }
     }
-    
-    //let currencyService: CurrencyServiceProtocol = CurrencyService()
-    // let serverService: ServerServiceProtocol = ServerService()
-    
-    //var currencyChangingMode: CurrencyChangingMode?
     
     required init(presenter: MainPresenterProtocol) {
         self.presenter = presenter
@@ -28,27 +23,5 @@ class MainInteractor: MainInteractorProtocol {
     
     func getAllCurrencies() {
         presenter.showHUD()
-//        serverService.getAllCurrencies { (dict, error) in
-//            
-//            if let error = error {
-//                self.presenter.hideHUD()
-//                self.presenter.showLoadCurrenciesButton()
-//                self.presenter.showAlertView(with: error.localizedDescription)
-//                return
-//            }
-//            
-//            if let dictResponse = dict {
-//                self.currencyService.saveAllCurrencies(with: dictResponse, completion: { (error) in
-//                    
-//                    if let error = error {
-//                        self.presenter.hideHUD()
-//                        self.presenter.showAlertView(with: error.localizedDesc)
-//                        return
-//                    }
-//                    self.currencyService.sortAndUpdateCurrentCurrencies()
-//                    self.getOutputCurrencyRatio(newCurrency: nil)
-//                })
-//            }
-//        }
     }
 }

@@ -16,10 +16,22 @@ class MainRouter: MainRouterProtocol {
     }
     
     func showQuizScene(articleNumber: Int) {
-        if articleNumber == 0 {
-            print("Открыть экран с первым квизом!")
-            let vc = QuizViewController()
-            self.viewController.navigationController?.pushViewController(vc, animated: true)
+      //  MusicTasksPausesDurations()/*MusicTasks()*//* MusicTasksBass()*/
+        let vc = QuizViewController()
+        switch articleNumber {
+        case 0:
+            let musicTasks = MusicTasks()
+            vc.questions = musicTasks.tasks
+        case 1:
+            let musicTasksBass = MusicTasksBass()
+            vc.questions = musicTasksBass.tasks
+        case 2:
+            let musicTasksPauses = MusicTasksPausesDurations()
+            vc.questions = musicTasksPauses.tasks
+        default:
+            break
         }
+        self.viewController.navigationController?.pushViewController(vc, animated: true)
+
     }
 }

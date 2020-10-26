@@ -180,7 +180,7 @@ extension QuizPauseAndDurationCollectionViewCell: UICollectionViewDelegate {
                 let previousCell = collectionView.cellForItem(at: previousVariantIndexPath)
                 previousCell?.layer.borderColor = UIColor.gray.cgColor
             }
-            cell.layer.borderColor = UIColor.red.cgColor
+            //cell.layer.borderColor = UIColor.red.cgColor
         }
         previousVariantIndexPath = indexPath
     }
