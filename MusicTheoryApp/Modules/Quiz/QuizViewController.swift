@@ -40,16 +40,11 @@ class QuizViewController: UIViewController, QuizViewProtocol {
         return collectionView
     }()
     
-    var questions = [MusicTask]() /*MusicTasksPausesDurations()*//*MusicTasks()*//* MusicTasksBass()*/
+    var questions = [MusicTask]()
     
     //Mark: -LifeCycle
-//    override func init(questions:[MusicTasks]) {
-//        
-//    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.view.backgroundColor = .orange
         configurator.configure(with: self)
         configureCollectionView()
     }
@@ -81,8 +76,6 @@ extension QuizViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-     //   currentQuestionNumber = indexPath.row
-        print("currentQuestionNumber = " + String(currentQuestionNumber) + " from cellForItemAt")
         let frame = quizCollectionView.frame
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
         
@@ -148,40 +141,8 @@ extension QuizViewController: UICollectionViewDataSource {
         default:
             return cell
         }
-      
-    }
-    
-}
-
-extension QuizViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let frame = quizCollectionView.frame
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-        let question = questions[indexPath.row]
-        
-        switch question {
-        case is MusicTaskSelectNote:
-            break
-        case is MusicTaskShowNoteOnThePiano:
-            break
-        case is MusicTaskSelectNoteInWord:
-            let q = question as! MusicTaskSelectNoteInWord
-            if q.needToTypeAnswer! {
-                var cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizWriteNoteCollectionViewCell.cellIdentifier, for: indexPath) as? QuizWriteNoteCollectionViewCell
-                if cell == nil {
-                    cell = QuizWriteNoteCollectionViewCell(frame: frame)
-                }
-                cell!.endEditing(true)
-            } else {
-                
-            }
-            
-        default:
-            break
-        }
     }
 }
-
 
 extension QuizViewController: QuizSelectNoteCollectionViewCellDelegate, QuizSelectNoteInWordCollectionViewCellDelegate {
 
@@ -199,7 +160,7 @@ extension QuizViewController: QuizShowNoteCollectionViewCellDelegate, QuizWriteN
     }
     
     func rightAnswerReaction() {
-        let alert = UIAlertController(title: "Верный ответ", message: "Поехали дальше!", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Верный ответ!", message: "Поехали дальше!", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
             self.okAction()}))
         self.present(alert, animated: true)

@@ -15,6 +15,7 @@ protocol QuizAdditionCollectionViewCellDelegate {
 }
 
 class QuizAdditionCollectionViewCell: UICollectionViewCell {
+    //MARK: -Static
     static var cellIdentifier: String {
         return String(describing: self)
     }
@@ -25,22 +26,16 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
         return UIFont.boldSystemFont(ofSize: 20.0)
     }()
     
-    ////MARK: -Delegate
+    //MARK: -Delegate
     var delegate: QuizAdditionCollectionViewCellDelegate?
     
-    lazy var collectoinViewHight: CGFloat = {
-        //        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_11Pro_X_Xs {
-        //            return 200.0
-        //        }
-        return 150.0
-    }()
-    
+    //MARK: -Constants
     let pickerToolBarHeight: CGFloat = 50.0
     let CELLS_OFFSET: CGFloat = 0.0
     let LEFT_OFFSET: CGFloat = 15.0
     let TOP_OFFSET: CGFloat = 15.0
-    var numberOfTaskElements = 0
-    
+
+    //MARK: -Views
     var questionLabel: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -52,10 +47,27 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    var taskCollectionViewWidth: CGFloat = 0.0
+    var bgButton: UIButton = {
+        var btn = UIButton()
+        btn.backgroundColor = .clear
+        return btn
+    }()
+    
     var taskCollectionView: UICollectionView!
     var pickerView: UIPickerView!
     var pickerToolBar: UIToolbar!
+ 
+    
+    //MARK: -Variables
+    lazy var collectoinViewHight: CGFloat = {
+        //        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_11Pro_X_Xs {
+        //            return 200.0
+        //        }
+        return 150.0
+    }()
+
+    var numberOfTaskElements = 0
+    var taskCollectionViewWidth: CGFloat = 0.0
     var pickeViewIsShown: Bool = false
     
     //MARK: -ViewModel
@@ -92,7 +104,7 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = CELLS_OFFSET
         layout.minimumLineSpacing = CELLS_OFFSET
-        var itemWidth:CGFloat = (numberOfTaskElements > 1) ? ((taskCollectionViewWidth - CGFloat(numberOfTaskElements-1)*CELLS_OFFSET)/CGFloat(numberOfTaskElements)) : 30.0
+        let itemWidth:CGFloat = (numberOfTaskElements > 1) ? ((taskCollectionViewWidth - CGFloat(numberOfTaskElements-1)*CELLS_OFFSET)/CGFloat(numberOfTaskElements)) : 30.0
         layout.itemSize = CGSize(
             width: itemWidth,
             height: collectoinViewHight)
@@ -114,7 +126,15 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
         taskCollectionView.widthAnchor.constraint(equalToConstant: taskCollectionViewWidth).isActive = true
         taskCollectionView.heightAnchor.constraint(equalToConstant: CGFloat(collectoinViewHight)).isActive = true
         
-        pickerView = UIPickerView.init()
+        self.contentView.addSubview(bgButton)
+        self.bgButton.frame = CGRect(
+               x: self.contentView.frame.origin.x,
+               y: self.contentView.frame.origin.y + self.contentView.frame.size.height,
+               width: self.contentView.frame.width,
+               height: self.contentView.frame.height)
+        bgButton.addTarget(self, action: #selector(bgButtonTapped(sender:)), for: .touchUpInside)
+        
+        pickerView = UIPickerView()
         pickerView.delegate = self
         pickerView.dataSource = self
         pickerView.contentMode = .center
@@ -142,7 +162,7 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
         pickerToolBar.layer.cornerRadius = 10.0
         pickerToolBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         
-        let doneButton =  UIBarButtonItem(title: "Выбрать", style: .done, target: self, action: #selector(onDoneButtonTapped))
+        let doneButton = UIBarButtonItem(title: "Выбрать", style: .done, target: self, action: #selector(onDoneButtonTapped))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
         let cancelButton = UIBarButtonItem(title: "Отмена", style: .plain, target: self, action: #selector(onCancelPickerViewTapped))
         
@@ -154,19 +174,25 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
             width: self.pickerView.frame.size.width,
             height: pickerToolBarHeight)
         self.contentView.addSubview(self.pickerToolBar)
+
     }
     
     //MARK: - Actions
     @objc func onDoneButtonTapped() {
-        pickeViewIsShown = false
         hidePickerViewAndIncreaseTaskCollectionView()
+        hideBgButton()
         let selectedDuration = getSelectedDurationAndRedrawCollectionView()
         checkUserAnswer(duration:selectedDuration)
     }
     
     @objc func onCancelPickerViewTapped() {
-        pickeViewIsShown = false
         hidePickerViewAndIncreaseTaskCollectionView()
+        hideBgButton()
+    }
+    
+    @objc func bgButtonTapped(sender: UIButton) {
+        hidePickerViewAndIncreaseTaskCollectionView()
+        hideBgButton()
     }
     
     override func prepareForReuse() {
@@ -221,33 +247,46 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDataSource {
 
 extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)  {
-        if indexPath.row == (numberOfTaskElements - 1) && !pickeViewIsShown{
+        if indexPath.row == (numberOfTaskElements - 1) {
             showPickerView()
+            showBgButton()
         }
     }
     
-    @objc func handleGesture(gestureRecognizer:UITapGestureRecognizer) {
-        if !pickeViewIsShown {
-            showPickerView()
-        }
+    func showBgButton() {
+        self.bgButton.frame = CGRect(
+            x: self.contentView.frame.origin.x,
+            y: self.contentView.frame.origin.y,
+            width: self.contentView.frame.width,
+            height: self.contentView.frame.height)
+    }
+    
+    func hideBgButton() {
+        self.bgButton.frame = CGRect(
+            x: self.contentView.frame.origin.x,
+            y: self.contentView.frame.origin.y + self.contentView.frame.width,
+            width: self.contentView.frame.width,
+            height: self.contentView.frame.height)
     }
     
     func showPickerView() {
-        UIView.animate(withDuration: 0.3) {
-            var frameForChange = self.pickerView.frame
-            frameForChange.origin.x = (self.contentView.bounds.width - self.taskCollectionView.bounds.size.width)/2
-            frameForChange.origin.y = self.contentView.bounds.height - self.contentView.bounds.height/3
-            self.pickerView.frame = frameForChange
-            
-            self.pickerToolBar.frame = CGRect(
-                x: self.pickerView.frame.origin.x,
-                y: self.pickerView.frame.origin.y - self.pickerToolBarHeight,
-                width: self.pickerView.frame.size.width,
-                height: self.pickerToolBarHeight)
-            
-            self.squeeseTaskCollectionView()
+        if !pickeViewIsShown {
+            UIView.animate(withDuration: 0.3) {
+                var frameForChange = self.pickerView.frame
+                frameForChange.origin.x = (self.contentView.bounds.width - self.taskCollectionView.bounds.size.width)/2
+                frameForChange.origin.y = self.contentView.bounds.height - self.contentView.bounds.height/3
+                self.pickerView.frame = frameForChange
+                
+                self.pickerToolBar.frame = CGRect(
+                    x: self.pickerView.frame.origin.x,
+                    y: self.pickerView.frame.origin.y - self.pickerToolBarHeight,
+                    width: self.pickerView.frame.size.width,
+                    height: self.pickerToolBarHeight)
+                
+                self.squeeseTaskCollectionView()
+            }
+            pickeViewIsShown = true
         }
-        pickeViewIsShown = true
     }
     
     func squeeseTaskCollectionView() {
@@ -257,19 +296,22 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
     }
 
     func hidePickerViewAndIncreaseTaskCollectionView() {
-        var newPickerViewFrame = self.pickerView.frame
-        newPickerViewFrame.origin.x = (self.contentView.frame.width - self.taskCollectionViewWidth)/2
-        newPickerViewFrame.origin.y = self.contentView.frame.height + CGFloat(self.pickerToolBarHeight)
-        
-        UIView.animate(withDuration: 0.3) {
-            self.taskCollectionView.transform = CGAffineTransform.identity
-            self.pickerView.frame = newPickerViewFrame
+        if pickeViewIsShown {
+            var newPickerViewFrame = self.pickerView.frame
+            newPickerViewFrame.origin.x = (self.contentView.frame.width - self.taskCollectionViewWidth)/2
+            newPickerViewFrame.origin.y = self.contentView.frame.height + CGFloat(self.pickerToolBarHeight)
             
-            self.pickerToolBar.frame = CGRect(
-                x: self.pickerView.frame.origin.x,
-                y: self.pickerView.frame.origin.y - self.pickerToolBarHeight,
-                width: self.pickerView.frame.size.width,
-                height: self.pickerToolBarHeight)
+            UIView.animate(withDuration: 0.3) {
+                self.taskCollectionView.transform = CGAffineTransform.identity
+                self.pickerView.frame = newPickerViewFrame
+                
+                self.pickerToolBar.frame = CGRect(
+                    x: self.pickerView.frame.origin.x,
+                    y: self.pickerView.frame.origin.y - self.pickerToolBarHeight,
+                    width: self.pickerView.frame.size.width,
+                    height: self.pickerToolBarHeight)
+            }
+            pickeViewIsShown = !pickeViewIsShown
         }
     }
     
@@ -304,18 +346,13 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
     
     func checkAndReactInView(duration: Duration,view: UIView) {
         if viewModel.checkUserAnswer(userAnswer: duration) {
-            self.delegate?.additionalRightAnswerReaction(view: view/*cell.viewForFireworks*/)
+            self.delegate?.additionalRightAnswerReaction(view: view)
             let seconds = 1.0
             DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
                 self.delegate?.rightAnswerReaction()
             }
-        } else {
-            print("No")
         }
-        
     }
-    
-    
 }
 
 extension QuizAdditionCollectionViewCell: UIPickerViewDataSource {

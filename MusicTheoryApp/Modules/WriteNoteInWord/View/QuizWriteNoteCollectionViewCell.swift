@@ -46,6 +46,7 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
     var wordStackView: UIStackView!
 
     var textField: UITextField!
+    
     var bgButton: UIButton = {
         var btn = UIButton()
         btn.translatesAutoresizingMaskIntoConstraints = false
