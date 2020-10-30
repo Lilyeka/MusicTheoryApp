@@ -9,10 +9,11 @@
 import UIKit
 
 class QuizVariantCollectionViewCell: UICollectionViewCell {
+     //MARK: -Static variables
     static var cellIdentifier: String {
         return String(describing: self)
     }
-    
+    //MARK: -Views
     var viewForFireworks: UIView = {
         var view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false

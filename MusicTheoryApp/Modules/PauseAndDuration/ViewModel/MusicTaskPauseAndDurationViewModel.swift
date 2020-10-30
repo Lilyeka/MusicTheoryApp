@@ -11,11 +11,13 @@ import UIKit
 class MusicTaskPauseAndDurationViewModel {
     
     let model: MusicTaskPauseAndDuration
+   
     var pauseViewModel: PauseViewModel {
         get {
             return PauseViewModel(model: model.pause)
         }
     }
+    
     var notesViewModels: [NoteViewModel] {
         get {
             var resultArray:[NoteViewModel] = [NoteViewModel]()
@@ -34,4 +36,9 @@ class MusicTaskPauseAndDurationViewModel {
     func checkUserAnswers(userAnswer: Duration) -> Bool {
         return userAnswer == model.pause.duration ? true : false
     }
+    
+    func noteDuration(noteIndex: Int) -> Duration {
+        return notesViewModels[noteIndex].model.duration
+    }
+    
 }

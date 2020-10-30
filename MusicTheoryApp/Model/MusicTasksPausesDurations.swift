@@ -9,58 +9,57 @@
 import UIKit
 
 class MusicTasksPausesDurations {
-    var tasks: [MusicTask] = [/*
+    var tasks: [MusicTask] = [
         MusicTaskPauseAndDuration(
-            questionText: "Выберите длительность, которая соответствует данной паузе",
-            notesArray: [
-                Note(name: .Do, tone: .none, duration: .whole),
-                Note(name: .Do, tone: .none, duration: .half),
-                Note(name: .Do, tone: .none, duration: .quarter),
-                Note(name: .Do, tone: .none, duration: .eighth),
-                Note(name: .Do, tone: .none, duration: .sixteen)],
-            cleff: .Treble,
-            pause: Pause(duration: .half)),
-        MusicTaskPauseAndDuration(
-                 questionText: "Выберите длительность, которая соответствует данной паузе",
-                 notesArray: [
-                     Note(name: .Do, tone: .none, duration: .whole),
-                     Note(name: .Do, tone: .none, duration: .half),
-                     Note(name: .Do, tone: .none, duration: .quarter),
-                     Note(name: .Do, tone: .none, duration: .eighth),
-                     Note(name: .Do, tone: .none, duration: .sixteen)],
-                 cleff: .Treble,
-                 pause: Pause(duration: .whole)),
-        MusicTaskPauseAndDuration(
-                     questionText: "Выберите длительность, которая соответствует данной паузе",
-                     notesArray: [
-                         Note(name: .Do, tone: .none, duration: .whole),
-                         Note(name: .Do, tone: .none, duration: .half),
-                         Note(name: .Do, tone: .none, duration: .quarter),
-                         Note(name: .Do, tone: .none, duration: .eighth),
-                         Note(name: .Do, tone: .none, duration: .sixteen)],
-                     cleff: .Treble,
-                     pause: Pause(duration: .sixteen)),
-        MusicTaskPauseAndDuration(
-                     questionText: "Выберите длительность, которая соответствует данной паузе",
-                     notesArray: [
-                         Note(name: .Do, tone: .none, duration: .whole),
-                         Note(name: .Do, tone: .none, duration: .half),
-                         Note(name: .Do, tone: .none, duration: .quarter),
-                         Note(name: .Do, tone: .none, duration: .eighth),
-                         Note(name: .Do, tone: .none, duration: .sixteen)],
-                     cleff: .Treble,
-                     pause: Pause(duration: .quarter)),
-        MusicTaskPauseAndDuration(
-                     questionText: "Выберите длительность, которая соответствует данной паузе",
-                     notesArray: [
-                         Note(name: .Do, tone: .none, duration: .whole),
-                         Note(name: .Do, tone: .none, duration: .half),
-                         Note(name: .Do, tone: .none, duration: .quarter),
-                         Note(name: .Do, tone: .none, duration: .eighth),
-                         Note(name: .Do, tone: .none, duration: .sixteen)],
-                     cleff: .Treble,
-                     pause: Pause(duration: .eighth)),*/
-   
+                   questionText: "Выберите длительность, которая соответствует данной паузе",
+                   notesArray: [
+                       Note(name: .Do, tone: .none, duration: .whole),
+                       Note(name: .Do, tone: .none, duration: .half),
+                       Note(name: .Do, tone: .none, duration: .quarter),
+                       Note(name: .Do, tone: .none, duration: .eighth),
+                       Note(name: .Do, tone: .none, duration: .sixteen)],
+                   cleff: .Treble,
+                   pause: Pause(duration: .half)),
+               MusicTaskPauseAndDuration(
+                        questionText: "Выберите длительность, которая соответствует данной паузе",
+                        notesArray: [
+                            Note(name: .Do, tone: .none, duration: .whole),
+                            Note(name: .Do, tone: .none, duration: .half),
+                            Note(name: .Do, tone: .none, duration: .quarter),
+                            Note(name: .Do, tone: .none, duration: .eighth),
+                            Note(name: .Do, tone: .none, duration: .sixteen)],
+                        cleff: .Treble,
+                        pause: Pause(duration: .whole)),
+               MusicTaskPauseAndDuration(
+                            questionText: "Выберите длительность, которая соответствует данной паузе",
+                            notesArray: [
+                                Note(name: .Do, tone: .none, duration: .whole),
+                                Note(name: .Do, tone: .none, duration: .half),
+                                Note(name: .Do, tone: .none, duration: .quarter),
+                                Note(name: .Do, tone: .none, duration: .eighth),
+                                Note(name: .Do, tone: .none, duration: .sixteen)],
+                            cleff: .Treble,
+                            pause: Pause(duration: .sixteen)),
+               MusicTaskPauseAndDuration(
+                            questionText: "Выберите длительность, которая соответствует данной паузе",
+                            notesArray: [
+                                Note(name: .Do, tone: .none, duration: .whole),
+                                Note(name: .Do, tone: .none, duration: .half),
+                                Note(name: .Do, tone: .none, duration: .quarter),
+                                Note(name: .Do, tone: .none, duration: .eighth),
+                                Note(name: .Do, tone: .none, duration: .sixteen)],
+                            cleff: .Treble,
+                            pause: Pause(duration: .quarter)),
+               MusicTaskPauseAndDuration(
+                            questionText: "Выберите длительность, которая соответствует данной паузе",
+                            notesArray: [
+                                Note(name: .Do, tone: .none, duration: .whole),
+                                Note(name: .Do, tone: .none, duration: .half),
+                                Note(name: .Do, tone: .none, duration: .quarter),
+                                Note(name: .Do, tone: .none, duration: .eighth),
+                                Note(name: .Do, tone: .none, duration: .sixteen)],
+                            cleff: .Treble,
+                            pause: Pause(duration: .eighth)),
         MusicTaskAddition(
             questionText: "Решите пример с паузами",
             answer: Duration.quarter,

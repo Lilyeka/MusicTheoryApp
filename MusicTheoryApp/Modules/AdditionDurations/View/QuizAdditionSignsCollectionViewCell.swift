@@ -9,6 +9,7 @@
 import UIKit
 
 class QuizAdditionSignsCollectionViewCell: UICollectionViewCell {
+    //MARK: -Static
     static var cellIdentifier: String {
         return String(describing: self)
     }
@@ -19,8 +20,6 @@ class QuizAdditionSignsCollectionViewCell: UICollectionViewCell {
         }
         return UIFont.boldSystemFont(ofSize: 70.0)
     }()
-    
-    var signFontColor: UIColor = .black
     
     //MARK: -Views
     var signLabel: UILabel = {

@@ -51,7 +51,6 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
     var pickerView: UIPickerView!
     var pickerToolBar: UIToolbar!
  
-    
     //MARK: -Variables
     lazy var collectoinViewHight: CGFloat = {
         //        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_11Pro_X_Xs {
@@ -81,6 +80,7 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
     func configureSubviews(viewModel: MusicTaskAdditionViewModel, frame: CGRect) {
         self.viewModel = viewModel
         self.mathElements = viewModel.mathElements
+        numberOfTaskElements = mathElements.count
         
         questionLabel.text = viewModel.getQuestionText()
         self.contentView.addSubview(questionLabel)
@@ -90,8 +90,6 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
         questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: frame.size.width, font:QuizPauseAndDurationCollectionViewCell.QUESTION_FONT))!).isActive = true
         
         taskCollectionViewWidth = 2*(frame.size.width - 2*LEFT_OFFSET)/3
-        
-        numberOfTaskElements = mathElements.count
         
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0.0, bottom: 0, right: 0.0)
@@ -161,7 +159,6 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
         let cancelButton = UIBarButtonItem(title: "Отмена", style: .plain, target: self, action: #selector(onCancelPickerViewTapped))
         
         pickerToolBar.items = [cancelButton,spaceButton,doneButton]
-        
         self.pickerToolBar.frame = CGRect(
             x: self.pickerView.frame.origin.x,
             y: self.pickerView.frame.origin.y - pickerToolBarHeight,
@@ -194,6 +191,7 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
     }
 }
 
+//MARK: - UICollectionViewDataSource
 extension QuizAdditionCollectionViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return numberOfTaskElements
@@ -233,12 +231,9 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDataSource {
             return cell!
         }
     }
-    
-    func elementIndex(index: Int) -> (tupleIndex: Int, indexInTuple: Int) {
-        return (index/2, index%2)
-    }
 }
 
+//MARK: - UICollectionViewDelegate
 extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)  {
         if indexPath.row == (numberOfTaskElements - 1) {
@@ -246,8 +241,9 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
             showBgButton()
         }
     }
-    
-    func showBgButton() {
+
+//MARK: - Private methods
+    fileprivate func showBgButton() {
         self.bgButton.frame = CGRect(
             x: self.contentView.frame.origin.x,
             y: self.contentView.frame.origin.y,
@@ -255,7 +251,7 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
             height: self.contentView.frame.height)
     }
     
-    func hideBgButton() {
+    fileprivate func hideBgButton() {
         self.bgButton.frame = CGRect(
             x: self.contentView.frame.origin.x,
             y: self.contentView.frame.origin.y + self.contentView.frame.width,
@@ -263,7 +259,7 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
             height: self.contentView.frame.height)
     }
     
-    func showPickerView() {
+    fileprivate func showPickerView() {
         if !pickeViewIsShown {
             UIView.animate(withDuration: 0.3) {
                 var frameForChange = self.pickerView.frame
@@ -283,13 +279,13 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
         }
     }
     
-    func squeeseTaskCollectionView() {
+    fileprivate func squeeseTaskCollectionView() {
         let translate = CATransform3DMakeTranslation(0, -25, 0)
         let scale = CATransform3DScale(translate, 0.8, 0.8, 1)
         self.taskCollectionView.layer.transform = CATransform3DConcat(translate, scale)
     }
 
-    func hidePickerViewAndIncreaseTaskCollectionView() {
+    fileprivate func hidePickerViewAndIncreaseTaskCollectionView() {
         if pickeViewIsShown {
             var newPickerViewFrame = self.pickerView.frame
             newPickerViewFrame.origin.x = (self.contentView.frame.width - self.taskCollectionViewWidth)/2
@@ -309,7 +305,7 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
         }
     }
     
-    func getSelectedDurationAndRedrawCollectionView() -> Duration {
+    fileprivate func getSelectedDurationAndRedrawCollectionView() -> Duration {
         let index = pickerView.selectedRow(inComponent: 0)
         
         var selectedDuration: Duration = .whole
@@ -325,7 +321,7 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
         return selectedDuration
     }
     
-    func checkUserAnswer(duration: Duration) {
+    fileprivate func checkUserAnswer(duration: Duration) {
         var cell: UICollectionViewCell!
         if viewModel.notesVariants != nil {
              cell = taskCollectionView.cellForItem(at: IndexPath(row: mathElements.count - 1, section: 0)) as! QuizAdditionNotesCollectionViewCell
@@ -338,7 +334,7 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
 
     }
     
-    func checkAndReactInView(duration: Duration,view: UIView) {
+    fileprivate func checkAndReactInView(duration: Duration,view: UIView) {
         if viewModel.checkUserAnswer(userAnswer: duration) {
             self.delegate?.additionalRightAnswerReaction(view: view)
             let seconds = 1.0
@@ -349,6 +345,7 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
     }
 }
 
+//MARK: - UIPickerViewDataSource
 extension QuizAdditionCollectionViewCell: UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -366,6 +363,8 @@ extension QuizAdditionCollectionViewCell: UIPickerViewDataSource {
         return numberOfVariantsElements
     }
 }
+
+//MARK: - UIPickerViewDelegate
 extension QuizAdditionCollectionViewCell: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         

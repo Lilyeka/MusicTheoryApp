@@ -9,6 +9,7 @@
 import UIKit
 
 class QuizAdditionNotesCollectionViewCell: UICollectionViewCell {
+    //MARK: -Static
     static var cellIdentifier: String {
         return String(describing: self)
     }

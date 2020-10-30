@@ -9,6 +9,7 @@
 import UIKit
 
 class QuizAdditionPausesCollectionViewCell: UICollectionViewCell {
+    //MARK: -Static
     static var cellIdentifier: String {
         return String(describing: self)
     }
@@ -48,7 +49,6 @@ class QuizAdditionPausesCollectionViewCell: UICollectionViewCell {
             let resizedImage = UIImage.resizeImage(image:image,targetSize: CGSize(width: viewModel.width, height: viewModel.height))
             imageView.image = resizedImage
         }
-        
         
         self.contentView.addSubview(imageView)
         imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 0.0).isActive = true
