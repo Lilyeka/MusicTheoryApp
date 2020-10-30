@@ -9,12 +9,16 @@
 import UIKit
 
 class QuizViewController: UIViewController, QuizViewProtocol {
+    //MARK: -ViewControllers
+    private let fireworkController = ClassicFireworkController()
+    
+    //MARK: -Variables
     var presenter: QuizPresenterProtocol!
     var configurator: QuizConfiguratorProtocol = QuizConfigurator()
     var currentQuestionNumber: Int = 0
+    var questions = [MusicTask]()
     
-    private let fireworkController = ClassicFireworkController()
-    
+    //MARK: -Views
     lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -40,9 +44,7 @@ class QuizViewController: UIViewController, QuizViewProtocol {
         return collectionView
     }()
     
-    var questions = [MusicTask]()
-    
-    //Mark: -LifeCycle
+    //MARK: -LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configurator.configure(with: self)
@@ -70,6 +72,7 @@ class QuizViewController: UIViewController, QuizViewProtocol {
     }
 }
 
+//MARK: -UICollectionViewDataSource
 extension QuizViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         questions.count
@@ -108,7 +111,7 @@ extension QuizViewController: UICollectionViewDataSource {
                 if cell == nil {
                     cell = QuizWriteNoteCollectionViewCell(frame: frame, viewModel: viewModel)
                 }
-             
+                
                 cell?.configureSubviews(viewModel: viewModel, frame: frame)
                 cell?.delegate = self
                 return cell!
@@ -144,16 +147,8 @@ extension QuizViewController: UICollectionViewDataSource {
     }
 }
 
-extension QuizViewController: QuizSelectNoteCollectionViewCellDelegate, QuizSelectNoteInWordCollectionViewCellDelegate {
-
-    func rightNoteTappedReaction(noteView: UIView) {
-        fireworkController.addFireworks(count: 2, sparks: 8, around: noteView)
-        noteView.isUserInteractionEnabled = false
-    }
-}
-
-extension QuizViewController: QuizShowNoteCollectionViewCellDelegate, QuizWriteNoteCollectionViewCellDelegate, QuizPauseAndDurationCollectionViewCellDelegate, QuizAdditionCollectionViewCellDelegate {
-    
+//MARK: -QuizSelectAnswerDelegate
+extension QuizViewController: QuizSelectAnswerDelegate {
     func additionalRightAnswerReaction(view: UIView) {
         fireworkController.addFireworks(count: 2, sparks: 8, around: view)
         view.isUserInteractionEnabled = false
@@ -180,41 +175,40 @@ extension QuizViewController: QuizShowNoteCollectionViewCellDelegate, QuizWriteN
         self.moveToFrame(contentOffset: contentOffset)
     }
     
-    func moveToFrame(contentOffset : CGFloat) {
+    private func moveToFrame(contentOffset : CGFloat) {
         let frame: CGRect = CGRect(x : contentOffset, y : self.quizCollectionView.contentOffset.y, width : self.quizCollectionView.frame.width, height: self.quizCollectionView.frame.height)
         self.quizCollectionView.scrollRectToVisible(frame, animated: true)
     }
 }
 
+//MARK: -PianoViewDelegate
 extension QuizViewController: PianoViewDelegate {
     func keyTapped(withNotes: [(Note.NoteName, Note.Tonality)], view: UIView) {
-        
         let model = questions[currentQuestionNumber] as? MusicTaskShowNoteOnThePiano
         if let model = model {
             let viewModel = MusicTaskShowtNoteOnThePianoViewModel(model: model)
-        if viewModel.checkUserAnswer(userAnswer: withNotes) {
-            fireworkController.addFireworks(count: 2, sparks: 8, around: view)
-            view.backgroundColor = .green
-            view.isUserInteractionEnabled = false
-            if (withNotes.count) > 0 {
-                let note = withNotes[0]
-            if note != nil { // добавляем название ноты на клавишу
-                let noteLabelHeight:CGFloat = 40.0
-                var noteNameLabel = UILabel(frame:CGRect(x: view.bounds.minX + 5, y: view.bounds.maxY - noteLabelHeight, width: view.bounds.size.width - 10.0, height: noteLabelHeight))
-                noteNameLabel.font = QuizShowNoteCollectionViewCell.QUESTION_FONT
-                noteNameLabel.text = note.0.noteRusName()
-                noteNameLabel.textAlignment = .center
-                view.addSubview(noteNameLabel)
+            if viewModel.checkUserAnswer(userAnswer: withNotes) {
+                fireworkController.addFireworks(count: 2, sparks: 8, around: view)
+                view.backgroundColor = .green
+                view.isUserInteractionEnabled = false
+                if (withNotes.count) > 0 {
+                    let note = withNotes[0]
+                    if note != nil { // добавляем название ноты на клавишу
+                        let noteLabelHeight:CGFloat = 40.0
+                        var noteNameLabel = UILabel(frame:CGRect(x: view.bounds.minX + 5, y: view.bounds.maxY - noteLabelHeight, width: view.bounds.size.width - 10.0, height: noteLabelHeight))
+                        noteNameLabel.font = QuizShowNoteCollectionViewCell.QUESTION_FONT
+                        noteNameLabel.text = note.0.noteRusName()
+                        noteNameLabel.textAlignment = .center
+                        view.addSubview(noteNameLabel)
+                    }
+                }
+                
+                let alert = UIAlertController(title: "Верный ответ", message: "Поехали дальше!", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                    self.okAction()}))
+                self.present(alert, animated: true)
             }
-            }
-       
-            let alert = UIAlertController(title: "Верный ответ", message: "Поехали дальше!", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
-                self.okAction()}))
-            self.present(alert, animated: true)
         }
-        }
-        
     }
 }
 

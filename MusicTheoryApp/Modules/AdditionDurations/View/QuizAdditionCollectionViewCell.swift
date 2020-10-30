@@ -8,12 +8,6 @@
 
 import UIKit
 
-protocol QuizAdditionCollectionViewCellDelegate {
-    func rightAnswerReaction()
-    func wrongAnswerReaction()
-    func additionalRightAnswerReaction(view: UIView)
-}
-
 class QuizAdditionCollectionViewCell: UICollectionViewCell {
     //MARK: -Static
     static var cellIdentifier: String {
@@ -27,7 +21,7 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
     }()
     
     //MARK: -Delegate
-    var delegate: QuizAdditionCollectionViewCellDelegate?
+    var delegate: QuizSelectAnswerDelegate?
     
     //MARK: -Constants
     let pickerToolBarHeight: CGFloat = 50.0

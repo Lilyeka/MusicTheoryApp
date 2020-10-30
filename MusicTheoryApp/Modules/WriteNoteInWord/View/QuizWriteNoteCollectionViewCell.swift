@@ -8,11 +8,11 @@
 
 import UIKit
 
-protocol QuizWriteNoteCollectionViewCellDelegate {
-    func rightAnswerReaction()
-    func wrongAnswerReaction()
-    func additionalRightAnswerReaction(view: UIView)
-}
+//protocol QuizWriteNoteCollectionViewCellDelegate {
+//    func rightAnswerReaction()
+//    func wrongAnswerReaction()
+//    func additionalRightAnswerReaction(view: UIView)
+//}
 
 class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
     static var cellIdentifier: String {
@@ -38,7 +38,7 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
     }()
     
     //MARK: -Delegate
-    var delegate: QuizWriteNoteCollectionViewCellDelegate?
+    var delegate: QuizSelectAnswerDelegate?
     
     //MARK: -UI Elements
     var viewModel: MusicTaskWriteNoteInWordViewModel!

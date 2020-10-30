@@ -8,11 +8,12 @@
 
 import UIKit
 
-protocol QuizSelectNoteCollectionViewCellDelegate {
-    func rightAnswerReaction()
-    func wrongAnswerReaction()
-    func rightNoteTappedReaction(noteView: UIView)
-}
+//protocol QuizSelectNoteCollectionViewCellDelegate {
+//    func rightAnswerReaction()
+//    func wrongAnswerReaction()
+//    func additionalRightAnswerReaction(view: UIView)
+//   // func rightNoteTappedReaction(noteView: UIView)
+//}
 
 class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
     static var cellIdentifier: String {
@@ -42,7 +43,7 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
     }()
     
     //MARK: -Delegate
-    var delegate: QuizSelectNoteCollectionViewCellDelegate?
+    var delegate: QuizSelectAnswerDelegate?
     
     //MARK: -ViewModel
     var viewModel: MusicTaskSelectNoteViewModel?
@@ -136,7 +137,8 @@ extension QuizSelectNoteCollectionViewCell: NoteViewModelDelegate {
     func noteTaped(noteName: Note.NoteName, noteView: UIView) {
         if let viewModel = viewModel {
             if viewModel.noteIsFromRightAnswer(note:noteName) {
-                delegate?.rightNoteTappedReaction(noteView: noteView)
+                //delegate?.rightNoteTappedReaction(noteView: noteView)
+                delegate?.additionalRightAnswerReaction(view: noteView)
             }
         }
     }

@@ -8,12 +8,6 @@
 
 import UIKit
 
-protocol QuizPauseAndDurationCollectionViewCellDelegate {
-    func rightAnswerReaction()
-    func wrongAnswerReaction()
-    func additionalRightAnswerReaction(view: UIView)
-}
-
 class QuizPauseAndDurationCollectionViewCell: UICollectionViewCell {
     static var cellIdentifier: String {
         return String(describing: self)
@@ -38,7 +32,7 @@ class QuizPauseAndDurationCollectionViewCell: UICollectionViewCell {
     var previousVariantIndexPath: IndexPath!
 
     //MARK: -Delegate
-    var delegate: QuizPauseAndDurationCollectionViewCellDelegate?
+    var delegate: QuizSelectAnswerDelegate?
     
     //MARK: -Views
     var staffView: StaffView!

@@ -8,10 +8,10 @@
 
 import UIKit
 
-protocol QuizShowNoteCollectionViewCellDelegate {
-    func rightAnswerReaction()
-    func wrongAnswerReaction()
-}
+//protocol QuizShowNoteCollectionViewCellDelegate {
+//    func rightAnswerReaction()
+//    func wrongAnswerReaction()
+//}
 
 class QuizShowNoteCollectionViewCell: UICollectionViewCell {
     static var cellIdentifier: String {
@@ -28,7 +28,7 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
     let LEFT_OFFSET: CGFloat = 15.0
    
     //MARK: -Delegate
-    var delegate: QuizShowNoteCollectionViewCellDelegate?
+    var delegate: QuizSelectAnswerDelegate?
         
     //MARK: -Views
     var viewModel: MusicTaskShowtNoteOnThePianoViewModel?
