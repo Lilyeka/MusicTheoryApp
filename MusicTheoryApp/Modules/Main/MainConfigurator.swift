@@ -18,7 +18,5 @@ class MainConfigurator: MainConfiguratorProtocol {
         viewController.presenter = presenter
         presenter.interactor = interactor
         presenter.router = router
- //       presenter.currencyPickerView = viewController.currencyPickerView
-//        viewController.currencyPickerView.delegate = presenter
     }
 }

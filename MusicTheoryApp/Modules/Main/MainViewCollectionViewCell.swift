@@ -9,6 +9,11 @@
 import UIKit
 
 class MainViewCollectionViewCell: UICollectionViewCell {
+    // MARK: - Static elements
+    static var cellIdentifier: String {
+        return String(describing: self)
+    }
+    
     // MARK: - UIElements
     var textLabel: UILabel = {
         var label = UILabel()

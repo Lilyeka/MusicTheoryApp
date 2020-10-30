@@ -8,41 +8,27 @@
 
 import UIKit
 
-class MainPresenter: MainPresenterProtocol/*, CurrencyPickerViewDelegate*/ {
+class MainPresenter: MainPresenterProtocol {
     weak var view: MainViewProtocol!
     var interactor: MainInteractorProtocol!
     var router: MainRouterProtocol!
-   // weak var currencyPickerView: CurrencyPickerViewProtocol?
-   // let inputCurrencyPickerViewTitle = "Choose input currency"
-   // let outputCurrencyPickerViewTitle = "Choose output currency"
     
     required init(view: MainViewProtocol) {
         self.view = view
     }
-    
-    func configureView() {
-//      view?.setInputValue(with: inputValue)
-//      view?.setOutputValue(with: outputValue)
-//      view?.setInputCurrencyShortName(with: inputCurrencyShortName)
-//      view?.setOutputCurrencyShortName(with: outputCurrencyShortName)
-//      view?.addDoneOnInputCurrencyKeyboard()
-//      updateRateText()
-      interactor.getAllCurrencies()
-    }
-    
-    func showHUD() {
-        view.showHUD()
-    }
-    
+        
     func numberOfItemsInSection() -> Int {
         return interactor.arrayOfArticles.count
     }
     
     func titleForArticle(index: Int) -> String {
-        return interactor.arrayOfArticles[index]
+        return interactor.arrayOfArticles[index].rawValue
     }
     
     func didSelectItemAt(index: Int) {
-        router.showQuizScene(articleNumber: index)
+        let article = interactor.arrayOfArticles[index]
+        router.showQuizScene(article: article)
     }
 }
+
+

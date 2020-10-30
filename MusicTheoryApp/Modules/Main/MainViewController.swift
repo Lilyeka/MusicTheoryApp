@@ -8,12 +8,15 @@
 
 import UIKit
 
-class MainViewController: UIViewController,MainViewProtocol {
+class MainViewController: UIViewController, MainViewProtocol {
+    // MARK: - Constants
     let COLLECTION_VIEW_SECTION_INSET: CGFloat = 10.0
     
+    // MARK: - Variables
     var presenter: MainPresenterProtocol!
     var configurator: MainConfiguratorProtocol = MainConfigurator()
     
+    // MARK: - Views
     lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: COLLECTION_VIEW_SECTION_INSET, left: COLLECTION_VIEW_SECTION_INSET, bottom: COLLECTION_VIEW_SECTION_INSET, right: COLLECTION_VIEW_SECTION_INSET)
@@ -26,56 +29,45 @@ class MainViewController: UIViewController,MainViewProtocol {
     lazy var articlesCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.backgroundColor = .white
+        collectionView.register(MainViewCollectionViewCell.self, forCellWithReuseIdentifier: MainViewCollectionViewCell.cellIdentifier)
         return collectionView
     }()
 
     // MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
         configurator.configure(with: self)
-        presenter.configureView()
         configureCollectionView()
     }
-    
-    func configureCollectionView() {
-        articlesCollectionView.delegate = self
-        articlesCollectionView.dataSource = self
-        articlesCollectionView.backgroundColor = .white
-        articlesCollectionView.register(MainViewCollectionViewCell.self, forCellWithReuseIdentifier: "MyCell")
-        
+   
+    // MARK: - Private methods
+    private func configureCollectionView() {
+        self.view.backgroundColor = .white
         self.view.addSubview(self.articlesCollectionView)
         articlesCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         articlesCollectionView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        articlesCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.6).isActive = true
-        articlesCollectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.6).isActive = true
+        articlesCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8).isActive = true
+        articlesCollectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.8).isActive = true
     }
-    
-    func showHUD() {
-//         DispatchQueue.main.async {
-//             self.view.bringSubview(toFront: self.HUDView)
-//             self.activityIndicatorView.alpha = 1
-//             self.loadCurrenciesButton.alpha = 0
-//             UIView.animate(withDuration: 0.5) {
-//                 self.HUDView.alpha = 1
-//             }
-//         }
-     }
 }
 
-
+// MARK: - UICollectionViewDataSource
 extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return presenter.numberOfItemsInSection()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath) as! MainViewCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewCollectionViewCell.cellIdentifier, for: indexPath) as! MainViewCollectionViewCell
         cell.textLabel.text = presenter.titleForArticle(index: indexPath.row)
         return cell
     }
 }
 
+// MARK: - UICollectionViewDelegate
 extension MainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         presenter.didSelectItemAt(index: indexPath.row)

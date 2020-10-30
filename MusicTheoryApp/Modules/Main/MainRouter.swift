@@ -15,23 +15,19 @@ class MainRouter: MainRouterProtocol {
         self.viewController = viewController
     }
     
-    func showQuizScene(articleNumber: Int) {
-      //  MusicTasksPausesDurations()/*MusicTasks()*//* MusicTasksBass()*/
+    func showQuizScene(article: QuizArticles) {
         let vc = QuizViewController()
-        switch articleNumber {
-        case 0:
+        switch article {
+        case .trebleCleffNotes:
             let musicTasks = MusicTasks()
             vc.questions = musicTasks.tasks
-        case 1:
+        case .bassCleffNotes:
             let musicTasksBass = MusicTasksBass()
             vc.questions = musicTasksBass.tasks
-        case 2:
+        case .durationsAndPauses:
             let musicTasksPauses = MusicTasksPausesDurations()
             vc.questions = musicTasksPauses.tasks
-        default:
-            break
         }
         self.viewController.navigationController?.pushViewController(vc, animated: true)
-
     }
 }

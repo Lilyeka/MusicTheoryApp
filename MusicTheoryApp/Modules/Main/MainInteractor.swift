@@ -8,20 +8,21 @@
 
 import Foundation
 
+enum QuizArticles: String {
+    case trebleCleffNotes = "Ноты в скрипичном ключе"
+    case bassCleffNotes = "Ноты в басовом ключе"
+    case durationsAndPauses = "Длительности и паузы"
+}
+
 class MainInteractor: MainInteractorProtocol {
-    
     weak var presenter: MainPresenterProtocol!
-    var arrayOfArticles: [String] {
+    var arrayOfArticles: [QuizArticles] {
         get {// TODO: need return from service!
-            return ["Ноты в скрипичном ключе", "Ноты в басовом ключе", "Длительности и паузы"]
+            return [.trebleCleffNotes, .bassCleffNotes, .durationsAndPauses]
         }
     }
     
     required init(presenter: MainPresenterProtocol) {
         self.presenter = presenter
-    }
-    
-    func getAllCurrencies() {
-        presenter.showHUD()
     }
 }
