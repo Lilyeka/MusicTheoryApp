@@ -44,6 +44,26 @@ class QuizViewController: UIViewController, QuizViewProtocol {
         return collectionView
     }()
     
+    lazy var lastQuestionRightAnswerAlert: UIAlertController! = {
+          let alert = UIAlertController(title: "Вы прошли весь раздел!", message: "Поздравляем!", preferredStyle: .alert)
+          alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+              self.okActionForLastAlert()}))
+          return alert
+      }()
+    
+    lazy var rightAnswerAlert: UIAlertController! = {
+        let alert = UIAlertController(title: "Верный ответ!", message: "Поехали дальше!", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+            self.okAction()}))
+        return alert
+    }()
+    
+    lazy var wrongAnswerAlert: UIAlertController! = {
+        let alert = UIAlertController(title: "Неверный ответ", message: "Попробуй еще раз!", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        return alert
+    }()
+    
     //MARK: -LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,6 +89,30 @@ class QuizViewController: UIViewController, QuizViewProtocol {
         let index = quizCollectionView!.indexPathForItem(at: center)
         print(index ?? "index not found")
         return index
+    }
+    
+    func okAction() {
+        let collectionBounds = quizCollectionView.bounds
+        var contentOffset: CGFloat = 0
+        contentOffset = CGFloat(floor(self.quizCollectionView.contentOffset.x + collectionBounds.size.width))
+        currentQuestionNumber += currentQuestionNumber >= questions.count ? 0 : 1
+       
+        if rightAnswerAlert.isBeingPresented {
+            rightAnswerAlert.dismiss(animated: true, completion: nil)
+        }
+        if wrongAnswerAlert.isBeingPresented {
+            wrongAnswerAlert.dismiss(animated: true, completion: nil)
+        }
+         self.moveToFrame(contentOffset: contentOffset)
+    }
+    
+    func okActionForLastAlert() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    private func moveToFrame(contentOffset: CGFloat) {
+        let frame: CGRect = CGRect(x : contentOffset, y : self.quizCollectionView.contentOffset.y, width : self.quizCollectionView.frame.width, height: self.quizCollectionView.frame.height)
+        self.quizCollectionView.scrollRectToVisible(frame, animated: true)
     }
 }
 
@@ -111,7 +155,6 @@ extension QuizViewController: UICollectionViewDataSource {
                 if cell == nil {
                     cell = QuizWriteNoteCollectionViewCell(frame: frame, viewModel: viewModel)
                 }
-                
                 cell?.configureSubviews(viewModel: viewModel, frame: frame)
                 cell?.delegate = self
                 return cell!
@@ -155,29 +198,19 @@ extension QuizViewController: QuizSelectAnswerDelegate {
     }
     
     func rightAnswerReaction() {
-        let alert = UIAlertController(title: "Верный ответ!", message: "Поехали дальше!", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
-            self.okAction()}))
-        self.present(alert, animated: true)
+        presentRightAnswerAlerts()
     }
     
     func wrongAnswerReaction() {
-        let alert = UIAlertController(title: "Неверный ответ", message: "Попробуй еще раз!", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alert, animated: true)
+        self.present(wrongAnswerAlert, animated: true)
     }
     
-    func okAction() {
-        let collectionBounds = quizCollectionView.bounds
-        var contentOffset: CGFloat = 0
-        contentOffset = CGFloat(floor(self.quizCollectionView.contentOffset.x + collectionBounds.size.width))
-        currentQuestionNumber += currentQuestionNumber >= questions.count ? 0 : 1
-        self.moveToFrame(contentOffset: contentOffset)
-    }
-    
-    private func moveToFrame(contentOffset : CGFloat) {
-        let frame: CGRect = CGRect(x : contentOffset, y : self.quizCollectionView.contentOffset.y, width : self.quizCollectionView.frame.width, height: self.quizCollectionView.frame.height)
-        self.quizCollectionView.scrollRectToVisible(frame, animated: true)
+    fileprivate func presentRightAnswerAlerts() {
+        if (currentQuestionNumber == questions.count - 1)  {
+            self.present(lastQuestionRightAnswerAlert, animated: true)
+        } else {
+            self.present(rightAnswerAlert, animated: true)
+        }
     }
 }
 
@@ -193,20 +226,16 @@ extension QuizViewController: PianoViewDelegate {
                 view.isUserInteractionEnabled = false
                 if (withNotes.count) > 0 {
                     let note = withNotes[0]
-                    if note != nil { // добавляем название ноты на клавишу
+                //    if note != nil { // добавляем название ноты на клавишу
                         let noteLabelHeight:CGFloat = 40.0
                         var noteNameLabel = UILabel(frame:CGRect(x: view.bounds.minX + 5, y: view.bounds.maxY - noteLabelHeight, width: view.bounds.size.width - 10.0, height: noteLabelHeight))
                         noteNameLabel.font = QuizShowNoteCollectionViewCell.QUESTION_FONT
                         noteNameLabel.text = note.0.noteRusName()
                         noteNameLabel.textAlignment = .center
                         view.addSubview(noteNameLabel)
-                    }
+               //     }
                 }
-                
-                let alert = UIAlertController(title: "Верный ответ", message: "Поехали дальше!", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
-                    self.okAction()}))
-                self.present(alert, animated: true)
+                presentRightAnswerAlerts()
             }
         }
     }

@@ -8,14 +8,8 @@
 
 import UIKit
 
-/*protocol QuizSelectNoteInWordCollectionViewCellDelegate {
-    func rightAnswerReaction()
-    func wrongAnswerReaction()
-    func additionalRightAnswerReaction(view: UIView)
-   
-}*/
-
 class QuizSelectNoteInWordCollectionViewCell: UICollectionViewCell {
+   //MARK: -Static
     static var cellIdentifier: String {
         return String(describing: self)
     }
@@ -124,21 +118,20 @@ class QuizSelectNoteInWordCollectionViewCell: UICollectionViewCell {
         viewModel = nil
         wordStackView = nil
     }
-    
-    
 }
 
+//MARK: -NoteViewModelDelegate
 extension QuizSelectNoteInWordCollectionViewCell: NoteViewModelDelegate {
     func noteTaped(noteName: Note.NoteName, noteView: UIView) {
         if let viewModel = viewModel {
             if (viewModel.noteIsFromRightAnswer(note: noteName)) {
                 delegate?.additionalRightAnswerReaction(view: noteView)
-                //delegate?.rightNoteTappedReaction(noteView: noteView)
             }
         }
     }
 }
 
+//MARK: -StaffViewDelegate
 extension QuizSelectNoteInWordCollectionViewCell: StaffViewDelegate {
     func pickedOutNotesIndexesDidChange(newValue: [Int]) {
         if (viewModel.checkUserAnswer1(userAnswer: newValue)) {

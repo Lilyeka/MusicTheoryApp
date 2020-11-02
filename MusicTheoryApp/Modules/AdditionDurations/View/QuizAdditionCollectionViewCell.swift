@@ -331,7 +331,6 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
              cell = taskCollectionView.cellForItem(at: IndexPath(row: mathElements.count - 1, section: 0)) as! QuizAdditionPausesCollectionViewCell
             checkAndReactInView(duration: duration, view: cell)
         }
-
     }
     
     fileprivate func checkAndReactInView(duration: Duration,view: UIView) {

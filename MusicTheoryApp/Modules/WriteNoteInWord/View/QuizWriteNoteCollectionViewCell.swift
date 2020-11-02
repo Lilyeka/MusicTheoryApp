@@ -8,17 +8,12 @@
 
 import UIKit
 
-//protocol QuizWriteNoteCollectionViewCellDelegate {
-//    func rightAnswerReaction()
-//    func wrongAnswerReaction()
-//    func additionalRightAnswerReaction(view: UIView)
-//}
-
 class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
+    //MARK: -Static
     static var cellIdentifier: String {
         return String(describing: self)
     }
-   static let QUESTION_FONT: UIFont = {
+    static let QUESTION_FONT: UIFont = {
         if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_11Pro_X_Xs {
             return UIFont.boldSystemFont(ofSize: 23.0)
         }
@@ -40,11 +35,12 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
     //MARK: -Delegate
     var delegate: QuizSelectAnswerDelegate?
     
-    //MARK: -UI Elements
+   //MARK: -View Model
     var viewModel: MusicTaskWriteNoteInWordViewModel!
+    
+    //MARK: -Views
     var staffView: StaffView!
     var wordStackView: UIStackView!
-
     var textField: UITextField!
     
     var bgButton: UIButton = {
@@ -204,35 +200,35 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
     }
 }
 
+//MARK: - UITextFieldDelegate
 extension QuizWriteNoteCollectionViewCell: UITextFieldDelegate {
     
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        // return NO to disallow editing.
-        print("TextField should begin editing method called")
-        return true
-    }
+//    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+//        // return NO to disallow editing.
+//        print("TextField should begin editing method called")
+//        return true
+//    }
+//
+//    func textFieldDidBeginEditing(_ textField: UITextField) {
+//        // became first responder
+//        print("TextField did begin editing method called")
+//    }
+//
+//    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+//        // return YES to allow editing to stop and to resign first responder status. NO to disallow the editing session to end
+//        print("TextField should snd editing method called")
+//        return true
+//    }
     
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        // became first responder
-        print("TextField did begin editing method called")
-    }
-    
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        // return YES to allow editing to stop and to resign first responder status. NO to disallow the editing session to end
-        print("TextField should snd editing method called")
-        return true
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        // may be called if forced even if shouldEndEditing returns NO (e.g. view removed from window) or endEditing:YES called
-        print("TextField did end editing method called")
-    }
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//        // may be called if forced even if shouldEndEditing returns NO (e.g. view removed from window) or endEditing:YES called
+//        print("TextField did end editing method called")
+//    }
     
     internal func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         if let text = textField.text, text.count > 0 {
             checkAnswer(answerString:text,textField:textField)
         }
-        print("TextField did end editing with reason method called")
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -244,13 +240,7 @@ extension QuizWriteNoteCollectionViewCell: UITextFieldDelegate {
         let count = textFieldText.count - substringToReplace.count + string.count
         return count <= numberOfLettersInTextField
     }
-    
-    func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        // called when clear button pressed. return NO to ignore (no notifications)
-        print("TextField should clear method called")
-        return true
-    }
-    
+        
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         if let text = textField.text, text.count > 0 {
@@ -258,7 +248,7 @@ extension QuizWriteNoteCollectionViewCell: UITextFieldDelegate {
         }
         return true
     }
-    
+    //MARK: - Private methods
     fileprivate func checkAnswer(answerString: String, textField: UITextField) {
         if viewModel.checkUserAnswer(userAnswer: answerString) {
                delegate?.additionalRightAnswerReaction(view: textField)
@@ -273,7 +263,7 @@ extension QuizWriteNoteCollectionViewCell: UITextFieldDelegate {
         }
     }
     
-    func configurationForRightAnswer() {
+    fileprivate func configurationForRightAnswer() {
         textField.borderStyle = .none
         let text = textConfiguration(text:String(textField.text!))
         textField.text = text
@@ -282,7 +272,7 @@ extension QuizWriteNoteCollectionViewCell: UITextFieldDelegate {
         textField.widthAnchor.constraint(equalToConstant: minTextFieldWidth).isActive = true
     }
     
-    func textConfiguration(text: String) -> String {
+    fileprivate func textConfiguration(text: String) -> String {
         var resultString = ""
         if textFieldPosition > 0 {
             resultString = text.lowercased()
@@ -292,4 +282,4 @@ extension QuizWriteNoteCollectionViewCell: UITextFieldDelegate {
         return resultString
     }
 }
-// MARK: UITextFieldDelegate <---
+
