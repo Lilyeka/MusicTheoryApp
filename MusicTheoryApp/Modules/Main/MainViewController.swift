@@ -41,6 +41,7 @@ class MainViewController: UIViewController, MainViewProtocol {
         super.viewDidLoad()
         configurator.configure(with: self)
         configureCollectionView()
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
     }
    
     // MARK: - Private methods
@@ -51,6 +52,14 @@ class MainViewController: UIViewController, MainViewProtocol {
         articlesCollectionView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         articlesCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8).isActive = true
         articlesCollectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.8).isActive = true
+    }
+    
+    @objc private func handleTap() {
+        var indexPath = NSIndexPath(row: 0, section: 0)
+
+        if let cell = articlesCollectionView.cellForItem(at: indexPath as IndexPath) as? MainViewCollectionViewCell {
+            cell.animationFunc()
+        }
     }
 }
 

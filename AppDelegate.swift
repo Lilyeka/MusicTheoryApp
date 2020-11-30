@@ -18,6 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Create a window that is the same size as the screen
         window = UIWindow(frame: UIScreen.main.bounds)
         // Create a view controller
+        
+       /* let testVC = TestViewController()
+        window?.rootViewController = testVC */
+        
         let nav = UINavigationController()
        // nav.edgesForExtendedLayout = .all;
         let mainVC = MainViewController()
@@ -26,6 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         nav.viewControllers = [mainVC]
         // Assign the view controller as `window`'s root view controller
         window?.rootViewController = nav
+        
+        
         // Show the window
         window?.makeKeyAndVisible()
         return true

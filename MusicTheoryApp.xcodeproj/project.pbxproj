@@ -58,6 +58,7 @@
 		6175CA0A24BC5C920028BDBD /* QuizSelectNoteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6175CA0924BC5C920028BDBD /* QuizSelectNoteCollectionViewCell.swift */; };
 		617F7EC7245E05F900EE08AA /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6149ED24245A24D600A1375A /* Note.swift */; };
 		619059C7254B9F8F00FF1156 /* QuizSelectAnswerDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619059C6254B9F8F00FF1156 /* QuizSelectAnswerDelegateProtocol.swift */; };
+		619059F2255348A600FF1156 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619059F1255348A600FF1156 /* TestViewController.swift */; };
 		619BB53924B4FF3C00D3076E /* MainConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619BB53824B4FF3C00D3076E /* MainConfigurator.swift */; };
 		619BB53B24B5008F00D3076E /* MainProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619BB53A24B5008F00D3076E /* MainProtocols.swift */; };
 		619BB53D24B5021B00D3076E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619BB53C24B5021B00D3076E /* MainViewController.swift */; };
@@ -144,6 +145,7 @@
 		617592C42503D21C00FB372D /* MusicTasksBass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTasksBass.swift; sourceTree = "<group>"; };
 		6175CA0924BC5C920028BDBD /* QuizSelectNoteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSelectNoteCollectionViewCell.swift; sourceTree = "<group>"; };
 		619059C6254B9F8F00FF1156 /* QuizSelectAnswerDelegateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSelectAnswerDelegateProtocol.swift; sourceTree = "<group>"; };
+		619059F1255348A600FF1156 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		619BB53824B4FF3C00D3076E /* MainConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainConfigurator.swift; sourceTree = "<group>"; };
 		619BB53A24B5008F00D3076E /* MainProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainProtocols.swift; sourceTree = "<group>"; };
 		619BB53C24B5021B00D3076E /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -462,10 +464,18 @@
 			path = "System Extensions";
 			sourceTree = "<group>";
 		};
+		6149E87325759DA700E4FC31 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		6149ED02245978CD00A1375A = {
 			isa = PBXGroup;
 			children = (
 				6149ED0E245978CD00A1375A /* AppDelegate.swift */,
+				619059F1255348A600FF1156 /* TestViewController.swift */,
 				6149ED0D245978CD00A1375A /* MusicTheoryApp */,
 				6149ED0C245978CD00A1375A /* Products */,
 			);
@@ -532,6 +542,7 @@
 				619BB54224B50F5A00D3076E /* MainRouter.swift */,
 				619BB53A24B5008F00D3076E /* MainProtocols.swift */,
 				619BB54424B5C7A900D3076E /* MainViewCollectionViewCell.swift */,
+				6149E87325759DA700E4FC31 /* View */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -689,6 +700,7 @@
 				616810602527D21B0095754E /* QuizAdditionPausesCollectionViewCell.swift in Sources */,
 				612AAAC024D74FFE00A3CC28 /* FireworkSpark.swift in Sources */,
 				612AAAAC24D74FFE00A3CC28 /* ClassicSparkTrajectoryFactoryProtocol.swift in Sources */,
+				619059F2255348A600FF1156 /* TestViewController.swift in Sources */,
 				61CDA927247C66E800780D04 /* PianoView.swift in Sources */,
 				612AAAAE24D74FFE00A3CC28 /* ClassicSparkTrajectoryFactory.swift in Sources */,
 				6149ED0F245978CD00A1375A /* AppDelegate.swift in Sources */,
