@@ -22,11 +22,18 @@ class MainPresenter: MainPresenterProtocol {
     }
     
     func titleForArticle(index: Int) -> String {
-        return interactor.arrayOfArticles[index].rawValue
+        return interactor.arrayOfArticles[index].0.rawValue
+    }
+    
+    func imageForArticle(index: Int) -> UIImage? {
+        guard let image = UIImage(named: interactor.arrayOfArticles[index].1) else {
+            return nil
+        }
+        return image
     }
     
     func didSelectItemAt(index: Int) {
-        let article = interactor.arrayOfArticles[index]
+        let article = interactor.arrayOfArticles[index].0
         router.showQuizScene(article: article)
     }
 }

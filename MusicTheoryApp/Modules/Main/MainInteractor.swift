@@ -16,9 +16,9 @@ enum QuizArticles: String {
 
 class MainInteractor: MainInteractorProtocol {
     weak var presenter: MainPresenterProtocol!
-    var arrayOfArticles: [QuizArticles] {
+    var arrayOfArticles: [(QuizArticles, String)] {
         get {// TODO: need return from service!
-            return [.trebleCleffNotes, .bassCleffNotes, .durationsAndPauses]
+            return [(.trebleCleffNotes, "mainTreble"),( .bassCleffNotes, "mainBass"), (.durationsAndPauses,"mainDuration")]
         }
     }
     

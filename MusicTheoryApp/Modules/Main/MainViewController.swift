@@ -11,6 +11,7 @@ import UIKit
 class MainViewController: UIViewController, MainViewProtocol {
     // MARK: - Constants
     let COLLECTION_VIEW_SECTION_INSET: CGFloat = 10.0
+    let COLLECTION_VIEW_CELL_SIZE: CGFloat = 160
     
     // MARK: - Variables
     var presenter: MainPresenterProtocol!
@@ -20,7 +21,7 @@ class MainViewController: UIViewController, MainViewProtocol {
     lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: COLLECTION_VIEW_SECTION_INSET, left: COLLECTION_VIEW_SECTION_INSET, bottom: COLLECTION_VIEW_SECTION_INSET, right: COLLECTION_VIEW_SECTION_INSET)
-        layout.itemSize = CGSize(width: 150, height: 150)
+        layout.itemSize = CGSize(width: COLLECTION_VIEW_CELL_SIZE, height: COLLECTION_VIEW_CELL_SIZE)
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
         return layout
@@ -41,22 +42,46 @@ class MainViewController: UIViewController, MainViewProtocol {
         super.viewDidLoad()
         configurator.configure(with: self)
         configureCollectionView()
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
+//        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
+    }
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//         UIGraphicsBeginImageContext(self.view.frame.size)
+//               UIImage(named: "bgImage")?.draw(in: self.view.bounds)
+//
+//               if let image = UIGraphicsGetImageFromCurrentImageContext(){
+//                   UIGraphicsEndImageContext()
+//                   self.view.backgroundColor = UIColor(patternImage: image)
+//               }else{
+//                   UIGraphicsEndImageContext()
+//                   debugPrint("Image not available")
+//                }
+//    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        var i = 0
+        while i < 3 {
+            let indexPath = NSIndexPath(row: i, section: 0)
+            if let cell = articlesCollectionView.cellForItem(at: indexPath as IndexPath) as? MainViewCollectionViewCell {
+                cell.animationFunc()
+            }
+            i += 1
+        }
     }
    
     // MARK: - Private methods
     private func configureCollectionView() {
         self.view.backgroundColor = .white
+        
         self.view.addSubview(self.articlesCollectionView)
         articlesCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         articlesCollectionView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         articlesCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8).isActive = true
-        articlesCollectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.8).isActive = true
+        articlesCollectionView.heightAnchor.constraint(equalToConstant: COLLECTION_VIEW_CELL_SIZE +  2*COLLECTION_VIEW_SECTION_INSET).isActive = true
     }
     
     @objc private func handleTap() {
-        var indexPath = NSIndexPath(row: 0, section: 0)
-
+        let indexPath = NSIndexPath(row: 0, section: 0)
         if let cell = articlesCollectionView.cellForItem(at: indexPath as IndexPath) as? MainViewCollectionViewCell {
             cell.animationFunc()
         }
@@ -71,6 +96,13 @@ extension MainViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewCollectionViewCell.cellIdentifier, for: indexPath) as! MainViewCollectionViewCell
+        if let image = presenter.imageForArticle(index: indexPath.row) {
+            var resizedImage = image
+//            if indexPath.row == 1 {
+//                 resizedImage = UIImage.resizeImage(image: image, targetSize:CGSize(width: 80, height: 80))
+//            }
+            cell.imageView.image = resizedImage
+        }
         cell.textLabel.text = presenter.titleForArticle(index: indexPath.row)
         return cell
     }
