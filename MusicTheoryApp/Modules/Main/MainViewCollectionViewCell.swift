@@ -35,14 +35,26 @@ class MainViewCollectionViewCell: UICollectionViewCell {
         iv.clipsToBounds = true
         return iv
     }()
+    
+    var resultLabel: UILabel = {
+        var label = UILabel()
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.text = "Пройдено 0%"
+        label.backgroundColor = .yellow
+        return label
+    }()
+    
     var shapeLayer: CAShapeLayer!
     var trackLayer: CAShapeLayer!
     
     // MARK: - Life cycle
     override init(frame: CGRect) {
         super.init(frame:.zero)
-    
+        backgroundColor = .gray
         imageView.image = UIImage(named:"trebleClef")
+        
         contentView.addSubview(imageView)
         imageView.widthAnchor.constraint(equalToConstant: 2*CIRCLE_RADIUS).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: 2*CIRCLE_RADIUS).isActive = true
@@ -54,6 +66,11 @@ class MainViewCollectionViewCell: UICollectionViewCell {
         textLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
         textLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
         //textLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0).isActive = true
+        
+        contentView.addSubview(resultLabel)
+        resultLabel.topAnchor.constraint(equalTo: textLabel.bottomAnchor, constant: 8).isActive = true
+        resultLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
+        resultLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {

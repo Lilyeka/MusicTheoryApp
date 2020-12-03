@@ -11,7 +11,8 @@ import UIKit
 class MainViewController: UIViewController, MainViewProtocol {
     // MARK: - Constants
     let COLLECTION_VIEW_SECTION_INSET: CGFloat = 10.0
-    let COLLECTION_VIEW_CELL_SIZE: CGFloat = 160
+    let COLLECTION_VIEW_CELL_WIDTH: CGFloat = 160
+    let COLLECTION_VIEW_CELL_HIGHT: CGFloat = 190
     
     // MARK: - Variables
     var presenter: MainPresenterProtocol!
@@ -21,7 +22,7 @@ class MainViewController: UIViewController, MainViewProtocol {
     lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: COLLECTION_VIEW_SECTION_INSET, left: COLLECTION_VIEW_SECTION_INSET, bottom: COLLECTION_VIEW_SECTION_INSET, right: COLLECTION_VIEW_SECTION_INSET)
-        layout.itemSize = CGSize(width: COLLECTION_VIEW_CELL_SIZE, height: COLLECTION_VIEW_CELL_SIZE)
+        layout.itemSize = CGSize(width: COLLECTION_VIEW_CELL_WIDTH, height: COLLECTION_VIEW_CELL_HIGHT)
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
         return layout
@@ -36,13 +37,13 @@ class MainViewController: UIViewController, MainViewProtocol {
         collectionView.register(MainViewCollectionViewCell.self, forCellWithReuseIdentifier: MainViewCollectionViewCell.cellIdentifier)
         return collectionView
     }()
+    
 
     // MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         configurator.configure(with: self)
         configureCollectionView()
-//        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
     }
     
 //    override func viewWillAppear(_ animated: Bool) {
@@ -77,7 +78,7 @@ class MainViewController: UIViewController, MainViewProtocol {
         articlesCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         articlesCollectionView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         articlesCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8).isActive = true
-        articlesCollectionView.heightAnchor.constraint(equalToConstant: COLLECTION_VIEW_CELL_SIZE +  2*COLLECTION_VIEW_SECTION_INSET).isActive = true
+        articlesCollectionView.heightAnchor.constraint(equalToConstant: COLLECTION_VIEW_CELL_HIGHT + 2*COLLECTION_VIEW_SECTION_INSET).isActive = true
     }
     
     @objc private func handleTap() {
@@ -97,12 +98,9 @@ extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewCollectionViewCell.cellIdentifier, for: indexPath) as! MainViewCollectionViewCell
         if let image = presenter.imageForArticle(index: indexPath.row) {
-            var resizedImage = image
-//            if indexPath.row == 1 {
-//                 resizedImage = UIImage.resizeImage(image: image, targetSize:CGSize(width: 80, height: 80))
-//            }
-            cell.imageView.image = resizedImage
+            cell.imageView.image = image
         }
+        cell.resultLabel.text = presenter.resultTitleForArticle(index: indexPath.row)
         cell.textLabel.text = presenter.titleForArticle(index: indexPath.row)
         return cell
     }

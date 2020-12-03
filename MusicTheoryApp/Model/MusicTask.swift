@@ -12,6 +12,7 @@ class MusicTask {
     var questionText: String
     var notesArray: [Note]?
     var cleffType: CleffTypes = CleffTypes.Treble
+    var done: Bool = false
     
     init(questionText: String, notesArray: [Note]?, cleff:CleffTypes ) {
         self.questionText = questionText
@@ -19,4 +20,7 @@ class MusicTask {
         self.cleffType = cleff
     }
     
+    func didFinishTask(result: Bool) {
+        self.done = result
+    }
 }

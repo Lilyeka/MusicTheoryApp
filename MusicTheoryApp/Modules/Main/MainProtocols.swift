@@ -22,12 +22,13 @@ protocol MainPresenterProtocol: class {
 
     func numberOfItemsInSection() -> Int
     func titleForArticle(index: Int) -> String
+    func resultTitleForArticle(index: Int) -> String
     func imageForArticle(index: Int) -> UIImage?
     func didSelectItemAt(index: Int)
 }
 
 protocol MainInteractorProtocol: class {
-    var arrayOfArticles: [(QuizArticles,String)] { get }
+    var articles: [QuizArticleViewModel] { get }
 }
 
 protocol MainRouterProtocol: class {

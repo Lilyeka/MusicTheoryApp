@@ -8,19 +8,15 @@
 
 import Foundation
 
-enum QuizArticles: String {
-    case trebleCleffNotes = "Ноты в скрипичном ключе"
-    case bassCleffNotes = "Ноты в басовом ключе"
-    case durationsAndPauses = "Длительности и паузы"
-}
-
 class MainInteractor: MainInteractorProtocol {
     weak var presenter: MainPresenterProtocol!
-    var arrayOfArticles: [(QuizArticles, String)] {
-        get {// TODO: need return from service!
-            return [(.trebleCleffNotes, "mainTreble"),( .bassCleffNotes, "mainBass"), (.durationsAndPauses,"mainDuration")]
-        }
-    }
+    
+    var articles: [QuizArticleViewModel] = [
+        QuizArticleViewModel(model: QuizArticle(article: .trebleCleffNotes, percent: 0), imageName: "mainTreble"),
+        QuizArticleViewModel(model: QuizArticle(article: .bassCleffNotes, percent: 0), imageName: "mainBass"),
+        QuizArticleViewModel(model: QuizArticle(article: .durationsAndPauses, percent: 0), imageName: "mainDuration")
+    ]
+
     
     required init(presenter: MainPresenterProtocol) {
         self.presenter = presenter

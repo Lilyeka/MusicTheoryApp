@@ -28,9 +28,13 @@ class MusicTaskWriteNoteInWordViewModel {
         for partOfWord in model.partsOfWord! {
             if let part = partOfWord.1 {
                 let noteName = part.name.noteRusName()
-                if userAnswer.uppercased() == noteName.uppercased() {return true}
+                if userAnswer.uppercased() == noteName.uppercased() {
+                    model.done = true
+                    return true
+                }
             }
         }
+        model.done = false
         return false
     }
     

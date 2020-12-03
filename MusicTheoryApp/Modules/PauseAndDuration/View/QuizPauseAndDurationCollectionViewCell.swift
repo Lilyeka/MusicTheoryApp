@@ -132,7 +132,7 @@ extension QuizPauseAndDurationCollectionViewCell: UICollectionViewDelegate {
         
         let selectedDuration = viewModel.noteDuration(noteIndex: indexPath.row)
         
-        if viewModel.checkUserAnswers(userAnswer: selectedDuration) {
+        if viewModel.checkUserAnswer(answer: selectedDuration) {
             if previousVariantIndexPath != nil {
                 let previousCell = collectionView.cellForItem(at: previousVariantIndexPath)
                 previousCell?.layer.borderColor = UIColor.gray.cgColor
