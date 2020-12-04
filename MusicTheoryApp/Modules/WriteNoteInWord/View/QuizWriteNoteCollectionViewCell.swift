@@ -197,42 +197,12 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
     @objc func keyboardWillHide(_ notification: Notification) {
         staffView.transform  = CGAffineTransform.identity
         wordStackView.transform  = CGAffineTransform.identity
-        //self.endEditing(true)
     }
 }
 
 //MARK: - UITextFieldDelegate
 extension QuizWriteNoteCollectionViewCell: UITextFieldDelegate {
-    
-//    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-//        // return NO to disallow editing.
-//        print("TextField should begin editing method called")
-//        return true
-//    }
-//
-//    func textFieldDidBeginEditing(_ textField: UITextField) {
-//        // became first responder
-//        print("TextField did begin editing method called")
-//    }
-//
-//    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-//        // return YES to allow editing to stop and to resign first responder status. NO to disallow the editing session to end
-//        print("TextField should snd editing method called")
-//        return true
-//    }
-    
-//    func textFieldDidEndEditing(_ textField: UITextField) {
-//        // may be called if forced even if shouldEndEditing returns NO (e.g. view removed from window) or endEditing:YES called
-//        print("TextField did end editing method called")
-//    }
-    
-    internal func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-        // textField.resignFirstResponder()
-        if let text = textField.text, text.count > 0 {
-            checkAnswer(answerString:text,textField:textField)
-        }
-    }
-    
+
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let textFieldText = textField.text,
             let rangeOfTextToReplace = Range(range, in: textFieldText) else {
@@ -244,7 +214,7 @@ extension QuizWriteNoteCollectionViewCell: UITextFieldDelegate {
     }
         
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+        self.endEditing(true)
         if let text = textField.text, text.count > 0 {
             checkAnswer(answerString:text, textField: textField)
         }
@@ -254,7 +224,7 @@ extension QuizWriteNoteCollectionViewCell: UITextFieldDelegate {
     fileprivate func checkAnswer(answerString: String, textField: UITextField) {
         if viewModel.checkUserAnswer(userAnswer: answerString) {
             delegate?.additionalRightAnswerReaction(view: textField)
-            let seconds = 1.0
+            let seconds = 0.5
             DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
                 self.delegate?.rightAnswerReaction()
             }
