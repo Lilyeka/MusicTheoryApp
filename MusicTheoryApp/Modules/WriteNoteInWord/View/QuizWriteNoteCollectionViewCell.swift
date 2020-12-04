@@ -197,6 +197,7 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
     @objc func keyboardWillHide(_ notification: Notification) {
         staffView.transform  = CGAffineTransform.identity
         wordStackView.transform  = CGAffineTransform.identity
+        //self.endEditing(true)
     }
 }
 
@@ -226,6 +227,7 @@ extension QuizWriteNoteCollectionViewCell: UITextFieldDelegate {
 //    }
     
     internal func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+        // textField.resignFirstResponder()
         if let text = textField.text, text.count > 0 {
             checkAnswer(answerString:text,textField:textField)
         }
@@ -251,11 +253,10 @@ extension QuizWriteNoteCollectionViewCell: UITextFieldDelegate {
     //MARK: - Private methods
     fileprivate func checkAnswer(answerString: String, textField: UITextField) {
         if viewModel.checkUserAnswer(userAnswer: answerString) {
-               delegate?.additionalRightAnswerReaction(view: textField)
+            delegate?.additionalRightAnswerReaction(view: textField)
             let seconds = 1.0
             DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
                 self.delegate?.rightAnswerReaction()
-                //textField.isUserInteractionEnabled = true
             }
             configurationForRightAnswer()
         } else {

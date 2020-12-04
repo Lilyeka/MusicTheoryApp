@@ -29,7 +29,7 @@ class MusicTaskSelectNoteViewModel {
         let sortedUserAnswer = userAnswer.sorted{$0.rawValue < $1.rawValue}
         let sortedRightAnswer = model.rightAnswer?.sorted{$0.rawValue < $1.rawValue}
         let result = (sortedRightAnswer == sortedUserAnswer)
-        model.done = result
+        if result { model.didFinishTask(result: result) }
         return result
     }
     

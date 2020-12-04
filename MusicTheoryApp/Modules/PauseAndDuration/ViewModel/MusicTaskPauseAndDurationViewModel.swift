@@ -35,7 +35,7 @@ class MusicTaskPauseAndDurationViewModel {
     
     func checkUserAnswer(answer: Duration) -> Bool {
         let result = (answer == model.pause.duration)
-        model.done = result
+        if result { model.didFinishTask(result: result) }
         return result
     }
     

@@ -38,7 +38,7 @@ class MainPresenter: MainPresenterProtocol {
     }
     
     func didSelectItemAt(index: Int) {
-        let article = interactor.articles[index].model.article
+        let article = interactor.articles[index].model
         router.showQuizScene(article: article)
     }
 }

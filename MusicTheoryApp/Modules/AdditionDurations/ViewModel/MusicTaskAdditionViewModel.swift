@@ -111,7 +111,7 @@ class MusicTaskAdditionViewModel {
     
     func checkUserAnswer(userAnswer: Duration) -> Bool {
         let result = (userAnswer == model.rightAnswer)
-        model.done = result
+        if result { model.didFinishTask(result: result) }
         return result
     }
     

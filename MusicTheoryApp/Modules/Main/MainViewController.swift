@@ -68,6 +68,7 @@ class MainViewController: UIViewController, MainViewProtocol {
             }
             i += 1
         }
+        articlesCollectionView.reloadData()
     }
    
     // MARK: - Private methods

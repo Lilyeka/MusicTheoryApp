@@ -16,31 +16,25 @@ enum QuizArticles: String {
 
 class QuizArticle {
     var article: QuizArticles = .trebleCleffNotes
-    var percent: Int!
+    var articleQuestions:[MusicTask]
+    var percent: Int {
+        get {
+            return (articleQuestions.filter({$0.done == true}).count*100)/articleQuestions.count
+        }
+    }
     
-    init(article: QuizArticles, percent: Int) {
+    var numberOfFinishedTasks: Int {
+        get {
+           return articleQuestions.filter({$0.done == true}).count
+        }
+    }
+    
+    init(article: QuizArticles, questions: [MusicTask]) {
         self.article = article
-        self.percent = percent
+        self.articleQuestions = questions
     }
 }
 
-class QuizArticleViewModel {
-    var model: QuizArticle
-    var imageName: String
-    
-    init(model: QuizArticle, imageName: String) {
-        self.model = model
-        self.imageName = imageName
-    }
-    
-    func articleTitle() -> String {
-        return model.article.rawValue
-    }
-    
-    func resultTitle() -> String {
-        return "Выполнено на \(String(describing: model.percent!))%"
-    }
-    
-}
+
 
 

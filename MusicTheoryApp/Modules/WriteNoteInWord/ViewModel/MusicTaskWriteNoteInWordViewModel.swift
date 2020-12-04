@@ -29,12 +29,11 @@ class MusicTaskWriteNoteInWordViewModel {
             if let part = partOfWord.1 {
                 let noteName = part.name.noteRusName()
                 if userAnswer.uppercased() == noteName.uppercased() {
-                    model.done = true
+                    model.didFinishTask(result: true)
                     return true
                 }
             }
         }
-        model.done = false
         return false
     }
     

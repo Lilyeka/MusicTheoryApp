@@ -12,12 +12,17 @@ class MainInteractor: MainInteractorProtocol {
     weak var presenter: MainPresenterProtocol!
     
     var articles: [QuizArticleViewModel] = [
-        QuizArticleViewModel(model: QuizArticle(article: .trebleCleffNotes, percent: 0), imageName: "mainTreble"),
-        QuizArticleViewModel(model: QuizArticle(article: .bassCleffNotes, percent: 0), imageName: "mainBass"),
-        QuizArticleViewModel(model: QuizArticle(article: .durationsAndPauses, percent: 0), imageName: "mainDuration")
+        QuizArticleViewModel(
+            model: QuizArticle(article: .trebleCleffNotes, questions: MusicTasks.shared.tasks),
+            imageName: "mainTreble"),
+        QuizArticleViewModel(
+            model: QuizArticle(article: .bassCleffNotes, questions:MusicTasksBass.shared.tasks),
+            imageName: "mainBass"),
+        QuizArticleViewModel(
+            model: QuizArticle(article: .durationsAndPauses, questions: MusicTasksPausesDurations.shared.tasks),
+            imageName: "mainDuration")
     ]
 
-    
     required init(presenter: MainPresenterProtocol) {
         self.presenter = presenter
     }

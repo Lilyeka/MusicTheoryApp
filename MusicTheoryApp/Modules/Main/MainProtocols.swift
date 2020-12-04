@@ -32,6 +32,6 @@ protocol MainInteractorProtocol: class {
 }
 
 protocol MainRouterProtocol: class {
-    func showQuizScene(article: QuizArticles)
+    func showQuizScene(article: QuizArticle)
 }
 

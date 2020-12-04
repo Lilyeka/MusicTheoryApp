@@ -16,7 +16,15 @@ class QuizViewController: UIViewController, QuizViewProtocol {
     var presenter: QuizPresenterProtocol!
     var configurator: QuizConfiguratorProtocol = QuizConfigurator()
     var currentQuestionNumber: Int = 0
-    var questions = [MusicTask]()
+    var numberOfFinishedTasks: Int!
+    var questions: [MusicTask]!
+    var notFinishedQuestions:[MusicTask] {
+        get {
+            var questionsCopy = questions
+            questionsCopy?.removeFirst(numberOfFinishedTasks!)
+            return questionsCopy! //questions.filter { $0.done == false }
+        }
+    }
     
     //MARK: -Views
     lazy var layout: UICollectionViewFlowLayout = {
@@ -95,14 +103,8 @@ class QuizViewController: UIViewController, QuizViewProtocol {
         let collectionBounds = quizCollectionView.bounds
         var contentOffset: CGFloat = 0
         contentOffset = CGFloat(floor(self.quizCollectionView.contentOffset.x + collectionBounds.size.width))
-        currentQuestionNumber += currentQuestionNumber >= questions.count ? 0 : 1
-       
-        if rightAnswerAlert.isBeingPresented {
-            rightAnswerAlert.dismiss(animated: true, completion: nil)
-        }
-        if wrongAnswerAlert.isBeingPresented {
-            wrongAnswerAlert.dismiss(animated: true, completion: nil)
-        }
+        currentQuestionNumber += currentQuestionNumber >= notFinishedQuestions.count ? 0 : 1
+       //было тут
          self.moveToFrame(contentOffset: contentOffset)
     }
     
@@ -119,14 +121,14 @@ class QuizViewController: UIViewController, QuizViewProtocol {
 //MARK: -UICollectionViewDataSource
 extension QuizViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        questions.count
+        notFinishedQuestions.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let frame = quizCollectionView.frame
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-        
-        let question = questions[indexPath.row]
+    
+        let question = notFinishedQuestions[indexPath.row]
         switch question {
         case is MusicTaskSelectNote:
             var cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizSelectNoteCollectionViewCell.cellIdentifier, for: indexPath) as? QuizSelectNoteCollectionViewCell
@@ -159,7 +161,7 @@ extension QuizViewController: UICollectionViewDataSource {
                 cell?.delegate = self
                 return cell!
             } else {
-                let viewModel = MusicTaskSelectNoteInWordViewModel(model:questions[indexPath.row] as! MusicTaskSelectNoteInWord)
+                let viewModel = MusicTaskSelectNoteInWordViewModel(model: q)
                 var cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizSelectNoteInWordCollectionViewCell.cellIdentifier, for: indexPath) as? QuizSelectNoteInWordCollectionViewCell
                 if cell == nil {
                     cell = QuizSelectNoteInWordCollectionViewCell(frame: frame)
@@ -169,14 +171,14 @@ extension QuizViewController: UICollectionViewDataSource {
                 return cell!
             }
         case is MusicTaskPauseAndDuration:
-            let viewModel = MusicTaskPauseAndDurationViewModel(model: questions[indexPath.row] as! MusicTaskPauseAndDuration)
+            let viewModel = MusicTaskPauseAndDurationViewModel(model: question as! MusicTaskPauseAndDuration)
             var cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizPauseAndDurationCollectionViewCell.cellIdentifier, for: indexPath) as? QuizPauseAndDurationCollectionViewCell
             if cell == nil { cell = QuizPauseAndDurationCollectionViewCell(frame: frame)}
             cell!.configureSubviews(viewModel: viewModel, frame: frame)
             cell!.delegate = self
             return cell!
         case is MusicTaskAddition:
-            let viewModel = MusicTaskAdditionViewModel(model: questions[indexPath.row] as! MusicTaskAddition)
+            let viewModel = MusicTaskAdditionViewModel(model: question as! MusicTaskAddition)
             var cell = collectionView.dequeueReusableCell(withReuseIdentifier: QuizAdditionCollectionViewCell.cellIdentifier, for: indexPath) as? QuizAdditionCollectionViewCell
             if cell == nil {
                 cell = QuizAdditionCollectionViewCell(frame: frame)
@@ -198,18 +200,24 @@ extension QuizViewController: QuizSelectAnswerDelegate {
     }
     
     func rightAnswerReaction() {
+        if rightAnswerAlert.isBeingPresented {
+            rightAnswerAlert.dismiss(animated: true, completion: nil)
+        }
         presentRightAnswerAlerts()
     }
     
     func wrongAnswerReaction() {
-        self.present(wrongAnswerAlert, animated: true)
+        if wrongAnswerAlert.isBeingPresented {
+            wrongAnswerAlert.dismiss(animated: true, completion: nil)
+        }
+        self.present(wrongAnswerAlert, animated: true, completion: nil)
     }
     
     fileprivate func presentRightAnswerAlerts() {
-        if (currentQuestionNumber == questions.count - 1)  {
-            self.present(lastQuestionRightAnswerAlert, animated: true)
+        if (currentQuestionNumber == notFinishedQuestions.count - 1) {
+            self.present(lastQuestionRightAnswerAlert, animated: true, completion: nil)
         } else {
-            self.present(rightAnswerAlert, animated: true)
+            self.present(rightAnswerAlert, animated: true, completion: nil)
         }
     }
 }
@@ -217,7 +225,7 @@ extension QuizViewController: QuizSelectAnswerDelegate {
 //MARK: -PianoViewDelegate
 extension QuizViewController: PianoViewDelegate {
     func keyTapped(withNotes: [(Note.NoteName, Note.Tonality)], view: UIView) {
-        let model = questions[currentQuestionNumber] as? MusicTaskShowNoteOnThePiano
+        let model = notFinishedQuestions[currentQuestionNumber] as? MusicTaskShowNoteOnThePiano
         if let model = model {
             let viewModel = MusicTaskShowtNoteOnThePianoViewModel(model: model)
             if viewModel.checkUserAnswer(userAnswer: withNotes) {

@@ -8,7 +8,8 @@
 
 import UIKit
 
-class MusicTasksBass {
+class MusicTasksBass: MusicTasksProtocol {
+    static let shared = MusicTasksBass()
     var tasks: [MusicTask] = [
         MusicTaskSelectNote(
             questionText: "Выберите ноты большой октавы, расположенные на основных линейках нотного стана",

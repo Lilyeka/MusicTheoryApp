@@ -37,7 +37,7 @@ class MusicTaskSelectNoteInWordViewModel {
         let userAnswerSet = Set(userAnswer)
         let notesInWordSet = notesInWord()
         let result = (userAnswerSet == notesInWordSet)
-        model.done = result
+        if result { model.didFinishTask(result: result) }
         return result
     }
     

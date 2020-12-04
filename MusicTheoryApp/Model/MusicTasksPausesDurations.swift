@@ -8,7 +8,8 @@
 
 import UIKit
 
-class MusicTasksPausesDurations {
+class MusicTasksPausesDurations: MusicTasksProtocol {
+    static let shared = MusicTasksPausesDurations()
     var tasks: [MusicTask] = [
         MusicTaskPauseAndDuration(
                    questionText: "Выберите длительность, которая соответствует данной паузе",

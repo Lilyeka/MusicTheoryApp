@@ -8,9 +8,10 @@
 
 import UIKit
 
-class MusicTasks {
+class MusicTasks: MusicTasksProtocol {
+    static let shared = MusicTasks()
     var tasks: [MusicTask] = [
-        MusicTaskSelectNote(
+        /*  MusicTaskSelectNote(
             questionText: "Выберите ноты первой октавы, расположенные на основных линейках нотного стана",
             notesArray: [ Note(name:.Do, tone:.none, duration:.whole),
                           Note(name:.re, tone:.none, duration:.whole),
@@ -219,7 +220,7 @@ class MusicTasks {
                                                 ("ре",Note(name: .re, tone: .none, duration: .whole)),
                                                 ("г",nil)],
                                   needToType: false,
-                                  cleff: CleffTypes.Treble),
+                                  cleff: CleffTypes.Treble),*/
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.si, tone:.none, duration:.whole)],
                                   partsOfWord: [
