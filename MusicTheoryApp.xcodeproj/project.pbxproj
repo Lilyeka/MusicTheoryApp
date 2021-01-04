@@ -473,6 +473,7 @@
 		6149E87325759DA700E4FC31 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				619BB54424B5C7A900D3076E /* MainViewCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -480,6 +481,7 @@
 		6149E874257831CA00E4FC31 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6149E875257831FA00E4FC31 /* QuizArticle.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -549,16 +551,14 @@
 		619BB53624B4F6C400D3076E /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				6149E874257831CA00E4FC31 /* Model */,
 				619BB53C24B5021B00D3076E /* MainViewController.swift */,
 				619BB53824B4FF3C00D3076E /* MainConfigurator.swift */,
 				619BB53E24B5048300D3076E /* MainPresenter.swift */,
 				619BB54024B5096E00D3076E /* MainInteractor.swift */,
 				619BB54224B50F5A00D3076E /* MainRouter.swift */,
 				619BB53A24B5008F00D3076E /* MainProtocols.swift */,
-				619BB54424B5C7A900D3076E /* MainViewCollectionViewCell.swift */,
-				6149E875257831FA00E4FC31 /* QuizArticle.swift */,
-				6149E877257A280A00E4FC31 /* QuizArticleViewModel.swift */,
+				6149E874257831CA00E4FC31 /* Model */,
+				61B03C5D25A308C700CCD0BD /* View model */,
 				6149E87325759DA700E4FC31 /* View */,
 			);
 			path = Main;
@@ -612,6 +612,14 @@
 				616863282534E026000BD9F8 /* PauseViewModelSeparate.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		61B03C5D25A308C700CCD0BD /* View model */ = {
+			isa = PBXGroup;
+			children = (
+				6149E877257A280A00E4FC31 /* QuizArticleViewModel.swift */,
+			);
+			path = "View model";
 			sourceTree = "<group>";
 		};
 		61E3914924CE073E00603666 /* Managers */ = {

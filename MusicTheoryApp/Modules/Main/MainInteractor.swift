@@ -21,9 +21,10 @@ class MainInteractor: MainInteractorProtocol {
         QuizArticleViewModel(
             model: QuizArticle(article: .durationsAndPauses, questions: MusicTasksPausesDurations.shared.tasks),
             imageName: "mainDuration")
-    ]
+        ] 
 
     required init(presenter: MainPresenterProtocol) {
         self.presenter = presenter
+
     }
 }

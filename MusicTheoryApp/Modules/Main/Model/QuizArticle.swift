@@ -17,15 +17,12 @@ enum QuizArticles: String {
 class QuizArticle {
     var article: QuizArticles = .trebleCleffNotes
     var articleQuestions:[MusicTask]
-    var percent: Int {
-        get {
-            return (articleQuestions.filter({$0.done == true}).count*100)/articleQuestions.count
-        }
-    }
+
     
     var numberOfFinishedTasks: Int {
         get {
-           return articleQuestions.filter({$0.done == true}).count
+           var num = articleQuestions.filter({$0.done == true}).count
+            return num
         }
     }
     

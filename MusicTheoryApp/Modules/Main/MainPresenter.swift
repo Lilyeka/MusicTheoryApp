@@ -30,6 +30,14 @@ class MainPresenter: MainPresenterProtocol {
         return interactor.articles[index].resultTitle()
     }
     
+    func resultAngle(index: Int) -> CGFloat {
+        return interactor.articles[index].percentInAngle
+    }
+    
+    func articleResultDidChande(index: Int) -> Bool {
+        return interactor.articles[index].percentIsChanged
+    }
+    
     func imageForArticle(index: Int) -> UIImage? {
         guard let image = UIImage(named: interactor.articles[index].imageName) else {
             return nil
@@ -38,8 +46,9 @@ class MainPresenter: MainPresenterProtocol {
     }
     
     func didSelectItemAt(index: Int) {
-        let article = interactor.articles[index].model
-        router.showQuizScene(article: article)
+        let article = interactor.articles[index]//.model
+        article.previousPercent = article.percent
+        router.showQuizScene(article: article.model)
     }
 }
 

@@ -45,7 +45,7 @@ class MainViewCollectionViewCell: UICollectionViewCell {
         label.backgroundColor = .yellow
         return label
     }()
-    
+    var endAngle: CGFloat = 0.0
     var shapeLayer: CAShapeLayer!
     var trackLayer: CAShapeLayer!
     
@@ -88,13 +88,10 @@ class MainViewCollectionViewCell: UICollectionViewCell {
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-      //  self.layer.cornerRadius = self.frame.size.width / 2
-      //  self.layer.backgroundColor = #colorLiteral(red: 0.3014289141, green: 0.8125473857, blue: 0.8772042394, alpha: 1).withAlphaComponent(0.5).cgColor
-        
         imageView.layer.cornerRadius = imageView.frame.size.width/2
         let center = imageView.center
         let trackLayer = CAShapeLayer()
-        let circularPath = UIBezierPath(arcCenter: center, radius: CIRCLE_RADIUS, startAngle: -CGFloat.pi/2, endAngle: 2*CGFloat.pi, clockwise: true)
+        let circularPath = UIBezierPath(arcCenter: center, radius: CIRCLE_RADIUS, startAngle: -CGFloat.pi/2, endAngle: endAngle/*1*CGFloat.pi*/, clockwise: true)
         trackLayer.path = circularPath.cgPath
         trackLayer.strokeColor = UIColor.lightGray.cgColor
         trackLayer.lineCap = .round
@@ -113,6 +110,8 @@ class MainViewCollectionViewCell: UICollectionViewCell {
     }
 
     override func prepareForReuse() {
-         imageView.image = nil
+        super.prepareForReuse()
+        imageView.image = nil
+        setNeedsDisplay()
     }
 }

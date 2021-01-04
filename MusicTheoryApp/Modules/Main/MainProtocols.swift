@@ -25,6 +25,8 @@ protocol MainPresenterProtocol: class {
     func resultTitleForArticle(index: Int) -> String
     func imageForArticle(index: Int) -> UIImage?
     func didSelectItemAt(index: Int)
+    func resultAngle(index: Int) -> CGFloat
+    func articleResultDidChande(index: Int) -> Bool
 }
 
 protocol MainInteractorProtocol: class {

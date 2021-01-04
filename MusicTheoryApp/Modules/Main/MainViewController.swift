@@ -60,15 +60,23 @@ class MainViewController: UIViewController, MainViewProtocol {
 //    }
     
     override func viewDidAppear(_ animated: Bool) {
-        var i = 0
-        while i < 3 {
-            let indexPath = NSIndexPath(row: i, section: 0)
-            if let cell = articlesCollectionView.cellForItem(at: indexPath as IndexPath) as? MainViewCollectionViewCell {
-                cell.animationFunc()
-            }
-            i += 1
-        }
         articlesCollectionView.reloadData()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { 
+            var i = 0
+                  while i < 3 {
+                      let indexPath = NSIndexPath(row: i, section: 0)
+                    if let cell = self.articlesCollectionView.cellForItem(at: indexPath as IndexPath) as? MainViewCollectionViewCell,
+                        self.presenter.articleResultDidChande(index: i)
+                        {
+                          cell.animationFunc()
+                          // TODO - animationFunc() сделать с комплишеном
+                          // в комплишне запустить функцию приравнивания
+                          // предыдущего процента к текущему (это нужно чтобы не срабатывала повторно анимация на предыдущем измененном разделе)
+                      }
+                      i += 1
+                  }
+        }
+ 
     }
    
     // MARK: - Private methods
@@ -103,6 +111,7 @@ extension MainViewController: UICollectionViewDataSource {
         }
         cell.resultLabel.text = presenter.resultTitleForArticle(index: indexPath.row)
         cell.textLabel.text = presenter.titleForArticle(index: indexPath.row)
+        cell.endAngle = presenter.resultAngle(index: indexPath.row)
         return cell
     }
 }
