@@ -12,6 +12,17 @@ class QuizArticleViewModel {
     var model: QuizArticle
     var imageName: String
     var previousPercent: CGFloat = 0.0
+   
+    var previousPercentInAngle: CGFloat {
+        get {
+            var angle = (CGFloat(previousPercent)*360)/100
+            angle *= CGFloat.pi/180
+            angle -= CGFloat.pi/2
+            print("previous angle = \(angle)")
+            return angle
+        }
+    }
+    
     var percentIsChanged: Bool {
         get { return self.previousPercent != self.percent}
     }

@@ -34,6 +34,10 @@ class MainPresenter: MainPresenterProtocol {
         return interactor.articles[index].percentInAngle
     }
     
+    func previousResultAngle(index: Int) -> CGFloat {
+        return interactor.articles[index].previousPercentInAngle
+       }
+    
     func articleResultDidChande(index: Int) -> Bool {
         return interactor.articles[index].percentIsChanged
     }
@@ -49,6 +53,10 @@ class MainPresenter: MainPresenterProtocol {
         let article = interactor.articles[index]//.model
         article.previousPercent = article.percent
         router.showQuizScene(article: article.model)
+    }
+    
+    func afterAnimation(index: Int) {
+        interactor.articles[index].previousPercent = interactor.articles[index].percent
     }
 }
 

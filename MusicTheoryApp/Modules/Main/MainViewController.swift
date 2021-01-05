@@ -61,17 +61,20 @@ class MainViewController: UIViewController, MainViewProtocol {
     
     override func viewDidAppear(_ animated: Bool) {
         articlesCollectionView.reloadData()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { 
+       DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             var i = 0
                   while i < 3 {
                       let indexPath = NSIndexPath(row: i, section: 0)
                     if let cell = self.articlesCollectionView.cellForItem(at: indexPath as IndexPath) as? MainViewCollectionViewCell,
                         self.presenter.articleResultDidChande(index: i)
                         {
-                          cell.animationFunc()
+                            cell.animationFunc {[i]  in
+                                self.presenter.afterAnimation(index: i)
+                                print("Сработала круговая анимация для ячейки \(i)")
+                            }
                           // TODO - animationFunc() сделать с комплишеном
                           // в комплишне запустить функцию приравнивания
-                          // предыдущего процента к текущему (это нужно чтобы не срабатывала повторно анимация на предыдущем измененном разделе)
+                          // предыдущего процента к текущему (это нужно чтобы не срабатывала повторно анимация на предыдущих измененных разделах)
                       }
                       i += 1
                   }
@@ -90,12 +93,12 @@ class MainViewController: UIViewController, MainViewProtocol {
         articlesCollectionView.heightAnchor.constraint(equalToConstant: COLLECTION_VIEW_CELL_HIGHT + 2*COLLECTION_VIEW_SECTION_INSET).isActive = true
     }
     
-    @objc private func handleTap() {
-        let indexPath = NSIndexPath(row: 0, section: 0)
-        if let cell = articlesCollectionView.cellForItem(at: indexPath as IndexPath) as? MainViewCollectionViewCell {
-            cell.animationFunc()
-        }
-    }
+//    @objc private func handleTap() {
+//        let indexPath = NSIndexPath(row: 0, section: 0)
+//        if let cell = articlesCollectionView.cellForItem(at: indexPath as IndexPath) as? MainViewCollectionViewCell {
+//            cell.animationFunc()
+//        }
+//    }
 }
 
 // MARK: - UICollectionViewDataSource
@@ -106,12 +109,15 @@ extension MainViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewCollectionViewCell.cellIdentifier, for: indexPath) as! MainViewCollectionViewCell
+    
         if let image = presenter.imageForArticle(index: indexPath.row) {
             cell.imageView.image = image
         }
         cell.resultLabel.text = presenter.resultTitleForArticle(index: indexPath.row)
         cell.textLabel.text = presenter.titleForArticle(index: indexPath.row)
         cell.endAngle = presenter.resultAngle(index: indexPath.row)
+        cell.previousEndAngle = presenter.previousResultAngle(index: indexPath.row)
+        cell.setNeedsDisplay()
         return cell
     }
 }

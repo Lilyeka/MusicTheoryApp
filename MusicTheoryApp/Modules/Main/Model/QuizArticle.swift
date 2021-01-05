@@ -21,7 +21,7 @@ class QuizArticle {
     
     var numberOfFinishedTasks: Int {
         get {
-           var num = articleQuestions.filter({$0.done == true}).count
+           let num = articleQuestions.filter({$0.done == true}).count
             return num
         }
     }
