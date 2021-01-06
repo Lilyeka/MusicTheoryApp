@@ -99,8 +99,8 @@ class QuizPauseAndDurationCollectionViewCell: UICollectionViewCell {
         variantsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         variantsCollectionView.translatesAutoresizingMaskIntoConstraints = false
         variantsCollectionView.isScrollEnabled = false
-         variantsCollectionView.dataSource = self
-         variantsCollectionView.delegate = self
+        variantsCollectionView.dataSource = self
+        variantsCollectionView.delegate = self
         variantsCollectionView.backgroundColor = .white
         variantsCollectionView.register(QuizVariantCollectionViewCell.self, forCellWithReuseIdentifier: QuizVariantCollectionViewCell.cellIdentifier)
     
@@ -140,7 +140,7 @@ extension QuizPauseAndDurationCollectionViewCell: UICollectionViewDelegate {
             cell.layer.borderColor = UIColor.green.cgColor
             self.delegate?.additionalRightAnswerReaction(view: cell.viewForFireworks)
             collectionView.isUserInteractionEnabled = false
-            let seconds = 1.0
+            let seconds = 0.5
             DispatchQueue.main.asyncAfter(deadline:.now() + seconds) {
                 self.delegate?.rightAnswerReaction()
             }

@@ -336,7 +336,7 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
     fileprivate func checkAndReactInView(duration: Duration,view: UIView) {
         if viewModel.checkUserAnswer(userAnswer: duration) {
             self.delegate?.additionalRightAnswerReaction(view: view)
-            let seconds = 1.0
+            let seconds = 0.5
             DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
                 self.delegate?.rightAnswerReaction()
             }
@@ -379,7 +379,7 @@ extension QuizAdditionCollectionViewCell: UIPickerViewDelegate {
         let imageView: UIImageView = UIImageView(image:image)
         imageView.contentMode = .scaleAspectFit
         imageView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        imageView.transform = CGAffineTransform(rotationAngle: 3*3.14159/2)
+        imageView.transform = CGAffineTransform(rotationAngle: 3*CGFloat.pi/2)
         return imageView
     }
     

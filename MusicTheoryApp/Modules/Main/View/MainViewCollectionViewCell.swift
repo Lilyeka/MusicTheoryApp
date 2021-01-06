@@ -132,6 +132,5 @@ class MainViewCollectionViewCell: UICollectionViewCell {
         if shapeLayer != nil { shapeLayer.removeFromSuperlayer() }
         if trackLayer != nil { trackLayer.removeFromSuperlayer() }
         if previousTrackLayer != nil { previousTrackLayer.removeFromSuperlayer() }
-        //setNeedsDisplay()
     }
 }

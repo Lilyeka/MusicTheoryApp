@@ -61,7 +61,7 @@ class MainViewController: UIViewController, MainViewProtocol {
     
     override func viewDidAppear(_ animated: Bool) {
         articlesCollectionView.reloadData()
-       DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        DispatchQueue.main.async {
             var i = 0
                   while i < 3 {
                       let indexPath = NSIndexPath(row: i, section: 0)
@@ -72,9 +72,7 @@ class MainViewController: UIViewController, MainViewProtocol {
                                 self.presenter.afterAnimation(index: i)
                                 print("Сработала круговая анимация для ячейки \(i)")
                             }
-                          // TODO - animationFunc() сделать с комплишеном
-                          // в комплишне запустить функцию приравнивания
-                          // предыдущего процента к текущему (это нужно чтобы не срабатывала повторно анимация на предыдущих измененных разделах)
+    
                       }
                       i += 1
                   }
