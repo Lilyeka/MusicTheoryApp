@@ -17,18 +17,24 @@ enum QuizArticles: String {
 class QuizArticle {
     var article: QuizArticles = .trebleCleffNotes
     var articleQuestions:[MusicTask]
+    var result: ArticleResultsAndKeys
 
-    
     var numberOfFinishedTasks: Int {
         get {
-           let num = articleQuestions.filter({$0.done == true}).count
-            return num
+            var doneTasks = result.doneTasks
+            if doneTasks == 0 {
+                let num = articleQuestions.filter({$0.done == true}).count
+                UserDefaults.standard.set(num,forKey:result.rawValue)
+                doneTasks = result.doneTasks
+            }
+            return doneTasks
         }
     }
     
-    init(article: QuizArticles, questions: [MusicTask]) {
+    init(article: QuizArticles, questions: [MusicTask], result: ArticleResultsAndKeys) {
         self.article = article
         self.articleQuestions = questions
+        self.result = result
     }
 }
 
