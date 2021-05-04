@@ -24,7 +24,8 @@ enum ArticleResultsAndKeys: String {
         }
     }
     
-    var doneTasks: Int {
+    
+    func  getDoneTasks() -> Int {
         switch self {
         case .firstArticleDoneTasksNumber:
             return UserDefaults.standard.integer(forKey: ArticleResultsAndKeys.firstArticleDoneTasksNumber.rawValue)
@@ -34,9 +35,5 @@ enum ArticleResultsAndKeys: String {
              return UserDefaults.standard.integer(forKey: ArticleResultsAndKeys.thirdArticleDoneTasksNumber.rawValue)
         }
     }
-    
-    
-    
 }
 
- //

@@ -51,12 +51,17 @@ class MainPresenter: MainPresenterProtocol {
     
     func didSelectItemAt(index: Int) {
         let article = interactor.articles[index]//.model
+        interactor.currentArticle = article
         article.previousPercent = article.percent
         router.showQuizScene(article: article.model)
     }
     
     func afterAnimation(index: Int) {
         interactor.articles[index].previousPercent = interactor.articles[index].percent
+    }
+    
+    func updateRecentSelectedArticle() {
+        interactor.currentArticle?.model.updateCache()
     }
 }
 

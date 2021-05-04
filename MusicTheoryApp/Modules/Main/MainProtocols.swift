@@ -25,6 +25,7 @@ protocol MainPresenterProtocol: class {
     func resultTitleForArticle(index: Int) -> String
     func imageForArticle(index: Int) -> UIImage?
     func didSelectItemAt(index: Int)
+    func updateRecentSelectedArticle()
     func resultAngle(index: Int) -> CGFloat
     func articleResultDidChande(index: Int) -> Bool
     func afterAnimation(index: Int)
@@ -33,6 +34,7 @@ protocol MainPresenterProtocol: class {
 
 protocol MainInteractorProtocol: class {
     var articles: [QuizArticleViewModel] { get }
+    var currentArticle: QuizArticleViewModel? { get set }
 }
 
 protocol MainRouterProtocol: class {

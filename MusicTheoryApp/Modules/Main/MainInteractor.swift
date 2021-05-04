@@ -9,6 +9,8 @@
 import Foundation
 
 class MainInteractor: MainInteractorProtocol {
+    var currentArticle: QuizArticleViewModel?
+    
     weak var presenter: MainPresenterProtocol!
     
     var articles: [QuizArticleViewModel] = [

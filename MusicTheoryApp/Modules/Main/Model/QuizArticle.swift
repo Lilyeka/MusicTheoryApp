@@ -21,14 +21,13 @@ class QuizArticle {
 
     var numberOfFinishedTasks: Int {
         get {
-            var doneTasks = result.doneTasks
-            if doneTasks == 0 {
-                let num = articleQuestions.filter({$0.done == true}).count
-                UserDefaults.standard.set(num,forKey:result.rawValue)
-                doneTasks = result.doneTasks
-            }
-            return doneTasks
+            return result.getDoneTasks()
         }
+    }
+    
+    func updateCache() {
+        let num = articleQuestions.filter({$0.done == true}).count
+        UserDefaults.standard.set(num,forKey:result.rawValue)
     }
     
     init(article: QuizArticles, questions: [MusicTask], result: ArticleResultsAndKeys) {

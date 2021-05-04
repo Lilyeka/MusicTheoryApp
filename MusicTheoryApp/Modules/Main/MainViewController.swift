@@ -63,21 +63,21 @@ class MainViewController: UIViewController, MainViewProtocol {
         articlesCollectionView.reloadData()
         DispatchQueue.main.async {
             var i = 0
-                  while i < 3 {
-                      let indexPath = NSIndexPath(row: i, section: 0)
-                    if let cell = self.articlesCollectionView.cellForItem(at: indexPath as IndexPath) as? MainViewCollectionViewCell,
-                        self.presenter.articleResultDidChande(index: i)
-                        {
-                            cell.animationFunc {[i]  in
-                                self.presenter.afterAnimation(index: i)
-                                print("Сработала круговая анимация для ячейки \(i)")
-                            }
-    
-                      }
-                      i += 1
-                  }
+            while i < 3 {
+                let indexPath = NSIndexPath(row: i, section: 0)
+                if let cell = self.articlesCollectionView.cellForItem(at: indexPath as IndexPath) as? MainViewCollectionViewCell,
+                   self.presenter.articleResultDidChande(index: i)
+                {
+                    cell.animationFunc { [i]  in
+                        self.presenter.afterAnimation(index: i)
+                        print("Сработала круговая анимация для ячейки \(i)")
+                    }
+                    
+                }
+                i += 1
+            }
         }
- 
+        
     }
    
     // MARK: - Private methods
@@ -125,4 +125,13 @@ extension MainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         presenter.didSelectItemAt(index: indexPath.row)
     }
+}
+
+// MARK: - QuizViewControllerDelegate
+extension MainViewController: QuizViewControllerDelegate {
+    func storeRightAnswer() {
+        presenter.updateRecentSelectedArticle()
+    }
+    
+    
 }

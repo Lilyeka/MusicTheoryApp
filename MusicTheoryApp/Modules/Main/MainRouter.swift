@@ -22,7 +22,10 @@ class MainRouter: MainRouterProtocol {
         let vc = QuizViewController()
         vc.questions = article.articleQuestions
         vc.numberOfFinishedTasks = article.numberOfFinishedTasks
-//        switch article.article {
+        if let viewController = viewController as? QuizViewControllerDelegate {
+            vc.delegate = viewController
+        }
+        //        switch article.article {
 //        case .trebleCleffNotes:
 //            let musicTasks = MusicTasks()
 //            vc.questions = musicTasks.tasks

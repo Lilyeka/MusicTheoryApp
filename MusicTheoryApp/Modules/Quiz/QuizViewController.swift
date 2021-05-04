@@ -8,7 +8,14 @@
 
 import UIKit
 
+protocol QuizViewControllerDelegate: NSObjectProtocol {
+    func storeRightAnswer()
+}
+
 class QuizViewController: UIViewController, QuizViewProtocol {
+    //MARK: -Delegates
+    weak var delegate: QuizViewControllerDelegate?
+    
     //MARK: -ViewControllers
     private let fireworkController = ClassicFireworkController()
     
@@ -214,6 +221,8 @@ extension QuizViewController: QuizSelectAnswerDelegate {
     }
     
     fileprivate func presentRightAnswerAlerts() {
+        // update cache
+        delegate?.storeRightAnswer()
         if (currentQuestionNumber == notFinishedQuestions.count - 1) {
             self.present(lastQuestionRightAnswerAlert, animated: true, completion: nil)
         } else {

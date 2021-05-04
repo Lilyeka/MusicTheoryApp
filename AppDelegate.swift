@@ -22,14 +22,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
        /* let testVC = TestViewController()
         window?.rootViewController = testVC */
         
-        let nav = UINavigationController()
+        let navVC = UINavigationController()
        // nav.edgesForExtendedLayout = .all;
         let mainVC = MainViewController()
         let configurator = MainConfigurator()
         configurator.configure(with: mainVC)
-        nav.viewControllers = [mainVC]
+        navVC.viewControllers = [mainVC]
         // Assign the view controller as `window`'s root view controller
-        window?.rootViewController = nav
+        window?.rootViewController = navVC
         
         
         // Show the window
