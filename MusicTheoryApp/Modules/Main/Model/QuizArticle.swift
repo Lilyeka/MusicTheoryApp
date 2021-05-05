@@ -26,8 +26,8 @@ class QuizArticle {
     }
     
     func updateCache() {
-        let num = articleQuestions.filter({$0.done == true}).count
-        UserDefaults.standard.set(num,forKey:result.rawValue)
+        let newNumberOfFinishedTasks = numberOfFinishedTasks + 1
+        UserDefaults.standard.set(newNumberOfFinishedTasks,forKey:result.rawValue)
     }
     
     init(article: QuizArticles, questions: [MusicTask], result: ArticleResultsAndKeys) {
