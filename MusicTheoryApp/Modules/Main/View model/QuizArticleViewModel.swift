@@ -54,7 +54,7 @@ class QuizArticleViewModel {
     }
     
     func resultTitle() -> String {
-        return "Выполнено на \(String(describing: Int(percent)))%"
+        return "Выполнено \(String(describing: Int(percent)))%"
     }
     
  

@@ -29,7 +29,9 @@ protocol MainPresenterProtocol: class {
     func resultAngle(index: Int) -> CGFloat
     func articleResultDidChande(index: Int) -> Bool
     func afterAnimation(index: Int)
-    func previousResultAngle(index: Int) -> CGFloat 
+    func previousResultAngle(index: Int) -> CGFloat
+    func startArticleAgain(index: Int)
+    func showStartButton(index: Int) -> Bool
 }
 
 protocol MainInteractorProtocol: class {

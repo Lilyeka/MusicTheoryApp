@@ -13,18 +13,6 @@ enum ArticleResultsAndKeys: String {
     case secondArticleDoneTasksNumber = "second_article_done_tasks"
     case thirdArticleDoneTasksNumber = "third_article_done_tasks"
     
-    var title: String {
-        switch self {
-        case .firstArticleDoneTasksNumber:
-            return "Ноты в скрипичном ключе"
-        case .secondArticleDoneTasksNumber:
-            return "Ноты в басовом ключе"
-        case .thirdArticleDoneTasksNumber:
-            return "Длительности и паузы"
-        }
-    }
-    
-    
     func  getDoneTasks() -> Int {
         switch self {
         case .firstArticleDoneTasksNumber:

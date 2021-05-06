@@ -11,8 +11,8 @@ import UIKit
 class MainViewController: UIViewController, MainViewProtocol {
     // MARK: - Constants
     let COLLECTION_VIEW_SECTION_INSET: CGFloat = 10.0
-    let COLLECTION_VIEW_CELL_WIDTH: CGFloat = 160
-    let COLLECTION_VIEW_CELL_HIGHT: CGFloat = 190
+    let COLLECTION_VIEW_CELL_WIDTH: CGFloat = 180
+    let COLLECTION_VIEW_CELL_HIGHT: CGFloat = 222
     
     // MARK: - Variables
     var presenter: MainPresenterProtocol!
@@ -87,7 +87,7 @@ class MainViewController: UIViewController, MainViewProtocol {
         self.view.addSubview(self.articlesCollectionView)
         articlesCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         articlesCollectionView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        articlesCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8).isActive = true
+        articlesCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.90).isActive = true
         articlesCollectionView.heightAnchor.constraint(equalToConstant: COLLECTION_VIEW_CELL_HIGHT + 2*COLLECTION_VIEW_SECTION_INSET).isActive = true
     }
     
@@ -116,7 +116,15 @@ extension MainViewController: UICollectionViewDataSource {
         cell.endAngle = presenter.resultAngle(index: indexPath.row)
         cell.previousEndAngle = presenter.previousResultAngle(index: indexPath.row)
         cell.setNeedsDisplay()
+        cell.startButton.tag = indexPath.row
+        cell.startButton.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
+        cell.startButton.isHidden = !presenter.showStartButton(index: indexPath.row)
         return cell
+    }
+    
+    @objc func startButtonTapped(sender: UIButton) {
+        let index = sender.tag
+        presenter.startArticleAgain(index: index)
     }
 }
 
@@ -127,11 +135,10 @@ extension MainViewController: UICollectionViewDelegate {
     }
 }
 
-// MARK: - QuizViewControllerDelegate
+// MARK: -QuizViewControllerDelegate
 extension MainViewController: QuizViewControllerDelegate {
     func storeRightAnswer() {
         presenter.updateRecentSelectedArticle()
     }
-    
-    
 }
+

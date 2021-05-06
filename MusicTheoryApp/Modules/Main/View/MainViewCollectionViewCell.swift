@@ -46,6 +46,19 @@ class MainViewCollectionViewCell: UICollectionViewCell {
         label.backgroundColor = .yellow
         return label
     }()
+    
+    var startButton: UIButton = {
+        var button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Начать заново", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .blue
+        button.layer.cornerRadius = 5
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.black.cgColor
+        return button
+    }()
+    
     var endAngle: CGFloat = 0.0
     var previousEndAngle: CGFloat = 0.0
     
@@ -53,28 +66,35 @@ class MainViewCollectionViewCell: UICollectionViewCell {
     var trackLayer: CAShapeLayer!
     var previousTrackLayer: CAShapeLayer!
     
+    var showStartButton: Bool = false
+    
     // MARK: - Life cycle
     override init(frame: CGRect) {
         super.init(frame:.zero)
         backgroundColor = .gray
         imageView.image = UIImage(named:"trebleClef")
         
+        contentView.addSubview(textLabel)
+        textLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5).isActive = true
+        textLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5).isActive = true
+        textLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5).isActive = true
+   
         contentView.addSubview(imageView)
+        imageView.topAnchor.constraint(equalTo: textLabel.bottomAnchor, constant: 5).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: 2*CIRCLE_RADIUS).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: 2*CIRCLE_RADIUS).isActive = true
-        imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5).isActive = true
         imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         
-        contentView.addSubview(textLabel)
-        textLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8).isActive = true
-        textLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
-        textLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
-        //textLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0).isActive = true
-        
         contentView.addSubview(resultLabel)
-        resultLabel.topAnchor.constraint(equalTo: textLabel.bottomAnchor, constant: 8).isActive = true
+        resultLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8).isActive = true
         resultLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
         resultLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
+        
+        contentView.addSubview(startButton)
+        startButton.topAnchor.constraint(equalTo: resultLabel.bottomAnchor, constant: 8).isActive = true
+        startButton.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 8).isActive = true
+        startButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -8).isActive = true
+        startButton.heightAnchor.constraint(equalToConstant: 28).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -53,7 +53,9 @@ class MainPresenter: MainPresenterProtocol {
         let article = interactor.articles[index]//.model
         interactor.currentArticle = article
         article.previousPercent = article.percent
-        router.showQuizScene(article: article.model)
+        if article.percent != 100 {
+            router.showQuizScene(article: article.model)
+        }
     }
     
     func afterAnimation(index: Int) {
@@ -62,6 +64,15 @@ class MainPresenter: MainPresenterProtocol {
     
     func updateRecentSelectedArticle() {
         interactor.currentArticle?.model.updateCache()
+    }
+    
+    func startArticleAgain(index: Int) {
+        print("Start article \(index)!")
+    }
+    
+    func showStartButton(index: Int) -> Bool {
+        let article = interactor.articles[index]
+        return article.percent == 100
     }
 }
 
