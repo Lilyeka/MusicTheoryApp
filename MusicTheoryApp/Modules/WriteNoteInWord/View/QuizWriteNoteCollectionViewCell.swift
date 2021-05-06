@@ -124,6 +124,7 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
         staffView.drawNotesOneByOne1(notesAreTransparent: false, viewWidth: halfWidth)
         
         wordStackView = UIStackView()
+        wordStackView.addBackground(color: .white)
         wordStackView.translatesAutoresizingMaskIntoConstraints = false
         wordStackView.axis = .horizontal
         wordStackView.distribution = .fill
