@@ -41,5 +41,6 @@ protocol MainInteractorProtocol: class {
 
 protocol MainRouterProtocol: class {
     func showQuizScene(article: QuizArticle)
+    func showStartAgainAlert(index: Int)
 }
 

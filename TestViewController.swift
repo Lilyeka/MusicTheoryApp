@@ -29,7 +29,7 @@ class TestViewController: UIViewController {
         view.layer.addSublayer(trackLayer)
       
         shapeLayer.path = circularPath.cgPath
-        shapeLayer.strokeColor = UIColor.red.cgColor
+        shapeLayer.strokeColor = UIColor(named: "doneArticleColour")?.cgColor//UIColor.red.cgColor
         shapeLayer.lineCap = .round
         shapeLayer.fillColor = UIColor.clear.cgColor
         shapeLayer.lineWidth = 10

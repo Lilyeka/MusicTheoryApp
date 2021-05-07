@@ -38,4 +38,8 @@ class MainRouter: MainRouterProtocol {
 //        }
         self.viewController.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    func showStartAgainAlert(index: Int) {
+        self.viewController.showStartArticleAgainAlert(index: index)
+    }
 }

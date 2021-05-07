@@ -9,6 +9,7 @@
 import UIKit
 
 class MainPresenter: MainPresenterProtocol {
+  
     weak var view: MainViewProtocol!
     var interactor: MainInteractorProtocol!
     var router: MainRouterProtocol!
@@ -53,7 +54,9 @@ class MainPresenter: MainPresenterProtocol {
         let article = interactor.articles[index]//.model
         interactor.currentArticle = article
         article.previousPercent = article.percent
-        if article.percent != 100 {
+        if article.percent == 100 {
+            router.showStartAgainAlert(index: index)
+        } else {
             router.showQuizScene(article: article.model)
         }
     }

@@ -12,7 +12,7 @@ class MainViewController: UIViewController, MainViewProtocol {
     // MARK: - Constants
     let COLLECTION_VIEW_SECTION_INSET: CGFloat = 10.0
     let COLLECTION_VIEW_CELL_WIDTH: CGFloat = 180
-    let COLLECTION_VIEW_CELL_HIGHT: CGFloat = 222
+    let COLLECTION_VIEW_CELL_HIGHT: CGFloat = 194
     
     // MARK: - Variables
     var presenter: MainPresenterProtocol!
@@ -38,7 +38,6 @@ class MainViewController: UIViewController, MainViewProtocol {
         return collectionView
     }()
     
-
     // MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,6 +90,17 @@ class MainViewController: UIViewController, MainViewProtocol {
         articlesCollectionView.heightAnchor.constraint(equalToConstant: COLLECTION_VIEW_CELL_HIGHT + 2*COLLECTION_VIEW_SECTION_INSET).isActive = true
     }
     
+    func showStartArticleAgainAlert(index: Int) {
+        let alert = UIAlertController(title: "", message: "Пройти раздел заново?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action) in
+            presenter.startArticleAgain(index: index)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+        
+        }))
+      present(alert, animated: true, completion: nil)
+    }
+    
 //    @objc private func handleTap() {
 //        let indexPath = NSIndexPath(row: 0, section: 0)
 //        if let cell = articlesCollectionView.cellForItem(at: indexPath as IndexPath) as? MainViewCollectionViewCell {
@@ -116,15 +126,7 @@ extension MainViewController: UICollectionViewDataSource {
         cell.endAngle = presenter.resultAngle(index: indexPath.row)
         cell.previousEndAngle = presenter.previousResultAngle(index: indexPath.row)
         cell.setNeedsDisplay()
-        cell.startButton.tag = indexPath.row
-        cell.startButton.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
-        cell.startButton.isHidden = !presenter.showStartButton(index: indexPath.row)
         return cell
-    }
-    
-    @objc func startButtonTapped(sender: UIButton) {
-        let index = sender.tag
-        presenter.startArticleAgain(index: index)
     }
 }
 
