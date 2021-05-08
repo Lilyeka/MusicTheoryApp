@@ -45,43 +45,24 @@ class MainViewController: UIViewController, MainViewProtocol {
         configureCollectionView()
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//         UIGraphicsBeginImageContext(self.view.frame.size)
-//               UIImage(named: "bgImage")?.draw(in: self.view.bounds)
-//
-//               if let image = UIGraphicsGetImageFromCurrentImageContext(){
-//                   UIGraphicsEndImageContext()
-//                   self.view.backgroundColor = UIColor(patternImage: image)
-//               }else{
-//                   UIGraphicsEndImageContext()
-//                   debugPrint("Image not available")
-//                }
-//    }
-    
     override func viewDidAppear(_ animated: Bool) {
-      //  articlesCollectionView.reloadData()
-     //   anime()
+       collectionViewCellsCircleAnimation()
         
     }
-//
-//    func anime() {
-//           DispatchQueue.main.async {
-//               var i = 0
-//               while i < 3 {
-//                   let indexPath = NSIndexPath(row: i, section: 0)
-//                   if let cell = self.articlesCollectionView.cellForItem(at: indexPath as IndexPath) as? MainViewCollectionViewCell,
-//                      self.presenter.articleResultDidChande(index: i)
-//                   {
-//                       cell.animationFunc { [i]  in
-//                           self.presenter.afterAnimation(index: i)
-//                           print("Сработала круговая анимация для ячейки \(i)")
-//                       }
-//
-//                   }
-//                   i += 1
-//               }
-//           }
-//    }
+
+    func collectionViewCellsCircleAnimation() {
+           DispatchQueue.main.async {
+               var i = 0
+               while i < 3 {
+                   let indexPath = NSIndexPath(row: i, section: 0)
+                   if let cell = self.articlesCollectionView.cellForItem(at: indexPath as IndexPath) as? MainViewCollectionViewCell
+                   {
+                        cell.animationFunc()
+                   }
+                   i += 1
+               }
+           }
+    }
    
     // MARK: - Private methods
     private func configureCollectionView() {
@@ -104,13 +85,6 @@ class MainViewController: UIViewController, MainViewProtocol {
         }))
       present(alert, animated: true, completion: nil)
     }
-    
-//    @objc private func handleTap() {
-//        let indexPath = NSIndexPath(row: 0, section: 0)
-//        if let cell = articlesCollectionView.cellForItem(at: indexPath as IndexPath) as? MainViewCollectionViewCell {
-//            cell.animationFunc()
-//        }
-//    }
 }
 
 // MARK: - UICollectionViewDataSource

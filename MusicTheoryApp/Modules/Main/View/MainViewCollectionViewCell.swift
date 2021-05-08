@@ -25,7 +25,6 @@ class MainViewCollectionViewCell: UICollectionViewCell {
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        // label.backgroundColor = .green
         return label
     }()
     
@@ -40,7 +39,7 @@ class MainViewCollectionViewCell: UICollectionViewCell {
     var resultLabel: UILabel = {
         var label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .heavy)
-        label.textColor = UIColor(named: "doneArticleColour")//UIColor.red
+        label.textColor = UIColor(named: "doneArticleColour")
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
@@ -49,38 +48,14 @@ class MainViewCollectionViewCell: UICollectionViewCell {
     }()
     
     var viewModel: QuizArticleViewModel?
-    
     var shapeLayer: CAShapeLayer!
     var trackLayer: CAShapeLayer!
     var previousTrackLayer: CAShapeLayer!
-    
     var showStartButton: Bool = false
     
     // MARK: - Life cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        self.layer.cornerRadius = 5
-//        self.layer.borderWidth = 1
-//        self.layer.borderColor = UIColor.gray.cgColor
-//        //backgroundColor = .gray
-//        imageView.image = UIImage(named:"trebleClef")
-//
-//        contentView.addSubview(textLabel)
-//        textLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8).isActive = true
-//        textLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5).isActive = true
-//        textLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5).isActive = true
-//
-//        contentView.addSubview(imageView)
-//        imageView.topAnchor.constraint(equalTo: textLabel.bottomAnchor, constant: 8).isActive = true
-//        imageView.widthAnchor.constraint(equalToConstant: 2*CIRCLE_RADIUS).isActive = true
-//        imageView.heightAnchor.constraint(equalToConstant: 2*CIRCLE_RADIUS).isActive = true
-//        imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-//
-//        contentView.addSubview(resultLabel)
-//        resultLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8).isActive = true
-//        resultLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
-//        resultLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -92,14 +67,14 @@ class MainViewCollectionViewCell: UICollectionViewCell {
         layer.cornerRadius = 5
         layer.borderWidth = 1
         layer.borderColor = UIColor.gray.cgColor
-        //backgroundColor = .gray
-        //imageView.image = UIImage(named:"trebleClef")
+        
+        textLabel.text = viewModel.articleTitle()
         
         contentView.addSubview(textLabel)
         textLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8).isActive = true
         textLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5).isActive = true
         textLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5).isActive = true
-   
+    
         contentView.addSubview(imageView)
         imageView.topAnchor.constraint(equalTo: textLabel.bottomAnchor, constant: 8).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: 2*CIRCLE_RADIUS).isActive = true
@@ -110,36 +85,41 @@ class MainViewCollectionViewCell: UICollectionViewCell {
         resultLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8).isActive = true
         resultLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
         resultLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
-        
-        //imageView = UIImageView(image: UIImage(named: viewModel?.imageName ?? "trebleClef"))
     }
     
     func animationFunc() {
-        imageView.layer.removeAllAnimations()
+        let center = imageView.center
+        let path = UIBezierPath(arcCenter: center, radius: CIRCLE_RADIUS, startAngle: viewModel!.previousPercentInAngle, endAngle: viewModel!.percentInAngle, clockwise: true)
         
         shapeLayer = CAShapeLayer()
-        shapeLayer.path = circularPath?.cgPath
-        shapeLayer.strokeColor = UIColor(named: "doneArticleColour")?.cgColor//UIColor.red.cgColor
+        shapeLayer.path = path.cgPath
+        shapeLayer.strokeColor = UIColor(named: "doneArticleColour")?.cgColor
         shapeLayer.lineCap = .round
         shapeLayer.fillColor = UIColor.clear.cgColor
         shapeLayer.lineWidth = TRACK_LINE_WIDTH
         shapeLayer.strokeEnd = 0
         contentView.layer.addSublayer(shapeLayer)
         
+        CATransaction.begin()
+          CATransaction.setCompletionBlock({ [viewModel] in
+            viewModel?.afterAnimation()
+          })
         let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
         basicAnimation.toValue = 1
         basicAnimation.duration = 2
         basicAnimation.fillMode = .forwards
         basicAnimation.isRemovedOnCompletion = false
         shapeLayer.add(basicAnimation, forKey: "urSoBasic")
+        CATransaction.commit()
     }
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-        imageView.layer.cornerRadius = imageView.frame.size.width/2
+        if trackLayer != nil { trackLayer.removeFromSuperlayer() }
+        if previousTrackLayer != nil { previousTrackLayer.removeFromSuperlayer() }
         
-        textLabel.text = viewModel?.articleTitle()
         resultLabel.text = viewModel?.resultTitle()
+        imageView.layer.cornerRadius = imageView.frame.size.width/2
         imageView.image = UIImage(named: viewModel?.imageName ?? "trebleClef")
     
         let center = imageView.center
@@ -155,41 +135,10 @@ class MainViewCollectionViewCell: UICollectionViewCell {
         previousTrackLayer = CAShapeLayer()
         let prevCircularPath = UIBezierPath(arcCenter: center, radius: CIRCLE_RADIUS, startAngle: -CGFloat.pi/2, endAngle:  viewModel!.previousPercentInAngle, clockwise: true)
         previousTrackLayer.path = prevCircularPath.cgPath
-        previousTrackLayer.strokeColor = UIColor.red.cgColor
+        previousTrackLayer.strokeColor = UIColor(named: "doneArticleColour")?.cgColor
         previousTrackLayer.lineCap = .round
         previousTrackLayer.fillColor = UIColor.clear.cgColor
         previousTrackLayer.lineWidth = TRACK_LINE_WIDTH
         contentView.layer.addSublayer(previousTrackLayer)
-        print("сработала функция draw angle = \(viewModel!.percentInAngle)")
-        print("сработала функция draw previousAngle = \(viewModel!.previousPercentInAngle)")
-        
-        if viewModel?.percentIsChanged == true {
-            animationFunc()
-            viewModel?.afterAnimation()
-        }
-    }
-    
-    
-    
-    
-
-    
-    
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        if shapeLayer != nil {
-            shapeLayer.removeFromSuperlayer()
-            shapeLayer =  nil
-        }
-        if trackLayer != nil {
-            trackLayer.removeFromSuperlayer()
-            trackLayer = nil
-        }
-        if previousTrackLayer != nil {
-            previousTrackLayer.removeFromSuperlayer()
-            previousTrackLayer = nil
-        }
-        print("prepareForReuse called");
     }
 }

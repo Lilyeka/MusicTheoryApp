@@ -43,6 +43,7 @@ class QuizArticleViewModel {
     init(model: QuizArticle, imageName: String) {
         self.model = model
         self.imageName = imageName
+        previousPercent = percent
     }
     
     var percent: CGFloat {
