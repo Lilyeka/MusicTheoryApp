@@ -18,6 +18,7 @@ class QuizArticleViewModel {
             var angle = (CGFloat(previousPercent)*360)/100
             angle *= CGFloat.pi/180
             angle -= CGFloat.pi/2
+            print("previousPercent = \(previousPercent)")
             print("previous angle = \(angle)")
             return angle
         }
@@ -33,6 +34,7 @@ class QuizArticleViewModel {
             angle *= CGFloat.pi/180
             angle -= CGFloat.pi/2
           //  angle += CGFloat.pi/2 //temp
+            print("percent = \(percent)")
             print("angle = \(angle)")
             return angle//(CGFloat(angle) * CGFloat.pi)/180
          }
@@ -57,6 +59,9 @@ class QuizArticleViewModel {
         return "Выполнено \(String(describing: Int(percent)))%"
     }
     
+    func afterAnimation() {
+        previousPercent = percent
+    }
  
     
 }

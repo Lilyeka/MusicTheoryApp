@@ -48,8 +48,7 @@ class MainViewCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    var endAngle: CGFloat = 0.0
-    var previousEndAngle: CGFloat = 0.0
+    var viewModel: QuizArticleViewModel?
     
     var shapeLayer: CAShapeLayer!
     var trackLayer: CAShapeLayer!
@@ -59,12 +58,42 @@ class MainViewCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Life cycle
     override init(frame: CGRect) {
-        super.init(frame:.zero)
-        self.layer.cornerRadius = 5
-        self.layer.borderWidth = 1
-        self.layer.borderColor = UIColor.gray.cgColor
+        super.init(frame: frame)
+//        self.layer.cornerRadius = 5
+//        self.layer.borderWidth = 1
+//        self.layer.borderColor = UIColor.gray.cgColor
+//        //backgroundColor = .gray
+//        imageView.image = UIImage(named:"trebleClef")
+//
+//        contentView.addSubview(textLabel)
+//        textLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8).isActive = true
+//        textLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5).isActive = true
+//        textLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5).isActive = true
+//
+//        contentView.addSubview(imageView)
+//        imageView.topAnchor.constraint(equalTo: textLabel.bottomAnchor, constant: 8).isActive = true
+//        imageView.widthAnchor.constraint(equalToConstant: 2*CIRCLE_RADIUS).isActive = true
+//        imageView.heightAnchor.constraint(equalToConstant: 2*CIRCLE_RADIUS).isActive = true
+//        imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+//
+//        contentView.addSubview(resultLabel)
+//        resultLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8).isActive = true
+//        resultLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
+//        resultLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configureSubviews(viewModel:QuizArticleViewModel, frame:CGRect) {
+        self.viewModel = viewModel
+        layer.cornerRadius = 5
+        layer.borderWidth = 1
+        layer.borderColor = UIColor.gray.cgColor
         //backgroundColor = .gray
-        imageView.image = UIImage(named:"trebleClef")
+        //imageView.image = UIImage(named:"trebleClef")
         
         contentView.addSubview(textLabel)
         textLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8).isActive = true
@@ -81,13 +110,11 @@ class MainViewCollectionViewCell: UICollectionViewCell {
         resultLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8).isActive = true
         resultLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
         resultLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
+        
+        //imageView = UIImageView(image: UIImage(named: viewModel?.imageName ?? "trebleClef"))
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func animationFunc(afterAnimation:()->()) {
+    func animationFunc() {
         imageView.layer.removeAllAnimations()
         
         shapeLayer = CAShapeLayer()
@@ -105,38 +132,64 @@ class MainViewCollectionViewCell: UICollectionViewCell {
         basicAnimation.fillMode = .forwards
         basicAnimation.isRemovedOnCompletion = false
         shapeLayer.add(basicAnimation, forKey: "urSoBasic")
-        afterAnimation()
     }
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         imageView.layer.cornerRadius = imageView.frame.size.width/2
         
+        textLabel.text = viewModel?.articleTitle()
+        resultLabel.text = viewModel?.resultTitle()
+        imageView.image = UIImage(named: viewModel?.imageName ?? "trebleClef")
+    
         let center = imageView.center
-        
         trackLayer = CAShapeLayer()
-        circularPath = UIBezierPath(arcCenter: center, radius: CIRCLE_RADIUS, startAngle: -CGFloat.pi/2, endAngle: endAngle, clockwise: true)
+        circularPath = UIBezierPath(arcCenter: center, radius: CIRCLE_RADIUS, startAngle: -CGFloat.pi/2, endAngle: viewModel!.percentInAngle, clockwise: true)
         trackLayer.path = circularPath?.cgPath
         trackLayer.strokeColor = UIColor.lightGray.cgColor
         trackLayer.lineCap = .round
         trackLayer.fillColor = UIColor.clear.cgColor
         trackLayer.lineWidth = TRACK_LINE_WIDTH
         contentView.layer.addSublayer(trackLayer)
-        
+
         previousTrackLayer = CAShapeLayer()
-        let prevCircularPath = UIBezierPath(arcCenter: center, radius: CIRCLE_RADIUS, startAngle: -CGFloat.pi/2, endAngle: previousEndAngle, clockwise: true)
+        let prevCircularPath = UIBezierPath(arcCenter: center, radius: CIRCLE_RADIUS, startAngle: -CGFloat.pi/2, endAngle:  viewModel!.previousPercentInAngle, clockwise: true)
         previousTrackLayer.path = prevCircularPath.cgPath
         previousTrackLayer.strokeColor = UIColor.red.cgColor
         previousTrackLayer.lineCap = .round
         previousTrackLayer.fillColor = UIColor.clear.cgColor
         previousTrackLayer.lineWidth = TRACK_LINE_WIDTH
         contentView.layer.addSublayer(previousTrackLayer)
+        print("сработала функция draw angle = \(viewModel!.percentInAngle)")
+        print("сработала функция draw previousAngle = \(viewModel!.previousPercentInAngle)")
+        
+        if viewModel?.percentIsChanged == true {
+            animationFunc()
+            viewModel?.afterAnimation()
+        }
     }
+    
+    
+    
+    
+
+    
+    
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        if shapeLayer != nil { shapeLayer.removeFromSuperlayer() }
-        if trackLayer != nil { trackLayer.removeFromSuperlayer() }
-        if previousTrackLayer != nil { previousTrackLayer.removeFromSuperlayer() }
+        if shapeLayer != nil {
+            shapeLayer.removeFromSuperlayer()
+            shapeLayer =  nil
+        }
+        if trackLayer != nil {
+            trackLayer.removeFromSuperlayer()
+            trackLayer = nil
+        }
+        if previousTrackLayer != nil {
+            previousTrackLayer.removeFromSuperlayer()
+            previousTrackLayer = nil
+        }
+        print("prepareForReuse called");
     }
 }
