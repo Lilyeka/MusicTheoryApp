@@ -117,6 +117,7 @@ class MainViewCollectionViewCell: UICollectionViewCell {
         super.draw(rect)
         if trackLayer != nil { trackLayer.removeFromSuperlayer() }
         if previousTrackLayer != nil { previousTrackLayer.removeFromSuperlayer() }
+        if shapeLayer != nil { shapeLayer.removeFromSuperlayer() }
         
         resultLabel.text = viewModel?.resultTitle()
         imageView.layer.cornerRadius = imageView.frame.size.width/2

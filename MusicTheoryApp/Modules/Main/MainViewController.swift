@@ -17,7 +17,6 @@ class MainViewController: UIViewController, MainViewProtocol {
     // MARK: - Variables
     var presenter: MainPresenterProtocol!
     var configurator: MainConfiguratorProtocol = MainConfigurator()
-    var indexPathToReload: IndexPath?
     
     // MARK: - Views
     lazy var layout: UICollectionViewFlowLayout = {
@@ -47,10 +46,6 @@ class MainViewController: UIViewController, MainViewProtocol {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if let indexPathToReload = indexPathToReload {
-            articlesCollectionView.reloadItems(at: [indexPathToReload])
-            self.indexPathToReload = nil
-        }
        collectionViewCellsCircleAnimation()
     }
 
@@ -89,8 +84,7 @@ class MainViewController: UIViewController, MainViewProtocol {
             {
                 cell.clearModel()
             }
-            indexPathToReload = indexPath
-            
+        
             presenter.startArticleAgain(index: index)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
