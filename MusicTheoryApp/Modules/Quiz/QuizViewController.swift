@@ -29,7 +29,7 @@ class QuizViewController: UIViewController, QuizViewProtocol {
         get {
             var questionsCopy = questions
             questionsCopy?.removeFirst(numberOfFinishedTasks!)
-            return questionsCopy! //questions.filter { $0.done == false }
+            return questionsCopy! 
         }
     }
     

@@ -11,12 +11,3 @@ import UIKit
 protocol MusicTasksProtocol: class {
     var tasks: [MusicTask] { get set }
 }
-
-extension MusicTasksProtocol{
-
-    var percentOfFinishedTasks: Int {
-        get {
-            return (tasks.filter({$0.done == true}).count*100)/tasks.count
-        }
-    }
-}

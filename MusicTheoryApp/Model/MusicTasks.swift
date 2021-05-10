@@ -220,7 +220,7 @@ class MusicTasks: MusicTasksProtocol {
                                                 ("ре",Note(name: .re, tone: .none, duration: .whole)),
                                                 ("г",nil)],
                                   needToType: false,
-                                  cleff: CleffTypes.Treble),*/
+                                  cleff: CleffTypes.Treble),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.si, tone:.none, duration:.whole)],
                                   partsOfWord: [
@@ -270,7 +270,7 @@ class MusicTasks: MusicTasksProtocol {
                                     ("Ми",Note(name:.mi, tone: .none, duration: .whole)),
                                     ("нута",nil)],
                                   needToType: true,
-                                  cleff: CleffTypes.Treble),
+                                  cleff: CleffTypes.Treble),*/
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.mi1, tone:.none, duration:.whole)],
                                   partsOfWord: [

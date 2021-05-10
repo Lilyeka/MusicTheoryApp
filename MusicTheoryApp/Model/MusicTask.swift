@@ -19,8 +19,4 @@ class MusicTask {
         self.notesArray = notesArray
         self.cleffType = cleff
     }
-    
-    func didFinishTask(result: Bool) {
-        self.done = result
-    }
 }

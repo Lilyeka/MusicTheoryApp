@@ -23,6 +23,15 @@ class QuizArticle {
         get {
             return result.getDoneTasks()
         }
+        set {
+            
+        }
+    }
+        
+    init(article: QuizArticles, questions: [MusicTask], result: ArticleResultsAndKeys) {
+        self.article = article
+        self.articleQuestions = questions
+        self.result = result
     }
     
     func updateCache() {
@@ -30,10 +39,9 @@ class QuizArticle {
         UserDefaults.standard.set(newNumberOfFinishedTasks,forKey:result.rawValue)
     }
     
-    init(article: QuizArticles, questions: [MusicTask], result: ArticleResultsAndKeys) {
-        self.article = article
-        self.articleQuestions = questions
-        self.result = result
+    func clearFinichedTasks() {
+        result.clearDoneTasks()
+        numberOfFinishedTasks = 0
     }
 }
 

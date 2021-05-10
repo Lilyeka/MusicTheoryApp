@@ -64,5 +64,8 @@ class QuizArticleViewModel {
         previousPercent = percent
     }
  
-    
+    func clearArticleResult() {
+        model.clearFinichedTasks()
+        previousPercent = percent
+    }
 }

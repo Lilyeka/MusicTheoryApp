@@ -13,15 +13,12 @@ enum ArticleResultsAndKeys: String {
     case secondArticleDoneTasksNumber = "second_article_done_tasks"
     case thirdArticleDoneTasksNumber = "third_article_done_tasks"
     
-    func  getDoneTasks() -> Int {
-        switch self {
-        case .firstArticleDoneTasksNumber:
-            return UserDefaults.standard.integer(forKey: ArticleResultsAndKeys.firstArticleDoneTasksNumber.rawValue)
-        case .secondArticleDoneTasksNumber:
-            return UserDefaults.standard.integer(forKey: ArticleResultsAndKeys.secondArticleDoneTasksNumber.rawValue)
-        case .thirdArticleDoneTasksNumber:
-             return UserDefaults.standard.integer(forKey: ArticleResultsAndKeys.thirdArticleDoneTasksNumber.rawValue)
-        }
+    func getDoneTasks() -> Int {
+        UserDefaults.standard.integer(forKey: self.rawValue)
+    }
+    
+    func clearDoneTasks() {
+        UserDefaults.standard.removeObject(forKey: self.rawValue)
     }
 }
 

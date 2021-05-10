@@ -17,6 +17,7 @@ class MainViewController: UIViewController, MainViewProtocol {
     // MARK: - Variables
     var presenter: MainPresenterProtocol!
     var configurator: MainConfiguratorProtocol = MainConfigurator()
+    var indexPathToReload: IndexPath?
     
     // MARK: - Views
     lazy var layout: UICollectionViewFlowLayout = {
@@ -46,8 +47,11 @@ class MainViewController: UIViewController, MainViewProtocol {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        if let indexPathToReload = indexPathToReload {
+            articlesCollectionView.reloadItems(at: [indexPathToReload])
+            self.indexPathToReload = nil
+        }
        collectionViewCellsCircleAnimation()
-        
     }
 
     func collectionViewCellsCircleAnimation() {
@@ -78,12 +82,19 @@ class MainViewController: UIViewController, MainViewProtocol {
     func showStartArticleAgainAlert(index: Int) {
         let alert = UIAlertController(title: "", message: "Пройти раздел заново?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action) in
+            
+
+            let indexPath = IndexPath(row: index, section: 0)
+            if let cell = self.articlesCollectionView.cellForItem(at: indexPath as IndexPath) as? MainViewCollectionViewCell
+            {
+                cell.clearModel()
+            }
+            indexPathToReload = indexPath
+            
             presenter.startArticleAgain(index: index)
         }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
-        
-        }))
-      present(alert, animated: true, completion: nil)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
 }
 

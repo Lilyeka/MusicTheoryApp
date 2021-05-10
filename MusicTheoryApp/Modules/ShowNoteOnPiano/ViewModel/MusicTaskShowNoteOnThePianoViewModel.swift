@@ -29,7 +29,6 @@ class MusicTaskShowtNoteOnThePianoViewModel {
         let noteTone = model.notesArray![0].tone
         for noteNameAndTone in userAnswer {
             if noteNameAndTone.0 == noteName && noteNameAndTone.1 == noteTone {
-                model.didFinishTask(result: true)
                 return true
             }
         }

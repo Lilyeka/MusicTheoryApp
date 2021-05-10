@@ -70,7 +70,11 @@ class MainPresenter: MainPresenterProtocol {
     }
     
     func startArticleAgain(index: Int) {
-        print("Start article \(index)!")
+        let article = interactor.articles[index]
+        interactor.currentArticle = article
+        article.previousPercent = article.percent
+        article.clearArticleResult()
+        router.showQuizScene(article: article.model)
     }
     
     func showStartButton(index: Int) -> Bool {

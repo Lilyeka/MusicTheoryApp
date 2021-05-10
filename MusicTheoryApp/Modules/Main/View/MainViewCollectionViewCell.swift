@@ -133,12 +133,20 @@ class MainViewCollectionViewCell: UICollectionViewCell {
         contentView.layer.addSublayer(trackLayer)
 
         previousTrackLayer = CAShapeLayer()
-        let prevCircularPath = UIBezierPath(arcCenter: center, radius: CIRCLE_RADIUS, startAngle: -CGFloat.pi/2, endAngle:  viewModel!.previousPercentInAngle, clockwise: true)
+        let prevCircularPath = UIBezierPath(arcCenter: center, radius: CIRCLE_RADIUS, startAngle: -CGFloat.pi/2, endAngle: viewModel!.previousPercentInAngle, clockwise: true)
         previousTrackLayer.path = prevCircularPath.cgPath
         previousTrackLayer.strokeColor = UIColor(named: "doneArticleColour")?.cgColor
         previousTrackLayer.lineCap = .round
         previousTrackLayer.fillColor = UIColor.clear.cgColor
         previousTrackLayer.lineWidth = TRACK_LINE_WIDTH
         contentView.layer.addSublayer(previousTrackLayer)
+    }
+    
+    func clearModel() {
+        viewModel?.clearArticleResult()
+        if trackLayer != nil { trackLayer.removeFromSuperlayer() }
+        if previousTrackLayer != nil { previousTrackLayer.removeFromSuperlayer() }
+        if shapeLayer != nil {shapeLayer.removeFromSuperlayer()}
+        setNeedsDisplay()
     }
 }
