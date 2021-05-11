@@ -114,7 +114,10 @@ class MainViewController: UIViewController, MainViewProtocol {
     }
     
     @objc func infoImageViewTapped() {
-        print("О программе")
+        let aboutVC = GameInfoViewController()
+        aboutVC.modalPresentationStyle = .overCurrentContext
+        aboutVC.modalTransitionStyle = .crossDissolve
+        self.present(aboutVC, animated: true, completion: nil)
     }
 }
 

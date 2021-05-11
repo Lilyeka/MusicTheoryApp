@@ -30,6 +30,11 @@
 		612AAABF24D74FFE00A3CC28 /* SparkViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612AAAA824D74FFE00A3CC28 /* SparkViewFactory.swift */; };
 		612AAAC024D74FFE00A3CC28 /* FireworkSpark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612AAAA924D74FFE00A3CC28 /* FireworkSpark.swift */; };
 		612AAAC124D74FFE00A3CC28 /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612AAAAB24D74FFE00A3CC28 /* CGPoint+Extensions.swift */; };
+		61400E58264AC74300F179F9 /* GameInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61400E57264AC74300F179F9 /* GameInfoViewController.swift */; };
+		61400E5D264B02CA00F179F9 /* SelfSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61400E5C264B02CA00F179F9 /* SelfSizedTableView.swift */; };
+		61400E61264B041D00F179F9 /* GameInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61400E60264B041D00F179F9 /* GameInfoHeaderView.swift */; };
+		61400E64264B048400F179F9 /* GameInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61400E63264B048400F179F9 /* GameInfoTableViewCell.swift */; };
+		61400E67264B04FE00F179F9 /* GameInfoLinksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61400E66264B04FE00F179F9 /* GameInfoLinksTableViewCell.swift */; };
 		6149E876257831FA00E4FC31 /* QuizArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6149E875257831FA00E4FC31 /* QuizArticle.swift */; };
 		6149E878257A280A00E4FC31 /* QuizArticleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6149E877257A280A00E4FC31 /* QuizArticleViewModel.swift */; };
 		6149E87A257A2E8C00E4FC31 /* MusicTasksProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6149E879257A2E8C00E4FC31 /* MusicTasksProtocol.swift */; };
@@ -120,6 +125,11 @@
 		612AAAA824D74FFE00A3CC28 /* SparkViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SparkViewFactory.swift; sourceTree = "<group>"; };
 		612AAAA924D74FFE00A3CC28 /* FireworkSpark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireworkSpark.swift; sourceTree = "<group>"; };
 		612AAAAB24D74FFE00A3CC28 /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
+		61400E57264AC74300F179F9 /* GameInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameInfoViewController.swift; sourceTree = "<group>"; };
+		61400E5C264B02CA00F179F9 /* SelfSizedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfSizedTableView.swift; sourceTree = "<group>"; };
+		61400E60264B041D00F179F9 /* GameInfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameInfoHeaderView.swift; sourceTree = "<group>"; };
+		61400E63264B048400F179F9 /* GameInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameInfoTableViewCell.swift; sourceTree = "<group>"; };
+		61400E66264B04FE00F179F9 /* GameInfoLinksTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameInfoLinksTableViewCell.swift; sourceTree = "<group>"; };
 		6149E875257831FA00E4FC31 /* QuizArticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizArticle.swift; sourceTree = "<group>"; };
 		6149E877257A280A00E4FC31 /* QuizArticleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizArticleViewModel.swift; sourceTree = "<group>"; };
 		6149E879257A2E8C00E4FC31 /* MusicTasksProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTasksProtocol.swift; sourceTree = "<group>"; };
@@ -474,6 +484,18 @@
 			path = "System Extensions";
 			sourceTree = "<group>";
 		};
+		61400E56264AC70C00F179F9 /* GameInfo */ = {
+			isa = PBXGroup;
+			children = (
+				61400E57264AC74300F179F9 /* GameInfoViewController.swift */,
+				61400E5C264B02CA00F179F9 /* SelfSizedTableView.swift */,
+				61400E60264B041D00F179F9 /* GameInfoHeaderView.swift */,
+				61400E63264B048400F179F9 /* GameInfoTableViewCell.swift */,
+				61400E66264B04FE00F179F9 /* GameInfoLinksTableViewCell.swift */,
+			);
+			path = GameInfo;
+			sourceTree = "<group>";
+		};
 		6149E87325759DA700E4FC31 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -572,6 +594,7 @@
 		619BB53724B4FEE900D3076E /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				61400E56264AC70C00F179F9 /* GameInfo */,
 				619BB53624B4F6C400D3076E /* Main */,
 				619BB54824B7235500D3076E /* Quiz */,
 				61068AAA253F698700E234D4 /* AdditionDurations */,
@@ -712,6 +735,7 @@
 				612AAAB624D74FFE00A3CC28 /* CircleColorSparkViewFactory.swift in Sources */,
 				616810522517D9750095754E /* MusicTasksPausesDurations.swift in Sources */,
 				6168105C2527A62A0095754E /* QuizAdditionNotesCollectionViewCell.swift in Sources */,
+				61400E67264B04FE00F179F9 /* GameInfoLinksTableViewCell.swift in Sources */,
 				6168632F253825CF000BD9F8 /* MathElement.swift in Sources */,
 				6168104A2517C4760095754E /* MusicTaskPauseAndDuration.swift in Sources */,
 				612AAABD24D74FFE00A3CC28 /* SparkViewAnimator.swift in Sources */,
@@ -748,8 +772,10 @@
 				61E3914B24CE079500603666 /* DeviceTypeManager.swift in Sources */,
 				616810502517CB750095754E /* MusicTaskPauseAndDurationViewModel.swift in Sources */,
 				612AAABC24D74FFE00A3CC28 /* Firework.swift in Sources */,
+				61400E61264B041D00F179F9 /* GameInfoHeaderView.swift in Sources */,
 				616863312538282C000BD9F8 /* MathSignViewModel.swift in Sources */,
 				616810482517C35B0095754E /* QuizPauseAndDurationCollectionViewCell.swift in Sources */,
+				61400E58264AC74300F179F9 /* GameInfoViewController.swift in Sources */,
 				612AAAAD24D74FFE00A3CC28 /* ClassicFireworkController.swift in Sources */,
 				612AAABF24D74FFE00A3CC28 /* SparkViewFactory.swift in Sources */,
 				619BB54524B5C7A900D3076E /* MainViewCollectionViewCell.swift in Sources */,
@@ -785,12 +811,14 @@
 				6175CA0A24BC5C920028BDBD /* QuizSelectNoteCollectionViewCell.swift in Sources */,
 				61E8ABF024BDB29100B58A01 /* QuizWriteNoteCollectionViewCell.swift in Sources */,
 				61A818BD247477E2009DCE07 /* MusicTask.swift in Sources */,
+				61400E5D264B02CA00F179F9 /* SelfSizedTableView.swift in Sources */,
 				619BB54724B7234C00D3076E /* QuizViewController.swift in Sources */,
 				617F7EC7245E05F900EE08AA /* Note.swift in Sources */,
 				619BB54124B5096E00D3076E /* MainInteractor.swift in Sources */,
 				61681054251FD7CC0095754E /* QuizVariantCollectionViewCell.swift in Sources */,
 				617592C52503D21C00FB372D /* MusicTasksBass.swift in Sources */,
 				6149E878257A280A00E4FC31 /* QuizArticleViewModel.swift in Sources */,
+				61400E64264B048400F179F9 /* GameInfoTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
