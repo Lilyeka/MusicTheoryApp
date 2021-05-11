@@ -13,6 +13,7 @@ class MainViewController: UIViewController, MainViewProtocol {
     let COLLECTION_VIEW_SECTION_INSET: CGFloat = 10.0
     let COLLECTION_VIEW_CELL_WIDTH: CGFloat = 180
     let COLLECTION_VIEW_CELL_HIGHT: CGFloat = 194
+    let ICON_SIZE: CGFloat = 44.0
     
     // MARK: - Variables
     var presenter: MainPresenterProtocol!
@@ -38,6 +39,18 @@ class MainViewController: UIViewController, MainViewProtocol {
         return collectionView
     }()
     
+    lazy var infoImageView: UIImageView = {
+        var imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "information")
+        imageView.widthAnchor.constraint(equalToConstant: ICON_SIZE).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: ICON_SIZE).isActive = true
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.infoImageViewTapped))
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(tapGestureRecognizer)
+        return imageView
+    }()
+    
     // MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,7 +61,17 @@ class MainViewController: UIViewController, MainViewProtocol {
     override func viewDidAppear(_ animated: Bool) {
        collectionViewCellsCircleAnimation()
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
     func collectionViewCellsCircleAnimation() {
            DispatchQueue.main.async {
                var i = 0
@@ -72,23 +95,26 @@ class MainViewController: UIViewController, MainViewProtocol {
         articlesCollectionView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         articlesCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.90).isActive = true
         articlesCollectionView.heightAnchor.constraint(equalToConstant: COLLECTION_VIEW_CELL_HIGHT + 2*COLLECTION_VIEW_SECTION_INSET).isActive = true
+        
+        self.view.addSubview(infoImageView)
+        infoImageView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
+        infoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
     }
     
     func showStartArticleAgainAlert(index: Int) {
         let alert = UIAlertController(title: "", message: "Пройти раздел заново?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action) in
-            
-
             let indexPath = IndexPath(row: index, section: 0)
             if let cell = self.articlesCollectionView.cellForItem(at: indexPath as IndexPath) as? MainViewCollectionViewCell
-            {
-                cell.clearModel()
-            }
-        
+            { cell.clearModel() }
             presenter.startArticleAgain(index: index)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         present(alert, animated: true, completion: nil)
+    }
+    
+    @objc func infoImageViewTapped() {
+        print("О программе")
     }
 }
 
