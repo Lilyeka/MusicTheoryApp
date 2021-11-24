@@ -15,32 +15,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
        
-         // Clear UserDefaults
-        //UserDefaults.standard.removeObject(forKey: "first_article_done_tasks")
-        //UserDefaults.standard.removeObject(forKey:  "second_article_done_tasks")
-        //UserDefaults.standard.removeObject(forKey: "third_article_done_tasks")
+        // Clear UserDefaults to start all articles again
+        // UserDefaults.standard.removeObject(forKey: "first_article_done_tasks")
+        // UserDefaults.standard.removeObject(forKey:  "second_article_done_tasks")
+        // UserDefaults.standard.removeObject(forKey: "third_article_done_tasks")
         
-        //Create a window that is the same size as the screen
         window = UIWindow(frame: UIScreen.main.bounds)
-        // Create a view controller
-        
-       /* let testVC = TestViewController()
-        window?.rootViewController = testVC */
-        
-        let navVC = UINavigationController()
-       // nav.edgesForExtendedLayout = .all;
         let mainVC = MainViewController()
-        let configurator = MainConfigurator()
-        configurator.configure(with: mainVC)
-        navVC.viewControllers = [mainVC]
-        // Assign the view controller as `window`'s root view controller
-        window?.rootViewController = navVC
-        
-        
-        // Show the window
+        window?.rootViewController = UINavigationController(rootViewController: mainVC)
         window?.makeKeyAndVisible()
         return true
     }
-
 }
 

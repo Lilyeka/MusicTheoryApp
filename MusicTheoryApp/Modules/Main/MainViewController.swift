@@ -17,8 +17,7 @@ class MainViewController: UIViewController, MainViewProtocol {
     
     // MARK: - Variables
     var presenter: MainPresenterProtocol!
-    var configurator: MainConfiguratorProtocol = MainConfigurator()
-    
+  
     // MARK: - Views
     lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -54,6 +53,7 @@ class MainViewController: UIViewController, MainViewProtocol {
     // MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        let configurator: MainConfiguratorProtocol = MainConfigurator()
         configurator.configure(with: self)
         configureCollectionView()
     }
