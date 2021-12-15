@@ -25,17 +25,6 @@ class MainRouter: MainRouterProtocol {
         if let viewController = viewController as? QuizViewControllerDelegate {
             vc.delegate = viewController
         }
-        //        switch article.article {
-//        case .trebleCleffNotes:
-//            let musicTasks = MusicTasks()
-//            vc.questions = musicTasks.tasks
-//        case .bassCleffNotes:
-//            let musicTasksBass = MusicTasksBass()
-//            vc.questions = musicTasksBass.tasks
-//        case .durationsAndPauses:
-//            let musicTasksPauses = MusicTasksPausesDurations()
-//            vc.questions = musicTasksPauses.tasks
-//        }
         self.viewController.navigationController?.pushViewController(vc, animated: true)
     }
     
