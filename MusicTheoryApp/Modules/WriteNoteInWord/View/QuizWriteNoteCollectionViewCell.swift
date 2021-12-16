@@ -9,21 +9,15 @@
 import UIKit
 
 class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
+    
     //MARK: -Static
-
     static let WORD_FONT: UIFont = {
         if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
             return UIFont.boldSystemFont(ofSize: 45.0)
         }
         return UIFont.boldSystemFont(ofSize: 35.0)
     }()
-       
-    var numberOfLettersInTextField = 0
-    var textFieldPosition = 0
-    var letterWidth: CGFloat = { //берем ширину самой широкой буквы
-        return "Ж".width(withConstrainedHeight: 50.0, font: QuizWriteNoteCollectionViewCell.WORD_FONT)
-    }()
-    
+           
     //MARK: -Delegate
     var delegate: QuizSelectAnswerDelegate?
     
@@ -34,23 +28,15 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
     var staffView: StaffView!
     var wordStackView: UIStackView!
     var textField: UITextField!
+    var bgButton: UIButton!
+    var questionLabel: UILabel!
     
-    var bgButton: UIButton = {
-        var btn = UIButton()
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.backgroundColor = .clear
-        return btn
-    }()
-    
-    var questionLabel: UILabel = {
-        var label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .black
-        label.font = QuizWriteNoteCollectionViewCell.QUESTION_FONT
-        label.lineBreakMode = .byWordWrapping
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        return label
+    //MARK: -Variables
+    var numberOfLettersInTextField = 0
+    var textFieldPosition = 0
+    var letterWidth: CGFloat = { //берем ширину самой широкой буквы
+        return "Ж".width(withConstrainedHeight: 50.0,
+                         font: QuizWriteNoteCollectionViewCell.WORD_FONT)
     }()
 
     //MARK: -Init
@@ -71,95 +57,106 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
     func configureSubviews(viewModel:MusicTaskWriteNoteInWordViewModel, frame:CGRect) {
         self.viewModel = viewModel
         
-        textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.textAlignment = .center
-        textField.placeholder = "?"
-        textField.font = QuizWriteNoteCollectionViewCell.WORD_FONT
-        textField.borderStyle = UITextField.BorderStyle.roundedRect
-        textField.autocorrectionType = UITextAutocorrectionType.no
-        textField.keyboardType = UIKeyboardType.alphabet
-        textField.returnKeyType = UIReturnKeyType.done
-        textField.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.center
-        textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
-        textField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
+        self.textField = UITextField()
+        self.textField.translatesAutoresizingMaskIntoConstraints = false
+        self.textField.textAlignment = .center
+        self.textField.placeholder = "?"
+        self.textField.font = QuizWriteNoteCollectionViewCell.WORD_FONT
+        self.textField.borderStyle = UITextField.BorderStyle.roundedRect
+        self.textField.autocorrectionType = UITextAutocorrectionType.no
+        self.textField.keyboardType = .default
+        self.textField.delegate = self
+        self.textField.returnKeyType = UIReturnKeyType.done
+        self.textField.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.center
+        self.textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
+        self.textField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
         
-
+        self.bgButton = UIButton()
+        self.bgButton.translatesAutoresizingMaskIntoConstraints = false
+        self.bgButton.backgroundColor = .clear
+        
+        self.questionLabel = UILabel()
+        self.questionLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.questionLabel.textColor = .black
+        self.questionLabel.font = QuizWriteNoteCollectionViewCell.QUESTION_FONT
+        self.questionLabel.lineBreakMode = .byWordWrapping
+        self.questionLabel.numberOfLines = 0
+        self.questionLabel.textAlignment = .center
+        self.questionLabel.text = self.viewModel.model.questionText
+     
         self.contentView.addSubview(bgButton)
-        bgButton.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
-        bgButton.leftAnchor.constraint(equalTo: self.contentView.leftAnchor).isActive = true
-        bgButton.rightAnchor.constraint(equalTo: self.contentView.rightAnchor).isActive = true
-        bgButton.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor).isActive = true
-        bgButton.addTarget(self, action: #selector(bgButtonTapped(sender:)), for: .touchUpInside)
+        self.bgButton.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
+        self.bgButton.leftAnchor.constraint(equalTo: self.contentView.leftAnchor).isActive = true
+        self.bgButton.rightAnchor.constraint(equalTo: self.contentView.rightAnchor).isActive = true
+        self.bgButton.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor).isActive = true
+        self.bgButton.addTarget(self, action: #selector(bgButtonTapped(sender:)), for: .touchUpInside)
         
         self.contentView.addSubview(questionLabel)
-        questionLabel.text = viewModel.model.questionText
-        questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 15.0).isActive = true
-        questionLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 15.0).isActive = true
-        questionLabel.widthAnchor.constraint(equalToConstant: frame.size.width - 30.0).isActive = true
-        questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: frame.size.width, font:QuizWriteNoteCollectionViewCell.QUESTION_FONT))!).isActive = true
+        self.questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 15.0).isActive = true
+        self.questionLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 15.0).isActive = true
+        self.questionLabel.widthAnchor.constraint(equalToConstant: frame.size.width - 30.0).isActive = true
+        self.questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: frame.size.width, font:QuizWriteNoteCollectionViewCell.QUESTION_FONT))!).isActive = true
+        
+        self.staffView = StaffView(
+            notesViewModels: self.viewModel.notesViewModels,
+            selectOnlyOneNote: true,
+            frame: CGRect.zero,
+            notesDelegate: nil,
+            cleff: self.viewModel.model.cleffType)
+        self.staffView.translatesAutoresizingMaskIntoConstraints = false
+        self.staffView.isUserInteractionEnabled = false
         
         let halfWidth = (self.contentView.frame.width - 15.0*3)/2
-        staffView = StaffView(notesViewModels: viewModel.notesViewModels,
-                              selectOnlyOneNote: true,
-                              frame: CGRect.zero,
-                              notesDelegate: nil,
-                              cleff: viewModel.model.cleffType)
-        staffView.translatesAutoresizingMaskIntoConstraints = false
-        staffView.isUserInteractionEnabled = false
+        self.contentView.addSubview(self.staffView)
+        self.staffView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
+        self.staffView.widthAnchor.constraint(equalToConstant: halfWidth).isActive = true
+        self.staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 15.0).isActive = true
+        self.staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
+        self.staffView.drawNotesOneByOne1(notesAreTransparent: false, viewWidth: halfWidth)
         
-        self.contentView.addSubview(staffView)
-        staffView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor, constant: -0).isActive = true
-        staffView.widthAnchor.constraint(equalToConstant: halfWidth).isActive = true
-        staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 15.0).isActive = true
-        staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
-        staffView.drawNotesOneByOne1(notesAreTransparent: false, viewWidth: halfWidth)
-        
-        wordStackView = UIStackView()
-        wordStackView.addBackground(color: .white)
-        wordStackView.translatesAutoresizingMaskIntoConstraints = false
-        wordStackView.axis = .horizontal
-        wordStackView.distribution = .fill
-        wordStackView.spacing = 5.0
-        wordStackView.alignment = .center
+        self.wordStackView = UIStackView()
+        self.wordStackView.addBackground(color: .white)
+        self.wordStackView.translatesAutoresizingMaskIntoConstraints = false
+        self.wordStackView.axis = .horizontal
+        self.wordStackView.distribution = .fill
+        self.wordStackView.spacing = 5.0
+        self.wordStackView.alignment = .center
         
         var i = 0
-        while i < viewModel.model.partsOfWord!.count {
-            if let note = viewModel.model.partsOfWord![i].1 {
-                numberOfLettersInTextField = note.name.noteRusName().count
-                let textWidth = CGFloat(numberOfLettersInTextField) * letterWidth + 15.0
-                textField.keyboardType = .default
-                textField.delegate = self
-                textField.widthAnchor.constraint(equalToConstant: textWidth).isActive = true
-                textField.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                wordStackView.addArrangedSubview(textField)
-                textFieldPosition = i
+        while i < self.viewModel.model.partsOfWord!.count {
+            if let note = self.viewModel.model.partsOfWord![i].1 {
+                self.numberOfLettersInTextField = note.name.noteRusName().count
+                let textWidth = CGFloat(numberOfLettersInTextField) * self.letterWidth + 15.0
+                self.textField.widthAnchor.constraint(equalToConstant: textWidth).isActive = true
+                self.textField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                self.wordStackView.addArrangedSubview(textField)
+                self.textFieldPosition = i
             } else {
                 let label = UILabel()
                 label.text = viewModel.model.partsOfWord![i].0
                 label.textColor = .black
                 label.font = QuizWriteNoteCollectionViewCell.WORD_FONT
                 label.textAlignment = i == 0 ? .right : .left
-                wordStackView.addArrangedSubview(label)
+                self.wordStackView.addArrangedSubview(label)
             }
             i += 1
         }
    
-        self.contentView.addSubview(wordStackView)
-        wordStackView.backgroundColor = .black
-        wordStackView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
-        wordStackView.centerXAnchor.constraint(equalTo: staffView.centerXAnchor, constant: 15.0 + halfWidth).isActive = true
+        self.contentView.addSubview(self.wordStackView)
+        self.wordStackView.backgroundColor = .black
+        self.wordStackView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
+        self.wordStackView.centerXAnchor.constraint(equalTo: self.staffView.centerXAnchor, constant: 15.0 + halfWidth).isActive = true
         
-        questionLabel.superview?.bringSubviewToFront(questionLabel)
+        self.questionLabel.superview?.bringSubviewToFront(questionLabel)
     }
     
     override func prepareForReuse() {
         for view in contentView.subviews {
             view.removeFromSuperview()
         }
-        viewModel = nil
-        staffView = nil
-        wordStackView = nil
+        self.viewModel = nil
+        self.staffView = nil
+        self.wordStackView = nil
     }
     
     override func didMoveToSuperview() {
@@ -181,10 +178,10 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
     @objc func keyboardWillShow(_ notification: Notification) {
         let translate = CATransform3DMakeTranslation(0, -40, 0)
         let scale = CATransform3DScale(translate, 0.6, 0.6, 1)
-        staffView.layer.transform = CATransform3DConcat(translate, scale)
+        self.staffView.layer.transform = CATransform3DConcat(translate, scale)
         
         let translate1 = CATransform3DMakeTranslation(0, -65, 0)
-        wordStackView.layer.transform = translate1
+        self.wordStackView.layer.transform = translate1
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
@@ -213,27 +210,28 @@ extension QuizWriteNoteCollectionViewCell: UITextFieldDelegate {
         }
         return true
     }
+    
     //MARK: - Private methods
     fileprivate func checkAnswer(answerString: String, textField: UITextField) {
-        if viewModel.checkUserAnswer(userAnswer: answerString) {
-            delegate?.additionalRightAnswerReaction(view: textField)
+        if self.viewModel.checkUserAnswer(userAnswer: answerString) {
+            self.delegate?.additionalRightAnswerReaction(view: self.textField)
             let seconds = 0.5
             DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
                 self.delegate?.rightAnswerReaction()
             }
-            configurationForRightAnswer()
+            self.configurationForRightAnswer()
         } else {
-            delegate?.wrongAnswerReaction()
+            self.delegate?.wrongAnswerReaction()
         }
     }
     
     fileprivate func configurationForRightAnswer() {
-        textField.borderStyle = .none
+        self.textField.borderStyle = .none
         let text = textConfiguration(text:String(textField.text!))
-        textField.text = text
+        self.textField.text = text
         let minTextFieldWidth = text.width(withConstrainedHeight: 50.0, font: QuizWriteNoteCollectionViewCell.WORD_FONT)
-        wordStackView.spacing = 0.0
-        textField.widthAnchor.constraint(equalToConstant: minTextFieldWidth).isActive = true
+        self.wordStackView.spacing = 0.0
+        self.textField.widthAnchor.constraint(equalToConstant: minTextFieldWidth).isActive = true
     }
     
     fileprivate func textConfiguration(text: String) -> String {
