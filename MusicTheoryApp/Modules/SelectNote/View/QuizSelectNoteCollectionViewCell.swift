@@ -8,31 +8,7 @@
 
 import UIKit
 
-//protocol QuizSelectNoteCollectionViewCellDelegate {
-//    func rightAnswerReaction()
-//    func wrongAnswerReaction()
-//    func additionalRightAnswerReaction(view: UIView)
-//   // func rightNoteTappedReaction(noteView: UIView)
-//}
-
 class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
-
-    let LBL_TOP_OFFSET: CGFloat = 10.0
-    let STAF_TOP_OFFSET: CGFloat = {
-        if DeviceType.IS_IPHONE_11Pro_X_Xs || DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
-            return 30.0
-        }
-        return 45.0
-    }()
-    
-    let STAF_VERT_OFFSET: CGFloat = {
-        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
-            return 15.0
-        } else {
-            return 10.0
-        }
-    }()
-    
     //MARK: -Delegate
     var delegate: QuizSelectAnswerDelegate?
     
@@ -41,18 +17,7 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
     
     //MARK: -Views
     var staffView: StaffView!
-    
-    var questionLabel: UILabel = {
-        var label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.backgroundColor = .clear
-        label.textColor = .black
-        label.font = QuizSelectNoteCollectionViewCell.QUESTION_FONT
-        label.lineBreakMode = .byWordWrapping
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        return label
-    }()
+    var questionLabel: UILabel!
     
     //MARK: - Life cycle
     override init(frame: CGRect) {
@@ -64,7 +29,7 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
     }
     
     //MARK: -Public methods
-    func configureSubviews(viewModel:MusicTaskSelectNoteViewModel, frame:CGRect) {
+    func configureSubviews(viewModel: MusicTaskSelectNoteViewModel, frame: CGRect) {
         self.viewModel = viewModel
         //дельта, которая становится больше нуля в случае, если все ноты viewModel.notesViewModels выше Do1
         let additionalTopOffsetForStaffView: CGFloat = {
@@ -73,28 +38,36 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
             }
             return 0.0
         }()
-        
-        staffView = StaffView(notesViewModels: viewModel.notesViewModels,
+        self.questionLabel = UILabel()
+        self.questionLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.questionLabel.backgroundColor = .clear
+        self.questionLabel.textColor = .black
+        self.questionLabel.font = QuizSelectNoteCollectionViewCell.QUESTION_FONT
+        self.questionLabel.lineBreakMode = .byWordWrapping
+        self.questionLabel.numberOfLines = 0
+        self.questionLabel.textAlignment = .center
+        self.questionLabel.text = viewModel.model.questionText
+    
+        self.staffView = StaffView(notesViewModels: viewModel.notesViewModels,
                               selectOnlyOneNote: false,
                               frame: CGRect.zero,
                               notesDelegate: self,
                               cleff: viewModel.model.cleffType)
-        staffView.delegate = self
-        staffView.translatesAutoresizingMaskIntoConstraints = false
+        self.staffView.delegate = self
+        self.staffView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(staffView)
         
-        staffView.topAnchor.constraint(equalTo:  self.contentView.topAnchor, constant: STAF_TOP_OFFSET + additionalTopOffsetForStaffView).isActive = true
-        staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: STAF_VERT_OFFSET).isActive = true
-        staffView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -STAF_VERT_OFFSET).isActive = true
-        staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
-        staffView.drawNotesOneByOne1(notesAreTransparent: true, viewWidth: self.contentView.frame.width)
+        self.staffView.topAnchor.constraint(equalTo:  self.contentView.topAnchor, constant: QuizSelectNoteCollectionViewCell.STAF_TOP_OFFSET + additionalTopOffsetForStaffView).isActive = true
+        self.staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: QuizSelectNoteCollectionViewCell.STAF_VERT_OFFSET).isActive = true
+        self.staffView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -QuizSelectNoteCollectionViewCell.STAF_VERT_OFFSET).isActive = true
+        self.staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
+        self.staffView.drawNotesOneByOne1(notesAreTransparent: true, viewWidth: self.contentView.frame.width)
         
-        questionLabel.text = viewModel.model.questionText
-        self.contentView.addSubview(questionLabel)
-        questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: LBL_TOP_OFFSET).isActive = true
-        questionLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 25).isActive = true
-        questionLabel.widthAnchor.constraint(equalToConstant: frame.size.width - 50).isActive = true
-        questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: frame.size.width - 50, font:QuizSelectNoteCollectionViewCell.QUESTION_FONT))!).isActive = true
+        self.contentView.addSubview(self.questionLabel)
+        self.questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: QuizSelectNoteCollectionViewCell.LBL_TOP_OFFSET).isActive = true
+        self.questionLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 25).isActive = true
+        self.questionLabel.widthAnchor.constraint(equalToConstant: frame.size.width - 50).isActive = true
+        self.questionLabel.heightAnchor.constraint(equalToConstant: (self.questionLabel.text?.height(width: frame.size.width - 50, font:QuizSelectNoteCollectionViewCell.QUESTION_FONT))!).isActive = true
         
         questionLabel.superview!.bringSubviewToFront(questionLabel)
     }
@@ -108,7 +81,7 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
     
     //MARK: -Private methods
     func addTopOffsetForStaffView() -> CGFloat {
-        if DeviceType.IS_IPHONE_11Pro_X_Xs {
+        if DeviceType.IS_IPHONE_11Pro_X_Xs || DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
             return 17.0
         }
         if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
@@ -148,4 +121,26 @@ extension QuizSelectNoteCollectionViewCell: StaffViewDelegate {
             delegate?.rightAnswerReaction()
         }
     }
+}
+
+extension QuizSelectNoteCollectionViewCell {
+    static let LBL_TOP_OFFSET: CGFloat = 10.0
+    
+    static let STAF_TOP_OFFSET: CGFloat = {
+        if DeviceType.IS_IPHONE_11Pro_X_Xs || DeviceType.IS_IPHONE_11_XR_11PMax_XsMax  {
+            return 30.0
+        } else if DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+            return 20.0
+        }
+        return 45.0
+    }()
+    
+    static let STAF_VERT_OFFSET: CGFloat = {
+        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
+            DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+            return 15.0
+        } else {
+            return 10.0
+        }
+    }()
 }

@@ -554,8 +554,11 @@ extension StaffView {
         if DeviceType.IS_IPHONE_11Pro_X_Xs {
             return 73
         }
-        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
             return 75
+        }
+        if DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+            return 55
         }
         return 65
     }()

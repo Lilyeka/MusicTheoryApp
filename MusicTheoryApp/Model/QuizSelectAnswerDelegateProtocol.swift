@@ -12,5 +12,4 @@ protocol QuizSelectAnswerDelegate: class {
     func rightAnswerReaction()
     func wrongAnswerReaction()
     func additionalRightAnswerReaction(view: UIView)
-   
 }
