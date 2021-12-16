@@ -10,10 +10,7 @@ import UIKit
 
 class QuizAdditionSignsCollectionViewCell: UICollectionViewCell {
     //MARK: -Static
-    static var cellIdentifier: String {
-        return String(describing: self)
-    }
-    
+  
     static let SIGN_FONT: UIFont = {
         if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_11Pro_X_Xs {
             return UIFont.boldSystemFont(ofSize: 73.0)

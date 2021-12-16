@@ -9,10 +9,7 @@
 import UIKit
 
 class QuizAdditionPausesCollectionViewCell: UICollectionViewCell {
-    //MARK: -Static
-    static var cellIdentifier: String {
-        return String(describing: self)
-    }
+
     //MARK: -Views
     var imageView: UIImageView = {
         var imageView = UIImageView()

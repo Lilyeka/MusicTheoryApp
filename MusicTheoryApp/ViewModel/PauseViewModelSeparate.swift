@@ -129,7 +129,7 @@ class PauseViewModelSeparate:MathElementViewModel {
         } else if DeviceType.IS_IPHONE_11Pro_X_Xs {
             height = 68.0
             width = 29.0
-        } else if (DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_12) {
+        } else if (DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_12_12Pro_13_13Pro) {
             height = 68.0
             width = 29.0
         }

@@ -100,7 +100,6 @@ class MusicTasks: MusicTasksProtocol {
             ],
             rightAnswer: [.Do1,.mi1],
             cleff: CleffTypes.Treble),
-        MusicTaskShowNoteOnThePiano(questionText:"Нажмите на нужную ноту", note: Note(name:.fa, tone: .none, duration: .whole), cleff: CleffTypes.Treble),
         MusicTaskSelectNoteInWord(questionText: "Какая нота спряталась в слове?",
                                   notesArray: [
                                     Note(name:.Do, tone:.none, duration:.whole),
@@ -296,3 +295,7 @@ class MusicTasks: MusicTasksProtocol {
                                   cleff: CleffTypes.Treble)
     ]
 }
+
+
+//        MusicTaskShowNoteOnThePiano(questionText:"Нажмите на нужную ноту", note: Note(name:.fa, tone: .none, duration: .whole), cleff: CleffTypes.Treble),
+

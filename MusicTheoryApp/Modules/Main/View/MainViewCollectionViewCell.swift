@@ -13,12 +13,7 @@ class MainViewCollectionViewCell: UICollectionViewCell {
     let CIRCLE_RADIUS: CGFloat = 50.0
     let TRACK_LINE_WIDTH: CGFloat = 5.0//4.0
     var circularPath: UIBezierPath?
-    
-    // MARK: - Static elements
-    static var cellIdentifier: String {
-        return String(describing: self)
-    }
-    
+        
     // MARK: - UIElements
     var textLabel: UILabel = {
         var label = UILabel()
