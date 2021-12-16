@@ -12,159 +12,17 @@ protocol StaffViewDelegate {
     func pickedOutNotesIndexesDidChange(newValue: [Int])
 }
 
-class StaffView: UIView {    
-    static let VERTICAL_OFFSET:Int = {
-        if DeviceType.IS_IPHONE_6_6s_7_8 {
-            return 65
-        }
-        if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ {
-            return 70
-        }
-        if DeviceType.IS_IPHONE_11Pro_X_Xs {
-            return 73
-        }
-        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
-            return 75
-        }
-        return 65
-    }()
-    static let LINE_WIDTH: CGFloat = 2.0
+class StaffView: UIView {
     
-    static var LINE_OFFSET: Int = {
-        if DeviceType.IS_IPHONE_6_6s_7_8 {
-            return 28
-        } else if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ {
-            return 32
-        } else if DeviceType.IS_IPHONE_11Pro_X_Xs {
-            return 33
-        } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
-            return 34
-        }
-        return 30 // for iPhone 11
-    }()
-    
-    static var TREBLE_TOP_OFFSET: CGFloat = {
-        if (DeviceType.IS_IPHONE_6_6s_7_8)  {
-            return 35.0
-        }
-        if (DeviceType.IS_IPHONE_6P_6sP_7P_8P_)  {
-            return 15.0
-        }
-        if DeviceType.IS_IPHONE_11Pro_X_Xs {
-            return 15.0
-        }
-        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
-            return 15.0
-        }
-        return 15.0 // for iPhone 11
-    }()
-    
-    static var TREBLE_BOTTOM_OFFSET: CGFloat = {
-        if(DeviceType.IS_IPHONE_6_6s_7_8) {
-            return -16.0
-        }
-        if (DeviceType.IS_IPHONE_6P_6sP_7P_8P_) {
-            return 6.0
-        }
-        if DeviceType.IS_IPHONE_11Pro_X_Xs {
-            return 9.0
-        }
-        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
-            return 8.0
-        }
-        return 0 // for iPhone 11
-    }()
-    
-    static let TREBLE_WIDTH: CGFloat = {
-        if (DeviceType.IS_IPHONE_6_6s_7_8) {
-            return 70.0
-        }
-        if (DeviceType.IS_IPHONE_6P_6sP_7P_8P_) {
-            return 80.0
-        }
-        if DeviceType.IS_IPHONE_11Pro_X_Xs {
-            return 80.0
-        }
-        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
-            return 89.0
-        }
-        
-        return 80.0 // for iPhone 11
-    }()
-    
-    static let TREBLE_LEFT_OFFSET: CGFloat = {
-        if DeviceType.IS_IPHONE_6_6s_7_8 {
-            return 5.0
-        }
-        if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ {
-            return 8.0
-        }
-        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
-            return 15.0
-        }
-        return 5.0
-    }()
-    
-    static var BASS_TOP_OFFSET: CGFloat = {
-        if DeviceType.IS_IPHONE_6_6s_7_8 || DeviceType.IS_IPHONE_11Pro_X_Xs ||  DeviceType.IS_IPHONE_11_XR_11PMax_XsMax{
-            return 6.0
-        }
-        if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ {
-            return 2.0
-        }
-        return 6.0
-    }()
-    static var BASS_LEFT_OFFSET: CGFloat = {
-        if DeviceType.IS_IPHONE_6_6s_7_8 {
-            return 8.0
-        }
-        if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ || DeviceType.IS_IPHONE_11Pro_X_Xs ||  DeviceType.IS_IPHONE_11_XR_11PMax_XsMax{
-            return 5.0
-        }
-        return 8.0
-    }()
-    static var BASS_BOTTOM_OFFSET: CGFloat = {
-        if DeviceType.IS_IPHONE_6_6s_7_8 || DeviceType.IS_IPHONE_11Pro_X_Xs ||  DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
-            return -16.0
-        }
-        if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ {
-            return -15.0
-        }
-        return -16.0
-    }()
-    static var BASS_WIDTH: CGFloat = {
-        if DeviceType.IS_IPHONE_6_6s_7_8 {
-            return 77.0
-        }
-        if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ {
-            return 87.0
-        }
-        if DeviceType.IS_IPHONE_11Pro_X_Xs {
-            return 95.0
-        }
-        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
-            return 100.0
-        }
-        return 77.0
-    }()
-    
-    static func viewHeight() -> Int {
-        let linesThicknessHeight = Int(LINE_WIDTH)*5
-        let linesOffset = LINE_OFFSET*4
-        let offsetFromTopAndBottom = VERTICAL_OFFSET*2
-        return (offsetFromTopAndBottom + linesOffset + linesThicknessHeight)
-    }
-    
+    var selectOnlyOneNote: Bool?
+    var cleff: CleffTypes!
     var notesArray:[NoteViewModel]?
     var pickedOutNotesIndexes:[Int] = [Int]() {
         didSet {
             delegate?.pickedOutNotesIndexesDidChange(newValue: notesRowValuesByIndexes(indexes: pickedOutNotesIndexes))
         }
     }
-    
-    var selectOnlyOneNote: Bool?
-    var cleff: CleffTypes!
-    
+
     //MARK: - Delegate
     var delegate: StaffViewDelegate?
     var noteDelegate: NoteViewModelDelegate?
@@ -180,6 +38,7 @@ class StaffView: UIView {
         return imageView
     }()
     
+    //MARK: -Views
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -193,7 +52,7 @@ class StaffView: UIView {
         self.notesArray = notesViewModels
         self.selectOnlyOneNote = selectOnlyOneNote
         self.cleff = cleff
-        setupView()
+        self.setupView()
         if notesDelegate != nil {
             setNotesDelegate(deleg: notesDelegate!)
         }
@@ -217,7 +76,7 @@ class StaffView: UIView {
         let leftOffset = cleff == CleffTypes.Treble ? StaffView.TREBLE_LEFT_OFFSET : StaffView.BASS_LEFT_OFFSET
         let topOffset = cleff == CleffTypes.Treble ? StaffView.TREBLE_TOP_OFFSET : StaffView.BASS_TOP_OFFSET
         let bottomOffset = cleff == CleffTypes.Treble ? StaffView.TREBLE_BOTTOM_OFFSET : StaffView.BASS_BOTTOM_OFFSET
-        let width =  cleff == CleffTypes.Treble ? StaffView.TREBLE_WIDTH : StaffView.BASS_WIDTH
+        let width = cleff == CleffTypes.Treble ? StaffView.TREBLE_WIDTH : StaffView.BASS_WIDTH
         
         self.addSubview(clefImageView)
         clefImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: leftOffset).isActive = true
@@ -251,10 +110,10 @@ class StaffView: UIView {
 
     }
 
-    func drawNotesOneByOne1(notesAreTransparent: Bool,viewWidth: CGFloat) {
+    func drawNotesOneByOne1(notesAreTransparent: Bool, viewWidth: CGFloat) {
         let width = cleff == CleffTypes.Treble ? viewWidth - StaffView.TREBLE_LEFT_OFFSET - StaffView.TREBLE_WIDTH : viewWidth - StaffView.BASS_LEFT_OFFSET - StaffView.BASS_WIDTH
        
-        let noteCenterX = width/CGFloat(notesArray!.count+1)
+        let noteCenterX = width/CGFloat(notesArray!.count + 1)
         
         var i = 0
         for note in notesArray! {
@@ -675,4 +534,155 @@ class StaffView: UIView {
         path.lineWidth = lineWidth
         path.stroke()
     }
+}
+
+extension StaffView {
+    static func viewHeight() -> Int {
+        let linesThicknessHeight = Int(LINE_WIDTH) * 5
+        let linesOffset = LINE_OFFSET * 4
+        let offsetFromTopAndBottom = VERTICAL_OFFSET * 2
+        return (offsetFromTopAndBottom + linesOffset + linesThicknessHeight)
+    }
+    
+    static let VERTICAL_OFFSET:Int = {
+        if DeviceType.IS_IPHONE_6_6s_7_8 {
+            return 65
+        }
+        if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ {
+            return 70
+        }
+        if DeviceType.IS_IPHONE_11Pro_X_Xs {
+            return 73
+        }
+        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+            return 75
+        }
+        return 65
+    }()
+    static let LINE_WIDTH: CGFloat = 2.0
+    
+    static var LINE_OFFSET: Int = {
+        if DeviceType.IS_IPHONE_6_6s_7_8 {
+            return 28
+        } else if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ {
+            return 32
+        } else if DeviceType.IS_IPHONE_11Pro_X_Xs {
+            return 33
+        } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
+                DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+            return 34
+        }
+        return 30 // for iPhone 11
+    }()
+    
+    static var TREBLE_TOP_OFFSET: CGFloat = {
+        if (DeviceType.IS_IPHONE_6_6s_7_8)  {
+            return 35.0
+        }
+        if (DeviceType.IS_IPHONE_6P_6sP_7P_8P_)  {
+            return 15.0
+        }
+        if DeviceType.IS_IPHONE_11Pro_X_Xs {
+            return 15.0
+        }
+        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
+            DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+            return 15.0
+        }
+        return 15.0 // for iPhone 11
+    }()
+    
+    static var TREBLE_BOTTOM_OFFSET: CGFloat = {
+        if(DeviceType.IS_IPHONE_6_6s_7_8) {
+            return -16.0
+        }
+        if (DeviceType.IS_IPHONE_6P_6sP_7P_8P_) {
+            return 6.0
+        }
+        if DeviceType.IS_IPHONE_11Pro_X_Xs {
+            return 9.0
+        }
+        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
+            DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+            return 8.0
+        }
+        return 0 // for iPhone 11
+    }()
+    
+    static let TREBLE_WIDTH: CGFloat = {
+        if (DeviceType.IS_IPHONE_6_6s_7_8) {
+            return 70.0
+        }
+        if (DeviceType.IS_IPHONE_6P_6sP_7P_8P_) {
+            return 80.0
+        }
+        if DeviceType.IS_IPHONE_11Pro_X_Xs {
+            return 80.0
+        }
+        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
+            DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+            return 89.0
+        }
+        
+        return 80.0 // for iPhone 11
+    }()
+    
+    static let TREBLE_LEFT_OFFSET: CGFloat = {
+        if DeviceType.IS_IPHONE_6_6s_7_8 {
+            return 5.0
+        }
+        if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ {
+            return 8.0
+        }
+        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
+            DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+            return 15.0
+        }
+        return 5.0
+    }()
+    
+    static var BASS_TOP_OFFSET: CGFloat = {
+        if DeviceType.IS_IPHONE_6_6s_7_8 || DeviceType.IS_IPHONE_11Pro_X_Xs ||  DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+            return 6.0
+        }
+        if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ {
+            return 2.0
+        }
+        return 6.0
+    }()
+    static var BASS_LEFT_OFFSET: CGFloat = {
+        if DeviceType.IS_IPHONE_6_6s_7_8 {
+            return 8.0
+        }
+        if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ || DeviceType.IS_IPHONE_11Pro_X_Xs ||  DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
+            DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+            return 5.0
+        }
+        return 8.0
+    }()
+    static var BASS_BOTTOM_OFFSET: CGFloat = {
+        if DeviceType.IS_IPHONE_6_6s_7_8 || DeviceType.IS_IPHONE_11Pro_X_Xs ||  DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+            return -16.0
+        }
+        if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ {
+            return -15.0
+        }
+        return -16.0
+    }()
+    static var BASS_WIDTH: CGFloat = {
+        if DeviceType.IS_IPHONE_6_6s_7_8 {
+            return 77.0
+        }
+        if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ {
+            return 87.0
+        }
+        if DeviceType.IS_IPHONE_11Pro_X_Xs {
+            return 95.0
+        }
+        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
+            DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+            return 100.0
+        }
+        return 77.0
+    }()
 }

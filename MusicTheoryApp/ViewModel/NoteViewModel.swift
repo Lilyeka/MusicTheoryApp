@@ -225,7 +225,8 @@ extension NoteViewModel {
         } else if DeviceType.IS_IPHONE_11Pro_X_Xs {
             height = 50.0
             width = 50.0
-        } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+        } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
+                    DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
             height = 50.0
             width = 50.0
         }
