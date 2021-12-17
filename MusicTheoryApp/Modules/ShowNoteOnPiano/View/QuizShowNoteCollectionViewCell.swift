@@ -8,11 +8,6 @@
 
 import UIKit
 
-//protocol QuizShowNoteCollectionViewCellDelegate {
-//    func rightAnswerReaction()
-//    func wrongAnswerReaction()
-//}
-
 class QuizShowNoteCollectionViewCell: UICollectionViewCell {
 
     let TOP_OFFSET: CGFloat = 15.0
@@ -46,40 +41,42 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
     }
     
     //MARK: -Public methods
-    func configureSubViews(viewModel: MusicTaskShowtNoteOnThePianoViewModel,frame:CGRect) {
+    func configureSubViews(viewModel: MusicTaskShowtNoteOnThePianoViewModel, frame: CGRect) {
         self.viewModel = viewModel
         
-        self.contentView.addSubview(questionLabel)
-        questionLabel.text = viewModel.model.questionText
-        questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: TOP_OFFSET).isActive = true
-        questionLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: LEFT_OFFSET).isActive = true
-        questionLabel.widthAnchor.constraint(equalToConstant: frame.size.width-2*LEFT_OFFSET).isActive = true
-        questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: frame.size.width, font:QuizShowNoteCollectionViewCell.QUESTION_FONT))!).isActive = true
+        self.contentView.addSubview(self.questionLabel)
+        self.questionLabel.text = viewModel.model.questionText
+        self.questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 8.0).isActive = true
+        self.questionLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: LEFT_OFFSET).isActive = true
+        self.questionLabel.widthAnchor.constraint(equalToConstant: frame.size.width-2*LEFT_OFFSET).isActive = true
+        self.questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: frame.size.width, font:QuizShowNoteCollectionViewCell.QUESTION_FONT))!).isActive = true
 
         let staffViewWidth = 1*(frame.size.width - 3*LEFT_OFFSET)/3
         let pianoViewWidth = 2*(frame.size.width - 3*LEFT_OFFSET)/3
         
-        staffView = StaffView(notesViewModels:viewModel.notesViewModels,
-                              selectOnlyOneNote: true,
-                              frame: CGRect.zero,
-                              notesDelegate: nil,
-                              cleff: viewModel.model.cleffType)
-        staffView.translatesAutoresizingMaskIntoConstraints = false
-        staffView.isUserInteractionEnabled = false
-        self.contentView.addSubview(staffView)
-        staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: TOP_OFFSET).isActive = true
-        staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: LEFT_OFFSET).isActive = true
-        staffView.widthAnchor.constraint(equalToConstant: staffViewWidth).isActive = true
-        staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
+        self.staffView = StaffView(
+            notesViewModels: viewModel.notesViewModels,
+            selectOnlyOneNote: true,
+            frame: CGRect.zero,
+            notesDelegate: nil,
+            cleff: viewModel.model.cleffType)
+        self.staffView.translatesAutoresizingMaskIntoConstraints = false
+        self.staffView.isUserInteractionEnabled = false
+        
+        self.contentView.addSubview(self.staffView)
+        self.staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 0.0).isActive = true
+        self.staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: LEFT_OFFSET).isActive = true
+        self.staffView.widthAnchor.constraint(equalToConstant: staffViewWidth).isActive = true
+        self.staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
         staffView.drawNotesOneByOne1(notesAreTransparent: false, viewWidth: staffViewWidth)
         
-        pianoView = PianoView(pianoWidth: pianoViewWidth, blackKeysOffset: 20.0, frame:CGRect.zero)
-        pianoView.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.addSubview(pianoView)
-        pianoView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: TOP_OFFSET).isActive = true
-        pianoView.leftAnchor.constraint(equalTo: staffView.rightAnchor, constant: LEFT_OFFSET*2).isActive = true
-        pianoView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: LEFT_OFFSET).isActive = true
-        pianoView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
+        self.pianoView = PianoView(pianoWidth: pianoViewWidth, blackKeysOffset: 20.0, frame:CGRect.zero)
+        self.pianoView.translatesAutoresizingMaskIntoConstraints = false
+        self.contentView.addSubview(self.pianoView)
+        self.pianoView.topAnchor.constraint(equalTo: self.questionLabel.bottomAnchor, constant: TOP_OFFSET).isActive = true
+        self.pianoView.leftAnchor.constraint(equalTo: self.staffView.rightAnchor, constant: LEFT_OFFSET*2).isActive = true
+        self.pianoView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -LEFT_OFFSET).isActive = true
+        self.pianoView.heightAnchor.constraint(equalTo: self.staffView.heightAnchor).isActive = true
     }
     
     //MARK: -Override methods

@@ -248,7 +248,6 @@ class StaffView: UIView {
         }
     }
     
-    
     func drawNotesOneByOne(notesAreTransparent: Bool) {
         let offsetBetwenNotes: CGFloat = {
             if DeviceType.IS_IPHONE_6_6s_7_8 {
