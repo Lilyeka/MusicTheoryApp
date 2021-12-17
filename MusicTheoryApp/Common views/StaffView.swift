@@ -100,7 +100,7 @@ class StaffView: UIView {
         let img = UIImage(named: pause.imageName)
         imageView.image = img
         
-        let pausePositionY = pauseYPosition(pause:pause,pauseInnerOfsetFromCenter: pause.innerOffsetFromCenter)
+        let pausePositionY = pauseYPosition(pause:pause, pauseInnerOfsetFromCenter: pause.innerOffsetFromCenter)
     
             self.addSubview(imageView)
             imageView.centerXAnchor.constraint(equalTo: clefImageView.rightAnchor, constant: pauseCenterX - pause.width/2 + 12).isActive = true

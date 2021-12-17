@@ -107,7 +107,8 @@ class PauseViewModel:MathElementViewModel {
             height = 93.0
             width = 48.0
             offsetFromCenter = -18
-        } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+        } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
+                    DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
             height = 68.0
             width = 29.0
         }
@@ -127,7 +128,8 @@ class PauseViewModel:MathElementViewModel {
         } else if DeviceType.IS_IPHONE_11Pro_X_Xs {
             height = 68.0
             width = 29.0
-        } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+        } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
+                    DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
             height = 68.0
             width = 29.0
         }
@@ -150,7 +152,7 @@ class PauseViewModel:MathElementViewModel {
             height = 93.0
             width = 40.0
             offsetFromCenter = -4.0
-        } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+        } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
             height = 93.0
             width = 40.0
             offsetFromCenter = -4.0
@@ -174,7 +176,8 @@ class PauseViewModel:MathElementViewModel {
             height = 50.0
             width = 50.0
             offsetFromCenter = 27.0
-        } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+        } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
+                    DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
             height = 50.0
             width = 50.0
             offsetFromCenter = 27.0
@@ -198,13 +201,12 @@ class PauseViewModel:MathElementViewModel {
             height = 50.0
             width = 50.0
             offsetFromCenter = -10.0
-        } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+        } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
+                    DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
             height = 50.0
             width = 50.0
             offsetFromCenter = -12.0
         }
         return (height: height, width: width, offsetFromCenter: offsetFromCenter)
     }
-    
-    
 }

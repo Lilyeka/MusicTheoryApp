@@ -20,14 +20,14 @@ class QuizPauseAndDurationCollectionViewCell: UICollectionViewCell {
     let TOP_OFFSET: CGFloat = 15.0
     
     //MARK: -Variables
+    var previousVariantIndexPath: IndexPath!
     lazy var collectoinViewHight: CGFloat = {
         if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_11Pro_X_Xs {
             return 200.0
         }
         return 150.0
     }()
-    var previousVariantIndexPath: IndexPath!
-    
+   
     //MARK: -Views
     var staffView: StaffView!
     var variantsCollectionView: UICollectionView!
@@ -57,46 +57,51 @@ class QuizPauseAndDurationCollectionViewCell: UICollectionViewCell {
         self.viewModel = viewModel
         self.contentView.backgroundColor = .white
         
-        questionLabel.text = viewModel.model.questionText
+        self.questionLabel.text = viewModel.model.questionText
         self.contentView.addSubview(questionLabel)
-        questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
-        questionLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 15.0).isActive = true
-        questionLabel.widthAnchor.constraint(equalToConstant: frame.size.width - 30.0).isActive = true
-        questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: frame.size.width, font:QuizPauseAndDurationCollectionViewCell.QUESTION_FONT))!).isActive = true
-        
+       
         let staffViewWidth = 1*(frame.size.width - 3*LEFT_OFFSET)/3
         let variantsWidth = 2*(frame.size.width - 3*LEFT_OFFSET)/3
         
-        staffView = StaffView(cleff: .Treble, frame: frame)
-        staffView.translatesAutoresizingMaskIntoConstraints = false
-        staffView.isUserInteractionEnabled = false
-        self.contentView.addSubview(staffView)
-        staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: TOP_OFFSET).isActive = true
-        staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: LEFT_OFFSET).isActive = true
-        staffView.widthAnchor.constraint(equalToConstant: staffViewWidth).isActive = true
-        staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
-        staffView.drawPause(pause: viewModel.pauseViewModel, viewWidth: staffViewWidth)
+        self.staffView = StaffView(cleff: .Treble, frame: frame)
+        self.staffView.translatesAutoresizingMaskIntoConstraints = false
+        self.staffView.isUserInteractionEnabled = false
+        self.contentView.addSubview(self.staffView)
+        
+        self.staffView.drawPause(pause: viewModel.pauseViewModel, viewWidth: staffViewWidth)
         
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0.0, bottom: 0, right: 0.0)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 5
         layout.minimumLineSpacing = 5
         layout.itemSize = CGSize(width: (variantsWidth - 6*5.0)/5, height: collectoinViewHight)
         
-        variantsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        variantsCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        variantsCollectionView.isScrollEnabled = false
-        variantsCollectionView.dataSource = self
-        variantsCollectionView.delegate = self
-        variantsCollectionView.backgroundColor = .white
-        variantsCollectionView.register(QuizVariantCollectionViewCell.self, forCellWithReuseIdentifier: QuizVariantCollectionViewCell.cellIdentifier)
-    
+        self.variantsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        self.variantsCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        self.variantsCollectionView.isScrollEnabled = false
+        self.variantsCollectionView.dataSource = self
+        self.variantsCollectionView.delegate = self
+        self.variantsCollectionView.backgroundColor = .white
+        self.variantsCollectionView.register(QuizVariantCollectionViewCell.self, forCellWithReuseIdentifier: QuizVariantCollectionViewCell.cellIdentifier)
         self.contentView.addSubview(variantsCollectionView)
-        variantsCollectionView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor, constant: 0.0).isActive = true
-        variantsCollectionView.leftAnchor.constraint(equalTo: staffView.rightAnchor, constant: LEFT_OFFSET).isActive = true
-        variantsCollectionView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -LEFT_OFFSET).isActive = true
-        variantsCollectionView.heightAnchor.constraint(equalToConstant: CGFloat(collectoinViewHight)).isActive = true
+        
+        NSLayoutConstraint.activate([
+            self.questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            self.questionLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 15.0),
+            self.questionLabel.widthAnchor.constraint(equalToConstant: frame.size.width - 30.0),
+            self.questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: frame.size.width, font:QuizPauseAndDurationCollectionViewCell.QUESTION_FONT))!),
+            
+            self.staffView.topAnchor.constraint(equalTo: self.questionLabel.bottomAnchor, constant: TOP_OFFSET),
+            self.staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: LEFT_OFFSET),
+            self.staffView.widthAnchor.constraint(equalToConstant: staffViewWidth),
+            self.staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())),
+            
+            self.variantsCollectionView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
+            self.variantsCollectionView.leftAnchor.constraint(equalTo: self.staffView.rightAnchor, constant: LEFT_OFFSET),
+            self.variantsCollectionView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -LEFT_OFFSET),
+            self.variantsCollectionView.heightAnchor.constraint(equalToConstant: CGFloat(self.collectoinViewHight))
+        ])
     }
 }
 
@@ -120,11 +125,13 @@ extension QuizPauseAndDurationCollectionViewCell: UICollectionViewDelegate {
         
         let selectedDuration = viewModel.noteDuration(noteIndex: indexPath.row)
         
-        if viewModel.checkUserAnswer(answer: selectedDuration) {
-            if previousVariantIndexPath != nil {
-                let previousCell = collectionView.cellForItem(at: previousVariantIndexPath)
-                previousCell?.layer.borderColor = UIColor.gray.cgColor
-            }
+        if previousVariantIndexPath != nil {
+            let previousCell = collectionView.cellForItem(at: previousVariantIndexPath)
+            previousCell?.layer.borderColor = UIColor.gray.cgColor
+        }
+        cell.layer.borderColor = UIColor.red.cgColor
+        
+        if self.viewModel.checkUserAnswer(answer: selectedDuration) {
             cell.layer.borderColor = UIColor.green.cgColor
             self.delegate?.additionalRightAnswerReaction(view: cell.viewForFireworks)
             collectionView.isUserInteractionEnabled = false
@@ -132,12 +139,6 @@ extension QuizPauseAndDurationCollectionViewCell: UICollectionViewDelegate {
             DispatchQueue.main.asyncAfter(deadline:.now() + seconds) {
                 self.delegate?.rightAnswerReaction()
             }
-        } else {
-            if previousVariantIndexPath != nil {
-                let previousCell = collectionView.cellForItem(at: previousVariantIndexPath)
-                previousCell?.layer.borderColor = UIColor.gray.cgColor
-            }
-            cell.layer.borderColor = UIColor.red.cgColor
         }
         previousVariantIndexPath = indexPath
     }

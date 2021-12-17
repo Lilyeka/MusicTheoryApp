@@ -43,7 +43,7 @@ class QuizAdditionPausesCollectionViewCell: UICollectionViewCell {
         
         let image = UIImage(named: self.viewModel.imageName)
         if let image = image {
-            let resizedImage = UIImage.resizeImage(image:image,targetSize: CGSize(width: viewModel.width, height: viewModel.height))
+            let resizedImage = UIImage.resizeImage(image:image, targetSize: CGSize(width: viewModel.width, height: viewModel.height))
             imageView.image = resizedImage
         }
         
