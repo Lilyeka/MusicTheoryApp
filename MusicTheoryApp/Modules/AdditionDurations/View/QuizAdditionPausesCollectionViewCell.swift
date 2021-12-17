@@ -38,12 +38,12 @@ class QuizAdditionPausesCollectionViewCell: UICollectionViewCell {
     }
     
     //MARK: -Public methods
-    func configureSubviews(viewModel:PauseViewModelSeparate) {
+    func configureSubviews(viewModel: PauseViewModelSeparate) {
         self.viewModel = viewModel
         
         let image = UIImage(named: self.viewModel.imageName)
         if let image = image {
-            let resizedImage = UIImage.resizeImage(image:image, targetSize: CGSize(width: viewModel.width, height: viewModel.height))
+            let resizedImage = image.scalePreservingAspectRatio(targetSize: CGSize(width: viewModel.width, height: viewModel.height))
             imageView.image = resizedImage
         }
         

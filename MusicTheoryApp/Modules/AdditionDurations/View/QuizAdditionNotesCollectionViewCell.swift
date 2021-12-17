@@ -43,7 +43,7 @@ class QuizAdditionNotesCollectionViewCell: UICollectionViewCell {
         
         let image = UIImage(named: self.viewModel.durationImageName)
         if let image = image {
-            let resizedImage = UIImage.resizeImage(image:image,targetSize: CGSize(width: viewModel.durationWidth, height: viewModel.durationHeight))
+            let resizedImage = image.scalePreservingAspectRatio(targetSize: CGSize(width: viewModel.durationWidth, height: viewModel.durationHeight))
             imageView.image = resizedImage
         }
         
