@@ -24,9 +24,7 @@ extension UIImage {
            )
 
            // Draw and return the resized UIImage
-           let renderer = UIGraphicsImageRenderer(
-               size: scaledImageSize
-           )
+           let renderer = UIGraphicsImageRenderer(size: scaledImageSize)
 
            let scaledImage = renderer.image { _ in
                self.draw(in: CGRect(

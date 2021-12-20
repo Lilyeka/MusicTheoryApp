@@ -34,7 +34,6 @@
 		61400E58264AC74300F179F9 /* GameInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61400E57264AC74300F179F9 /* GameInfoViewController.swift */; };
 		61400E5D264B02CA00F179F9 /* SelfSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61400E5C264B02CA00F179F9 /* SelfSizedTableView.swift */; };
 		61400E61264B041D00F179F9 /* GameInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61400E60264B041D00F179F9 /* GameInfoHeaderView.swift */; };
-		61400E64264B048400F179F9 /* GameInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61400E63264B048400F179F9 /* GameInfoTableViewCell.swift */; };
 		61400E67264B04FE00F179F9 /* GameInfoLinksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61400E66264B04FE00F179F9 /* GameInfoLinksTableViewCell.swift */; };
 		6149E876257831FA00E4FC31 /* QuizArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6149E875257831FA00E4FC31 /* QuizArticle.swift */; };
 		6149E878257A280A00E4FC31 /* QuizArticleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6149E877257A280A00E4FC31 /* QuizArticleViewModel.swift */; };
@@ -129,7 +128,6 @@
 		61400E57264AC74300F179F9 /* GameInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameInfoViewController.swift; sourceTree = "<group>"; };
 		61400E5C264B02CA00F179F9 /* SelfSizedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfSizedTableView.swift; sourceTree = "<group>"; };
 		61400E60264B041D00F179F9 /* GameInfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameInfoHeaderView.swift; sourceTree = "<group>"; };
-		61400E63264B048400F179F9 /* GameInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameInfoTableViewCell.swift; sourceTree = "<group>"; };
 		61400E66264B04FE00F179F9 /* GameInfoLinksTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameInfoLinksTableViewCell.swift; sourceTree = "<group>"; };
 		6149E875257831FA00E4FC31 /* QuizArticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizArticle.swift; sourceTree = "<group>"; };
 		6149E877257A280A00E4FC31 /* QuizArticleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizArticleViewModel.swift; sourceTree = "<group>"; };
@@ -490,7 +488,6 @@
 				61400E57264AC74300F179F9 /* GameInfoViewController.swift */,
 				61400E5C264B02CA00F179F9 /* SelfSizedTableView.swift */,
 				61400E60264B041D00F179F9 /* GameInfoHeaderView.swift */,
-				61400E63264B048400F179F9 /* GameInfoTableViewCell.swift */,
 				61400E66264B04FE00F179F9 /* GameInfoLinksTableViewCell.swift */,
 			);
 			path = GameInfo;
@@ -818,7 +815,6 @@
 				61681054251FD7CC0095754E /* QuizVariantCollectionViewCell.swift in Sources */,
 				617592C52503D21C00FB372D /* MusicTasksBass.swift in Sources */,
 				6149E878257A280A00E4FC31 /* QuizArticleViewModel.swift in Sources */,
-				61400E64264B048400F179F9 /* GameInfoTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

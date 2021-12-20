@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import SafariServices
 
 class GameInfoViewController: UIViewController {
     //MARK: -Constants
-    let OFFSET: CGFloat = 30.0
+    let OFFSET: CGFloat = 100.0
     let INNER_OFFSET: CGFloat = 10.0
     let CORNER_RAD: CGFloat = 15.0
     let HEADER_HEIGHT: CGFloat = 44.0
@@ -28,24 +29,11 @@ class GameInfoViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.layer.cornerRadius = 15.0
         tableView.register(GameInfoTableViewCell.self, forCellReuseIdentifier: GameInfoTableViewCell.reuseIdentifier)
-        tableView.register(GameInfoLinksTableViewCell.self, forCellReuseIdentifier: GameInfoLinksTableViewCell.reuseIdentifier)
         tableView.separatorStyle = .none
         tableView.estimatedRowHeight = 120
         return tableView
     }()
-    
-    //MARK: -Init
-//    init(startImage: UIImage, targetImage: UIImage, numberOfLines: Int) {
-//        self.startImage = startImage
-//        self.targetImage = targetImage
-//        self.numberOfLines = numberOfLines
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//    
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//    }
-    
+        
     //MARK: -Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,10 +54,10 @@ class GameInfoViewController: UIViewController {
         self.view.addGestureRecognizer(tapRecognizer)
         
         let centralView = UIView(frame:.zero)
+        centralView.translatesAutoresizingMaskIntoConstraints = false
         centralView.layer.cornerRadius = CORNER_RAD
         centralView.backgroundColor = .white
         self.view.addSubview(centralView)
-        centralView.translatesAutoresizingMaskIntoConstraints = false
         
         let headerView = GameInfoHeaderView(frame: .zero)
         headerView.isUserInteractionEnabled = true
@@ -77,6 +65,7 @@ class GameInfoViewController: UIViewController {
         headerView.delegate = self
         headerView.translatesAutoresizingMaskIntoConstraints = false
         centralView.addSubview(headerView)
+        
         headerView.leftAnchor.constraint(equalTo: centralView.leftAnchor).isActive = true
         headerView.topAnchor.constraint(equalTo: centralView.topAnchor).isActive = true
         headerView.rightAnchor.constraint(equalTo: centralView.rightAnchor).isActive = true
@@ -90,11 +79,14 @@ class GameInfoViewController: UIViewController {
         tableView.rightAnchor.constraint(equalTo: centralView.rightAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: centralView.bottomAnchor,constant: -INNER_OFFSET).isActive = true
         
-        centralView.leftAnchor.constraint(equalTo: self.view.leftAnchor,constant: OFFSET).isActive = true
-        centralView.rightAnchor.constraint(equalTo: self.view.rightAnchor,constant: -OFFSET).isActive = true
+//        centralView.leftAnchor.constraint(equalTo: self.view.leftAnchor,constant: OFFSET).isActive = true
+//        centralView.rightAnchor.constraint(equalTo: self.view.rightAnchor,constant: -OFFSET).isActive = true
         centralView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
-        centralView.heightAnchor.constraint(lessThanOrEqualToConstant: self.view.frame.height - 2*OFFSET).isActive = true
+        centralView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        centralView.widthAnchor.constraint(equalToConstant: 400).isActive = true
+        centralView.heightAnchor.constraint(lessThanOrEqualToConstant: 300).isActive = true
     }
+    
     //Mark: - Actions
     @objc func backgroundViewTapped(sender: UITapGestureRecognizer? = nil) {
         let point = sender?.location(in: sender?.view)
@@ -108,28 +100,26 @@ class GameInfoViewController: UIViewController {
 //MARK: -UITableViewDataSource
 extension GameInfoViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            var cell = tableView.dequeueReusableCell(withIdentifier: GameInfoTableViewCell.reuseIdentifier, for: indexPath) as? GameInfoTableViewCell
-            if cell == nil {
-                cell = GameInfoTableViewCell()
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: GameInfoTableViewCell.reuseIdentifier, for: indexPath) as? GameInfoTableViewCell else { return  UITableViewCell()
             }
-            cell!.selectionStyle = .none
-            cell!.configureTextView()
-            return cell!
-        } else if indexPath.row == 1 {
-            var cell = tableView.dequeueReusableCell(withIdentifier: GameInfoLinksTableViewCell.reuseIdentifier, for: indexPath) as? GameInfoLinksTableViewCell
-            if cell == nil {
-                cell = GameInfoLinksTableViewCell(style: .default, reuseIdentifier: GameInfoLinksTableViewCell.reuseIdentifier)
+            let sourcesAndLinksArray = [
+                (name: "gettyimages", url: "https://www.gettyimages.co.uk/"),
+                (name: "vhv", url: "https://www.vhv.rs/"),
+                (name: "pngguru", url: "https://www.pngguru.in/"),
+                (name: "pngegg", url: "https://www.pngegg.com/"),
+                (name: "pngtree", url: "https://pngtree.com/"),
+                (name: "flaticon", url: "https://www.flaticon.com/")
+            ]
+            cell.sourcesAndLinks = sourcesAndLinksArray
+            cell.buttonClickedAction = { index in
+                let vc = SFSafariViewController(url: URL(string: sourcesAndLinksArray[index].url)!)
+                self.present(vc, animated: true)
             }
-            return cell!
-        } else {
-            let cell = UITableViewCell(frame: .zero)
             return cell
-        }
     }
 }
 

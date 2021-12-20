@@ -7,8 +7,20 @@
 //
 
 import UIKit
+typealias Sources = (name: String, url: String)
 
-class GameInfoLinksTableViewCell: UITableViewCell {
+class GameInfoTableViewCell: UITableViewCell {
+    var buttonClickedAction: ((Int)->())?
+    var buttonsArray: [UIButton] = [UIButton]()
+    
+    var sourcesAndLinks: [Sources]! {
+        didSet {
+            buttonsArray.forEach { button in
+                button.setTitle(sourcesAndLinks[button.tag].name, for: .normal)
+            }
+        }
+    }
+    
     //MARK: -Static variables
     public static var reuseIdentifier: String {
         return String(describing: self)
@@ -31,55 +43,65 @@ class GameInfoLinksTableViewCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
     
-    
-//gettyimages    https://www.gettyimages.co.uk/
-//vhv    https://www.vhv.rs/
-//Pngguru https://www.pngguru.in/
-//pngegg    https://www.pngegg.com/
-// pngtree https://pngtree.com/
-//flaticon https://www.flaticon.com/
-    
     //MARK: -Private methods
     fileprivate func configureObjects() {
-        let textViewLinksLeft = UITextView()
-        textViewLinksLeft.isEditable = false
-        textViewLinksLeft.isScrollEnabled = false
-        textViewLinksLeft.isSelectable = true
-        textViewLinksLeft.dataDetectorTypes = .link
-        textViewLinksLeft.contentInset = UIEdgeInsets(top: -20, left: 0, bottom: 60, right: 0)
-        textViewLinksLeft.linkTextAttributes = [NSAttributedString.Key.foregroundColor : LINKS_COLOR]
-        let atributedLinksString = stringWithLinks(nameAndLinks: ["gettyimages":"https://www.gettyimages.co.uk/",
-             "vhv": "https://www.vhv.rs/",
-             "pngguru": "https://www.pngguru.in/"], addAdditionalInfo: true)
-        textViewLinksLeft.attributedText = atributedLinksString
-        textViewLinksLeft.sizeToFit()
+       
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Благодарим за предоставленные иконки:"
+        label.textAlignment = .center
+        label.textColor = FONT_COLOR
         
-        let textViewLinksRight = UITextView()
-        textViewLinksRight.isEditable = false
-        textViewLinksRight.isScrollEnabled = false
-        textViewLinksRight.isSelectable = true
-        textViewLinksRight.dataDetectorTypes = .link
-        textViewLinksRight.contentInset = UIEdgeInsets(top: -20, left: 0, bottom: 0, right: 0)
-        textViewLinksRight.linkTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.blue]
+        self.contentView.addSubview(label)
+        label.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: OFFSET).isActive = true
+        label.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: OFFSET).isActive = true
+        label.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -OFFSET).isActive = true
         
-        textViewLinksRight.attributedText = stringWithLinks(nameAndLinks: ["pngegg":"https://www.pngegg.com/",
-             "pngtree":"https://pngtree.com/",
-             "flaticon":"https://www.flaticon.com/"],addAdditionalInfo: false)
-        textViewLinksRight.sizeToFit()
+        let verticalLeftStackView = UIStackView()
+        verticalLeftStackView.axis = .vertical
+        verticalLeftStackView.distribution = .fillEqually
+        verticalLeftStackView.alignment = .fill
         
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        stackView.alignment = .fill
+        var i = 0
+        while i < 3 {
+            let button = UIButton()
+            button.setTitleColor(.blue, for: .normal)
+            button.tag = i
+            self.buttonsArray.append(button)
+            button.addTarget(self, action: #selector(linkButtonClicked), for: .touchUpInside)
+            verticalLeftStackView.addArrangedSubview(button)
+            i += 1
+        }
         
-        stackView.addArrangedSubview(textViewLinksLeft)
-        stackView.addArrangedSubview(textViewLinksRight)
+        let verticalRightStackView = UIStackView()
+        verticalRightStackView.axis = .vertical
+        verticalRightStackView.distribution = .fillEqually
+        verticalRightStackView.alignment = .fill
         
-        contentView.addSubview(stackView)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: OFFSET).isActive = true
-        stackView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        stackView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -OFFSET).isActive = true
+        i = 3
+        while i < 6 {
+            let button = UIButton()
+            button.setTitleColor(.blue, for: .normal)
+            button.tag = i
+            self.buttonsArray.append(button)
+            button.addTarget(self, action:  #selector(linkButtonClicked), for: .touchUpInside)
+            verticalRightStackView.addArrangedSubview(button)
+            i += 1
+        }
+        
+        let hStackView = UIStackView()
+        hStackView.translatesAutoresizingMaskIntoConstraints = false
+        hStackView.axis = .horizontal
+        hStackView.distribution = .fillEqually
+        hStackView.alignment = .fill
+        
+        hStackView.addArrangedSubview(verticalLeftStackView)
+        hStackView.addArrangedSubview(verticalRightStackView)
+        
+        self.contentView.addSubview(hStackView)
+        hStackView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: OFFSET).isActive = true
+        hStackView.topAnchor.constraint(equalTo: label.bottomAnchor).isActive = true
+        hStackView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -OFFSET).isActive = true
         
         let resultString = NSMutableAttributedString(string: " Наш ")
         let attrStringWithLink = NSMutableAttributedString(string: "сайт")
@@ -96,27 +118,16 @@ class GameInfoLinksTableViewCell: UITableViewCell {
         bottomTextView.attributedText = resultString
         bottomTextView.linkTextAttributes = [NSAttributedString.Key.foregroundColor : LINKS_COLOR]
         bottomTextView.sizeToFit()
+        
         contentView.addSubview(bottomTextView)
         bottomTextView.leftAnchor.constraint(equalTo: contentView.leftAnchor,constant: OFFSET).isActive = true
-        bottomTextView.topAnchor.constraint(equalTo: stackView.bottomAnchor,constant: -OFFSET*2).isActive = true
+        bottomTextView.topAnchor.constraint(equalTo: hStackView.bottomAnchor,constant: 0).isActive = true
         bottomTextView.rightAnchor.constraint(equalTo: contentView.rightAnchor,constant: -OFFSET).isActive = true
         bottomTextView.heightAnchor.constraint(equalToConstant: 30.0).isActive = true
         bottomTextView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: -OFFSET).isActive = true
     }
     
-      fileprivate func stringWithLinks(nameAndLinks:[String:String], addAdditionalInfo: Bool) -> NSMutableAttributedString {
-          let resultString = NSMutableAttributedString(string: "")
-          for (name,linkAddress) in nameAndLinks.sorted(by: {$0.0 < $1.0}) {
-              let linkName = "\n" + name
-              let attrStringWithLinks = NSMutableAttributedString(string: linkName)
-              attrStringWithLinks.addAttribute(.link, value: linkAddress, range: NSRange(location: 0, length: attrStringWithLinks.length))
-              resultString.append(attrStringWithLinks)
-          }
-      
-          let range = NSMakeRange(0, resultString.length)
-          resultString.addAttribute(NSAttributedString.Key.font, value: FONT, range: range)
-          resultString.addAttribute(NSAttributedString.Key.foregroundColor, value: FONT_COLOR, range: range)
-    
-          return resultString
-      }
+    @objc func linkButtonClicked(sender: UIButton) {
+        self.buttonClickedAction?(sender.tag)
+    }
 }
