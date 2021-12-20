@@ -22,9 +22,9 @@ class GameInfoHeaderView: UIView {
     var label: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = " "
         label.textColor = #colorLiteral(red: 0.07422413677, green: 0.5216350555, blue: 0.8784367442, alpha: 1)//#colorLiteral(red: 0.3014289141, green: 0.8125473857, blue: 0.8772042394, alpha: 1)
         label.font = GameInfoHeaderView.HEADER_FONT
+        label.numberOfLines = 0
         return label
     }()
     
@@ -41,7 +41,6 @@ class GameInfoHeaderView: UIView {
     //MARK: -Lifecycle
     override init(frame: CGRect) {
         super.init(frame:frame)
-        configureObjects()
     }
     
     required init?(coder: NSCoder) {
@@ -49,22 +48,23 @@ class GameInfoHeaderView: UIView {
     }
     
     init(withText: String, frame: CGRect) {
-        super.init(frame:frame)
+        super.init(frame: frame)
         configureObjects(text: withText)
     }
     
      //MARK: -Private methods
     fileprivate func configureObjects(text: String = "") {
-        self.addSubview(label)
-        label.text = text
-        label.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        label.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8.0).isActive = true
+        self.addSubview(self.label)
+        self.label.text = text
+        self.label.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        self.label.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         
-        self.addSubview(closeImageView)
-        closeImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 8.0).isActive = true
-        closeImageView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -8.0).isActive = true
-        closeImageView.heightAnchor.constraint(equalToConstant: 28.0).isActive = true
-        closeImageView.widthAnchor.constraint(equalToConstant: 28.0).isActive = true
+        self.addSubview(self.closeImageView)
+        self.closeImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 8.0).isActive = true
+        self.closeImageView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -12.0).isActive = true
+        self.closeImageView.heightAnchor.constraint(equalToConstant: 28.0).isActive = true
+        self.closeImageView.widthAnchor.constraint(equalToConstant: 28.0).isActive = true
+        self.closeImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeTapped))
         closeImageView.addGestureRecognizer(tapGestureRecognizer)

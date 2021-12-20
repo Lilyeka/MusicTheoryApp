@@ -59,7 +59,7 @@ class GameInfoViewController: UIViewController {
         centralView.backgroundColor = .white
         self.view.addSubview(centralView)
         
-        let headerView = GameInfoHeaderView(frame: .zero)
+        let headerView = GameInfoHeaderView(withText: " ", frame: .zero)
         headerView.isUserInteractionEnabled = true
         headerView.layer.cornerRadius = CORNER_RAD
         headerView.delegate = self
@@ -107,6 +107,7 @@ extension GameInfoViewController: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: GameInfoTableViewCell.reuseIdentifier, for: indexPath) as? GameInfoTableViewCell else { return  UITableViewCell()
             }
             let sourcesAndLinksArray = [
+                (name: "http://tatianastupak.com/", url: "http://tatianastupak.com/"),
                 (name: "gettyimages", url: "https://www.gettyimages.co.uk/"),
                 (name: "vhv", url: "https://www.vhv.rs/"),
                 (name: "pngguru", url: "https://www.pngguru.in/"),

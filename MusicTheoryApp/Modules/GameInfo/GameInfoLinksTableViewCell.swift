@@ -45,7 +45,32 @@ class GameInfoTableViewCell: UITableViewCell {
     
     //MARK: -Private methods
     fileprivate func configureObjects() {
-       
+        
+        let siteLabel = UILabel()
+        siteLabel.text = "Приглашаем посетить наш сайт"
+        siteLabel.textAlignment = .center
+        siteLabel.textColor = FONT_COLOR
+        
+        let siteButton = UIButton()
+        siteButton.setTitle("наш сайт", for: .normal)
+        siteButton.setTitleColor(.blue, for: .normal)
+        siteButton.tag = 0
+        self.buttonsArray.append(siteButton)
+        siteButton.addTarget(self, action: #selector(linkButtonClicked), for: .touchUpInside)
+        
+        let topVertStackView = UIStackView()
+        topVertStackView.translatesAutoresizingMaskIntoConstraints = false
+        topVertStackView.axis = .vertical
+        topVertStackView.distribution = .fillProportionally
+        topVertStackView.alignment = .fill
+        
+        topVertStackView.addArrangedSubview(siteLabel)
+        topVertStackView.addArrangedSubview(siteButton)
+        
+        self.contentView.addSubview(topVertStackView)
+        topVertStackView.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
+        topVertStackView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor, constant: 0).isActive = true
+        
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Благодарим за предоставленные иконки:"
@@ -54,7 +79,7 @@ class GameInfoTableViewCell: UITableViewCell {
         
         self.contentView.addSubview(label)
         label.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: OFFSET).isActive = true
-        label.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: OFFSET).isActive = true
+        label.topAnchor.constraint(equalTo: topVertStackView.bottomAnchor, constant: OFFSET).isActive = true
         label.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -OFFSET).isActive = true
         
         let verticalLeftStackView = UIStackView()
@@ -62,8 +87,8 @@ class GameInfoTableViewCell: UITableViewCell {
         verticalLeftStackView.distribution = .fillEqually
         verticalLeftStackView.alignment = .fill
         
-        var i = 0
-        while i < 3 {
+        var i = 1
+        while i < 4 {
             let button = UIButton()
             button.setTitleColor(.blue, for: .normal)
             button.tag = i
@@ -78,8 +103,8 @@ class GameInfoTableViewCell: UITableViewCell {
         verticalRightStackView.distribution = .fillEqually
         verticalRightStackView.alignment = .fill
         
-        i = 3
-        while i < 6 {
+        i = 4
+        while i < 7 {
             let button = UIButton()
             button.setTitleColor(.blue, for: .normal)
             button.tag = i
@@ -102,29 +127,8 @@ class GameInfoTableViewCell: UITableViewCell {
         hStackView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: OFFSET).isActive = true
         hStackView.topAnchor.constraint(equalTo: label.bottomAnchor).isActive = true
         hStackView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -OFFSET).isActive = true
-        
-        let resultString = NSMutableAttributedString(string: " Наш ")
-        let attrStringWithLink = NSMutableAttributedString(string: "сайт")
-        attrStringWithLink.addAttribute(.link, value: "http://tatianastupak.com/" , range: NSRange(location: 0, length: attrStringWithLink.length))
-        resultString.append(attrStringWithLink)
-        
-        let range = NSMakeRange(0, resultString.length)
-        resultString.addAttribute(NSAttributedString.Key.font, value: FONT, range: range)
-        resultString.addAttribute(NSAttributedString.Key.foregroundColor, value: FONT_COLOR, range: range)
-        
-        let bottomTextView = UITextView()
-        bottomTextView.isScrollEnabled = false
-        bottomTextView.translatesAutoresizingMaskIntoConstraints = false
-        bottomTextView.attributedText = resultString
-        bottomTextView.linkTextAttributes = [NSAttributedString.Key.foregroundColor : LINKS_COLOR]
-        bottomTextView.sizeToFit()
-        
-        contentView.addSubview(bottomTextView)
-        bottomTextView.leftAnchor.constraint(equalTo: contentView.leftAnchor,constant: OFFSET).isActive = true
-        bottomTextView.topAnchor.constraint(equalTo: hStackView.bottomAnchor,constant: 0).isActive = true
-        bottomTextView.rightAnchor.constraint(equalTo: contentView.rightAnchor,constant: -OFFSET).isActive = true
-        bottomTextView.heightAnchor.constraint(equalToConstant: 30.0).isActive = true
-        bottomTextView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: -OFFSET).isActive = true
+        hStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -OFFSET).isActive = true
+
     }
     
     @objc func linkButtonClicked(sender: UIButton) {
