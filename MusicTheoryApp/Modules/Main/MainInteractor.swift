@@ -8,10 +8,9 @@
 
 import Foundation
 
-class MainInteractor: MainInteractorProtocol {
+class MainInteractor: MainInteractorInputProtocol {
+    weak var presenter: MainInteractorOutputProtocol!
     var currentArticle: QuizArticleViewModel?
-    
-    weak var presenter: MainPresenterProtocol!
     
     var articles: [QuizArticleViewModel] = [
         QuizArticleViewModel(
@@ -23,9 +22,37 @@ class MainInteractor: MainInteractorProtocol {
         QuizArticleViewModel(
             model: QuizArticle(article: .durationsAndPauses, questions: MusicTasksPausesDurations.shared.tasks, result: .thirdArticleDoneTasksNumber),
             imageName: "mainDuration")
-        ] 
-
-    required init(presenter: MainPresenterProtocol) {
+    ]
+    
+    required init(presenter: MainInteractorOutputProtocol) {
         self.presenter = presenter
+    }
+    
+    func getArticles() {
+        self.presenter.articlesRecieved(articles)
+    }
+    
+    func prepareArticeToStartAgain(index: Int) {
+        let article = self.articles[index]
+        self.currentArticle = article
+        article.previousPercent = article.percent
+        article.clearArticleResult()
+        self.presenter.articlePreparedToStartAgain(article: article)
+    }
+    
+    func saveCurrentArticle() {
+        self.currentArticle?.model.updateCache()
+    }
+    
+    func articleDidSelect(index: Int) {
+        let article = self.articles[index]
+        self.currentArticle = article
+        article.previousPercent = article.percent
+        
+        if article.percent == 100 {
+            self.presenter.currentArticleDidComplete(articleIndex: index)
+        } else {
+            self.presenter.currentArticleDidNotComplete(articleModel: article.model)
+        }
     }
 }

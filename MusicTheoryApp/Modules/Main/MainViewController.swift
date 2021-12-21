@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController, MainViewProtocol {
+class MainViewController: UIViewController {
     // MARK: - Constants
     let COLLECTION_VIEW_SECTION_INSET: CGFloat = 10.0
     let COLLECTION_VIEW_CELL_WIDTH: CGFloat = 180
@@ -16,8 +16,9 @@ class MainViewController: UIViewController, MainViewProtocol {
     let ICON_SIZE: CGFloat = 44.0
     
     // MARK: - Variables
-    var presenter: MainPresenterProtocol!
-  
+    var presenter: MainViewOutputProtocol?
+    var viewModels: [QuizArticleViewModel]?
+      
     // MARK: - Views
     lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -55,7 +56,8 @@ class MainViewController: UIViewController, MainViewProtocol {
         super.viewDidLoad()
         let configurator: MainConfiguratorProtocol = MainConfigurator()
         configurator.configure(with: self)
-        configureCollectionView()
+     
+        self.configureCollectionView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -64,15 +66,17 @@ class MainViewController: UIViewController, MainViewProtocol {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
+        self.presenter?.viewDidLoad()
+        //navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
+        //navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
-    func collectionViewCellsCircleAnimation() {
+    // MARK: - Private methods
+    private func collectionViewCellsCircleAnimation() {
            DispatchQueue.main.async {
                var i = 0
                while i < 3 {
@@ -85,34 +89,35 @@ class MainViewController: UIViewController, MainViewProtocol {
                }
            }
     }
-   
-    // MARK: - Private methods
+    
     private func configureCollectionView() {
         self.view.backgroundColor = .white
         
         self.view.addSubview(self.articlesCollectionView)
-        articlesCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        articlesCollectionView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        articlesCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.90).isActive = true
-        articlesCollectionView.heightAnchor.constraint(equalToConstant: COLLECTION_VIEW_CELL_HIGHT + 2*COLLECTION_VIEW_SECTION_INSET).isActive = true
+        self.articlesCollectionView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        self.articlesCollectionView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+        self.articlesCollectionView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.90).isActive = true
+        self.articlesCollectionView.heightAnchor.constraint(equalToConstant: COLLECTION_VIEW_CELL_HIGHT + 2*COLLECTION_VIEW_SECTION_INSET).isActive = true
         
-        self.view.addSubview(infoImageView)
-        infoImageView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
-        infoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
+        self.view.addSubview(self.infoImageView)
+        self.infoImageView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10).isActive = true
+        self.infoImageView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 10).isActive = true
     }
     
+    // MARK: - Public methods
     func showStartArticleAgainAlert(index: Int) {
         let alert = UIAlertController(title: "", message: "Пройти раздел заново?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action) in
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action) in
             let indexPath = IndexPath(row: index, section: 0)
-            if let cell = self.articlesCollectionView.cellForItem(at: indexPath as IndexPath) as? MainViewCollectionViewCell
+            if let cell = self?.articlesCollectionView.cellForItem(at: indexPath) as? MainViewCollectionViewCell
             { cell.clearModel() }
-            presenter.startArticleAgain(index: index)
+            self?.presenter?.startArticleAgain(index: index)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        present(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
+    // MARK: - Actions
     @objc func infoImageViewTapped() {
         let aboutVC = GameInfoViewController()
         aboutVC.modalPresentationStyle = .overCurrentContext
@@ -124,12 +129,15 @@ class MainViewController: UIViewController, MainViewProtocol {
 // MARK: - UICollectionViewDataSource
 extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return presenter.numberOfItemsInSection()
+        return self.viewModels?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewCollectionViewCell.cellIdentifier, for: indexPath) as! MainViewCollectionViewCell
-        cell.configureSubviews(viewModel: presenter.interactor.articles[indexPath.row], frame: CGRect.zero)
+        guard
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewCollectionViewCell.cellIdentifier, for: indexPath) as? MainViewCollectionViewCell,
+            let viewModel = self.viewModels?[indexPath.row]
+            else { return UICollectionViewCell() }
+        cell.configureSubviews(viewModel: viewModel, frame: CGRect.zero)
         cell.setNeedsDisplay()
         return cell
     }
@@ -138,13 +146,22 @@ extension MainViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension MainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        presenter.didSelectItemAt(index: indexPath.row)
+        presenter?.didSelectItemAt(index: indexPath.row)
     }
 }
 
 // MARK: -QuizViewControllerDelegate
 extension MainViewController: QuizViewControllerDelegate {
     func storeRightAnswer() {
-        presenter.updateRecentSelectedArticle()
+        self.presenter?.updateRecentSelectedArticle()
     }
 }
+// MARK: -MainViewInputProtocol
+extension MainViewController: MainViewInputProtocol {
+    func updateView(with items: [QuizArticleViewModel]) {
+        self.viewModels = items
+        self.articlesCollectionView.reloadData()
+    }
+}
+
+

@@ -12,6 +12,12 @@ class QuizArticleViewModel {
     var model: QuizArticle
     var imageName: String
     var previousPercent: CGFloat = 0.0
+    
+    var percent: CGFloat {
+        get {
+            return CGFloat((model.numberOfFinishedTasks*100)/model.articleQuestions.count)
+        }
+    }
    
     var previousPercentInAngle: CGFloat {
         get {
@@ -45,13 +51,7 @@ class QuizArticleViewModel {
         self.imageName = imageName
         previousPercent = percent
     }
-    
-    var percent: CGFloat {
-        get {
-            return CGFloat((model.numberOfFinishedTasks*100)/model.articleQuestions.count)
-        }
-    }
-    
+        
     func articleTitle() -> String {
         return model.article.rawValue
     }
@@ -61,7 +61,7 @@ class QuizArticleViewModel {
     }
     
     func afterAnimation() {
-        previousPercent = percent
+        self.previousPercent = self.percent
     }
  
     func clearArticleResult() {

@@ -8,38 +8,41 @@
 
 import UIKit
 
-protocol MainConfiguratorProtocol: class {
+
+protocol MainInteractorInputProtocol: AnyObject {
+    var articles: [QuizArticleViewModel] { get }
+    var currentArticle: QuizArticleViewModel? { get set }
+    
+    func getArticles()
+    func prepareArticeToStartAgain(index: Int)
+    func saveCurrentArticle()
+    func articleDidSelect(index: Int)
+}
+
+protocol MainInteractorOutputProtocol: AnyObject {
+    func articlesRecieved(_ items: [QuizArticleViewModel])
+    func articlePreparedToStartAgain(article: QuizArticleViewModel)
+    func currentArticleDidComplete(articleIndex: Int)
+    func currentArticleDidNotComplete(articleModel: QuizArticle)
+}
+
+protocol MainViewInputProtocol: AnyObject {
+    func updateView(with items: [QuizArticleViewModel])
+}
+ 
+protocol MainConfiguratorProtocol: AnyObject {
     func configure(with viewController: MainViewController)
 }
 
-protocol MainViewProtocol: class {
-    var presenter: MainPresenterProtocol! {get set}
-}
-
-protocol MainPresenterProtocol: class {
-    var router: MainRouterProtocol! { set get }
-    var interactor: MainInteractorProtocol! {set get}
-
-    func numberOfItemsInSection() -> Int
-    func titleForArticle(index: Int) -> String
-    func resultTitleForArticle(index: Int) -> String
-    func imageForArticle(index: Int) -> UIImage?
-    func didSelectItemAt(index: Int)
-    func updateRecentSelectedArticle()
-    func resultAngle(index: Int) -> CGFloat
-    func articleResultDidChande(index: Int) -> Bool
-    func afterAnimation(index: Int)
-    func previousResultAngle(index: Int) -> CGFloat
+protocol MainViewOutputProtocol: AnyObject {
+    
+    func viewDidLoad()
     func startArticleAgain(index: Int)
-    func showStartButton(index: Int) -> Bool
+    func updateRecentSelectedArticle()
+    func didSelectItemAt(index: Int)
 }
 
-protocol MainInteractorProtocol: class {
-    var articles: [QuizArticleViewModel] { get }
-    var currentArticle: QuizArticleViewModel? { get set }
-}
-
-protocol MainRouterProtocol: class {
+protocol MainRouterProtocol: AnyObject {
     func showQuizScene(article: QuizArticle)
     func showStartAgainAlert(index: Int)
 }

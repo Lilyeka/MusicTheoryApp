@@ -46,8 +46,7 @@ class MainViewCollectionViewCell: UICollectionViewCell {
     var shapeLayer: CAShapeLayer!
     var trackLayer: CAShapeLayer!
     var previousTrackLayer: CAShapeLayer!
-    var showStartButton: Bool = false
-    
+   
     // MARK: - Life cycle
     override init(frame: CGRect) {
         super.init(frame: frame)

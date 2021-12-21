@@ -8,79 +8,46 @@
 
 import UIKit
 
-class MainPresenter: MainPresenterProtocol {
-  
-    weak var view: MainViewProtocol!
-    var interactor: MainInteractorProtocol!
+class MainPresenter: MainViewOutputProtocol, MainInteractorOutputProtocol {
+    weak var view: MainViewInputProtocol?
+    var interactor: MainInteractorInputProtocol!
     var router: MainRouterProtocol!
     
-    required init(view: MainViewProtocol) {
+    required init(view: MainViewInputProtocol) {
         self.view = view
     }
-        
-    func numberOfItemsInSection() -> Int {
-        //return interactor.arrayOfArticles.count
-        return interactor.articles.count
-    }
     
-    func titleForArticle(index: Int) -> String {
-        return interactor.articles[index].articleTitle()
-    }
-    
-    func resultTitleForArticle(index: Int) -> String {
-        return interactor.articles[index].resultTitle()
-    }
-    
-    func resultAngle(index: Int) -> CGFloat {
-        return interactor.articles[index].percentInAngle
-    }
-    
-    func previousResultAngle(index: Int) -> CGFloat {
-        return interactor.articles[index].previousPercentInAngle
-       }
-    
-    func articleResultDidChande(index: Int) -> Bool {
-        return interactor.articles[index].percentIsChanged
-    }
-    
-    func imageForArticle(index: Int) -> UIImage? {
-        guard let image = UIImage(named: interactor.articles[index].imageName) else {
-            return nil
-        }
-        return image
+    //MARK: - MainViewOutputProtocol
+    func viewDidLoad() {
+        self.interactor?.getArticles()
     }
     
     func didSelectItemAt(index: Int) {
-        let article = interactor.articles[index]//.model
-        interactor.currentArticle = article
-        article.previousPercent = article.percent
-        if article.percent == 100 {
-            router.showStartAgainAlert(index: index)
-        } else {
-            router.showQuizScene(article: article.model)
-        }
+        self.interactor.articleDidSelect(index: index)
     }
-    
-    func afterAnimation(index: Int) {
-        interactor.articles[index].previousPercent = interactor.articles[index].percent
-    }
-    
+        
     func updateRecentSelectedArticle() {
-        interactor.currentArticle?.model.updateCache()
+        self.interactor.saveCurrentArticle()
     }
     
     func startArticleAgain(index: Int) {
-        let article = interactor.articles[index]
-        interactor.currentArticle = article
-        article.previousPercent = article.percent
-        article.clearArticleResult()
-        router.showQuizScene(article: article.model)
+        self.interactor.prepareArticeToStartAgain(index: index)
     }
     
-    func showStartButton(index: Int) -> Bool {
-        let article = interactor.articles[index]
-        return article.percent == 100
+    //MARK: - MainInteractorOutputProtocol
+    func articlesRecieved(_ items: [QuizArticleViewModel]) {
+        self.view?.updateView(with: items)
+    }
+    
+    func articlePreparedToStartAgain(article: QuizArticleViewModel) {
+        self.router.showQuizScene(article: article.model)
+    }
+    
+    func currentArticleDidComplete(articleIndex: Int) {
+        self.router.showStartAgainAlert(index: articleIndex)
+    }
+    
+    func currentArticleDidNotComplete(articleModel: QuizArticle) {
+        self.router.showQuizScene(article: articleModel)
     }
 }
-
-
