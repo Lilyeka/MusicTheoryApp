@@ -259,14 +259,16 @@ class StaffView: UIView {
             if DeviceType.IS_IPHONE_11Pro_X_Xs {
                 return 38.0
             }
-            if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+            if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
+                DeviceType.IS_IPHONE_12ProMax_13ProMax {
                 return 40.0
             }
             return 38.0
         }()
         
         let offsetFromClef: CGFloat = {
-            if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+            if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
+                DeviceType.IS_IPHONE_12ProMax_13ProMax {
                 return 35.0
             } else {
                 return 20.0
@@ -553,7 +555,8 @@ extension StaffView {
         if DeviceType.IS_IPHONE_11Pro_X_Xs {
             return 73
         }
-        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
+            DeviceType.IS_IPHONE_12ProMax_13ProMax {
             return 75
         }
         if DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
@@ -571,7 +574,8 @@ extension StaffView {
         } else if DeviceType.IS_IPHONE_11Pro_X_Xs {
             return 33
         } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
-                DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+                DeviceType.IS_IPHONE_12_12Pro_13_13Pro ||
+                    DeviceType.IS_IPHONE_12ProMax_13ProMax {
             return 34
         }
         return 30 // for iPhone 11
@@ -588,7 +592,8 @@ extension StaffView {
             return 15.0
         }
         if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
-            DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+            DeviceType.IS_IPHONE_12_12Pro_13_13Pro ||
+            DeviceType.IS_IPHONE_12ProMax_13ProMax {
             return 15.0
         }
         return 15.0 // for iPhone 11
@@ -605,7 +610,8 @@ extension StaffView {
             return 9.0
         }
         if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
-            DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+            DeviceType.IS_IPHONE_12_12Pro_13_13Pro ||
+            DeviceType.IS_IPHONE_12ProMax_13ProMax {
             return 8.0
         }
         return 0 // for iPhone 11
@@ -622,7 +628,8 @@ extension StaffView {
             return 80.0
         }
         if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
-            DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+            DeviceType.IS_IPHONE_12_12Pro_13_13Pro ||
+            DeviceType.IS_IPHONE_12ProMax_13ProMax {
             return 89.0
         }
         
@@ -637,14 +644,16 @@ extension StaffView {
             return 8.0
         }
         if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
-            DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+            DeviceType.IS_IPHONE_12_12Pro_13_13Pro ||
+            DeviceType.IS_IPHONE_12ProMax_13ProMax {
             return 15.0
         }
         return 5.0
     }()
     
     static var BASS_TOP_OFFSET: CGFloat = {
-        if DeviceType.IS_IPHONE_6_6s_7_8 || DeviceType.IS_IPHONE_11Pro_X_Xs ||  DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+        if DeviceType.IS_IPHONE_6_6s_7_8 || DeviceType.IS_IPHONE_11Pro_X_Xs ||  DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_12_12Pro_13_13Pro ||
+            DeviceType.IS_IPHONE_12ProMax_13ProMax {
             return 6.0
         }
         if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ {
@@ -657,13 +666,15 @@ extension StaffView {
             return 8.0
         }
         if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ || DeviceType.IS_IPHONE_11Pro_X_Xs ||  DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
-            DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+            DeviceType.IS_IPHONE_12_12Pro_13_13Pro ||
+            DeviceType.IS_IPHONE_12ProMax_13ProMax {
             return 5.0
         }
         return 8.0
     }()
     static var BASS_BOTTOM_OFFSET: CGFloat = {
-        if DeviceType.IS_IPHONE_6_6s_7_8 || DeviceType.IS_IPHONE_11Pro_X_Xs ||  DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+        if DeviceType.IS_IPHONE_6_6s_7_8 || DeviceType.IS_IPHONE_11Pro_X_Xs ||  DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_12_12Pro_13_13Pro ||
+            DeviceType.IS_IPHONE_12ProMax_13ProMax {
             return -16.0
         }
         if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ {
@@ -682,7 +693,8 @@ extension StaffView {
             return 95.0
         }
         if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
-            DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+            DeviceType.IS_IPHONE_12_12Pro_13_13Pro ||
+            DeviceType.IS_IPHONE_12ProMax_13ProMax {
             return 100.0
         }
         return 77.0

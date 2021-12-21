@@ -9,6 +9,8 @@
 import UIKit
 
 class MainViewController: UIViewController {
+    // TODO - для телефонов побольше чем 8-ка, задать размеры картинок и ячеек побольше
+    // иначе на 13ProMax выглядит мелковато
     // MARK: - Constants
     let COLLECTION_VIEW_SECTION_INSET: CGFloat = 10.0
     let COLLECTION_VIEW_CELL_WIDTH: CGFloat = 180
@@ -56,8 +58,6 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         let configurator: MainConfiguratorProtocol = MainConfigurator()
         configurator.configure(with: self)
-     
-        self.configureCollectionView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -67,6 +67,7 @@ class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.presenter?.viewDidLoad()
+        self.configureCollectionView()
         //navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
@@ -93,15 +94,18 @@ class MainViewController: UIViewController {
     private func configureCollectionView() {
         self.view.backgroundColor = .white
         
+        let colViewWidth = CGFloat(self.viewModels!.count)*COLLECTION_VIEW_CELL_WIDTH +
+        (CGFloat(self.viewModels!.count + 1))*COLLECTION_VIEW_SECTION_INSET
+         
         self.view.addSubview(self.articlesCollectionView)
-        self.articlesCollectionView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        self.articlesCollectionView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
-        self.articlesCollectionView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.90).isActive = true
+        self.articlesCollectionView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        self.articlesCollectionView.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor).isActive = true
+        self.articlesCollectionView.widthAnchor.constraint(equalToConstant: colViewWidth).isActive = true
         self.articlesCollectionView.heightAnchor.constraint(equalToConstant: COLLECTION_VIEW_CELL_HIGHT + 2*COLLECTION_VIEW_SECTION_INSET).isActive = true
         
         self.view.addSubview(self.infoImageView)
-        self.infoImageView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10).isActive = true
-        self.infoImageView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 10).isActive = true
+        self.infoImageView.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor, constant: -10).isActive = true
+        self.infoImageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
     }
     
     // MARK: - Public methods

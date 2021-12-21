@@ -28,5 +28,6 @@ struct DeviceType {
     static let IS_IPHONE_11Pro_X_Xs = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.SCREEN_MAX_LENGTH == 812.0
     static let IS_IPHONE_11_XR_11PMax_XsMax = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.SCREEN_MAX_LENGTH == 896.0
     static let IS_IPHONE_12_12Pro_13_13Pro = UIDevice.current.userInterfaceIdiom == .phone &&  ScreenSize.SCREEN_MAX_LENGTH == 844.0
+    static let IS_IPHONE_12ProMax_13ProMax = UIDevice.current.userInterfaceIdiom == .phone &&  ScreenSize.SCREEN_MAX_LENGTH == 926.0
 }
 

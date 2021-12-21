@@ -110,7 +110,8 @@ class PauseViewModelSeparate:MathElementViewModel {
             width = 48.0
             offsetFromCenter = -18
         } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
-                    DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+            DeviceType.IS_IPHONE_12_12Pro_13_13Pro ||
+            DeviceType.IS_IPHONE_12ProMax_13ProMax {
             height = 68.0
             width = 29.0
         }
@@ -130,7 +131,8 @@ class PauseViewModelSeparate:MathElementViewModel {
         } else if DeviceType.IS_IPHONE_11Pro_X_Xs {
             height = 68.0
             width = 29.0
-        } else if (DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_12_12Pro_13_13Pro) {
+        } else if (DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_12_12Pro_13_13Pro) ||
+            DeviceType.IS_IPHONE_12ProMax_13ProMax {
             height = 68.0
             width = 29.0
         }
@@ -154,7 +156,8 @@ class PauseViewModelSeparate:MathElementViewModel {
             width = 40.0
             offsetFromCenter = -4.0
         } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
-                DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+            DeviceType.IS_IPHONE_12_12Pro_13_13Pro ||
+            DeviceType.IS_IPHONE_12ProMax_13ProMax {
              height = 93.0
              width = 40.0
              offsetFromCenter = -4.0
@@ -178,8 +181,8 @@ class PauseViewModelSeparate:MathElementViewModel {
               height = 50.0
               width = 50.0
               offsetFromCenter = 27.0
-          } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
-                    DeviceType.IS_IPHONE_12_12Pro_13_13Pro{
+          } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_12_12Pro_13_13Pro ||
+              DeviceType.IS_IPHONE_12ProMax_13ProMax {
               height = 50.0
               width = 50.0
               offsetFromCenter = 27.0
@@ -204,14 +207,12 @@ class PauseViewModelSeparate:MathElementViewModel {
             width = 50.0
             offsetFromCenter = -10.0
         } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
-                    DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+            DeviceType.IS_IPHONE_12_12Pro_13_13Pro ||
+            DeviceType.IS_IPHONE_12ProMax_13ProMax {
             height = 50.0
             width = 50.0
             offsetFromCenter = -12.0
         }
         return (height: height, width: width, offsetFromCenter: offsetFromCenter)
     }
-    
-    
 }
-
