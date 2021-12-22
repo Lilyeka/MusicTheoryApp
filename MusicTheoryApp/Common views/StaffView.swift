@@ -140,6 +140,10 @@ class StaffView: UIView {
                 imageView.widthAnchor.constraint(equalToConstant: note.durationWidth).isActive = true
                 imageView.centerYAnchor.constraint(equalTo: self.bottomAnchor, constant: durationPositionY).isActive = true
                 
+                let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(noteTapped(tapGestureRecognizer:)))
+                imageView.isUserInteractionEnabled = true
+                imageView.addGestureRecognizer(tapGestureRecognizer)
+                
                 //дополнительная линейка по центру ноты
                 if note.additionalLine(cleff: cleff) {
                     let addLineXOffset = 7
@@ -220,10 +224,7 @@ class StaffView: UIView {
                 } else {
                 nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: note.noteTitleBottomOffset(cleff: cleff)).isActive = true
                 }
-                let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(noteTapped(tapGestureRecognizer:)))
-                imageView.isUserInteractionEnabled = true
-                imageView.addGestureRecognizer(tapGestureRecognizer)
-                
+
                 //previousNoteWidth = noteWidth
                 // TODO: если у ноты есть еще и тональность то отрисовать значок тональности в отдельной imageView
                 if let toneImageName = noteCharacteristics.tone {
@@ -422,38 +423,36 @@ class StaffView: UIView {
     }
           
     //MARK - Actions
-    @objc func noteTapped(tapGestureRecognizer:UITapGestureRecognizer) {
-        selectedNoteView = tapGestureRecognizer.view
-        let noteViewModelIndex = tapGestureRecognizer.view?.tag
-        let noteViewModel = notesArray![noteViewModelIndex!]
-        noteViewModel.didTapped(noteView:selectedNoteView!)
+    @objc func noteTapped(tapGestureRecognizer: UITapGestureRecognizer) {
+        self.selectedNoteView = tapGestureRecognizer.view
+        guard
+            let noteViewModelIndex = self.selectedNoteView?.tag,
+            let noteViewModel = notesArray?[noteViewModelIndex] else {return}
+        noteViewModel.didTapped(noteView: selectedNoteView!)
         
-        if let selectOne = selectOnlyOneNote, selectOne == true{//можно выбрать только одну ноту из нескольких
-            tapGestureRecognizer.view?.alpha = NoteViewModel.OPAQUE_ALFA
+        if let selectOne = self.selectOnlyOneNote, selectOne {//можно выбрать только одну ноту из нескольких
+            self.selectedNoteView?.alpha = NoteViewModel.OPAQUE_ALFA
             if previousSelectedNoteView != nil, previousSelectedNoteView != tapGestureRecognizer.view {
                 previousSelectedNoteView?.alpha = NoteViewModel.TRANSPARENT_ALFA
-                for view in self.subviews { //имя предыдущей выбраной ноты скрываем
-                    if view.tag == previousSelectedNoteView!.tag + 1000 {
-                        view.isHidden = true
-                    }
-                }
+                self.switchNoteNames(hideNotePosition: previousSelectedNoteView!.tag,
+                                     showNotePosition: noteViewModelIndex)
+            } else {
+                self.showNoteName(notePosition: noteViewModelIndex)
             }
-            if !pickedOutNotesIndexes.contains(noteViewModelIndex!) {
-                pickedOutNotesIndexes.removeAll()
-                pickedOutNotesIndexes.append(noteViewModelIndex!)
-            }
-            previousSelectedNoteView = tapGestureRecognizer.view
+            self.pickedOutNotesIndexes = [noteViewModelIndex]
+            previousSelectedNoteView = selectedNoteView
         } else {// можно выбрать несколько нот из нескольких
-            tapGestureRecognizer.view?.alpha = noteViewModel.selected ? NoteViewModel.OPAQUE_ALFA : NoteViewModel.TRANSPARENT_ALFA
+            self.selectedNoteView?.alpha = noteViewModel.selected ? NoteViewModel.OPAQUE_ALFA : NoteViewModel.TRANSPARENT_ALFA
             
-            if pickedOutNotesIndexes.contains(noteViewModelIndex!) {
-                let index = pickedOutNotesIndexes.firstIndex(of: noteViewModelIndex!)
+            if pickedOutNotesIndexes.contains(noteViewModelIndex) {
+                let index = pickedOutNotesIndexes.firstIndex(of: noteViewModelIndex)
                 pickedOutNotesIndexes.remove(at: index!)
             } else {
-                pickedOutNotesIndexes.append(noteViewModelIndex!)
+                pickedOutNotesIndexes.append(noteViewModelIndex)
             }
+            self.toggleNoteName(notePosition:noteViewModelIndex)
         }
-        showNoteName(notePosition:noteViewModelIndex!)
+
         print(pickedOutNotesIndexes)
     }
     
@@ -478,10 +477,29 @@ class StaffView: UIView {
         return durationPositionY
     }
     
+    fileprivate func toggleNoteName(notePosition:Int) {
+        for view in self.subviews {
+            if view.tag == notePosition + 1000 {//имя ноты
+                view.isHidden.toggle()
+            }
+        }
+    }
+    
     fileprivate func showNoteName(notePosition:Int) {
         for view in self.subviews {
             if view.tag == notePosition + 1000 {//имя ноты
-                view.isHidden = !view.isHidden
+                view.isHidden = false
+            }
+        }
+    }
+    
+    fileprivate func switchNoteNames(hideNotePosition: Int, showNotePosition: Int) {
+        for view in self.subviews { //имя предыдущей выбраной ноты скрываем
+            if view.tag == hideNotePosition + 1000 {
+                view.isHidden = true
+            }
+            if view.tag == showNotePosition + 1000 {  //имя выбраной ноты показываем
+                view.isHidden = false
             }
         }
     }

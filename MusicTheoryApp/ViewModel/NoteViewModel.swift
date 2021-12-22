@@ -181,8 +181,8 @@ extension NoteViewModel {
     }
     
     func didTapped(noteView: UIView) {
-        self.selected = !self.selected
-        delegate?.noteTaped(noteName:self.model.name, noteView: noteView)
+        self.selected.toggle()
+        delegate?.noteTaped(noteName: self.model.name, noteView: noteView)
     }
     
     func noteTitleBottomOffset(cleff: CleffTypes) -> CGFloat {

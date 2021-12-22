@@ -28,8 +28,7 @@ class MusicTaskSelectNoteViewModel {
     func checkUserAnswer(userAnswer: [Note.NoteName]) -> Bool {
         let sortedUserAnswer = userAnswer.sorted{$0.rawValue < $1.rawValue}
         let sortedRightAnswer = model.rightAnswer?.sorted{$0.rawValue < $1.rawValue}
-        let result = (sortedRightAnswer == sortedUserAnswer)
-        return result
+        return sortedRightAnswer == sortedUserAnswer
     }
     
     func noteIsFromRightAnswer(note: Note.NoteName) -> Bool {

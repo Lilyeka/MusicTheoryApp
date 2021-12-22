@@ -47,12 +47,12 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
         self.questionLabel.numberOfLines = 0
         self.questionLabel.textAlignment = .center
         self.questionLabel.text = viewModel.model.questionText
-    
+        
         self.staffView = StaffView(notesViewModels: viewModel.notesViewModels,
-                              selectOnlyOneNote: false,
-                              frame: CGRect.zero,
-                              notesDelegate: self,
-                              cleff: viewModel.model.cleffType)
+                                   selectOnlyOneNote: false,
+                                   frame: CGRect.zero,
+                                   notesDelegate: self,
+                                   cleff: viewModel.model.cleffType)
         self.staffView.delegate = self
         self.staffView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(staffView)
@@ -81,7 +81,8 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
     
     //MARK: -Private methods
     func addTopOffsetForStaffView() -> CGFloat {
-        if DeviceType.IS_IPHONE_11Pro_X_Xs || DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+        if DeviceType.IS_IPHONE_11Pro_X_Xs || DeviceType.IS_IPHONE_12_12Pro_13_13Pro ||
+            DeviceType.IS_IPHONE_12ProMax_13ProMax {
             return 17.0
         }
         if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
@@ -100,7 +101,7 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
 extension QuizSelectNoteCollectionViewCell: NoteViewModelDelegate {
     func noteTaped(noteName: Note.NoteName, noteView: UIView) {
         if let viewModel = viewModel {
-            if viewModel.noteIsFromRightAnswer(note:noteName) {
+            if viewModel.noteIsFromRightAnswer(note: noteName) {
                 //delegate?.rightNoteTappedReaction(noteView: noteView)
                 delegate?.additionalRightAnswerReaction(view: noteView)
             }
@@ -109,16 +110,20 @@ extension QuizSelectNoteCollectionViewCell: NoteViewModelDelegate {
 }
 
 extension QuizSelectNoteCollectionViewCell: StaffViewDelegate {
+    
     func pickedOutNotesIndexesDidChange(newValue: [Int]) {
-        var noteNamesArray = [Note.NoteName]()
-        for n in newValue {
-            if let noteName = Note.NoteName(rawValue: n) {
-                noteNamesArray.append(noteName)
+        if newValue.count > 0 {
+            var noteNamesArray = [Note.NoteName]()
+            
+            for n in newValue {
+                if let noteName = Note.NoteName(rawValue: n) {
+                    noteNamesArray.append(noteName)
+                }
             }
-        }
-        noteNamesArray.sort{$0.rawValue < $1.rawValue}
-        if (viewModel?.checkUserAnswer(userAnswer: noteNamesArray))! {
-            delegate?.rightAnswerReaction()
+            noteNamesArray.sort{$0.rawValue < $1.rawValue}
+            if (viewModel?.checkUserAnswer(userAnswer: noteNamesArray))! {
+                delegate?.rightAnswerReaction()
+            }
         }
     }
 }
@@ -129,7 +134,7 @@ extension QuizSelectNoteCollectionViewCell {
     static let STAF_TOP_OFFSET: CGFloat = {
         if DeviceType.IS_IPHONE_11Pro_X_Xs || DeviceType.IS_IPHONE_11_XR_11PMax_XsMax  {
             return 30.0
-        } else if DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+        } else if DeviceType.IS_IPHONE_12_12Pro_13_13Pro || DeviceType.IS_IPHONE_12ProMax_13ProMax {
             return 20.0
         }
         return 45.0
@@ -137,7 +142,8 @@ extension QuizSelectNoteCollectionViewCell {
     
     static let STAF_VERT_OFFSET: CGFloat = {
         if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
-            DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+            DeviceType.IS_IPHONE_12_12Pro_13_13Pro ||
+            DeviceType.IS_IPHONE_12ProMax_13ProMax {
             return 15.0
         } else {
             return 10.0
