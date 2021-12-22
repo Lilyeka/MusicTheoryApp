@@ -15,7 +15,7 @@ protocol NoteViewModelDelegate {
 class NoteViewModel: MathElementViewModel {
     static let TRANSPARENT_ALFA: CGFloat = 0.3
     static let OPAQUE_ALFA: CGFloat = 1.0
-    static let NOTE_LABEL_FONT =  UIFont.boldSystemFont(ofSize: 18.0)
+    static let NOTE_LABEL_FONT = UIFont.boldSystemFont(ofSize: 18.0)
     
     var delegate: NoteViewModelDelegate?
     
@@ -25,7 +25,7 @@ class NoteViewModel: MathElementViewModel {
     var selected: Bool = false
     
     var duration: Duration {
-        get {return model.duration}
+        get { return model.duration }
     }
 
     var durationImageName: String {
@@ -73,10 +73,10 @@ class NoteViewModel: MathElementViewModel {
     
     var offsetFromDurationCenter: CGFloat {
         get {
-            switch  model.duration {
+            switch model.duration {
             case .whole:
                 return 1.0
-            case .half,.quarter:
+            case .half, .quarter:
                 return durationHeight/4 + durationHeight/8 - 1
             case .eighth, .sixteen:
                 return durationHeight/4 + durationHeight/8
@@ -214,8 +214,8 @@ extension NoteViewModel {
     }
     
     func wholeNoteSize() -> (height: CGFloat,width: CGFloat) {
-        var height: CGFloat = 0.0
-        var width: CGFloat = 0.0
+        var height: CGFloat = 45.0
+        var width: CGFloat = 45.0
         if DeviceType.IS_IPHONE_6_6s_7_8 {
             height = 45.0
             width = 45.0

@@ -92,8 +92,8 @@ class PauseViewModel:MathElementViewModel {
     }
     
     func sixteenRestSize() -> (height: CGFloat, width: CGFloat, offsetFromCenter: CGFloat){
-        var height: CGFloat = 0.0
-        var width: CGFloat = 0.0
+        var height: CGFloat = 90.0
+        var width: CGFloat = 37.0
         var offsetFromCenter: CGFloat = 0.0
         if DeviceType.IS_IPHONE_6_6s_7_8 {
             height = 90.0
@@ -117,8 +117,8 @@ class PauseViewModel:MathElementViewModel {
     }
     
     func eightRestSize() -> (height: CGFloat, width: CGFloat, offsetFromCenter: CGFloat){
-        var height: CGFloat = 0.0
-        var width: CGFloat = 0.0
+        var height: CGFloat = 68.0
+        var width: CGFloat = 24.0
         var offsetFromCenter: CGFloat = 0.0
         if DeviceType.IS_IPHONE_6_6s_7_8 {
             height = 68.0
@@ -139,8 +139,8 @@ class PauseViewModel:MathElementViewModel {
     }
     
     func quarterRestSize() -> (height: CGFloat, width: CGFloat, offsetFromCenter: CGFloat) {
-        var height: CGFloat = 0.0
-        var width: CGFloat = 0.0
+        var height: CGFloat = 83.0
+        var width: CGFloat = 37.0
         var offsetFromCenter: CGFloat = 0.0
         if DeviceType.IS_IPHONE_6_6s_7_8 {
             height = 83.0
@@ -165,8 +165,8 @@ class PauseViewModel:MathElementViewModel {
     }
     
     func halfRestSize() -> (height: CGFloat,width: CGFloat, offsetFromCenter: CGFloat) {
-        var height: CGFloat = 0.0
-        var width: CGFloat = 0.0
+        var height: CGFloat = 47.0
+        var width: CGFloat = 47.0
         var offsetFromCenter: CGFloat = 0.0
         if DeviceType.IS_IPHONE_6_6s_7_8 {
             height = 45.0
@@ -191,8 +191,8 @@ class PauseViewModel:MathElementViewModel {
     }
     
     func wholeRestSize() -> (height: CGFloat,width: CGFloat, offsetFromCenter: CGFloat) {
-        var height: CGFloat = 0.0
-        var width: CGFloat = 0.0
+        var height: CGFloat = 47.0
+        var width: CGFloat = 47.0
         var offsetFromCenter: CGFloat = 0.0
         if DeviceType.IS_IPHONE_6_6s_7_8 {
             height = 45.0
