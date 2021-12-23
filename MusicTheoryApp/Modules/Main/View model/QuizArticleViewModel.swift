@@ -9,6 +9,15 @@
 import UIKit
 
 class QuizArticleViewModel {
+    let HEADER_FONT: UIFont = {
+        
+        if DeviceType.IS_IPHONE_12ProMax_13ProMax ||
+            DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+        return UIFont(descriptor: .preferredFontDescriptor(withTextStyle: .title1), size: 20.0)
+        }
+        return UIFont(descriptor: .preferredFontDescriptor(withTextStyle: .title1), size: 16.0)
+    }()
+    
     var model: QuizArticle
     var imageName: String
     var previousPercent: CGFloat = 0.0

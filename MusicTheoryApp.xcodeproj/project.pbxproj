@@ -593,12 +593,6 @@
 				61400E56264AC70C00F179F9 /* GameInfo */,
 				619BB53624B4F6C400D3076E /* Main */,
 				619BB54824B7235500D3076E /* Quiz */,
-				61068AAA253F698700E234D4 /* AdditionDurations */,
-				61068AA8253F690A00E234D4 /* SelectNoteInWord */,
-				61068AA7253F68EF00E234D4 /* WriteNoteInWord */,
-				61068AA9253F694600E234D4 /* PauseAndDuration */,
-				61068AA6253F68BD00E234D4 /* ShowNoteOnPiano */,
-				61068AA5253F683B00E234D4 /* SelectNote */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -606,6 +600,12 @@
 		619BB54824B7235500D3076E /* Quiz */ = {
 			isa = PBXGroup;
 			children = (
+				61068AA5253F683B00E234D4 /* SelectNote */,
+				61068AA6253F68BD00E234D4 /* ShowNoteOnPiano */,
+				61068AA9253F694600E234D4 /* PauseAndDuration */,
+				61068AA7253F68EF00E234D4 /* WriteNoteInWord */,
+				61068AA8253F690A00E234D4 /* SelectNoteInWord */,
+				61068AAA253F698700E234D4 /* AdditionDurations */,
 				619BB54624B7234C00D3076E /* QuizViewController.swift */,
 				619BB54B24B7463200D3076E /* QuizConfigurator.swift */,
 				619BB54D24B7475200D3076E /* QuizPresenter.swift */,

@@ -12,6 +12,7 @@ class MainViewCollectionViewCell: UICollectionViewCell {
     // MARK: - Constants
     let CIRCLE_RADIUS: CGFloat = 50.0
     let TRACK_LINE_WIDTH: CGFloat = 5.0//4.0
+    
     var circularPath: UIBezierPath?
         
     // MARK: - UIElements
@@ -19,7 +20,7 @@ class MainViewCollectionViewCell: UICollectionViewCell {
         var label = UILabel()
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
+        label.numberOfLines = 2
         return label
     }()
     
@@ -58,27 +59,29 @@ class MainViewCollectionViewCell: UICollectionViewCell {
     
     func configureSubviews(viewModel:QuizArticleViewModel, frame:CGRect) {
         self.viewModel = viewModel
-        layer.cornerRadius = 5
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.gray.cgColor
+        self.layer.cornerRadius = 10 //5
+        self.layer.borderWidth = 1
+        self.layer.borderColor = UIColor.gray.cgColor
         
-        textLabel.text = viewModel.articleTitle()
+        self.textLabel.text = viewModel.articleTitle()
+        self.textLabel.font = viewModel.HEADER_FONT
         
-        contentView.addSubview(textLabel)
-        textLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8).isActive = true
-        textLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5).isActive = true
-        textLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5).isActive = true
+        self.contentView.addSubview(self.textLabel)
+        self.textLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8).isActive = true
+        self.textLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5).isActive = true
+        self.textLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5).isActive = true
     
-        contentView.addSubview(imageView)
-        imageView.topAnchor.constraint(equalTo: textLabel.bottomAnchor, constant: 8).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: 2*CIRCLE_RADIUS).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 2*CIRCLE_RADIUS).isActive = true
-        imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        
-        contentView.addSubview(resultLabel)
-        resultLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8).isActive = true
-        resultLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
-        resultLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
+        self.contentView.addSubview(imageView)
+      //  self.imageView.topAnchor.constraint(greaterThanOrEqualTo: self.textLabel.bottomAnchor, constant: 5).isActive = true
+        self.imageView.widthAnchor.constraint(equalToConstant: 2*CIRCLE_RADIUS).isActive = true
+        self.imageView.heightAnchor.constraint(equalToConstant: 2*CIRCLE_RADIUS).isActive = true
+        self.imageView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor, constant: 8.0).isActive = true
+        self.imageView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
+        //TODO - resultLabel разместить внутри вьюхи, саму вьюху разметить между дном картинки и дном ячейки, resultLabel будет по центру вьюхи размещаться
+        self.contentView.addSubview(self.resultLabel)
+        self.resultLabel.topAnchor.constraint(equalTo: self.imageView.bottomAnchor, constant: 8).isActive = true
+        self.resultLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor).isActive = true
+        self.resultLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
     }
     
     func animationFunc() {

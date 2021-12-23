@@ -13,33 +13,37 @@ class MainViewController: UIViewController {
     // иначе на 13ProMax выглядит мелковато
     // MARK: - Constants
     let COLLECTION_VIEW_SECTION_INSET: CGFloat = 10.0
-    let COLLECTION_VIEW_CELL_WIDTH: CGFloat = 180
-    let COLLECTION_VIEW_CELL_HIGHT: CGFloat = 194
-    let ICON_SIZE: CGFloat = 44.0
+    
+    let COLLECTION_VIEW_CELL_WIDTH: CGFloat = {
+        if DeviceType.IS_IPHONE_12ProMax_13ProMax ||
+            DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+            return 200
+        }
+        return 180
+    }()
+    
+    let COLLECTION_VIEW_CELL_HIGHT: CGFloat = {
+        if DeviceType.IS_IPHONE_12ProMax_13ProMax ||
+            DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+            return 214
+        }
+        return 194
+    }()
+    
+    let ICON_SIZE: CGFloat = {
+        //        if DeviceType.IS_IPHONE_12ProMax_13ProMax {
+        //            return 64.0
+        //        }
+        return 44.0
+    }()
+    // = 44.0
     
     // MARK: - Variables
     var presenter: MainViewOutputProtocol?
     var viewModels: [QuizArticleViewModel]?
-      
-    // MARK: - Views
-    lazy var layout: UICollectionViewFlowLayout = {
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: COLLECTION_VIEW_SECTION_INSET, left: COLLECTION_VIEW_SECTION_INSET, bottom: COLLECTION_VIEW_SECTION_INSET, right: COLLECTION_VIEW_SECTION_INSET)
-        layout.itemSize = CGSize(width: COLLECTION_VIEW_CELL_WIDTH, height: COLLECTION_VIEW_CELL_HIGHT)
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
-        return layout
-    }()
     
-    lazy var articlesCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.backgroundColor = .white
-        collectionView.register(MainViewCollectionViewCell.self, forCellWithReuseIdentifier: MainViewCollectionViewCell.cellIdentifier)
-        return collectionView
-    }()
+    // MARK: - Views
+    var collectionView: UICollectionView!
     
     lazy var infoImageView: UIImageView = {
         var imageView = UIImageView()
@@ -58,16 +62,17 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         let configurator: MainConfiguratorProtocol = MainConfigurator()
         configurator.configure(with: self)
+        self.presenter?.viewDidLoad()
+        self.configureCollectionView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-       collectionViewCellsCircleAnimation()
+        collectionViewCellsCircleAnimation()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.presenter?.viewDidLoad()
-        self.configureCollectionView()
+    
         //navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
@@ -78,42 +83,104 @@ class MainViewController: UIViewController {
     
     // MARK: - Private methods
     private func collectionViewCellsCircleAnimation() {
-           DispatchQueue.main.async {
-               var i = 0
-               while i < 3 {
-                   let indexPath = NSIndexPath(row: i, section: 0)
-                   if let cell = self.articlesCollectionView.cellForItem(at: indexPath as IndexPath) as? MainViewCollectionViewCell
-                   {
-                        cell.animationFunc()
-                   }
-                   i += 1
-               }
-           }
+        DispatchQueue.main.async {
+            var i = 0
+            while i < 3 {
+                let indexPath = NSIndexPath(row: i, section: 0)
+                if let cell = self.collectionView.cellForItem(at: indexPath as IndexPath) as? MainViewCollectionViewCell
+                {
+                    cell.animationFunc()
+                }
+                i += 1
+            }
+        }
     }
     
     private func configureCollectionView() {
+        guard let viewModels = viewModels, viewModels.count > 0  else {
+            return
+        }
+
         self.view.backgroundColor = .white
         
-        let colViewWidth = CGFloat(self.viewModels!.count)*COLLECTION_VIEW_CELL_WIDTH +
-        (CGFloat(self.viewModels!.count + 1))*COLLECTION_VIEW_SECTION_INSET
-         
-        self.view.addSubview(self.articlesCollectionView)
-        self.articlesCollectionView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-        self.articlesCollectionView.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor).isActive = true
-        self.articlesCollectionView.widthAnchor.constraint(equalToConstant: colViewWidth).isActive = true
-        self.articlesCollectionView.heightAnchor.constraint(equalToConstant: COLLECTION_VIEW_CELL_HIGHT + 2*COLLECTION_VIEW_SECTION_INSET).isActive = true
+        let widthPercent: CGFloat = 0.8
+        let heightPercent: CGFloat = 0.55
+        
+        let cellWidth = ((self.view.frame.size.width * widthPercent) - CGFloat((viewModels.count + 1))*self.COLLECTION_VIEW_SECTION_INSET)/CGFloat(viewModels.count)
+        let cellHeight = (self.view.frame.size.height * heightPercent)
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(
+            top: COLLECTION_VIEW_SECTION_INSET,
+            left: COLLECTION_VIEW_SECTION_INSET,
+            bottom: COLLECTION_VIEW_SECTION_INSET,
+            right: COLLECTION_VIEW_SECTION_INSET)
+        layout.itemSize = CGSize(
+            width: cellWidth,
+            height: cellHeight)
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
+        
+        self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        self.collectionView.setCollectionViewLayout(layout, animated: false)
+        self.collectionView.translatesAutoresizingMaskIntoConstraints = false
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
+        self.collectionView.backgroundColor = .white
+        self.collectionView.register(MainViewCollectionViewCell.self, forCellWithReuseIdentifier: MainViewCollectionViewCell.cellIdentifier)
+        
+        self.view.addSubview(self.collectionView)
+        self.collectionView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        self.collectionView.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor).isActive = true
+        self.collectionView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: widthPercent).isActive = true
+        self.collectionView.heightAnchor.constraint(equalTo: self.view.heightAnchor,multiplier: heightPercent, constant: 2*COLLECTION_VIEW_SECTION_INSET).isActive = true
         
         self.view.addSubview(self.infoImageView)
         self.infoImageView.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor, constant: -10).isActive = true
         self.infoImageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
+        
+        self.collectionView.reloadData()
     }
+    
+//    private func configureCollectionView() {
+//        self.view.backgroundColor = .white
+//
+//        let layout = UICollectionViewFlowLayout()
+//        layout.sectionInset = UIEdgeInsets(top: COLLECTION_VIEW_SECTION_INSET, left: COLLECTION_VIEW_SECTION_INSET, bottom: COLLECTION_VIEW_SECTION_INSET, right: COLLECTION_VIEW_SECTION_INSET)
+//        layout.itemSize = CGSize(width: COLLECTION_VIEW_CELL_WIDTH, height: COLLECTION_VIEW_CELL_HIGHT)
+//        layout.minimumInteritemSpacing = 0
+//        layout.minimumLineSpacing = 0
+//
+//        self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+//        self.collectionView.setCollectionViewLayout(layout, animated: false)
+//        self.collectionView.translatesAutoresizingMaskIntoConstraints = false
+//        self.collectionView.delegate = self
+//        self.collectionView.dataSource = self
+//        self.collectionView.backgroundColor = .white
+//        self.collectionView.register(MainViewCollectionViewCell.self, forCellWithReuseIdentifier: MainViewCollectionViewCell.cellIdentifier)
+//
+//        let colViewWidth = CGFloat(self.viewModels!.count) * COLLECTION_VIEW_CELL_WIDTH +
+//        (CGFloat(self.viewModels!.count + 1)) * COLLECTION_VIEW_SECTION_INSET
+//
+//        self.view.addSubview(self.collectionView)
+//        self.collectionView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+//        self.collectionView.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor).isActive = true
+//        self.collectionView.widthAnchor.constraint(equalToConstant: colViewWidth).isActive = true
+//        self.collectionView.heightAnchor.constraint(equalToConstant: COLLECTION_VIEW_CELL_HIGHT + 2*COLLECTION_VIEW_SECTION_INSET).isActive = true
+//
+//        self.view.addSubview(self.infoImageView)
+//        self.infoImageView.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor, constant: -10).isActive = true
+//        self.infoImageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
+//
+//        self.collectionView.reloadData()
+//    }
     
     // MARK: - Public methods
     func showStartArticleAgainAlert(index: Int) {
         let alert = UIAlertController(title: "", message: "Пройти раздел заново?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action) in
             let indexPath = IndexPath(row: index, section: 0)
-            if let cell = self?.articlesCollectionView.cellForItem(at: indexPath) as? MainViewCollectionViewCell
+            if let cell = self?.collectionView.cellForItem(at: indexPath) as? MainViewCollectionViewCell
             { cell.clearModel() }
             self?.presenter?.startArticleAgain(index: index)
         }))
@@ -140,7 +207,7 @@ extension MainViewController: UICollectionViewDataSource {
         guard
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewCollectionViewCell.cellIdentifier, for: indexPath) as? MainViewCollectionViewCell,
             let viewModel = self.viewModels?[indexPath.row]
-            else { return UICollectionViewCell() }
+        else { return UICollectionViewCell() }
         cell.configureSubviews(viewModel: viewModel, frame: CGRect.zero)
         cell.setNeedsDisplay()
         return cell
@@ -164,7 +231,6 @@ extension MainViewController: QuizViewControllerDelegate {
 extension MainViewController: MainViewInputProtocol {
     func updateView(with items: [QuizArticleViewModel]) {
         self.viewModels = items
-        self.articlesCollectionView.reloadData()
     }
 }
 

@@ -14,6 +14,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        do {
+             sleep(2)
+         }
        
         // Clear UserDefaults to start all articles again
         // UserDefaults.standard.removeObject(forKey: "first_article_done_tasks")

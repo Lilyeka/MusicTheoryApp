@@ -10,8 +10,8 @@ import UIKit
 
 enum QuizArticles: String {
     case trebleCleffNotes = "Ноты в скрипичном ключе"
-    case bassCleffNotes = "Ноты в басовом ключе"
-    case durationsAndPauses = "Длительности и паузы"
+    case bassCleffNotes = "Ноты в басовом \n ключе"
+    case durationsAndPauses = "Длительности и \n паузы"
 }
 
 class QuizArticle {
