@@ -10,9 +10,9 @@ import UIKit
 
 class QuizArticleViewModel {
     let HEADER_FONT: UIFont = {
-        
         if DeviceType.IS_IPHONE_12ProMax_13ProMax ||
-            DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
+            DeviceType.IS_IPHONE_12_12Pro_13_13Pro ||
+            DeviceType.IS_IPHONE_11Pro_X_Xs {
         return UIFont(descriptor: .preferredFontDescriptor(withTextStyle: .title1), size: 20.0)
         }
         return UIFont(descriptor: .preferredFontDescriptor(withTextStyle: .title1), size: 16.0)
@@ -62,11 +62,11 @@ class QuizArticleViewModel {
     }
         
     func articleTitle() -> String {
-        return model.article.rawValue
+        return self.model.article.rawValue
     }
     
     func resultTitle() -> String {
-        return "Выполнено \(String(describing: Int(percent)))%"
+        return "Выполнено \(String(describing: Int(self.percent)))%"
     }
     
     func afterAnimation() {
@@ -74,7 +74,7 @@ class QuizArticleViewModel {
     }
  
     func clearArticleResult() {
-        model.clearFinichedTasks()
-        previousPercent = percent
+        self.model.clearFinichedTasks()
+        self.previousPercent = percent
     }
 }
