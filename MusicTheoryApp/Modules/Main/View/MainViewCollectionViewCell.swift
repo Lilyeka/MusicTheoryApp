@@ -38,7 +38,7 @@ class MainViewCollectionViewCell: UICollectionViewCell {
         label.textColor = UIColor(named: "doneArticleColour")
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
+        label.numberOfLines = 1
         label.text = "Пройдено 0%"
         return label
     }()
@@ -67,21 +67,32 @@ class MainViewCollectionViewCell: UICollectionViewCell {
         self.textLabel.font = viewModel.HEADER_FONT
         
         self.contentView.addSubview(self.textLabel)
-        self.textLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8).isActive = true
-        self.textLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5).isActive = true
-        self.textLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5).isActive = true
-    
         self.contentView.addSubview(imageView)
-      //  self.imageView.topAnchor.constraint(greaterThanOrEqualTo: self.textLabel.bottomAnchor, constant: 5).isActive = true
-        self.imageView.widthAnchor.constraint(equalToConstant: 2*CIRCLE_RADIUS).isActive = true
-        self.imageView.heightAnchor.constraint(equalToConstant: 2*CIRCLE_RADIUS).isActive = true
-        self.imageView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor, constant: 8.0).isActive = true
-        self.imageView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
-        //TODO - resultLabel разместить внутри вьюхи, саму вьюху разметить между дном картинки и дном ячейки, resultLabel будет по центру вьюхи размещаться
-        self.contentView.addSubview(self.resultLabel)
-        self.resultLabel.topAnchor.constraint(equalTo: self.imageView.bottomAnchor, constant: 8).isActive = true
-        self.resultLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor).isActive = true
-        self.resultLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
+    
+        let bottomView = UIView()
+        bottomView.translatesAutoresizingMaskIntoConstraints = false
+        bottomView.addSubview(self.resultLabel)
+        self.contentView.addSubview(bottomView)
+        
+        NSLayoutConstraint.activate([
+            self.textLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 8.0),
+            self.textLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 5.0),
+            self.textLabel.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -5.0),
+            
+            self.imageView.widthAnchor.constraint(equalToConstant: 2 * CIRCLE_RADIUS),
+            self.imageView.heightAnchor.constraint(equalToConstant: 2 * CIRCLE_RADIUS),
+            self.imageView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor, constant: 8.0),
+            self.imageView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+            
+            self.resultLabel.centerYAnchor.constraint(equalTo: bottomView.centerYAnchor),
+            self.resultLabel.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor),
+            self.resultLabel.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor),
+            
+            bottomView.topAnchor.constraint(equalTo: self.imageView.bottomAnchor, constant: 8.0),
+            bottomView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor),
+            bottomView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor),
+            bottomView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -8.0)
+        ])
     }
     
     func animationFunc() {
