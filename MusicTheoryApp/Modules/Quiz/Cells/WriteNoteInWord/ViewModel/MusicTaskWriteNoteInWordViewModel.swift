@@ -25,7 +25,7 @@ class MusicTaskWriteNoteInWordViewModel {
     }
     
     func checkUserAnswer(userAnswer:String) -> Bool {
-        for partOfWord in model.partsOfWord! {
+        for partOfWord in model.partsOfWord {
             if let part = partOfWord.1 {
                 let noteName = part.name.noteRusName()
                 if userAnswer.uppercased() == noteName.uppercased() {
@@ -35,5 +35,4 @@ class MusicTaskWriteNoteInWordViewModel {
         }
         return false
     }
-    
 }

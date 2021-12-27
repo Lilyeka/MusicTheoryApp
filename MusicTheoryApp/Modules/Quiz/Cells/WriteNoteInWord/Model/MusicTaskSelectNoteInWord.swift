@@ -9,12 +9,12 @@
 import UIKit
 
 class MusicTaskSelectNoteInWord: MusicTask {
-    var partsOfWord:[(String,Note?)]?
+    var partsOfWord:[(String,Note?)]
     var needToTypeAnswer: Bool?
     
     init(questionText: String, notesArray: [Note], partsOfWord:[(String,Note?)], needToType: Bool, cleff: CleffTypes) {
-        super.init(questionText: questionText, notesArray: notesArray, cleff: cleff)
         self.partsOfWord = partsOfWord
+        super.init(questionText: questionText, notesArray: notesArray, cleff: cleff)
         self.needToTypeAnswer = needToType
     }
     

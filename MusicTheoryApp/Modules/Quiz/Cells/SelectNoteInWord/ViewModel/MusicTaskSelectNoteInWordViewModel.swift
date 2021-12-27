@@ -56,7 +56,7 @@ class MusicTaskSelectNoteInWordViewModel {
     fileprivate func notesInWord() -> Set<Int> {
         var notesInWordSet = Set<Int>()
         
-        for partOfWord in model.partsOfWord! {
+        for partOfWord in model.partsOfWord {
             if let note = partOfWord.1 {
                 notesInWordSet.insert(note.name.rawValue)
             }

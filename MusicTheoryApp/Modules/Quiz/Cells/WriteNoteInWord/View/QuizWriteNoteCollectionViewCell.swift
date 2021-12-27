@@ -123,8 +123,8 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
         self.wordStackView.alignment = .center
         
         var i = 0
-        while i < self.viewModel.model.partsOfWord!.count {
-            if let note = self.viewModel.model.partsOfWord![i].1 {
+        for partOfWord in self.viewModel.model.partsOfWord {
+            if let note = partOfWord.1 {
                 self.numberOfLettersInTextField = note.name.noteRusName().count
                 let textWidth = CGFloat(numberOfLettersInTextField) * self.letterWidth + 15.0
                 self.textField.widthAnchor.constraint(equalToConstant: textWidth).isActive = true
@@ -133,7 +133,7 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
                 self.textFieldPosition = i
             } else {
                 let label = UILabel()
-                label.text = viewModel.model.partsOfWord![i].0
+                label.text = partOfWord.0
                 label.textColor = .black
                 label.font = QuizWriteNoteCollectionViewCell.WORD_FONT
                 label.textAlignment = i == 0 ? .right : .left
