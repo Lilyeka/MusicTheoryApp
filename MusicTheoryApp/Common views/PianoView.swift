@@ -10,34 +10,34 @@ import UIKit
 
 class WhiteKeyView: UIView {
     static let BORDER_LINE_THICKNESS: CGFloat = 5.0
-    var notesForKey: [(Note.NoteName, Note.Tonality)]?
+    var notesForKey: [(Note.NoteName, Note.Tonality)]
     
-    init(frame: CGRect, notesForKey: [(Note.NoteName, Note.Tonality)]) {
-        super.init(frame:frame)
+    init(notesForKey: [(Note.NoteName, Note.Tonality)]) {
         self.notesForKey = notesForKey
+        super.init(frame: .zero)
         self.translatesAutoresizingMaskIntoConstraints = false
         self.backgroundColor = .white
         self.layer.borderWidth = WhiteKeyView.BORDER_LINE_THICKNESS
         self.layer.borderColor = CGColor(srgbRed: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
      }
-     
+        
      required init?(coder aDecoder: NSCoder) {
-         super.init(coder: aDecoder)
+        return nil
      }
   }
 
 class BlackKeyView: UIView {
-    var notesForKey: [(Note.NoteName, Note.Tonality)]?
+    var notesForKey: [(Note.NoteName, Note.Tonality)]
     
-    init(frame: CGRect, notesForKey: [(Note.NoteName, Note.Tonality)]) {
-        super.init(frame:frame)
+    init(notesForKey: [(Note.NoteName, Note.Tonality)]) {
         self.notesForKey = notesForKey
+        super.init(frame: .zero)
         self.backgroundColor = .black
         self.translatesAutoresizingMaskIntoConstraints = false
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
+        return nil
     }
 }
 
@@ -78,17 +78,17 @@ class PianoView: UIView {
         super.init(coder: aDecoder)
     }
     
-    init(pianoWidth: CGFloat, blackKeysOffset: CGFloat, frame:CGRect) {
-        super.init(frame:frame)
+    init(pianoWidth: CGFloat, blackKeysOffset: CGFloat) {
+        super.init(frame: .zero)
         let keyWidth:CGFloat = pianoWidth/CGFloat(WHITE_KEYS_NUMBER)
-        setupView(keyWidth: keyWidth, blackKeysOffset: blackKeysOffset)
+        self.setupView(keyWidth: keyWidth, blackKeysOffset: blackKeysOffset)
     }
     
     fileprivate func setupView(keyWidth:CGFloat, blackKeysOffset: CGFloat) {
         var i = 0
         var leftOffset:CGFloat = 0.0
         while i < WHITE_KEYS_NUMBER {
-            let whiteKey = WhiteKeyView(frame: .zero, notesForKey: whiteKeysNotes[i])
+            let whiteKey = WhiteKeyView(notesForKey: whiteKeysNotes[i])
             self.addSubview(whiteKey)
             whiteKey.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
             whiteKey.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
@@ -104,7 +104,7 @@ class PianoView: UIView {
         while j < BLACK_KEYS_NUMBER + 1, jj < BLACK_KEYS_NUMBER {
             let blackKeyWidth = keyWidth - blackKeysOffset
             if j != 2 { // рисуем черные клавиши подряд,третьей быть не должно
-                let blackKey = BlackKeyView(frame: .zero, notesForKey: blackKeysNotes[jj])
+                let blackKey = BlackKeyView(notesForKey: blackKeysNotes[jj])
                 self.addSubview(blackKey)
                 blackKey.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
                 blackKey.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.6).isActive = true
@@ -134,10 +134,11 @@ class PianoView: UIView {
             UIView.animate(withDuration: 0.5, animations: {
                 gesture.view?.layer.backgroundColor = UIColor.white.cgColor
             }) { _ in
-                    let view = gesture.view! as! WhiteKeyView
-                    self.delegate?.keyTapped(withNotes: view.notesForKey!, view: view)
+                if let view = gesture.view as? WhiteKeyView {
+                    self.delegate?.keyTapped(withNotes: view.notesForKey, view: view)
                     self.isUserInteractionEnabled = true
-                    print(view.notesForKey!)
+                    print(view.notesForKey)
+                }
             }
         }
     }
@@ -159,9 +160,9 @@ class PianoView: UIView {
                 gesture.view?.layer.backgroundColor = UIColor.black.cgColor
             }) { _ in
                     let view = gesture.view! as! BlackKeyView
-                    self.delegate?.keyTapped(withNotes: view.notesForKey!,view:view)
+                    self.delegate?.keyTapped(withNotes: view.notesForKey,view:view)
                     self.isUserInteractionEnabled = true
-                    print(view.notesForKey!)
+                    print(view.notesForKey)
             }
         }
     }

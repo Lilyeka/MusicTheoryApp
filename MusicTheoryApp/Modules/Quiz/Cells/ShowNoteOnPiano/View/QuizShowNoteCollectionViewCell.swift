@@ -63,7 +63,7 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
         self.staffView.isUserInteractionEnabled = false
         self.contentView.addSubview(self.staffView)
         
-        self.pianoView = PianoView(pianoWidth: pianoViewWidth, blackKeysOffset: 20.0, frame:CGRect.zero)
+        self.pianoView = PianoView(pianoWidth: pianoViewWidth, blackKeysOffset: 20.0)
         self.pianoView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(self.pianoView)
         

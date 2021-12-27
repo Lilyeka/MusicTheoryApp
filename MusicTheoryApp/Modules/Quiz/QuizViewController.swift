@@ -29,7 +29,7 @@ class QuizViewController: UIViewController, QuizViewProtocol {
         get {
             var questionsCopy = questions
             questionsCopy?.removeFirst(numberOfFinishedTasks!)
-            return questionsCopy! 
+            return questionsCopy!
         }
     }
     
@@ -60,11 +60,11 @@ class QuizViewController: UIViewController, QuizViewProtocol {
     }()
     
     lazy var lastQuestionRightAnswerAlert: UIAlertController! = {
-          let alert = UIAlertController(title: "Вы прошли весь раздел!", message: "Поздравляем!", preferredStyle: .alert)
-          alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
-              self.okActionForLastAlert()}))
-          return alert
-      }()
+        let alert = UIAlertController(title: "Вы прошли весь раздел!", message: "Поздравляем!", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+            self.okActionForLastAlert()}))
+        return alert
+    }()
     
     lazy var rightAnswerAlert: UIAlertController! = {
         let alert = UIAlertController(title: "Верный ответ!", message: "Поехали дальше!", preferredStyle: .alert)
@@ -112,8 +112,8 @@ class QuizViewController: UIViewController, QuizViewProtocol {
         var contentOffset: CGFloat = 0
         contentOffset = CGFloat(floor(self.quizCollectionView.contentOffset.x + collectionBounds.size.width))
         currentQuestionNumber += currentQuestionNumber >= notFinishedQuestions.count ? 0 : 1
-       //было тут
-         self.moveToFrame(contentOffset: contentOffset)
+        //было тут
+        self.moveToFrame(contentOffset: contentOffset)
     }
     
     func okActionForLastAlert() {
@@ -135,7 +135,7 @@ extension QuizViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let frame = quizCollectionView.frame
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-    
+        
         let question = notFinishedQuestions[indexPath.row]
         switch question {
         case is MusicTaskSelectNote:
@@ -239,19 +239,22 @@ extension QuizViewController: PianoViewDelegate {
         if let model = model {
             let viewModel = MusicTaskShowtNoteOnThePianoViewModel(model: model)
             if viewModel.checkUserAnswer(userAnswer: withNotes) {
-                fireworkController.addFireworks(count: 2, sparks: 8, around: view)
+                self.fireworkController.addFireworks(count: 2, sparks: 8, around: view)
                 view.backgroundColor = .green
                 view.isUserInteractionEnabled = false
                 if (withNotes.count) > 0 {
                     let note = withNotes[0]
-                //    if note != nil { // добавляем название ноты на клавишу
-                        let noteLabelHeight:CGFloat = 40.0
-                        var noteNameLabel = UILabel(frame:CGRect(x: view.bounds.minX + 5, y: view.bounds.maxY - noteLabelHeight, width: view.bounds.size.width - 10.0, height: noteLabelHeight))
-                        noteNameLabel.font = QuizShowNoteCollectionViewCell.QUESTION_FONT
-                        noteNameLabel.text = note.0.noteRusName()
-                        noteNameLabel.textAlignment = .center
-                        view.addSubview(noteNameLabel)
-               //     }
+                    let noteNameLabel = UILabel(
+                        frame:
+                            CGRect(x: view.bounds.minX + 5,
+                                   y: view.bounds.maxY - 40.0,
+                                   width: view.bounds.size.width - 10.0,
+                                   height: 40.0)
+                    )
+                    noteNameLabel.adjustsFontSizeToFitWidth = true
+                    noteNameLabel.text = note.0.noteRusName()
+                    noteNameLabel.textAlignment = .center
+                    view.addSubview(noteNameLabel)
                 }
                 presentRightAnswerAlerts()
             }
