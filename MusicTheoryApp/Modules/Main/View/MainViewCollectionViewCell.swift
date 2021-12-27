@@ -11,7 +11,7 @@ import UIKit
 class MainViewCollectionViewCell: UICollectionViewCell {
     // MARK: - Constants
     let CIRCLE_RADIUS: CGFloat = 50.0
-    let TRACK_LINE_WIDTH: CGFloat = 5.0//4.0
+    let TRACK_LINE_WIDTH: CGFloat = 5.0
     
     var circularPath: UIBezierPath?
         

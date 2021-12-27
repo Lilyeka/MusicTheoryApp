@@ -9,11 +9,8 @@
 import Foundation
 
 class MainRouter: MainRouterProtocol {
-    weak var viewController: MainViewController!
-//    var vc: QuizViewController = {
-//        return QuizViewController()
-//    }()
-    
+    weak var viewController: MainViewController?
+
     init(viewController: MainViewController) {
         self.viewController = viewController
     }
@@ -22,13 +19,11 @@ class MainRouter: MainRouterProtocol {
         let vc = QuizViewController()
         vc.questions = article.articleQuestions
         vc.numberOfFinishedTasks = article.numberOfFinishedTasks
-        if let viewController = viewController as? QuizViewControllerDelegate {
-            vc.delegate = viewController
-        }
-        self.viewController.navigationController?.pushViewController(vc, animated: true)
+        vc.delegate = self.viewController
+        self.viewController?.navigationController?.pushViewController(vc, animated: true)
     }
     
     func showStartAgainAlert(index: Int) {
-        self.viewController.showStartArticleAgainAlert(index: index)
+        self.viewController?.showStartArticleAgainAlert(index: index)
     }
 }

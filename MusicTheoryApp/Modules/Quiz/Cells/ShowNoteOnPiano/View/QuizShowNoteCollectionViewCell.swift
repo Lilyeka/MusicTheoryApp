@@ -17,7 +17,11 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
     var delegate: QuizSelectAnswerDelegate?
         
     //MARK: -Views
-    var viewModel: MusicTaskShowtNoteOnThePianoViewModel?
+    var viewModel: MusicTaskShowtNoteOnThePianoViewModel? {
+        didSet {
+            self.questionLabel.text = self.viewModel?.model.questionText
+        }
+    }
     var staffView: StaffView!
     var pianoView: PianoView!
     
@@ -27,7 +31,8 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
         label.font = QuizShowNoteCollectionViewCell.QUESTION_FONT
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .center
-        label.numberOfLines = 0
+        label.numberOfLines = 1
+        label.layer.zPosition = .greatestFiniteMagnitude
         return label
     }()
         
@@ -43,14 +48,8 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
     //MARK: -Public methods
     func configureSubViews(viewModel: MusicTaskShowtNoteOnThePianoViewModel, frame: CGRect) {
         self.viewModel = viewModel
-        
         self.contentView.addSubview(self.questionLabel)
-        self.questionLabel.text = viewModel.model.questionText
-        self.questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 8.0).isActive = true
-        self.questionLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: LEFT_OFFSET).isActive = true
-        self.questionLabel.widthAnchor.constraint(equalToConstant: frame.size.width-2*LEFT_OFFSET).isActive = true
-        self.questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: frame.size.width, font:QuizShowNoteCollectionViewCell.QUESTION_FONT))!).isActive = true
-
+        
         let staffViewWidth = 1*(frame.size.width - 3*LEFT_OFFSET)/3
         let pianoViewWidth = 2*(frame.size.width - 3*LEFT_OFFSET)/3
         
@@ -62,21 +61,29 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
             cleff: viewModel.model.cleffType)
         self.staffView.translatesAutoresizingMaskIntoConstraints = false
         self.staffView.isUserInteractionEnabled = false
-        
         self.contentView.addSubview(self.staffView)
-        self.staffView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 0.0).isActive = true
-        self.staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: LEFT_OFFSET).isActive = true
-        self.staffView.widthAnchor.constraint(equalToConstant: staffViewWidth).isActive = true
-        self.staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())).isActive = true
-        staffView.drawNotesOneByOne1(notesAreTransparent: false, viewWidth: staffViewWidth)
         
         self.pianoView = PianoView(pianoWidth: pianoViewWidth, blackKeysOffset: 20.0, frame:CGRect.zero)
         self.pianoView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(self.pianoView)
-        self.pianoView.topAnchor.constraint(equalTo: self.questionLabel.bottomAnchor, constant: TOP_OFFSET).isActive = true
-        self.pianoView.leftAnchor.constraint(equalTo: self.staffView.rightAnchor, constant: LEFT_OFFSET*2).isActive = true
-        self.pianoView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -LEFT_OFFSET).isActive = true
-        self.pianoView.heightAnchor.constraint(equalTo: self.staffView.heightAnchor).isActive = true
+        
+        NSLayoutConstraint.activate([
+            self.questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 8.0),
+            self.questionLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: LEFT_OFFSET),
+            self.questionLabel.widthAnchor.constraint(equalToConstant: frame.size.width-2*LEFT_OFFSET),
+            
+            self.staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: LEFT_OFFSET),
+            self.staffView.widthAnchor.constraint(equalToConstant: staffViewWidth),
+            self.staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())),
+            self.staffView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -8.0),
+            
+            self.pianoView.topAnchor.constraint(equalTo: self.questionLabel.bottomAnchor, constant: TOP_OFFSET),
+            self.pianoView.leftAnchor.constraint(equalTo: self.staffView.rightAnchor, constant: LEFT_OFFSET*2),
+            self.pianoView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -LEFT_OFFSET),
+            self.pianoView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -8.0)
+        ])
+    
+        self.staffView.drawNotesOneByOne1(notesAreTransparent: false, viewWidth: staffViewWidth)
     }
     
     //MARK: -Override methods
@@ -86,4 +93,3 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
         }
     }
 }
-

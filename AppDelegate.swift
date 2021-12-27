@@ -19,9 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          }
        
         // Clear UserDefaults to start all articles again
-        // UserDefaults.standard.removeObject(forKey: "first_article_done_tasks")
-        // UserDefaults.standard.removeObject(forKey:  "second_article_done_tasks")
-        // UserDefaults.standard.removeObject(forKey: "third_article_done_tasks")
+         UserDefaults.standard.removeObject(forKey: "first_article_done_tasks")
+         UserDefaults.standard.removeObject(forKey: "second_article_done_tasks")
+         UserDefaults.standard.removeObject(forKey: "third_article_done_tasks")
         
         window = UIWindow(frame: UIScreen.main.bounds)
         let mainVC = MainViewController()
