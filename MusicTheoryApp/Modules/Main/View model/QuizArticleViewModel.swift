@@ -12,10 +12,21 @@ class QuizArticleViewModel {
     let HEADER_FONT: UIFont = {
         if DeviceType.IS_IPHONE_12ProMax_13ProMax ||
             DeviceType.IS_IPHONE_12_12Pro_13_13Pro ||
-            DeviceType.IS_IPHONE_11Pro_X_Xs {
-        return UIFont(descriptor: .preferredFontDescriptor(withTextStyle: .title1), size: 20.0)
+            DeviceType.IS_IPHONE_11Pro_X_Xs ||
+            DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+            return UIFont(descriptor: .preferredFontDescriptor(withTextStyle: .title1), size: 20.0)
         }
         return UIFont(descriptor: .preferredFontDescriptor(withTextStyle: .title1), size: 16.0)
+    }()
+    
+    let TEXT_FONT: UIFont = {
+        if  DeviceType.IS_IPHONE_12ProMax_13ProMax ||
+            DeviceType.IS_IPHONE_12_12Pro_13_13Pro ||
+            DeviceType.IS_IPHONE_11Pro_X_Xs ||
+            DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+            return UIFont.systemFont(ofSize: 16.0, weight: .heavy)
+        }
+        return UIFont.systemFont(ofSize: 14.0, weight: .heavy)
     }()
     
     var model: QuizArticle

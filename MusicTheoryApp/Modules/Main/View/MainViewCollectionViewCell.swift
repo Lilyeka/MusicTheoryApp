@@ -34,7 +34,6 @@ class MainViewCollectionViewCell: UICollectionViewCell {
     
     var resultLabel: UILabel = {
         var label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .heavy)
         label.textColor = UIColor(named: "doneArticleColour")
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -57,7 +56,7 @@ class MainViewCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureSubviews(viewModel:QuizArticleViewModel, frame:CGRect) {
+    func configureSubviews(viewModel: QuizArticleViewModel, frame:CGRect) {
         self.viewModel = viewModel
         self.layer.cornerRadius = 10 //5
         self.layer.borderWidth = 1
@@ -65,7 +64,8 @@ class MainViewCollectionViewCell: UICollectionViewCell {
         
         self.textLabel.text = viewModel.articleTitle()
         self.textLabel.font = viewModel.HEADER_FONT
-        
+        self.resultLabel.font = viewModel.TEXT_FONT
+    
         self.contentView.addSubview(self.textLabel)
         self.contentView.addSubview(imageView)
     

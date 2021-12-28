@@ -9,34 +9,10 @@
 import UIKit
 
 class MainViewController: UIViewController {
-    // TODO - для телефонов побольше чем 8-ка, задать размеры картинок и ячеек побольше
-    // иначе на 13ProMax выглядит мелковато
+  
     // MARK: - Constants
     let COLLECTION_VIEW_SECTION_INSET: CGFloat = 10.0
-    
-    let COLLECTION_VIEW_CELL_WIDTH: CGFloat = {
-        if DeviceType.IS_IPHONE_12ProMax_13ProMax ||
-            DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
-            return 200
-        }
-        return 180
-    }()
-    
-    let COLLECTION_VIEW_CELL_HIGHT: CGFloat = {
-        if DeviceType.IS_IPHONE_12ProMax_13ProMax ||
-            DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
-            return 214
-        }
-        return 194
-    }()
-    
-    let ICON_SIZE: CGFloat = {
-        //        if DeviceType.IS_IPHONE_12ProMax_13ProMax {
-        //            return 64.0
-        //        }
-        return 44.0
-    }()
-    // = 44.0
+    let ICON_SIZE: CGFloat = 44.0
     
     // MARK: - Variables
     var presenter: MainViewOutputProtocol?
@@ -141,39 +117,6 @@ class MainViewController: UIViewController {
         
         self.collectionView.reloadData()
     }
-    
-//    private func configureCollectionView() {
-//        self.view.backgroundColor = .white
-//
-//        let layout = UICollectionViewFlowLayout()
-//        layout.sectionInset = UIEdgeInsets(top: COLLECTION_VIEW_SECTION_INSET, left: COLLECTION_VIEW_SECTION_INSET, bottom: COLLECTION_VIEW_SECTION_INSET, right: COLLECTION_VIEW_SECTION_INSET)
-//        layout.itemSize = CGSize(width: COLLECTION_VIEW_CELL_WIDTH, height: COLLECTION_VIEW_CELL_HIGHT)
-//        layout.minimumInteritemSpacing = 0
-//        layout.minimumLineSpacing = 0
-//
-//        self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-//        self.collectionView.setCollectionViewLayout(layout, animated: false)
-//        self.collectionView.translatesAutoresizingMaskIntoConstraints = false
-//        self.collectionView.delegate = self
-//        self.collectionView.dataSource = self
-//        self.collectionView.backgroundColor = .white
-//        self.collectionView.register(MainViewCollectionViewCell.self, forCellWithReuseIdentifier: MainViewCollectionViewCell.cellIdentifier)
-//
-//        let colViewWidth = CGFloat(self.viewModels!.count) * COLLECTION_VIEW_CELL_WIDTH +
-//        (CGFloat(self.viewModels!.count + 1)) * COLLECTION_VIEW_SECTION_INSET
-//
-//        self.view.addSubview(self.collectionView)
-//        self.collectionView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-//        self.collectionView.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor).isActive = true
-//        self.collectionView.widthAnchor.constraint(equalToConstant: colViewWidth).isActive = true
-//        self.collectionView.heightAnchor.constraint(equalToConstant: COLLECTION_VIEW_CELL_HIGHT + 2*COLLECTION_VIEW_SECTION_INSET).isActive = true
-//
-//        self.view.addSubview(self.infoImageView)
-//        self.infoImageView.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor, constant: -10).isActive = true
-//        self.infoImageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
-//
-//        self.collectionView.reloadData()
-//    }
     
     // MARK: - Public methods
     func showStartArticleAgainAlert(index: Int) {
