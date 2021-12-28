@@ -38,7 +38,6 @@ class MainViewCollectionViewCell: UICollectionViewCell {
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 1
-        label.text = "Пройдено 0%"
         return label
     }()
     

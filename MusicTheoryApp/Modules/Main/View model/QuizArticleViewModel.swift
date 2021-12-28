@@ -77,7 +77,7 @@ class QuizArticleViewModel {
     }
     
     func resultTitle() -> String {
-        return "Выполнено \(String(describing: Int(self.percent)))%"
+        return percent > 0 ? "Выполнено \(String(describing: Int(self.percent)))%" : ""
     }
     
     func afterAnimation() {
