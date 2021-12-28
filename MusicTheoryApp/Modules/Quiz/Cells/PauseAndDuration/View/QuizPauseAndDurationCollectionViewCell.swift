@@ -87,7 +87,7 @@ class QuizPauseAndDurationCollectionViewCell: UICollectionViewCell {
         self.contentView.addSubview(variantsCollectionView)
         
         NSLayoutConstraint.activate([
-            self.questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            self.questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 15.0),
             self.questionLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 15.0),
             self.questionLabel.widthAnchor.constraint(equalToConstant: frame.size.width - 30.0),
             self.questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: frame.size.width, font:QuizPauseAndDurationCollectionViewCell.QUESTION_FONT))!),
