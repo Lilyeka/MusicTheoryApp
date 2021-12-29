@@ -10,6 +10,15 @@ import UIKit
 typealias Sources = (name: String, url: String)
 
 class GameInfoTableViewCell: UITableViewCell {
+    //MARK: -Constants
+    let LINKS_COLOR: UIColor = .systemBlue
+    let OFFSET: CGFloat = 10.0
+    
+    //MARK: -Static variables
+    public static var reuseIdentifier: String {
+        return String(describing: self)
+    }
+    //MARK: -Variables
     var buttonClickedAction: ((Int)->())?
     var buttonsArray: [UIButton] = [UIButton]()
     
@@ -20,21 +29,11 @@ class GameInfoTableViewCell: UITableViewCell {
             }
         }
     }
-    
-    //MARK: -Static variables
-    public static var reuseIdentifier: String {
-        return String(describing: self)
-    }
-    //MARK: -Constants
-    let LINKS_COLOR: UIColor = .blue
-    let OFFSET: CGFloat = 10.0
-    var FONT: UIFont = UIFont(descriptor: .preferredFontDescriptor(withTextStyle: .body), size: 16.0)
-
     //MARK: -Lifecycle
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        selectionStyle = .none
-        configureObjects()
+        self.selectionStyle = .none
+        self.configureObjects()
     }
        
     required init?(coder aDecoder: NSCoder) {
@@ -50,7 +49,7 @@ class GameInfoTableViewCell: UITableViewCell {
         
         let siteButton = UIButton()
         siteButton.setTitle("наш сайт", for: .normal)
-        siteButton.setTitleColor(.blue, for: .normal)
+        siteButton.setTitleColor(self.LINKS_COLOR, for: .normal)
         siteButton.tag = 0
         self.buttonsArray.append(siteButton)
         siteButton.addTarget(self, action: #selector(linkButtonClicked), for: .touchUpInside)
@@ -86,7 +85,7 @@ class GameInfoTableViewCell: UITableViewCell {
         var i = 1
         while i < 4 {
             let button = UIButton()
-            button.setTitleColor(.blue, for: .normal)
+            button.setTitleColor(self.LINKS_COLOR, for: .normal)
             button.tag = i
             self.buttonsArray.append(button)
             button.addTarget(self, action: #selector(linkButtonClicked), for: .touchUpInside)
@@ -102,7 +101,7 @@ class GameInfoTableViewCell: UITableViewCell {
         i = 4
         while i < 7 {
             let button = UIButton()
-            button.setTitleColor(.blue, for: .normal)
+            button.setTitleColor(self.LINKS_COLOR, for: .normal)
             button.tag = i
             self.buttonsArray.append(button)
             button.addTarget(self, action:  #selector(linkButtonClicked), for: .touchUpInside)

@@ -18,6 +18,7 @@ class GameInfoHeaderView: UIView {
     
     //MARK: -Constants
     static let HEADER_FONT: UIFont = UIFont(descriptor: .preferredFontDescriptor(withTextStyle: .title1), size: 25.0)
+    
     //MARK: -UI Elements
     var label: UILabel = {
         var label = UILabel()

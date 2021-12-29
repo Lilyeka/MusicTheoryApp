@@ -20,17 +20,12 @@ class MainViewController: UIViewController {
     
     // MARK: - Views
     var collectionView: UICollectionView!
-    
-    lazy var infoImageView: UIImageView = {
-        var imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "information")
-        imageView.widthAnchor.constraint(equalToConstant: ICON_SIZE).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: ICON_SIZE).isActive = true
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.infoImageViewTapped))
-        imageView.isUserInteractionEnabled = true
-        imageView.addGestureRecognizer(tapGestureRecognizer)
-        return imageView
+
+    var infoButton: UIButton = {
+        var btn = UIButton(type: .infoDark)
+        btn.frame = CGRect(x: 0.0, y: 0.0, width: 35, height: 35)
+        btn.tintColor = UIColor.darkGray
+        return btn
     }()
     
     // MARK: - Lifecycle methods
@@ -39,7 +34,7 @@ class MainViewController: UIViewController {
         let configurator: MainConfiguratorProtocol = MainConfigurator()
         configurator.configure(with: self)
         self.presenter?.viewDidLoad()
-        self.configureCollectionView()
+        self.configureSubviews()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -48,13 +43,10 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-    
-        //navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        //navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     // MARK: - Private methods
@@ -72,7 +64,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    private func configureCollectionView() {
+    private func configureSubviews() {
         guard let viewModels = viewModels, viewModels.count > 0  else {
             return
         }
@@ -111,10 +103,9 @@ class MainViewController: UIViewController {
         self.collectionView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: widthPercent).isActive = true
         self.collectionView.heightAnchor.constraint(equalTo: self.view.heightAnchor,multiplier: heightPercent, constant: 2*COLLECTION_VIEW_SECTION_INSET).isActive = true
         
-        self.view.addSubview(self.infoImageView)
-        self.infoImageView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -40).isActive = true
-        self.infoImageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
-        
+        self.infoButton.addTarget(self, action: #selector(self.infoImageViewTapped), for: .touchUpInside)
+        let infoBarButtonItem = UIBarButtonItem(customView: self.infoButton)
+        self.navigationItem.rightBarButtonItem = infoBarButtonItem
         self.collectionView.reloadData()
     }
     
