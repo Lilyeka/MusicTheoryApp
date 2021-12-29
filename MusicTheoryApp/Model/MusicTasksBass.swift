@@ -76,12 +76,12 @@ class MusicTasksBass: MusicTasksProtocol {
                              Note(name:.la, tone:.none, duration:.whole),
                              Note(name:.fa1, tone:.none, duration:.whole)],
                  rightAnswer: [.la, .la1, .la],
-                 cleff: CleffTypes.Bass),
+                 cleff: CleffTypes.Bass),*/
         MusicTaskShowNoteOnThePiano(questionText:"Нажмите на нужную ноту", note: Note(name:.Do, tone: .none, duration: .whole), cleff: CleffTypes.Bass),
         MusicTaskShowNoteOnThePiano(questionText:"Нажмите на нужную ноту", note: Note(name:.fa, tone: .none, duration: .whole), cleff: CleffTypes.Bass),
         MusicTaskShowNoteOnThePiano(questionText:"Нажмите на нужную ноту", note: Note(name:.re1, tone: .none, duration: .whole), cleff: CleffTypes.Bass),
         MusicTaskShowNoteOnThePiano(questionText:"Нажмите на нужную ноту", note: Note(name:.sol1, tone: .none, duration: .whole), cleff: CleffTypes.Bass),
-          MusicTaskShowNoteOnThePiano(questionText:"Нажмите на нужную ноту", note: Note(name:.si1, tone: .none, duration: .whole), cleff: CleffTypes.Bass),*/
+          MusicTaskShowNoteOnThePiano(questionText:"Нажмите на нужную ноту", note: Note(name:.si1, tone: .none, duration: .whole), cleff: CleffTypes.Bass)/*,
           MusicTaskSelectNoteInWord(questionText: "Какая нота большой октавы спряталась в слове?",
                                 notesArray: [
                                   Note(name:.Do, tone:.none, duration:.whole),
@@ -247,6 +247,6 @@ class MusicTasksBass: MusicTasksProtocol {
                                                  ("ля",Note(name: .la1, tone: .none, duration: .whole)),
                                                  ("кса",nil)],
                                                needToType: true,
-                                               cleff: CleffTypes.Bass)
+                                               cleff: CleffTypes.Bass)*/
     ]
 }

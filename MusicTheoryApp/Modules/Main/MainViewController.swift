@@ -112,7 +112,7 @@ class MainViewController: UIViewController {
         self.collectionView.heightAnchor.constraint(equalTo: self.view.heightAnchor,multiplier: heightPercent, constant: 2*COLLECTION_VIEW_SECTION_INSET).isActive = true
         
         self.view.addSubview(self.infoImageView)
-        self.infoImageView.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor, constant: -10).isActive = true
+        self.infoImageView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -40).isActive = true
         self.infoImageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
         
         self.collectionView.reloadData()

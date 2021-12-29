@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina6_1" orientation="landscape" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
@@ -14,31 +14,34 @@
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch_logo" highlighted="YES" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ign-tf-ELj">
-                                <rect key="frame" x="7" y="378" width="400" height="150"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Umh-yx-dHE">
+                                <rect key="frame" x="148" y="107" width="600" height="200"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch_logo1" translatesAutoresizingMaskIntoConstraints="NO" id="cw0-Tn-QUY">
+                                        <rect key="frame" x="0.0" y="0.0" width="180" height="200"/>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch_logo" highlighted="YES" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ign-tf-ELj">
+                                        <rect key="frame" x="180" y="0.0" width="420" height="200"/>
+                                    </imageView>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="150" id="3mR-du-2TD"/>
-                                    <constraint firstAttribute="width" constant="400" id="Qb3-2a-PFM"/>
+                                    <constraint firstItem="cw0-Tn-QUY" firstAttribute="height" secondItem="Umh-yx-dHE" secondAttribute="height" id="7DB-8o-7iP"/>
+                                    <constraint firstItem="Ign-tf-ELj" firstAttribute="height" secondItem="Umh-yx-dHE" secondAttribute="height" id="Ljy-rB-CrQ"/>
+                                    <constraint firstItem="Ign-tf-ELj" firstAttribute="width" secondItem="Umh-yx-dHE" secondAttribute="width" multiplier="0.7" id="bYY-Hh-EYp"/>
+                                    <constraint firstItem="cw0-Tn-QUY" firstAttribute="width" secondItem="Umh-yx-dHE" secondAttribute="width" multiplier="0.3" id="fzH-Yr-NIP"/>
                                 </constraints>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch_logo1" translatesAutoresizingMaskIntoConstraints="NO" id="cw0-Tn-QUY">
-                                <rect key="frame" x="107" y="178" width="200" height="200"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="Yld-w7-5nm"/>
-                                    <constraint firstAttribute="width" constant="200" id="lZj-7m-CJp"/>
-                                </constraints>
-                            </imageView>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Ign-tf-ELj" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="6IS-wS-OZT"/>
-                            <constraint firstItem="Ign-tf-ELj" firstAttribute="top" secondItem="cw0-Tn-QUY" secondAttribute="bottom" id="Gl4-ST-Y92"/>
-                            <constraint firstItem="Ign-tf-ELj" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="LWc-o5-tvV"/>
-                            <constraint firstItem="cw0-Tn-QUY" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="lUh-Ma-5fu"/>
+                            <constraint firstItem="Umh-yx-dHE" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Dij-TG-X0m"/>
+                            <constraint firstItem="Umh-yx-dHE" firstAttribute="height" secondItem="6Tk-OE-BBY" secondAttribute="height" multiplier="0.508906" id="TeO-YA-SkH"/>
+                            <constraint firstItem="Umh-yx-dHE" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" multiplier="0.742574" id="ecx-kd-0nY"/>
+                            <constraint firstItem="Umh-yx-dHE" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="x73-nR-50G"/>
                         </constraints>
                     </view>
                 </viewController>
