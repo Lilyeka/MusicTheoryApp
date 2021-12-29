@@ -240,7 +240,7 @@ extension QuizViewController: PianoViewDelegate {
             let viewModel = MusicTaskShowtNoteOnThePianoViewModel(model: model)
             if viewModel.checkUserAnswer(userAnswer: withNotes) {
                 self.fireworkController.addFireworks(count: 2, sparks: 8, around: view)
-                view.backgroundColor = .green
+                view.backgroundColor = UIColor(named: "doneArticleColour")
                 view.isUserInteractionEnabled = false
                 if (withNotes.count) > 0 {
                     let note = withNotes[0]
