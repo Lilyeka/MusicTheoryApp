@@ -11,18 +11,13 @@ import SafariServices
 
 class GameInfoViewController: UIViewController {
     //MARK: -Constants
-    let OFFSET: CGFloat = 100.0
     let INNER_OFFSET: CGFloat = 10.0
     let CORNER_RAD: CGFloat = 15.0
     let HEADER_HEIGHT: CGFloat = 44.0
-    let IMAGE_IN_TEXTVIEW_SIZE: CGFloat = 28.0
+
     let FONT: UIFont = UIFont(descriptor: .preferredFontDescriptor(withTextStyle: .body), size: 16.0)
-    let FONT_COLOR: UIColor = #colorLiteral(red: 0.07422413677, green: 0.5216350555, blue: 0.8784367442, alpha: 1)
-    
+  
     //MARK: -UI Elements
-//    var numberOfLines: Int!
-//    var startImage: UIImage!
-//    var targetImage: UIImage!
     var tableView: SelfSizedTableView = {
         var tableView = SelfSizedTableView()
         tableView.alwaysBounceVertical = false
@@ -53,38 +48,39 @@ class GameInfoViewController: UIViewController {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.backgroundViewTapped(sender:)))
         self.view.addGestureRecognizer(tapRecognizer)
         
-        let centralView = UIView(frame:.zero)
+        let centralView = UIView(frame: .zero)
         centralView.translatesAutoresizingMaskIntoConstraints = false
         centralView.layer.cornerRadius = CORNER_RAD
         centralView.backgroundColor = .white
         self.view.addSubview(centralView)
         
-        let headerView = GameInfoHeaderView(withText: " ", frame: .zero)
+        let headerView = GameInfoHeaderView(withText: " ")
         headerView.isUserInteractionEnabled = true
         headerView.layer.cornerRadius = CORNER_RAD
         headerView.delegate = self
         headerView.translatesAutoresizingMaskIntoConstraints = false
         centralView.addSubview(headerView)
         
-        headerView.leftAnchor.constraint(equalTo: centralView.leftAnchor).isActive = true
-        headerView.topAnchor.constraint(equalTo: centralView.topAnchor).isActive = true
-        headerView.rightAnchor.constraint(equalTo: centralView.rightAnchor).isActive = true
-        headerView.heightAnchor.constraint(equalToConstant: HEADER_HEIGHT).isActive = true
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        centralView.addSubview(self.tableView)
         
-        tableView.dataSource = self
-        tableView.delegate = self
-        centralView.addSubview(tableView)
-        tableView.leftAnchor.constraint(equalTo: centralView.leftAnchor).isActive = true
-        tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor).isActive = true
-        tableView.rightAnchor.constraint(equalTo: centralView.rightAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: centralView.bottomAnchor,constant: -INNER_OFFSET).isActive = true
-        
-//        centralView.leftAnchor.constraint(equalTo: self.view.leftAnchor,constant: OFFSET).isActive = true
-//        centralView.rightAnchor.constraint(equalTo: self.view.rightAnchor,constant: -OFFSET).isActive = true
-        centralView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
-        centralView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        centralView.widthAnchor.constraint(equalToConstant: 400).isActive = true
-        centralView.heightAnchor.constraint(lessThanOrEqualToConstant: 300).isActive = true
+        NSLayoutConstraint.activate([
+            headerView.leftAnchor.constraint(equalTo: centralView.leftAnchor),
+            headerView.topAnchor.constraint(equalTo: centralView.topAnchor),
+            headerView.rightAnchor.constraint(equalTo: centralView.rightAnchor),
+            headerView.heightAnchor.constraint(equalToConstant: HEADER_HEIGHT),
+            
+            self.tableView.leftAnchor.constraint(equalTo: centralView.leftAnchor),
+            self.tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
+            self.tableView.rightAnchor.constraint(equalTo: centralView.rightAnchor),
+            self.tableView.bottomAnchor.constraint(equalTo: centralView.bottomAnchor,constant: -INNER_OFFSET),
+            
+            centralView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            centralView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            centralView.widthAnchor.constraint(equalToConstant: 400),
+            centralView.heightAnchor.constraint(lessThanOrEqualToConstant: 300)
+        ])
     }
     
     //Mark: - Actions

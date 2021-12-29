@@ -9,7 +9,7 @@
 import UIKit
 
 protocol GameInfoHeaderViewDelegate {
-   func closeTapped()
+    func closeTapped()
 }
 
 class GameInfoHeaderView: UIView {
@@ -22,20 +22,15 @@ class GameInfoHeaderView: UIView {
     var label: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = #colorLiteral(red: 0.07422413677, green: 0.5216350555, blue: 0.8784367442, alpha: 1)//#colorLiteral(red: 0.3014289141, green: 0.8125473857, blue: 0.8772042394, alpha: 1)
         label.font = GameInfoHeaderView.HEADER_FONT
         label.numberOfLines = 0
         return label
     }()
     
-    var closeImageView: UIImageView = {
-        var imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFill
-        imageView.image = UIImage(named: "exit")
-        imageView.isUserInteractionEnabled = true
-        imageView.transform = imageView.transform.rotated(by:.pi/4)
-        return imageView
+    var closeButton: UIButton = {
+        var btn = UIButton(type: .close)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
     }()
     
     //MARK: -Lifecycle
@@ -47,27 +42,26 @@ class GameInfoHeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(withText: String, frame: CGRect) {
-        super.init(frame: frame)
-        configureObjects(text: withText)
+    init(withText: String) {
+        super.init(frame: .zero)
+        self.configureObjects(text: withText)
     }
     
-     //MARK: -Private methods
+    //MARK: -Private methods
     fileprivate func configureObjects(text: String = "") {
-        self.addSubview(self.label)
         self.label.text = text
-        self.label.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        self.label.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        self.closeButton.addTarget(self, action: #selector(closeTapped), for: .touchUpInside)
         
-        self.addSubview(self.closeImageView)
-        self.closeImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 8.0).isActive = true
-        self.closeImageView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -12.0).isActive = true
-        self.closeImageView.heightAnchor.constraint(equalToConstant: 28.0).isActive = true
-        self.closeImageView.widthAnchor.constraint(equalToConstant: 28.0).isActive = true
-        self.closeImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        self.addSubview(self.label)
+        self.addSubview(self.closeButton)
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeTapped))
-        closeImageView.addGestureRecognizer(tapGestureRecognizer)
+        NSLayoutConstraint.activate([
+            self.label.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.label.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            
+            self.closeButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 8.0),
+            self.closeButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -12.0),
+        ])
     }
     
     //MARK: -Actions

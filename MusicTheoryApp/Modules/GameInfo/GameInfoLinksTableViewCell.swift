@@ -29,9 +29,7 @@ class GameInfoTableViewCell: UITableViewCell {
     let LINKS_COLOR: UIColor = .blue
     let OFFSET: CGFloat = 10.0
     var FONT: UIFont = UIFont(descriptor: .preferredFontDescriptor(withTextStyle: .body), size: 16.0)
-    var FONT_COLOR: UIColor = #colorLiteral(red: 0.07422413677, green: 0.5216350555, blue: 0.8784367442, alpha: 1)
-    
- 
+
     //MARK: -Lifecycle
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -49,7 +47,6 @@ class GameInfoTableViewCell: UITableViewCell {
         let siteLabel = UILabel()
         siteLabel.text = "Приглашаем посетить наш сайт"
         siteLabel.textAlignment = .center
-        siteLabel.textColor = FONT_COLOR
         
         let siteButton = UIButton()
         siteButton.setTitle("наш сайт", for: .normal)
@@ -75,7 +72,6 @@ class GameInfoTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Благодарим за предоставленные иконки:"
         label.textAlignment = .center
-        label.textColor = FONT_COLOR
         
         self.contentView.addSubview(label)
         label.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: OFFSET).isActive = true
