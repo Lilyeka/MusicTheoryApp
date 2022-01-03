@@ -154,7 +154,6 @@ extension QuizViewController: UICollectionViewDataSource {
             }
             let viewModel = MusicTaskShowtNoteOnThePianoViewModel(model: question as! MusicTaskShowNoteOnThePiano)
             cell?.configureSubViews(viewModel: viewModel, frame: frame)
-            cell?.delegate = self
             cell?.pianoView.delegate = self
             return cell!
         case is MusicTaskSelectNoteInWord:
@@ -254,6 +253,7 @@ extension QuizViewController: PianoViewDelegate {
                     noteNameLabel.adjustsFontSizeToFitWidth = true
                     noteNameLabel.text = note.0.noteRusName()
                     noteNameLabel.textAlignment = .center
+                    noteNameLabel.textColor = .white
                     view.addSubview(noteNameLabel)
                 }
                 presentRightAnswerAlerts()

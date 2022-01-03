@@ -12,10 +12,7 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
 
     let TOP_OFFSET: CGFloat = 15.0
     let LEFT_OFFSET: CGFloat = 15.0
-   
-    //MARK: -Delegate
-    var delegate: QuizSelectAnswerDelegate?
-        
+
     //MARK: -Views
     var viewModel: MusicTaskShowtNoteOnThePianoViewModel? {
         didSet {
