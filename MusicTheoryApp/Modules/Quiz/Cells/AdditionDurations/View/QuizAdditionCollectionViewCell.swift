@@ -70,9 +70,9 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
     func configureSubviews(viewModel: MusicTaskAdditionViewModel, frame: CGRect) {
         self.viewModel = viewModel
         self.mathElements = viewModel.mathElements
-        numberOfTaskElements = mathElements.count
+        self.numberOfTaskElements = mathElements.count
         
-        questionLabel.text = viewModel.getQuestionText()
+        self.questionLabel.text = viewModel.getQuestionText()
         self.contentView.addSubview(questionLabel)
         questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
         questionLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: LEFT_OFFSET).isActive = true
@@ -136,7 +136,6 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
         frameForChange.origin.x = (self.contentView.frame.width - taskCollectionViewWidth)/2
         frameForChange.origin.y = self.contentView.frame.height + self.contentView.frame.height/3 + CGFloat(pickerToolBarHeight)
         self.pickerView.frame = frameForChange
-        
         pickerToolBar = UIToolbar()
         pickerToolBar.barStyle = .default
         pickerToolBar.sizeToFit()

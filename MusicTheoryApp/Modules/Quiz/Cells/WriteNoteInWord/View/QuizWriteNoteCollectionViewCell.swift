@@ -58,11 +58,18 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
         self.viewModel = viewModel
         
         self.textField = UITextField()
+        self.textField.backgroundColor = .clear
+        self.textField.textColor = .black
         self.textField.translatesAutoresizingMaskIntoConstraints = false
         self.textField.textAlignment = .center
         self.textField.placeholder = "?"
         self.textField.font = QuizWriteNoteCollectionViewCell.WORD_FONT
         self.textField.borderStyle = UITextField.BorderStyle.roundedRect
+        let traitCollection = self.contentView.traitCollection
+        let resolvedColor = UIColor.darkGray/*label*/.resolvedColor(with: traitCollection)
+        self.textField.layer.borderColor = resolvedColor.cgColor
+
+       // self.textField.layer.borderColor = UIColor(named: "textFieldColor")?.resolvedColor(with: self.traitCollection).cgColor
         self.textField.autocorrectionType = UITextAutocorrectionType.no
         self.textField.keyboardType = .default
         self.textField.delegate = self
@@ -149,7 +156,7 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
         
         self.questionLabel.superview?.bringSubviewToFront(questionLabel)
     }
-    
+
     override func prepareForReuse() {
         for view in contentView.subviews {
             view.removeFromSuperview()

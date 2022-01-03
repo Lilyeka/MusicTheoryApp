@@ -33,6 +33,7 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
         label.textAlignment = .center
         label.numberOfLines = 1
         label.layer.zPosition = .greatestFiniteMagnitude
+        label.textColor = .black
         return label
     }()
         

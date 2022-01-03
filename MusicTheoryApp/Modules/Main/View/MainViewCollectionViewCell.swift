@@ -21,6 +21,7 @@ class MainViewCollectionViewCell: UICollectionViewCell {
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 2
+        label.textColor = .black
         return label
     }()
     

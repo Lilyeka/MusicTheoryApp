@@ -31,6 +31,7 @@ class QuizAdditionSignsCollectionViewCell: UICollectionViewCell {
     
     var textField: UITextField = {
         var textField = UITextField()
+        textField.backgroundColor = .white
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.isUserInteractionEnabled = false
         textField.textAlignment = .center
@@ -64,21 +65,26 @@ class QuizAdditionSignsCollectionViewCell: UICollectionViewCell {
         self.model = model
        
         if model.model.sign != .question {
-            let signLabelHight:CGFloat = 120.0
-            signLabel.text = model.signText
-            signLabel.textColor = model.signFontColor
-            self.contentView.addSubview(signLabel)
-            signLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 0.0).isActive = true
-            signLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor/*, constant: 50.0 - viewModel.offsetFromDurationCenter*/).isActive = true
-            signLabel.widthAnchor.constraint(equalTo:contentView.widthAnchor ).isActive = true
-            signLabel.heightAnchor.constraint(equalToConstant: signLabelHight).isActive = true
+            self.signLabel.text = model.signText
+            self.signLabel.textColor = model.signFontColor
+           
+            self.contentView.addSubview(self.signLabel)
+            NSLayoutConstraint.activate([
+                self.signLabel.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+                self.signLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
+                self.signLabel.widthAnchor.constraint(equalTo: self.contentView.widthAnchor),
+                self.signLabel.heightAnchor.constraint(equalToConstant: 120.0)
+            ])
         } else {
-            textField.placeholder = model.signText
-            self.contentView.addSubview(textField)
-            textField.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 0.0).isActive = true
-            textField.centerYAnchor.constraint(equalTo: contentView.centerYAnchor/*, constant: 50.0 - viewModel.offsetFromDurationCenter*/).isActive = true
-            textField.widthAnchor.constraint(equalTo:contentView.widthAnchor ).isActive = true
-            textField.heightAnchor.constraint(equalTo:contentView.heightAnchor).isActive = true
+            self.textField.placeholder = model.signText
+            
+            self.contentView.addSubview(self.textField)
+            NSLayoutConstraint.activate([
+                self.textField.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+                self.textField.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
+                self.textField.widthAnchor.constraint(equalTo:self.contentView.widthAnchor),
+                self.textField.heightAnchor.constraint(equalTo:self.contentView.heightAnchor)
+            ])
         }
     }
     
