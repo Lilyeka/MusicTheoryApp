@@ -11,7 +11,7 @@ import UIKit
 class MusicTasks: MusicTasksProtocol {
     static let shared = MusicTasks()
     var tasks: [MusicTask] = [
-        /*  MusicTaskSelectNote(
+          MusicTaskSelectNote(
             questionText: "Выберите ноты первой октавы, расположенные на основных линейках нотного стана",
             notesArray: [ Note(name:.Do, tone:.none, duration:.whole),
                           Note(name:.re, tone:.none, duration:.whole),
@@ -269,7 +269,7 @@ class MusicTasks: MusicTasksProtocol {
                                     ("Ми",Note(name:.mi, tone: .none, duration: .whole)),
                                     ("нута",nil)],
                                   needToType: true,
-                                  cleff: CleffTypes.Treble),*/
+                                  cleff: CleffTypes.Treble),
         MusicTaskSelectNoteInWord(questionText: "Разгадайте слово, зашифрованное с помощью нот",
                                   notesArray: [ Note(name:.mi1, tone:.none, duration:.whole)],
                                   partsOfWord: [

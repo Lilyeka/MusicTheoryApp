@@ -56,7 +56,9 @@ class QuizSelectNoteInWordCollectionViewCell: UICollectionViewCell {
     func configureSubviews(viewModel: MusicTaskSelectNoteInWordViewModel, frame: CGRect) {
         self.contentView.backgroundColor = .white
         self.viewModel = viewModel
-        let staffViewBigOctaveBottomOffset: CGFloat = viewModel.notesAreInBigOctave() ? 0.0 : 40.0
+        
+        let staffViewBigOctaveBottomOffset: CGFloat = viewModel.areNotesInBigOrFirstOctave() ? -40.0 : 0.0
+        
         self.questionLabel.text = viewModel.model.questionText
         self.contentView.addSubview(questionLabel)
         
@@ -93,7 +95,7 @@ class QuizSelectNoteInWordCollectionViewCell: UICollectionViewCell {
             self.staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: STAF_HORIZ_OFSET),
             self.staffView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -STAF_HORIZ_OFSET),
             self.staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())),
-            self.staffView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: (-40.0 + staffViewBigOctaveBottomOffset)),
+            self.staffView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: staffViewBigOctaveBottomOffset),
             
             self.wordStackView.topAnchor.constraint(equalTo: self.questionLabel.bottomAnchor),
             self.wordStackView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor)

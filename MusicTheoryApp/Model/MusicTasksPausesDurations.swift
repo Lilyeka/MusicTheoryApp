@@ -10,7 +10,7 @@ import UIKit
 
 class MusicTasksPausesDurations: MusicTasksProtocol {
     static let shared = MusicTasksPausesDurations()
-    var tasks: [MusicTask] = [/*
+    var tasks: [MusicTask] = [
         MusicTaskPauseAndDuration(
                    questionText: "Выберите длительность, которая соответствует данной паузе",
                    notesArray: [
@@ -50,7 +50,7 @@ class MusicTasksPausesDurations: MusicTasksProtocol {
                                 Note(name: .Do, tone: .none, duration: .eighth),
                                 Note(name: .Do, tone: .none, duration: .sixteen)],
                             cleff: .Treble,
-                            pause: Pause(duration: .quarter)),*/
+                            pause: Pause(duration: .quarter)),
                MusicTaskPauseAndDuration(
                             questionText: "Выберите длительность, которая соответствует данной паузе",
                             notesArray: [
@@ -60,7 +60,7 @@ class MusicTasksPausesDurations: MusicTasksProtocol {
                                 Note(name: .Do, tone: .none, duration: .eighth),
                                 Note(name: .Do, tone: .none, duration: .sixteen)],
                             cleff: .Treble,
-                            pause: Pause(duration: .eighth)),/*
+                            pause: Pause(duration: .eighth)),
         MusicTaskAddition(
             questionText: "Решите пример с паузами",
             answer: Duration.quarter,
@@ -149,7 +149,7 @@ class MusicTasksPausesDurations: MusicTasksProtocol {
                                       Duration.quarter,
                                       Duration.eighth,
                                       Duration.sixteen],
-                           variantsAreNotes: false),*/
+                           variantsAreNotes: false),
         MusicTaskAddition(
         questionText: "Решите музыкально-математические примеры",
         answer: Duration.half,

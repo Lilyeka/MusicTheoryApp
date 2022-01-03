@@ -18,17 +18,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             sleep(2)
          }
        
-        // Clear UserDefaults to start all articles again
-         UserDefaults.standard.removeObject(forKey: "first_article_done_tasks")
-         UserDefaults.standard.removeObject(forKey: "second_article_done_tasks")
-         UserDefaults.standard.removeObject(forKey: "third_article_done_tasks")
+        //self.clearLocalCache()
         
         window = UIWindow(frame: UIScreen.main.bounds)
         let mainVC = MainViewController()
         window?.rootViewController = UINavigationController(rootViewController: mainVC)
-        window?.makeKeyAndVisible()
         window?.overrideUserInterfaceStyle = .light
+        window?.makeKeyAndVisible()
         return true
+    }
+    
+    func clearLocalCache() {
+        // Clear UserDefaults to start all articles again
+         UserDefaults.standard.removeObject(forKey: "first_article_done_tasks")
+         UserDefaults.standard.removeObject(forKey: "second_article_done_tasks")
+         UserDefaults.standard.removeObject(forKey: "third_article_done_tasks")
     }
 }
 
