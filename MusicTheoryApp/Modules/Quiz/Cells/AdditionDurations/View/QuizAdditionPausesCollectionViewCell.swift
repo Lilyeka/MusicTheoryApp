@@ -44,20 +44,23 @@ class QuizAdditionPausesCollectionViewCell: UICollectionViewCell {
         let image = UIImage(named: self.viewModel.imageName)
         if let image = image {
             let resizedImage = image.scalePreservingAspectRatio(targetSize: CGSize(width: viewModel.width, height: viewModel.height))
-            imageView.image = resizedImage
+            self.imageView.image = resizedImage
         }
         
-        self.contentView.addSubview(imageView)
-        imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 0.0).isActive = true
-        imageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 0.0/*50.0 - viewModel.offsetFromDurationCenter*/).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: viewModel.width).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: viewModel.height).isActive = true
+        self.contentView.addSubview(self.imageView)
+        self.contentView.addSubview(self.viewForFireworks)
         
-        self.contentView.addSubview(viewForFireworks)
-        viewForFireworks.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
-        viewForFireworks.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
-        viewForFireworks.widthAnchor.constraint(equalToConstant: 10.0).isActive = true
-        viewForFireworks.heightAnchor.constraint(equalToConstant: 10.0).isActive = true
+        NSLayoutConstraint.activate([
+            self.imageView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+            self.imageView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
+            self.imageView.widthAnchor.constraint(equalToConstant: self.viewModel.width),
+            self.imageView.heightAnchor.constraint(equalToConstant: self.viewModel.height),
+            
+            self.viewForFireworks.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+            self.viewForFireworks.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
+            self.viewForFireworks.widthAnchor.constraint(equalToConstant: 10.0),
+            self.viewForFireworks.heightAnchor.constraint(equalToConstant: 10.0)
+        ])
     }
     
     override func prepareForReuse() {

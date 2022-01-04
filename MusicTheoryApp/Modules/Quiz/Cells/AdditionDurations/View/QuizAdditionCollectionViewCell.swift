@@ -74,19 +74,21 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
         
         self.questionLabel.text = viewModel.getQuestionText()
         self.contentView.addSubview(questionLabel)
-        questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
+        questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 15.0).isActive = true
         questionLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: LEFT_OFFSET).isActive = true
         questionLabel.widthAnchor.constraint(equalToConstant: frame.size.width - 2*LEFT_OFFSET).isActive = true
         questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: frame.size.width, font:QuizPauseAndDurationCollectionViewCell.QUESTION_FONT))!).isActive = true
         
-        taskCollectionViewWidth = 2*(frame.size.width - 2*LEFT_OFFSET)/3
+        //taskCollectionViewWidth = 2*(frame.size.width - 2*LEFT_OFFSET)/3
         
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0.0, bottom: 0, right: 0.0)
+        layout.sectionInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = CELLS_OFFSET
         layout.minimumLineSpacing = CELLS_OFFSET
-        let itemWidth:CGFloat = (numberOfTaskElements > 1) ? ((taskCollectionViewWidth - CGFloat(numberOfTaskElements-1)*CELLS_OFFSET)/CGFloat(numberOfTaskElements)) : 30.0
+        let itemWidth:CGFloat = 65.0
+        
+        taskCollectionViewWidth = CGFloat(numberOfTaskElements)*itemWidth
         layout.itemSize = CGSize(
             width: itemWidth,
             height: collectoinViewHight)
@@ -264,7 +266,7 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
                 
                 self.squeeseTaskCollectionView()
             }
-            pickeViewIsShown = true
+            self.pickeViewIsShown = true
         }
     }
     
@@ -275,7 +277,7 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
     }
 
     fileprivate func hidePickerViewAndIncreaseTaskCollectionView() {
-        if pickeViewIsShown {
+        if self.pickeViewIsShown {
             var newPickerViewFrame = self.pickerView.frame
             newPickerViewFrame.origin.x = (self.contentView.frame.width - self.taskCollectionViewWidth)/2
             newPickerViewFrame.origin.y = self.contentView.frame.height + CGFloat(self.pickerToolBarHeight)
@@ -290,7 +292,7 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
                     width: self.pickerView.frame.size.width,
                     height: self.pickerToolBarHeight)
             }
-            pickeViewIsShown = !pickeViewIsShown
+            self.pickeViewIsShown.toggle()
         }
     }
     
@@ -312,14 +314,6 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
     
     fileprivate func checkUserAnswer(duration: Duration) {
         var cell: QuizAdditionSignsCollectionViewCell?
-        
-//        if viewModel.notesVariants != nil {
-//             cell = taskCollectionView.cellForItem(at: IndexPath(row: mathElements.count - 1, section: 0)) as? QuizAdditionNotesCollectionViewCell
-//        }
-//        if viewModel.pausesVariants != nil {
-//             cell = taskCollectionView.cellForItem(at: IndexPath(row: mathElements.count - 1, section: 0)) as? QuizAdditionPausesCollectionViewCell
-//        }
-        
         if self.mathElements.count > 2 {
             cell = taskCollectionView.cellForItem(at: IndexPath(row: self.mathElements.count - 2, section: 0)) as? QuizAdditionSignsCollectionViewCell
         }
