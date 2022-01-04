@@ -159,10 +159,10 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Actions
     @objc func onDoneButtonTapped() {
-        hidePickerViewAndIncreaseTaskCollectionView()
-        hideBgButton()
-        let selectedDuration = getSelectedDurationAndRedrawCollectionView()
-        checkUserAnswer(duration:selectedDuration)
+        self.hidePickerViewAndIncreaseTaskCollectionView()
+        self.hideBgButton()
+        let selectedDuration = self.getSelectedDurationAndRedrawCollectionView()
+        self.checkUserAnswer(duration: selectedDuration)
     }
     
     @objc func onCancelPickerViewTapped() {
@@ -311,18 +311,24 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
     }
     
     fileprivate func checkUserAnswer(duration: Duration) {
-        var cell: UICollectionViewCell!
-        if viewModel.notesVariants != nil {
-             cell = taskCollectionView.cellForItem(at: IndexPath(row: mathElements.count - 1, section: 0)) as! QuizAdditionNotesCollectionViewCell
-            checkAndReactInView(duration: duration, view: cell)
+        var cell: QuizAdditionSignsCollectionViewCell?
+        
+//        if viewModel.notesVariants != nil {
+//             cell = taskCollectionView.cellForItem(at: IndexPath(row: mathElements.count - 1, section: 0)) as? QuizAdditionNotesCollectionViewCell
+//        }
+//        if viewModel.pausesVariants != nil {
+//             cell = taskCollectionView.cellForItem(at: IndexPath(row: mathElements.count - 1, section: 0)) as? QuizAdditionPausesCollectionViewCell
+//        }
+        
+        if self.mathElements.count > 2 {
+            cell = taskCollectionView.cellForItem(at: IndexPath(row: self.mathElements.count - 2, section: 0)) as? QuizAdditionSignsCollectionViewCell
         }
-        if viewModel.pausesVariants != nil {
-             cell = taskCollectionView.cellForItem(at: IndexPath(row: mathElements.count - 1, section: 0)) as! QuizAdditionPausesCollectionViewCell
-            checkAndReactInView(duration: duration, view: cell)
-        }
+        
+        guard let cell = cell else { return }
+        self.checkAndReactInView(duration: duration, view: cell.viewForFireworks)
     }
     
-    fileprivate func checkAndReactInView(duration: Duration,view: UIView) {
+    fileprivate func checkAndReactInView(duration: Duration, view: UIView) {
         if viewModel.checkUserAnswer(userAnswer: duration) {
             self.delegate?.additionalRightAnswerReaction(view: view)
             let seconds = 0.5

@@ -202,7 +202,7 @@ extension QuizViewController: UICollectionViewDataSource {
 //MARK: -QuizSelectAnswerDelegate
 extension QuizViewController: QuizSelectAnswerDelegate {
     func additionalRightAnswerReaction(view: UIView) {
-        fireworkController.addFireworks(count: 2, sparks: 8, around: view)
+        self.fireworkController.addFireworks(count: 2, sparks: 8, around: view)
         view.isUserInteractionEnabled = false
     }
     

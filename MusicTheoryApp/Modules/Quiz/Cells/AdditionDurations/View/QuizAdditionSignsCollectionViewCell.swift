@@ -10,7 +10,6 @@ import UIKit
 
 class QuizAdditionSignsCollectionViewCell: UICollectionViewCell {
     //MARK: -Static
-  
     static let SIGN_FONT: UIFont = {
         if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_11Pro_X_Xs {
             return UIFont.boldSystemFont(ofSize: 73.0)
@@ -40,12 +39,11 @@ class QuizAdditionSignsCollectionViewCell: UICollectionViewCell {
         return textField
     }()
     
-    var imageView: UIImageView = {
-        var imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "bemol")
-        imageView.contentMode = .scaleAspectFill
-        return imageView
+    var viewForFireworks: UIView! = {
+        var view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
+        return view
     }()
     
     //MARK: -ViewModel
@@ -63,11 +61,11 @@ class QuizAdditionSignsCollectionViewCell: UICollectionViewCell {
     //MARK: -Public methods
     func configureSubviews(model: MathSignViewModel) {
         self.model = model
-       
+        
         if model.model.sign != .question {
             self.signLabel.text = model.signText
             self.signLabel.textColor = model.signFontColor
-           
+            
             self.contentView.addSubview(self.signLabel)
             NSLayoutConstraint.activate([
                 self.signLabel.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
@@ -75,6 +73,7 @@ class QuizAdditionSignsCollectionViewCell: UICollectionViewCell {
                 self.signLabel.widthAnchor.constraint(equalTo: self.contentView.widthAnchor),
                 self.signLabel.heightAnchor.constraint(equalToConstant: 120.0)
             ])
+            
         } else {
             self.textField.placeholder = model.signText
             
@@ -86,6 +85,14 @@ class QuizAdditionSignsCollectionViewCell: UICollectionViewCell {
                 self.textField.heightAnchor.constraint(equalTo:self.contentView.heightAnchor)
             ])
         }
+        self.contentView.addSubview(viewForFireworks)
+        NSLayoutConstraint.activate([
+            viewForFireworks.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+            viewForFireworks.centerYAnchor.constraint(equalTo:
+                self.contentView.centerYAnchor),
+            viewForFireworks.widthAnchor.constraint(equalToConstant: 10.0),
+            viewForFireworks.heightAnchor.constraint(equalToConstant: 10.0)
+        ])
     }
     
     override func prepareForReuse() {
