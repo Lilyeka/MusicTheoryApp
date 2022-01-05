@@ -86,7 +86,6 @@ class PauseViewModel:MathElementViewModel {
         }
     }
     
-    
     init(model: Pause) {
         self.model = model
     }
@@ -94,7 +93,7 @@ class PauseViewModel:MathElementViewModel {
     func sixteenRestSize() -> (height: CGFloat, width: CGFloat, offsetFromCenter: CGFloat){
         var height: CGFloat = 90.0
         var width: CGFloat = 37.0
-        var offsetFromCenter: CGFloat = 0.0
+        var offsetFromCenter: CGFloat = -15.0
         if DeviceType.IS_IPHONE_6_6s_7_8 {
             height = 90.0
             width = 37.0
@@ -110,8 +109,9 @@ class PauseViewModel:MathElementViewModel {
         } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
             DeviceType.IS_IPHONE_12_12Pro_13_13Pro ||
             DeviceType.IS_IPHONE_12ProMax_13ProMax {
-            height = 90.0//68.0
-            width = 29.0//29.0
+            height = 93.0//68.0
+            width = 48.0//29.0
+            offsetFromCenter = -18
         }
         return (height: height, width: width, offsetFromCenter:offsetFromCenter)
     }
@@ -119,7 +119,7 @@ class PauseViewModel:MathElementViewModel {
     func eightRestSize() -> (height: CGFloat, width: CGFloat, offsetFromCenter: CGFloat){
         var height: CGFloat = 68.0
         var width: CGFloat = 24.0
-        var offsetFromCenter: CGFloat = 0.0
+        let offsetFromCenter: CGFloat = 0.0
         if DeviceType.IS_IPHONE_6_6s_7_8 {
             height = 68.0
             width = 24.0
@@ -135,13 +135,13 @@ class PauseViewModel:MathElementViewModel {
             height = 68.0
             width = 29.0
         }
-        return (height: height, width: width, offsetFromCenter:offsetFromCenter)
+        return (height: height, width: width, offsetFromCenter: offsetFromCenter)
     }
     
     func quarterRestSize() -> (height: CGFloat, width: CGFloat, offsetFromCenter: CGFloat) {
         var height: CGFloat = 83.0
         var width: CGFloat = 37.0
-        var offsetFromCenter: CGFloat = 0.0
+        var offsetFromCenter: CGFloat = -3.0
         if DeviceType.IS_IPHONE_6_6s_7_8 {
             height = 83.0
             width = 37.0
@@ -167,7 +167,7 @@ class PauseViewModel:MathElementViewModel {
     func halfRestSize() -> (height: CGFloat,width: CGFloat, offsetFromCenter: CGFloat) {
         var height: CGFloat = 47.0
         var width: CGFloat = 47.0
-        var offsetFromCenter: CGFloat = 0.0
+        var offsetFromCenter: CGFloat = 24.0
         if DeviceType.IS_IPHONE_6_6s_7_8 {
             height = 45.0
             width = 45.0
@@ -193,7 +193,7 @@ class PauseViewModel:MathElementViewModel {
     func wholeRestSize() -> (height: CGFloat,width: CGFloat, offsetFromCenter: CGFloat) {
         var height: CGFloat = 47.0
         var width: CGFloat = 47.0
-        var offsetFromCenter: CGFloat = 0.0
+        var offsetFromCenter: CGFloat = -10.0
         if DeviceType.IS_IPHONE_6_6s_7_8 {
             height = 45.0
             width = 45.0
