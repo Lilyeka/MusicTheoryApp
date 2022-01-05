@@ -45,12 +45,24 @@ class MusicTaskSelectNoteInWordViewModel {
         return userAnswerSet.contains(note.rawValue)
     }
 
-    func areNotesInBigOrFirstOctave() -> Bool {
+    func staffViewBigOctaveBottomOffset() -> CGFloat {
         var notesAreLessThenSeven = notesViewModels.map({ (note) -> Bool in
                return note.model.name.rawValue < 7
-           }).reduce(true){$0 && $1}
+           }).reduce(true){ $0 && $1 }
         
-        return notesAreLessThenSeven
+        if notesAreLessThenSeven {
+            if DeviceType.IS_IPHONE_11Pro_X_Xs {
+                return -20.0
+            }
+       
+            if (DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_6_6s_7_8 || DeviceType.IS_IPHONE_6P_6sP_7P_8P_) {
+                return -40.0
+            }
+            if DeviceType.IS_IPHONE_12_12Pro_13_13Pro || DeviceType.IS_IPHONE_12ProMax_13ProMax {
+                return -60.0
+            }
+        }
+        return 0.0
     }
     
     fileprivate func notesInWord() -> Set<Int> {

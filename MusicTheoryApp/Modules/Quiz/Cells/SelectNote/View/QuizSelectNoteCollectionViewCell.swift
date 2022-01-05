@@ -81,9 +81,12 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
     
     //MARK: -Private methods
     func addTopOffsetForStaffView() -> CGFloat {
-        if DeviceType.IS_IPHONE_11Pro_X_Xs || DeviceType.IS_IPHONE_12_12Pro_13_13Pro ||
-            DeviceType.IS_IPHONE_12ProMax_13ProMax {
-            return 17.0
+        if DeviceType.IS_IPHONE_11Pro_X_Xs {
+            return 25.0
+        }
+        
+        if DeviceType.IS_IPHONE_12ProMax_13ProMax {
+            return 55.0
         }
         if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
             return 21.0
@@ -94,7 +97,7 @@ class QuizSelectNoteCollectionViewCell: UICollectionViewCell {
         if DeviceType.IS_IPHONE_6_6s_7_8 {
             return 12.0
         }
-        return 0.0
+        return 13.0
     }
 }
 
@@ -132,9 +135,9 @@ extension QuizSelectNoteCollectionViewCell {
     static let LBL_TOP_OFFSET: CGFloat = 10.0
     
     static let STAF_TOP_OFFSET: CGFloat = {
-        if DeviceType.IS_IPHONE_11Pro_X_Xs || DeviceType.IS_IPHONE_11_XR_11PMax_XsMax  {
+        if DeviceType.IS_IPHONE_11Pro_X_Xs || DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
             return 30.0
-        } else if DeviceType.IS_IPHONE_12_12Pro_13_13Pro || DeviceType.IS_IPHONE_12ProMax_13ProMax {
+        } else if DeviceType.IS_IPHONE_12ProMax_13ProMax {
             return 20.0
         }
         return 45.0

@@ -60,16 +60,38 @@ class QuizViewController: UIViewController, QuizViewProtocol {
     }()
     
     lazy var lastQuestionRightAnswerAlert: UIAlertController! = {
-        let alert = UIAlertController(title: "Вы прошли весь раздел!", message: "Поздравляем!", preferredStyle: .alert)
+        let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+        
+        let attrTitle = NSAttributedString(
+            string: "Вы прошли весь раздел, поздравляем!",
+            attributes: [.font: UICollectionViewCell.QUESTION_FONT]
+        )
+        alert.setValue(attrTitle, forKey: "attributedTitle")
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
             self.okActionForLastAlert()}))
         return alert
     }()
     
     lazy var rightAnswerAlert: UIAlertController! = {
-        let alert = UIAlertController(title: "Верный ответ!", message: "Поехали дальше!", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
-            self.okAction()}))
+        let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+        
+
+        
+        let attrTitle = NSAttributedString(
+            string: "Верный ответ!",
+            attributes: [.font: UICollectionViewCell.QUESTION_FONT]
+        )
+//        let attrMessage = NSAttributedString(
+//            string: "Поехали дальше!",
+//            attributes: [.font: UIFont.systemFont(ofSize: 18, weight: .regular)]
+//        )
+        
+        alert.setValue(attrTitle, forKey: "attributedTitle")
+      // alert.setValue(attrMessage, forKey: "attributedMessage")
+        alert.addAction(
+            UIAlertAction(title: "OK", style: .default, handler: { (action) in
+            self.okAction()})
+        )
         return alert
     }()
     

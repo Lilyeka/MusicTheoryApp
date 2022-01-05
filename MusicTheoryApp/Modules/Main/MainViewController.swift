@@ -111,7 +111,14 @@ class MainViewController: UIViewController {
     
     // MARK: - Public methods
     func showStartArticleAgainAlert(index: Int) {
-        let alert = UIAlertController(title: "", message: "Пройти раздел заново?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+        
+        let attrMessage = NSAttributedString(
+            string: "Пройти раздел заново?",
+            attributes: [.font: UICollectionViewCell.QUESTION_FONT]
+        )
+        alert.setValue(attrMessage, forKey: "attributedMessage")
+        
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action) in
             let indexPath = IndexPath(row: index, section: 0)
             if let cell = self?.collectionView.cellForItem(at: indexPath) as? MainViewCollectionViewCell

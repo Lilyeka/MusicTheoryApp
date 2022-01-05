@@ -73,7 +73,7 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
             self.staffView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: LEFT_OFFSET),
             self.staffView.widthAnchor.constraint(equalToConstant: staffViewWidth),
             self.staffView.heightAnchor.constraint(equalToConstant: CGFloat(StaffView.viewHeight())),
-            self.staffView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -20.0),
+            self.staffView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -30.0),
             
             self.pianoView.topAnchor.constraint(equalTo: self.questionLabel.bottomAnchor, constant: TOP_OFFSET),
             self.pianoView.leftAnchor.constraint(equalTo: self.staffView.rightAnchor, constant: LEFT_OFFSET*2),

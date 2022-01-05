@@ -222,7 +222,7 @@ class StaffView: UIView {
                 if (cleff == .Bass) && (range.contains(note.model.name.rawValue)) {
                     nameLabel.topAnchor.constraint(equalTo:imageView.bottomAnchor).isActive = true
                 } else {
-                nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: note.noteTitleBottomOffset(cleff: cleff)).isActive = true
+                    nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: note.noteTitleBottomOffset(cleff: cleff)).isActive = true
                 }
 
                 //previousNoteWidth = noteWidth
@@ -427,7 +427,7 @@ class StaffView: UIView {
         self.selectedNoteView = tapGestureRecognizer.view
         guard
             let noteViewModelIndex = self.selectedNoteView?.tag,
-            let noteViewModel = notesArray?[noteViewModelIndex] else {return}
+            let noteViewModel = notesArray?[noteViewModelIndex] else { return }
         noteViewModel.didTapped(noteView: selectedNoteView!)
         
         if let selectOne = self.selectOnlyOneNote, selectOne {//можно выбрать только одну ноту из нескольких

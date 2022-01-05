@@ -57,8 +57,7 @@ class QuizSelectNoteInWordCollectionViewCell: UICollectionViewCell {
         self.contentView.backgroundColor = .white
         self.viewModel = viewModel
         
-        let staffViewBigOctaveBottomOffset: CGFloat = viewModel.areNotesInBigOrFirstOctave() ? -40.0 : 0.0
-        
+        let staffViewBigOctaveBottomOffset: CGFloat = viewModel.staffViewBigOctaveBottomOffset()
         self.questionLabel.text = viewModel.model.questionText
         self.contentView.addSubview(questionLabel)
         

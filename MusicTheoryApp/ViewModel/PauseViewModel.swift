@@ -109,8 +109,8 @@ class PauseViewModel:MathElementViewModel {
         } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
             DeviceType.IS_IPHONE_12_12Pro_13_13Pro ||
             DeviceType.IS_IPHONE_12ProMax_13ProMax {
-            height = 93.0//68.0
-            width = 48.0//29.0
+            height = 93.0
+            width = 48.0
             offsetFromCenter = -18
         }
         return (height: height, width: width, offsetFromCenter:offsetFromCenter)
