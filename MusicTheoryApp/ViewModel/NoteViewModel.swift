@@ -188,7 +188,7 @@ extension NoteViewModel {
     func noteTitleBottomOffset(cleff: CleffTypes) -> CGFloat {
         switch model.name.rawValue {
         case 0...6:
-            return cleff == CleffTypes.Treble ? noteTitleBottomOffsetForTrebleFirstOctave(value:model.name.rawValue) : noteTitleBottomOffsetForBassBigOctave()
+            return cleff == CleffTypes.Treble ? noteTitleBottomOffsetForTrebleFirstOctave(value: model.name.rawValue) : noteTitleBottomOffsetForBassBigOctave()
         case 7...13:
             return cleff == CleffTypes.Treble ? noteTitleBottomOffsetForTrebleSecondOctave() :
                 noteTitleBottomOffsetForBassSmallOctave()
@@ -198,27 +198,27 @@ extension NoteViewModel {
     }
     
     func noteTitleBottomOffsetForBassBigOctave() -> CGFloat {
-        return -35.0 // it's good for all device types
+        if DeviceType.IS_IPHONE_12_12Pro_13_13Pro { return -23.0 }
+        return -35.0
     }
     
     func noteTitleBottomOffsetForBassSmallOctave() -> CGFloat {
-        return -35.0 // it's good for all device types
+        if DeviceType.IS_IPHONE_12_12Pro_13_13Pro { return -23.0 }
+        return -35.0
     }
     
     fileprivate func noteTitleBottomOffsetForTrebleFirstOctave(value: Int) -> CGFloat {
         if value == 0 {
             if DeviceType.IS_IPHONE_11Pro_X_Xs { return 5 }
-            if DeviceType.IS_IPHONE_12_12Pro_13_13Pro ||
-                DeviceType.IS_IPHONE_12ProMax_13ProMax {
-                return 15
-            }
-            
+            if DeviceType.IS_IPHONE_12_12Pro_13_13Pro { return 17.0 }
+            if DeviceType.IS_IPHONE_12ProMax_13ProMax { return 15 }
         }
-        return 0.0 // it's good for all device types
+        return 0.0
     }
     
     fileprivate func noteTitleBottomOffsetForTrebleSecondOctave() -> CGFloat {
-        return -35.0 // it's good for all device types
+        if DeviceType.IS_IPHONE_12_12Pro_13_13Pro { return -23.0 }
+        return -35.0
     }
     
     func wholeNoteSize() -> (height: CGFloat,width: CGFloat) {
@@ -241,5 +241,4 @@ extension NoteViewModel {
         }
         return (height: height, width: width)
     }
-    
 }

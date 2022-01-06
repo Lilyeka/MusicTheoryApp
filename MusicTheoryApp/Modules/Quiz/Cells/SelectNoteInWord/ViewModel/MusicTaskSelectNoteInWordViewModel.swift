@@ -52,10 +52,14 @@ class MusicTaskSelectNoteInWordViewModel {
         
         if notesAreLessThenSeven {
             if DeviceType.IS_IPHONE_11Pro_X_Xs {
-                return -20.0
+                return -30.0
+            }
+            
+            if DeviceType.IS_IPHONE_6_6s_7_8 || DeviceType.IS_IPHONE_6P_6sP_7P_8P_{
+                return -50.0
             }
        
-            if (DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_6_6s_7_8 || DeviceType.IS_IPHONE_6P_6sP_7P_8P_) {
+            if (DeviceType.IS_IPHONE_11_XR_11PMax_XsMax) {
                 return -40.0
             }
             if DeviceType.IS_IPHONE_12_12Pro_13_13Pro || DeviceType.IS_IPHONE_12ProMax_13ProMax {

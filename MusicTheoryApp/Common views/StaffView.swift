@@ -220,7 +220,12 @@ class StaffView: UIView {
                 nameLabel.widthAnchor.constraint(equalToConstant: 50.0).isActive = true
                 let range = (0...4)
                 if (cleff == .Bass) && (range.contains(note.model.name.rawValue)) {
-                    nameLabel.topAnchor.constraint(equalTo:imageView.bottomAnchor).isActive = true
+                    var constant = 0.0
+                    if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
+                        DeviceType.IS_IPHONE_11Pro_X_Xs {
+                        constant = -6.0
+                    }
+                    nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: constant).isActive = true
                 } else {
                     nameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: note.noteTitleBottomOffset(cleff: cleff)).isActive = true
                 }
@@ -590,13 +595,15 @@ extension StaffView {
         } else if DeviceType.IS_IPHONE_6P_6sP_7P_8P_ {
             return 32
         } else if DeviceType.IS_IPHONE_11Pro_X_Xs {
+            return 32
+        } else if DeviceType.IS_IPHONE_12_12Pro_13_13Pro {
             return 33
         } else if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax ||
-                DeviceType.IS_IPHONE_12_12Pro_13_13Pro ||
                     DeviceType.IS_IPHONE_12ProMax_13ProMax {
             return 34
         }
         return 30 // for iPhone 11
+        
     }()
     
     static var TREBLE_TOP_OFFSET: CGFloat = {
