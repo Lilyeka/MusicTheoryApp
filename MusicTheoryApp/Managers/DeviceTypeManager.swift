@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum UIUserInterfaceIdiom : Int {
+enum UIUserInterfaceIdiom: Int {
     case unspecified
     case phone
     case pad
@@ -30,4 +30,3 @@ struct DeviceType {
     static let IS_IPHONE_12_12Pro_13_13Pro = UIDevice.current.userInterfaceIdiom == .phone &&  ScreenSize.SCREEN_MAX_LENGTH == 844.0
     static let IS_IPHONE_12ProMax_13ProMax = UIDevice.current.userInterfaceIdiom == .phone &&  ScreenSize.SCREEN_MAX_LENGTH == 926.0
 }
-

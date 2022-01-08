@@ -42,16 +42,9 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
     var pickerToolBar: UIToolbar!
  
     //MARK: -Variables
-    lazy var collectoinViewHight: CGFloat = {
-        //        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_11Pro_X_Xs {
-        //            return 200.0
-        //        }
-        return 150.0
-    }()
-
-    var numberOfTaskElements = 0
-    var taskCollectionViewWidth: CGFloat = 0.0
     var pickeViewIsShown: Bool = false
+    var taskCollectionViewWidth: CGFloat = 0.0
+    var pickerViewWidth: CGFloat = 0.0
     
     //MARK: -ViewModel
     var viewModel: MusicTaskAdditionViewModel!
@@ -70,28 +63,17 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
     func configureSubviews(viewModel: MusicTaskAdditionViewModel, frame: CGRect) {
         self.viewModel = viewModel
         self.mathElements = viewModel.mathElements
-        self.numberOfTaskElements = mathElements.count
-        
-        self.questionLabel.text = viewModel.getQuestionText()
-        self.contentView.addSubview(questionLabel)
-        questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 15.0).isActive = true
-        questionLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: LEFT_OFFSET).isActive = true
-        questionLabel.widthAnchor.constraint(equalToConstant: frame.size.width - 2*LEFT_OFFSET).isActive = true
-        questionLabel.heightAnchor.constraint(equalToConstant: (questionLabel.text?.height(width: frame.size.width, font:QuizPauseAndDurationCollectionViewCell.QUESTION_FONT))!).isActive = true
-        
-        //taskCollectionViewWidth = 2*(frame.size.width - 2*LEFT_OFFSET)/3
-        
+ 
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = CELLS_OFFSET
         layout.minimumLineSpacing = CELLS_OFFSET
-        let itemWidth:CGFloat = 65.0
         
-        taskCollectionViewWidth = CGFloat(numberOfTaskElements)*itemWidth
-        layout.itemSize = CGSize(
-            width: itemWidth,
-            height: collectoinViewHight)
+        let collectoinViewHeight: CGFloat = 150.0
+        let itemWidth: CGFloat = 65.0
+        self.taskCollectionViewWidth = CGFloat(self.mathElements.count) * itemWidth
+        layout.itemSize = CGSize( width: itemWidth, height: collectoinViewHeight)
         
         taskCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         taskCollectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -102,14 +84,14 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
         taskCollectionView.register(QuizAdditionNotesCollectionViewCell.self, forCellWithReuseIdentifier: QuizAdditionNotesCollectionViewCell.cellIdentifier)
         taskCollectionView.register(QuizAdditionPausesCollectionViewCell.self, forCellWithReuseIdentifier: QuizAdditionPausesCollectionViewCell.cellIdentifier)
         taskCollectionView.register(QuizAdditionSignsCollectionViewCell.self, forCellWithReuseIdentifier: QuizAdditionSignsCollectionViewCell.cellIdentifier)
-        taskCollectionView.register(QuizVariantCollectionViewCell.self, forCellWithReuseIdentifier: QuizVariantCollectionViewCell.cellIdentifier)
         
         self.contentView.addSubview(taskCollectionView)
-        taskCollectionView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor, constant: -20.0).isActive = true
-        taskCollectionView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
-        taskCollectionView.widthAnchor.constraint(equalToConstant: taskCollectionViewWidth).isActive = true
-        taskCollectionView.heightAnchor.constraint(equalToConstant: CGFloat(collectoinViewHight)).isActive = true
-        
+        NSLayoutConstraint.activate([
+            self.taskCollectionView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor, constant: -20.0),
+            self.taskCollectionView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+            self.taskCollectionView.widthAnchor.constraint(equalToConstant: self.taskCollectionViewWidth),
+            self.taskCollectionView.heightAnchor.constraint(equalToConstant: CGFloat(collectoinViewHeight))
+        ])
         self.contentView.addSubview(bgButton)
         self.bgButton.frame = CGRect(
                x: self.contentView.frame.origin.x,
@@ -126,16 +108,17 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
         pickerView.layer.borderWidth = 1.0
         pickerView.layer.borderColor = UIColor.gray.withAlphaComponent(0.1).cgColor
         
+        self.pickerViewWidth = 2*(frame.size.width - 2*LEFT_OFFSET)/3
         self.pickerView.frame = CGRect(
-            x:(self.contentView.frame.width - taskCollectionViewWidth)/2,
+            x:(self.contentView.frame.width - self.pickerViewWidth)/2,
             y: self.contentView.frame.height - self.contentView.frame.height/3,
             width: self.contentView.frame.height/3,
-            height: taskCollectionViewWidth)
+            height: self.pickerViewWidth)
         self.contentView.addSubview(self.pickerView)
         self.pickerView.transform = CGAffineTransform(rotationAngle: 3.14159/2)
         
         var frameForChange = self.pickerView.frame
-        frameForChange.origin.x = (self.contentView.frame.width - taskCollectionViewWidth)/2
+        frameForChange.origin.x = (self.contentView.frame.width - self.pickerViewWidth)/2
         frameForChange.origin.y = self.contentView.frame.height + self.contentView.frame.height/3 + CGFloat(pickerToolBarHeight)
         self.pickerView.frame = frameForChange
         pickerToolBar = UIToolbar()
@@ -156,7 +139,13 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
             width: self.pickerView.frame.size.width,
             height: pickerToolBarHeight)
         self.contentView.addSubview(self.pickerToolBar)
-
+        
+        self.questionLabel.text = viewModel.getQuestionText()
+        self.contentView.addSubview(self.questionLabel)
+        NSLayoutConstraint.activate([
+            self.questionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 15.0),
+            self.questionLabel.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor)
+        ])
     }
     
     //MARK: - Actions
@@ -185,7 +174,7 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
 //MARK: - UICollectionViewDataSource
 extension QuizAdditionCollectionViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return numberOfTaskElements
+        return self.mathElements.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -227,7 +216,7 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDataSource {
 //MARK: - UICollectionViewDelegate
 extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)  {
-        if indexPath.row == (numberOfTaskElements - 1) {
+        if indexPath.row == (self.mathElements.count - 1) {
             showPickerView()
             showBgButton()
         }
@@ -254,7 +243,7 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
         if !pickeViewIsShown {
             UIView.animate(withDuration: 0.3) {
                 var frameForChange = self.pickerView.frame
-                frameForChange.origin.x = (self.contentView.bounds.width - self.taskCollectionView.bounds.size.width)/2
+                frameForChange.origin.x = (self.contentView.bounds.width - self.pickerViewWidth)/2
                 frameForChange.origin.y = self.contentView.bounds.height - self.contentView.bounds.height/3
                 self.pickerView.frame = frameForChange
                 
@@ -279,7 +268,7 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
     fileprivate func hidePickerViewAndIncreaseTaskCollectionView() {
         if self.pickeViewIsShown {
             var newPickerViewFrame = self.pickerView.frame
-            newPickerViewFrame.origin.x = (self.contentView.frame.width - self.taskCollectionViewWidth)/2
+            newPickerViewFrame.origin.x = (self.contentView.frame.width - self.pickerViewWidth)/2
             newPickerViewFrame.origin.y = self.contentView.frame.height + CGFloat(self.pickerToolBarHeight)
             
             UIView.animate(withDuration: 0.3) {
