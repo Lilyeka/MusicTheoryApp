@@ -7,8 +7,32 @@
 //
 
 import UIKit
+class PianoKeyView: UIView {
+    var fireworkView: UIView!
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.addFireworkSubView()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func addFireworkSubView() {
+        self.fireworkView = UIView()
+        self.fireworkView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(self.fireworkView)
+        NSLayoutConstraint.activate([
+            self.fireworkView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.fireworkView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15.0),
+            self.fireworkView.widthAnchor.constraint(equalToConstant: 2.0),
+            self.fireworkView.heightAnchor.constraint(equalToConstant: 2.0)
+        ])
+    }
+}
 
-class WhiteKeyView: UIView {
+class WhiteKeyView: PianoKeyView {
     static let BORDER_LINE_THICKNESS: CGFloat = 5.0
     var notesForKey: [(Note.NoteName, Note.Tonality)]
     
@@ -26,7 +50,7 @@ class WhiteKeyView: UIView {
      }
   }
 
-class BlackKeyView: UIView {
+class BlackKeyView: PianoKeyView {
     var notesForKey: [(Note.NoteName, Note.Tonality)]
     
     init(notesForKey: [(Note.NoteName, Note.Tonality)]) {
@@ -42,7 +66,7 @@ class BlackKeyView: UIView {
 }
 
 protocol PianoViewDelegate {
-    func keyTapped(withNotes:[(Note.NoteName,Note.Tonality)], view: UIView)
+    func keyTapped(withNotes:[(Note.NoteName,Note.Tonality)], view: PianoKeyView)
 }
 
 class PianoView: UIView {
@@ -78,13 +102,14 @@ class PianoView: UIView {
         super.init(coder: aDecoder)
     }
     
-    init(pianoWidth: CGFloat, blackKeysOffset: CGFloat) {
+    init(pianoWidth: CGFloat, blackKeysOffset: CGFloat, delegate: PianoViewDelegate) {
         super.init(frame: .zero)
+        self.delegate = delegate
         let keyWidth:CGFloat = pianoWidth/CGFloat(WHITE_KEYS_NUMBER)
         self.setupView(keyWidth: keyWidth, blackKeysOffset: blackKeysOffset)
     }
     
-    fileprivate func setupView(keyWidth:CGFloat, blackKeysOffset: CGFloat) {
+    fileprivate func setupView(keyWidth: CGFloat, blackKeysOffset: CGFloat) {
         var i = 0
         var leftOffset:CGFloat = 0.0
         while i < WHITE_KEYS_NUMBER {
@@ -119,7 +144,7 @@ class PianoView: UIView {
     }
     
     func setupTapWhiteKey(forView: UIView) {
-        let touchDown = UILongPressGestureRecognizer(target:self, action: #selector(didTouchDownWhiteKey))
+        let touchDown = UILongPressGestureRecognizer(target: self, action: #selector(didTouchDownWhiteKey))
         touchDown.minimumPressDuration = 0
         forView.addGestureRecognizer(touchDown)
     }
@@ -131,7 +156,7 @@ class PianoView: UIView {
                 self.isUserInteractionEnabled = false
             })
         } else if gesture.state == .ended || gesture.state == .cancelled {
-            UIView.animate(withDuration: 0.5, animations: {
+            UIView.animate(withDuration: 0.1, animations: {
                 gesture.view?.layer.backgroundColor = UIColor.white.cgColor
             }) { _ in
                 if let view = gesture.view as? WhiteKeyView {

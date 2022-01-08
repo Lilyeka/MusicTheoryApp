@@ -174,9 +174,8 @@ extension QuizViewController: UICollectionViewDataSource {
             if cell == nil {
                 cell = QuizShowNoteCollectionViewCell(frame: frame)
             }
-            let viewModel = MusicTaskShowtNoteOnThePianoViewModel(model: question as! MusicTaskShowNoteOnThePiano)
-            cell?.configureSubViews(viewModel: viewModel, frame: frame)
-            cell?.pianoView.delegate = self
+            let viewModel = MusicTaskShowNoteOnThePianoViewModel(model: question as! MusicTaskShowNoteOnThePiano)
+            cell?.configureSubViews(viewModel: viewModel, frame: frame, delegate: self)
             return cell!
         case is MusicTaskSelectNoteInWord:
             let q = question as! MusicTaskSelectNoteInWord
@@ -244,7 +243,7 @@ extension QuizViewController: QuizSelectAnswerDelegate {
     
     fileprivate func presentRightAnswerAlerts() {
         // update cache
-        delegate?.storeRightAnswer()
+        self.delegate?.storeRightAnswer()
         if (currentQuestionNumber == notFinishedQuestions.count - 1) {
             self.present(lastQuestionRightAnswerAlert, animated: true, completion: nil)
         } else {
@@ -255,12 +254,11 @@ extension QuizViewController: QuizSelectAnswerDelegate {
 
 //MARK: -PianoViewDelegate
 extension QuizViewController: PianoViewDelegate {
-    func keyTapped(withNotes: [(Note.NoteName, Note.Tonality)], view: UIView) {
-        let model = notFinishedQuestions[currentQuestionNumber] as? MusicTaskShowNoteOnThePiano
-        if let model = model {
-            let viewModel = MusicTaskShowtNoteOnThePianoViewModel(model: model)
+    func keyTapped(withNotes: [(Note.NoteName, Note.Tonality)], view: PianoKeyView) {
+        if let model = notFinishedQuestions[currentQuestionNumber] as? MusicTaskShowNoteOnThePiano {
+            let viewModel = MusicTaskShowNoteOnThePianoViewModel(model: model)
             if viewModel.checkUserAnswer(userAnswer: withNotes) {
-                self.fireworkController.addFireworks(count: 2, sparks: 8, around: view)
+                self.fireworkController.addFireworks(count: 2, sparks: 8, around: view.fireworkView)
                 view.backgroundColor = UIColor(named: "doneArticleColour")
                 view.isUserInteractionEnabled = false
                 if (withNotes.count) > 0 {
@@ -278,7 +276,10 @@ extension QuizViewController: PianoViewDelegate {
                     noteNameLabel.textColor = .white
                     view.addSubview(noteNameLabel)
                 }
-                presentRightAnswerAlerts()
+                let seconds = 0.5
+                DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                    self.presentRightAnswerAlerts()
+                }
             }
         }
     }

@@ -129,7 +129,11 @@ extension QuizSelectNoteCollectionViewCell: StaffViewDelegate {
             }
             noteNamesArray.sort{$0.rawValue < $1.rawValue}
             if (viewModel?.checkUserAnswer(userAnswer: noteNamesArray))! {
-                delegate?.rightAnswerReaction()
+                self.staffView.isUserInteractionEnabled = false
+                let seconds = 0.5
+                DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                    self.delegate?.rightAnswerReaction()
+                }
             }
         }
     }

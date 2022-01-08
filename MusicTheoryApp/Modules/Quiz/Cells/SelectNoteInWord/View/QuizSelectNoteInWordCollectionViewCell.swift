@@ -127,7 +127,11 @@ extension QuizSelectNoteInWordCollectionViewCell: NoteViewModelDelegate {
 extension QuizSelectNoteInWordCollectionViewCell: StaffViewDelegate {
     func pickedOutNotesIndexesDidChange(newValue: [Int]) {
         if (viewModel.checkUserAnswer1(userAnswer: newValue)) {
-            delegate?.rightAnswerReaction()
+            self.staffView.isUserInteractionEnabled = false
+            let seconds = 0.5
+            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                self.delegate?.rightAnswerReaction()
+            }
         }
     }
 }

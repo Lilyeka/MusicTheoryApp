@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MusicTaskShowtNoteOnThePianoViewModel {
+class MusicTaskShowNoteOnThePianoViewModel {
     
     let model: MusicTaskShowNoteOnThePiano
     var notesViewModels: [NoteViewModel]

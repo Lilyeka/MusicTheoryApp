@@ -14,7 +14,7 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
     let LEFT_OFFSET: CGFloat = 15.0
 
     //MARK: -Views
-    var viewModel: MusicTaskShowtNoteOnThePianoViewModel? {
+    var viewModel: MusicTaskShowNoteOnThePianoViewModel? {
         didSet {
             self.questionLabel.text = self.viewModel?.model.questionText
         }
@@ -44,7 +44,7 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
     }
     
     //MARK: -Public methods
-    func configureSubViews(viewModel: MusicTaskShowtNoteOnThePianoViewModel, frame: CGRect) {
+    func configureSubViews(viewModel: MusicTaskShowNoteOnThePianoViewModel, frame: CGRect, delegate: PianoViewDelegate) {
         self.viewModel = viewModel
         self.contentView.addSubview(self.questionLabel)
         
@@ -61,7 +61,7 @@ class QuizShowNoteCollectionViewCell: UICollectionViewCell {
         self.staffView.isUserInteractionEnabled = false
         self.contentView.addSubview(self.staffView)
         
-        self.pianoView = PianoView(pianoWidth: pianoViewWidth, blackKeysOffset: 20.0)
+        self.pianoView = PianoView(pianoWidth: pianoViewWidth, blackKeysOffset: 20.0, delegate: delegate)
         self.pianoView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(self.pianoView)
         

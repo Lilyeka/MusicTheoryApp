@@ -12,7 +12,7 @@ class QuizWriteNoteCollectionViewCell: UICollectionViewCell {
     
     //MARK: -Static
     static let WORD_FONT: UIFont = {
-        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax {
+        if DeviceType.IS_IPHONE_11_XR_11PMax_XsMax || DeviceType.IS_IPHONE_12ProMax_13ProMax {
             return UIFont.boldSystemFont(ofSize: 45.0)
         }
         return UIFont.boldSystemFont(ofSize: 35.0)
@@ -213,7 +213,7 @@ extension QuizWriteNoteCollectionViewCell: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.endEditing(true)
         if let text = textField.text, text.count > 0 {
-            checkAnswer(answerString:text, textField: textField)
+            self.checkAnswer(answerString:text, textField: textField)
         }
         return true
     }
