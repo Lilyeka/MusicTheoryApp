@@ -46,7 +46,7 @@ class MusicTaskSelectNoteInWordViewModel {
     }
 
     func staffViewBigOctaveBottomOffset() -> CGFloat {
-        var notesAreLessThenSeven = notesViewModels.map({ (note) -> Bool in
+        let notesAreLessThenSeven = notesViewModels.map({ (note) -> Bool in
                return note.model.name.rawValue < 7
            }).reduce(true){ $0 && $1 }
         

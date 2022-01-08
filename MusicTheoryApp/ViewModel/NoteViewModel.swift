@@ -133,7 +133,7 @@ extension NoteViewModel {
     // Функция возвращает названия картинок значка и ноты,
     // их высоту, ширину и смещение центра картинки по Y (если не целая нота и/или не диез то центр смещен от реального центра)
     // высота ноты/значка подобрана так,чтобы круглешок ноты был равен расстоянию между линейками)
-    func noteImagesHeightsAndCentersPositions() -> (tone:String?, toneHeight:CGFloat?, toneWidth: CGFloat?, toneCenterOffesetY:CGFloat?) {
+    func noteImagesHeightsAndCentersPositions() -> (tone: String?, toneHeight: CGFloat?, toneWidth: CGFloat?, toneCenterOffesetY: CGFloat?) {
             var toneImageName: String?
             var toneHeight: CGFloat? = nil
             var toneWidth: CGFloat? = nil
@@ -177,7 +177,7 @@ extension NoteViewModel {
 //                offsetFromDurationCenter = 0.0
 //            }
             
-            return (tone:toneImageName, toneWidth:toneWidth, toneHeight:toneHeight, toneCenterOffesetY:offsetFromToneCenter)
+            return (tone: toneImageName, toneHeight: toneHeight, toneWidth: toneWidth, toneCenterOffesetY: offsetFromToneCenter)
     }
     
     func didTapped(noteView: UIView) {

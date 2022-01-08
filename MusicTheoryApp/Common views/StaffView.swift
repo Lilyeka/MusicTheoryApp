@@ -232,15 +232,11 @@ class StaffView: UIView {
 
                 //previousNoteWidth = noteWidth
                 // TODO: если у ноты есть еще и тональность то отрисовать значок тональности в отдельной imageView
-                if let toneImageName = noteCharacteristics.tone {
+                if noteCharacteristics.tone != nil {
                 }
             } else { //если просто тональность (без ноты)
-                if let toneImageName = noteCharacteristics.tone,
-                    let toneHeight = noteCharacteristics.toneHeight,
-                    let toneWidth = noteCharacteristics.toneWidth,
-                    let offsetFromCenterY = noteCharacteristics.toneCenterOffesetY {
+                if let toneImageName = noteCharacteristics.tone {
                     
-                    let durationPositionY = noteYPosition(note: note, noteInnerOfsetFromCenter: offsetFromCenterY)
                     let imageView = UIImageView()
                     //imageView.backgroundColor = .gray
                     imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -400,7 +396,7 @@ class StaffView: UIView {
                 previousLeftOffsetFromClef = leftOffsetFromClef
                 previousNoteWidth = note.durationWidth
                 // TODO: если у ноты есть еще и тональность то отрисовать значок тональности в отдельной imageView
-                if let toneImageName = noteCharacteristics.tone {
+                if noteCharacteristics.tone != nil {
                 }
             } else { //если просто тональность (без ноты)
                 if let toneImageName = noteCharacteristics.tone,

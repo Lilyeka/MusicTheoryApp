@@ -8,26 +8,26 @@
 
 import Foundation
 
-protocol QuizConfiguratorProtocol: class {
+protocol QuizConfiguratorProtocol: AnyObject {
     func configure(with viewController: QuizViewController)
 }
 
-protocol QuizViewProtocol: class {
+protocol QuizViewProtocol: AnyObject {
     var presenter: QuizPresenterProtocol! {get set}
 }
 
-protocol QuizPresenterProtocol: class {
+protocol QuizPresenterProtocol: AnyObject {
     var router: QuizRouterProtocol! {get set}
     var interactor: QuizInteractorProtocol! {get set}
     
     func viewForQuizQuestion(number: Int)
 }
 
-protocol QuizInteractorProtocol: class {
+protocol QuizInteractorProtocol: AnyObject {
     
 }
 
-protocol QuizRouterProtocol:class {
+protocol QuizRouterProtocol:AnyObject {
     
 }
 

@@ -115,7 +115,7 @@ class QuizAdditionCollectionViewCell: UICollectionViewCell {
             width: self.contentView.frame.height/3,
             height: self.pickerViewWidth)
         self.contentView.addSubview(self.pickerView)
-        self.pickerView.transform = CGAffineTransform(rotationAngle: 3.14159/2)
+        self.pickerView.transform = CGAffineTransform(rotationAngle: CGFloat.pi/2)
         
         var frameForChange = self.pickerView.frame
         frameForChange.origin.x = (self.contentView.frame.width - self.pickerViewWidth)/2
@@ -217,8 +217,8 @@ extension QuizAdditionCollectionViewCell: UICollectionViewDataSource {
 extension QuizAdditionCollectionViewCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)  {
         if indexPath.row == (self.mathElements.count - 1) {
-            showPickerView()
-            showBgButton()
+            self.showPickerView()
+            self.showBgButton()
         }
     }
 
@@ -346,18 +346,18 @@ extension QuizAdditionCollectionViewCell: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         
         var imageName = ""
-        if let notesVariants = viewModel.notesVariants {
+        if let notesVariants = viewModel.notesVariants  {
             imageName = notesVariants[row].durationImageName
         }
         if let pausesVariants = viewModel.pausesVariants {
             imageName = pausesVariants[row].imageName
         }
         
-        let image = UIImage(named:imageName)
-        let imageView: UIImageView = UIImageView(image:image)
+        let image = UIImage(named: imageName)
+        let imageView: UIImageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFit
         imageView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        imageView.transform = CGAffineTransform(rotationAngle: 3*CGFloat.pi/2)
+        imageView.transform = CGAffineTransform(rotationAngle: 3 * CGFloat.pi/2)
         return imageView
     }
     

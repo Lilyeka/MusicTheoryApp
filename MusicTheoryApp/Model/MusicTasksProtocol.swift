@@ -8,6 +8,6 @@
 
 import UIKit
 
-protocol MusicTasksProtocol: class {
+protocol MusicTasksProtocol: AnyObject {
     var tasks: [MusicTask] { get set }
 }

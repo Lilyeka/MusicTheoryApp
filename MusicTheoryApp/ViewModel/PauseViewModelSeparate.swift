@@ -121,7 +121,7 @@ class PauseViewModelSeparate:MathElementViewModel {
     func eightRestSize() -> (height: CGFloat, width: CGFloat, offsetFromCenter: CGFloat){
         var height: CGFloat = 68.0
         var width: CGFloat = 24.0
-        var offsetFromCenter: CGFloat = 0.0
+        let offsetFromCenter: CGFloat = 0.0
         if DeviceType.IS_IPHONE_6_6s_7_8 {
             height = 68.0
             width = 24.0
@@ -136,7 +136,7 @@ class PauseViewModelSeparate:MathElementViewModel {
             height = 68.0
             width = 29.0
         }
-        return (height: height, width: width, offsetFromCenter:offsetFromCenter)
+        return (height: height, width: width, offsetFromCenter: offsetFromCenter)
     }
     
     func quarterRestSize() -> (height: CGFloat, width: CGFloat, offsetFromCenter: CGFloat) {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol QuizSelectAnswerDelegate: class {
+protocol QuizSelectAnswerDelegate: AnyObject {
     func rightAnswerReaction()
     func wrongAnswerReaction()
     func additionalRightAnswerReaction(view: UIView)
