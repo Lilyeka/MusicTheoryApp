@@ -99,17 +99,17 @@ class MainViewCollectionViewCell: UICollectionViewCell {
         let center = imageView.center
         let path = UIBezierPath(arcCenter: center, radius: CIRCLE_RADIUS, startAngle: viewModel!.previousPercentInAngle, endAngle: viewModel!.percentInAngle, clockwise: true)
         
-        shapeLayer = CAShapeLayer()
-        shapeLayer.path = path.cgPath
-        shapeLayer.strokeColor = UIColor(named: "doneArticleColour")?.cgColor
-        shapeLayer.lineCap = .round
-        shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.lineWidth = TRACK_LINE_WIDTH
-        shapeLayer.strokeEnd = 0
-        contentView.layer.addSublayer(shapeLayer)
+        self.shapeLayer = CAShapeLayer()
+        self.shapeLayer.path = path.cgPath
+        self.shapeLayer.strokeColor = UIColor(named: "doneArticleColour")?.cgColor
+        self.shapeLayer.lineCap = .round
+        self.shapeLayer.fillColor = UIColor.clear.cgColor
+        self.shapeLayer.lineWidth = TRACK_LINE_WIDTH
+        self.shapeLayer.strokeEnd = 0
+        self.contentView.layer.addSublayer(self.shapeLayer)
         
         CATransaction.begin()
-          CATransaction.setCompletionBlock({ [viewModel] in
+        CATransaction.setCompletionBlock({ [viewModel] in
             viewModel?.afterAnimation()
           })
         let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
@@ -123,39 +123,39 @@ class MainViewCollectionViewCell: UICollectionViewCell {
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-        if trackLayer != nil { trackLayer.removeFromSuperlayer() }
-        if previousTrackLayer != nil { previousTrackLayer.removeFromSuperlayer() }
-        if shapeLayer != nil { shapeLayer.removeFromSuperlayer() }
+        if self.trackLayer != nil { self.trackLayer.removeFromSuperlayer() }
+        if self.previousTrackLayer != nil { self.previousTrackLayer.removeFromSuperlayer() }
+        if self.shapeLayer != nil { self.shapeLayer.removeFromSuperlayer() }
         
-        resultLabel.text = viewModel?.resultTitle()
-        imageView.layer.cornerRadius = imageView.frame.size.width/2
-        imageView.image = UIImage(named: viewModel?.imageName ?? "trebleClef")
+        self.resultLabel.text = viewModel?.resultTitle()
+        self.imageView.layer.cornerRadius = imageView.frame.size.width/2
+        self.imageView.image = UIImage(named: viewModel?.imageName ?? "trebleClef")
     
-        let center = imageView.center
-        trackLayer = CAShapeLayer()
-        circularPath = UIBezierPath(arcCenter: center, radius: CIRCLE_RADIUS, startAngle: -CGFloat.pi/2, endAngle: viewModel!.percentInAngle, clockwise: true)
-        trackLayer.path = circularPath?.cgPath
-        trackLayer.strokeColor = UIColor.lightGray.cgColor
-        trackLayer.lineCap = .round
-        trackLayer.fillColor = UIColor.clear.cgColor
-        trackLayer.lineWidth = TRACK_LINE_WIDTH
-        contentView.layer.addSublayer(trackLayer)
+        let center = self.imageView.center
+        self.trackLayer = CAShapeLayer()
+        self.circularPath = UIBezierPath(arcCenter: center, radius: CIRCLE_RADIUS, startAngle: -CGFloat.pi/2, endAngle: viewModel!.percentInAngle, clockwise: true)
+        self.trackLayer.path = self.circularPath?.cgPath
+        self.trackLayer.strokeColor = UIColor.lightGray.cgColor
+        self.trackLayer.lineCap = .round
+        self.trackLayer.fillColor = UIColor.clear.cgColor
+        self.trackLayer.lineWidth = self.TRACK_LINE_WIDTH
+        self.contentView.layer.addSublayer(trackLayer)
 
-        previousTrackLayer = CAShapeLayer()
-        let prevCircularPath = UIBezierPath(arcCenter: center, radius: CIRCLE_RADIUS, startAngle: -CGFloat.pi/2, endAngle: viewModel!.previousPercentInAngle, clockwise: true)
-        previousTrackLayer.path = prevCircularPath.cgPath
-        previousTrackLayer.strokeColor = UIColor(named: "doneArticleColour")?.cgColor
-        previousTrackLayer.lineCap = .round
-        previousTrackLayer.fillColor = UIColor.clear.cgColor
-        previousTrackLayer.lineWidth = TRACK_LINE_WIDTH
-        contentView.layer.addSublayer(previousTrackLayer)
+        self.previousTrackLayer = CAShapeLayer()
+        let prevCircularPath = UIBezierPath(arcCenter: center, radius: CIRCLE_RADIUS, startAngle: -CGFloat.pi/2, endAngle: self.viewModel!.previousPercentInAngle, clockwise: true)
+        self.previousTrackLayer.path = prevCircularPath.cgPath
+        self.previousTrackLayer.strokeColor = UIColor(named: "doneArticleColour")?.cgColor
+        self.previousTrackLayer.lineCap = .round
+        self.previousTrackLayer.fillColor = UIColor.clear.cgColor
+        self.previousTrackLayer.lineWidth = TRACK_LINE_WIDTH
+        self.contentView.layer.addSublayer(self.previousTrackLayer)
     }
     
     func clearModel() {
-        viewModel?.clearArticleResult()
+        self.viewModel?.clearArticleResult()
         if trackLayer != nil { trackLayer.removeFromSuperlayer() }
-        if previousTrackLayer != nil { previousTrackLayer.removeFromSuperlayer() }
-        if shapeLayer != nil {shapeLayer.removeFromSuperlayer()}
-        setNeedsDisplay()
+        if previousTrackLayer != nil { self.previousTrackLayer.removeFromSuperlayer() }
+        if self.shapeLayer != nil { self.shapeLayer.removeFromSuperlayer() }
+        self.setNeedsDisplay()
     }
 }

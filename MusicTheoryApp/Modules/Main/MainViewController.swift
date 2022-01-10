@@ -23,7 +23,8 @@ class MainViewController: UIViewController {
 
     var infoButton: UIButton = {
         var btn = UIButton(type: .infoDark)
-        btn.frame = CGRect(x: 0.0, y: 0.0, width: 35, height: 35)
+       // btn.frame = CGRect(x: 0.0, y: 0.0, width: 45, height: 45)
+        btn.translatesAutoresizingMaskIntoConstraints = false
         btn.tintColor = UIColor.darkGray
         return btn
     }()
@@ -43,10 +44,12 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     // MARK: - Private methods
@@ -65,15 +68,14 @@ class MainViewController: UIViewController {
     }
     
     private func configureSubviews() {
-        guard let viewModels = viewModels, viewModels.count > 0  else {
-            return
-        }
-
-        self.view.backgroundColor = .white
-        
         let widthPercent: CGFloat = 0.8
         let heightPercent: CGFloat = 0.55
         
+        self.view.backgroundColor = .white
+        
+        guard let viewModels = viewModels, viewModels.count > 0  else {
+            return
+        }
         let cellWidth = ((self.view.frame.size.width * widthPercent) - CGFloat((viewModels.count + 1))*self.COLLECTION_VIEW_SECTION_INSET)/CGFloat(viewModels.count)
         let cellHeight = (self.view.frame.size.height * heightPercent)
         
@@ -83,9 +85,7 @@ class MainViewController: UIViewController {
             left: COLLECTION_VIEW_SECTION_INSET,
             bottom: COLLECTION_VIEW_SECTION_INSET,
             right: COLLECTION_VIEW_SECTION_INSET)
-        layout.itemSize = CGSize(
-            width: cellWidth,
-            height: cellHeight)
+        layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
         
@@ -96,16 +96,22 @@ class MainViewController: UIViewController {
         self.collectionView.dataSource = self
         self.collectionView.backgroundColor = .white
         self.collectionView.register(MainViewCollectionViewCell.self, forCellWithReuseIdentifier: MainViewCollectionViewCell.cellIdentifier)
+       
+        self.infoButton.addTarget(self, action: #selector(self.infoImageViewTapped), for: .touchUpInside)
         
         self.view.addSubview(self.collectionView)
-        self.collectionView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-        self.collectionView.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor).isActive = true
-        self.collectionView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: widthPercent).isActive = true
-        self.collectionView.heightAnchor.constraint(equalTo: self.view.heightAnchor,multiplier: heightPercent, constant: 2*COLLECTION_VIEW_SECTION_INSET).isActive = true
+        self.view.addSubview(self.infoButton)
         
-        self.infoButton.addTarget(self, action: #selector(self.infoImageViewTapped), for: .touchUpInside)
-        let infoBarButtonItem = UIBarButtonItem(customView: self.infoButton)
-        self.navigationItem.rightBarButtonItem = infoBarButtonItem
+        NSLayoutConstraint.activate([
+            self.collectionView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.collectionView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            self.collectionView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: widthPercent),
+            self.collectionView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: heightPercent, constant: 2 * COLLECTION_VIEW_SECTION_INSET),
+            self.infoButton.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 25),
+            self.infoButton.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor, constant: -25),
+            self.infoButton.heightAnchor.constraint(equalToConstant: 45.0),
+            self.infoButton.widthAnchor.constraint(equalToConstant: 45.0)
+        ])
         self.collectionView.reloadData()
     }
     
