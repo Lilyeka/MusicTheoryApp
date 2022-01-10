@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             sleep(2)
          }
        
-        self.clearLocalCache()
+       // self.clearLocalCache()
         
         window = UIWindow(frame: UIScreen.main.bounds)
         let mainVC = MainViewController()
@@ -35,4 +35,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          UserDefaults.standard.removeObject(forKey: "third_article_done_tasks")
     }
 }
-
