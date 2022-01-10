@@ -11,7 +11,7 @@ import UIKit
 enum QuizArticles: String {
     case trebleCleffNotes = "Ноты в скрипичном ключе"
     case bassCleffNotes = "Ноты в басовом \n ключе"
-    case durationsAndPauses = "Длительности и \n паузы"
+    case durationsAndPauses = "Длительности \n и паузы"
 }
 
 class QuizArticle {
@@ -23,9 +23,7 @@ class QuizArticle {
         get {
             return result.getDoneTasks()
         }
-        set {
-            
-        }
+        set {}
     }
         
     init(article: QuizArticles, questions: [MusicTask], result: ArticleResultsAndKeys) {
@@ -44,7 +42,3 @@ class QuizArticle {
         numberOfFinishedTasks = 0
     }
 }
-
-
-
-

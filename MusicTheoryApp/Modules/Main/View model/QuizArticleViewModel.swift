@@ -60,10 +60,9 @@ class QuizArticleViewModel {
             var angle = (CGFloat(percent)*360)/100
             angle *= CGFloat.pi/180
             angle -= CGFloat.pi/2
-          //  angle += CGFloat.pi/2 //temp
             print("percent = \(percent)")
             print("angle = \(angle)")
-            return angle//(CGFloat(angle) * CGFloat.pi)/180
+            return angle
          }
      }
     

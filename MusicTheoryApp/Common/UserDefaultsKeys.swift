@@ -21,4 +21,3 @@ enum ArticleResultsAndKeys: String {
         UserDefaults.standard.removeObject(forKey: self.rawValue)
     }
 }
-

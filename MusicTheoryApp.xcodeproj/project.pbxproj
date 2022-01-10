@@ -219,6 +219,19 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		61016FEE278C2FEB008EE136 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				61B03C5E25A6F9EE00CCD0BD /* UserDefaultsKeys.swift */,
+				61E3914924CE073E00603666 /* Managers */,
+				619E3E5224686F1A003ECD16 /* Extensions */,
+				6149ED26245B697700A1375A /* Common views */,
+				61A818BA24747761009DCE07 /* ViewModel */,
+				617F7EC5245DFB9D00EE08AA /* Model */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		61068AA5253F683B00E234D4 /* SelectNote */ = {
 			isa = PBXGroup;
 			children = (
@@ -542,13 +555,8 @@
 		6149ED0D245978CD00A1375A /* MusicTheoryApp */ = {
 			isa = PBXGroup;
 			children = (
-				61B03C5E25A6F9EE00CCD0BD /* UserDefaultsKeys.swift */,
-				61E3914924CE073E00603666 /* Managers */,
+				61016FEE278C2FEB008EE136 /* Common */,
 				619BB53724B4FEE900D3076E /* Modules */,
-				617F7EC5245DFB9D00EE08AA /* Model */,
-				61A818BA24747761009DCE07 /* ViewModel */,
-				6149ED26245B697700A1375A /* Common views */,
-				619E3E5224686F1A003ECD16 /* Extensions */,
 				612AAA9024D74FFD00A3CC28 /* Fireworks */,
 				6149ED14245978D700A1375A /* Assets.xcassets */,
 				6149ED19245978D700A1375A /* LaunchScreen.storyboard */,

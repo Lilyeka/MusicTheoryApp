@@ -180,5 +180,3 @@ extension MainViewController: MainViewInputProtocol {
         self.viewModels = items
     }
 }
-
-

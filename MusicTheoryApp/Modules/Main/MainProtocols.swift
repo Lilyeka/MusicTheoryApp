@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 protocol MainInteractorInputProtocol: AnyObject {
     var articles: [QuizArticleViewModel] { get }
     var currentArticle: QuizArticleViewModel? { get set }
@@ -46,4 +45,3 @@ protocol MainRouterProtocol: AnyObject {
     func showQuizScene(article: QuizArticle)
     func showStartAgainAlert(index: Int)
 }
-
